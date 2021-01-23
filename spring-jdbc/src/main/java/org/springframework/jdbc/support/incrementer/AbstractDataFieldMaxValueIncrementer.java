@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.support.incrementer;
 
 import javax.sql.DataSource;
@@ -36,15 +20,20 @@ public abstract class AbstractDataFieldMaxValueIncrementer implements DataFieldM
 
 	private DataSource dataSource;
 
-	/** The name of the sequence/table containing the sequence. */
+	/**
+	 * The name of the sequence/table containing the sequence.
+	 */
 	private String incrementerName;
 
-	/** The length to which a string result should be pre-pended with zeroes. */
+	/**
+	 * The length to which a string result should be pre-pended with zeroes.
+	 */
 	protected int paddingLength = 0;
 
 
 	/**
 	 * Default constructor for bean property style usage.
+	 *
 	 * @see #setDataSource
 	 * @see #setIncrementerName
 	 */
@@ -53,7 +42,8 @@ public abstract class AbstractDataFieldMaxValueIncrementer implements DataFieldM
 
 	/**
 	 * Convenience constructor.
-	 * @param dataSource the DataSource to use
+	 *
+	 * @param dataSource      the DataSource to use
 	 * @param incrementerName the name of the sequence/table to use
 	 */
 	public AbstractDataFieldMaxValueIncrementer(DataSource dataSource, String incrementerName) {
@@ -146,6 +136,7 @@ public abstract class AbstractDataFieldMaxValueIncrementer implements DataFieldM
 
 	/**
 	 * Determine the next key to use, as a long.
+	 *
 	 * @return the key to use as a long. It will eventually be converted later
 	 * in another format by the public concrete methods of this class.
 	 */

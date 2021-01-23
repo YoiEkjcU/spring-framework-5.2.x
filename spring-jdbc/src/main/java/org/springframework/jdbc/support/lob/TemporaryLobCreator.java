@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.support.lob;
 
 import java.io.IOException;
@@ -42,10 +26,10 @@ import org.springframework.util.FileCopyUtils;
  * Can also be used directly to reuse the tracking and freeing of temporary LOBs.
  *
  * @author Juergen Hoeller
- * @since 3.2.2
  * @see DefaultLobHandler#setCreateTemporaryLob
  * @see java.sql.Connection#createBlob()
  * @see java.sql.Connection#createClob()
+ * @since 3.2.2
  */
 public class TemporaryLobCreator implements LobCreator {
 
@@ -65,8 +49,7 @@ public class TemporaryLobCreator implements LobCreator {
 			blob.setBytes(1, content);
 			this.temporaryBlobs.add(blob);
 			ps.setBlob(paramIndex, blob);
-		}
-		else {
+		} else {
 			ps.setBlob(paramIndex, (Blob) null);
 		}
 
@@ -85,14 +68,12 @@ public class TemporaryLobCreator implements LobCreator {
 			Blob blob = ps.getConnection().createBlob();
 			try {
 				FileCopyUtils.copy(binaryStream, blob.setBinaryStream(1));
-			}
-			catch (IOException ex) {
+			} catch (IOException ex) {
 				throw new DataAccessResourceFailureException("Could not copy into LOB stream", ex);
 			}
 			this.temporaryBlobs.add(blob);
 			ps.setBlob(paramIndex, blob);
-		}
-		else {
+		} else {
 			ps.setBlob(paramIndex, (Blob) null);
 		}
 
@@ -112,8 +93,7 @@ public class TemporaryLobCreator implements LobCreator {
 			clob.setString(1, content);
 			this.temporaryClobs.add(clob);
 			ps.setClob(paramIndex, clob);
-		}
-		else {
+		} else {
 			ps.setClob(paramIndex, (Clob) null);
 		}
 
@@ -132,14 +112,12 @@ public class TemporaryLobCreator implements LobCreator {
 			Clob clob = ps.getConnection().createClob();
 			try {
 				FileCopyUtils.copy(asciiStream, clob.setAsciiStream(1));
-			}
-			catch (IOException ex) {
+			} catch (IOException ex) {
 				throw new DataAccessResourceFailureException("Could not copy into LOB stream", ex);
 			}
 			this.temporaryClobs.add(clob);
 			ps.setClob(paramIndex, clob);
-		}
-		else {
+		} else {
 			ps.setClob(paramIndex, (Clob) null);
 		}
 
@@ -159,14 +137,12 @@ public class TemporaryLobCreator implements LobCreator {
 			Clob clob = ps.getConnection().createClob();
 			try {
 				FileCopyUtils.copy(characterStream, clob.setCharacterStream(1));
-			}
-			catch (IOException ex) {
+			} catch (IOException ex) {
 				throw new DataAccessResourceFailureException("Could not copy into LOB stream", ex);
 			}
 			this.temporaryClobs.add(clob);
 			ps.setClob(paramIndex, clob);
-		}
-		else {
+		} else {
 			ps.setClob(paramIndex, (Clob) null);
 		}
 
@@ -182,16 +158,14 @@ public class TemporaryLobCreator implements LobCreator {
 		for (Blob blob : this.temporaryBlobs) {
 			try {
 				blob.free();
-			}
-			catch (SQLException ex) {
+			} catch (SQLException ex) {
 				logger.warn("Could not free BLOB", ex);
 			}
 		}
 		for (Clob clob : this.temporaryClobs) {
 			try {
 				clob.free();
-			}
-			catch (SQLException ex) {
+			} catch (SQLException ex) {
 				logger.warn("Could not free CLOB", ex);
 			}
 		}

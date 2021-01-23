@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2012 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.core;
 
 /**
@@ -37,9 +21,9 @@ package org.springframework.jdbc.core;
  *
  * @author Thomas Risberg
  * @author Juergen Hoeller
- * @since 2.0
  * @see JdbcTemplate#batchUpdate(String, BatchPreparedStatementSetter)
  * @see org.springframework.jdbc.core.support.AbstractInterruptibleBatchPreparedStatementSetter
+ * @since 2.0
  */
 public interface InterruptibleBatchPreparedStatementSetter extends BatchPreparedStatementSetter {
 
@@ -51,6 +35,7 @@ public interface InterruptibleBatchPreparedStatementSetter extends BatchPrepared
 	 * be ignored! Make sure that you set a corresponding internal flag if you
 	 * detect exhaustion <i>at the beginning</i> of your {@code setValues}
 	 * implementation, letting this method return {@code true} based on the flag.
+	 *
 	 * @param i index of the statement we're issuing in the batch, starting from 0
 	 * @return whether the batch is already exhausted
 	 * @see #setValues

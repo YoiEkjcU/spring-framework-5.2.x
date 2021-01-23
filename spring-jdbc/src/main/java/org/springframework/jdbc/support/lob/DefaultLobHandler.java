@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.support.lob;
 
 import java.io.ByteArrayInputStream;
@@ -69,7 +53,6 @@ import org.springframework.lang.Nullable;
  * <p>See the {@link LobHandler} interface javadoc for a summary of recommendations.
  *
  * @author Juergen Hoeller
- * @since 04.12.2003
  * @see java.sql.ResultSet#getBytes
  * @see java.sql.ResultSet#getBinaryStream
  * @see java.sql.ResultSet#getString
@@ -80,6 +63,7 @@ import org.springframework.lang.Nullable;
  * @see java.sql.PreparedStatement#setString
  * @see java.sql.PreparedStatement#setAsciiStream
  * @see java.sql.PreparedStatement#setCharacterStream
+ * @since 04.12.2003
  */
 public class DefaultLobHandler extends AbstractLobHandler {
 
@@ -104,6 +88,7 @@ public class DefaultLobHandler extends AbstractLobHandler {
 	 * <p>This setting affects byte array / String arguments as well as stream
 	 * arguments, unless {@link #setStreamAsLob "streamAsLob"} overrides this
 	 * handling to use JDBC 4.0's new explicit streaming support (if available).
+	 *
 	 * @see java.sql.PreparedStatement#setBlob(int, java.sql.Blob)
 	 * @see java.sql.PreparedStatement#setClob(int, java.sql.Clob)
 	 */
@@ -122,6 +107,7 @@ public class DefaultLobHandler extends AbstractLobHandler {
 	 * <p>This setting affects stream arguments as well as byte array / String
 	 * arguments, requiring JDBC 4.0 support. For supporting LOB content against
 	 * JDBC 3.0, check out the {@link #setWrapAsLob "wrapAsLob"} setting.
+	 *
 	 * @see java.sql.PreparedStatement#setBlob(int, java.io.InputStream, long)
 	 * @see java.sql.PreparedStatement#setClob(int, java.io.Reader, long)
 	 */
@@ -139,6 +125,7 @@ public class DefaultLobHandler extends AbstractLobHandler {
 	 * <p>This setting affects stream arguments as well as byte array / String
 	 * arguments, requiring JDBC 4.0 support. For supporting LOB content against
 	 * JDBC 3.0, check out the {@link #setWrapAsLob "wrapAsLob"} setting.
+	 *
 	 * @see java.sql.Connection#createBlob()
 	 * @see java.sql.Connection#createClob()
 	 */
@@ -154,8 +141,7 @@ public class DefaultLobHandler extends AbstractLobHandler {
 		if (this.wrapAsLob) {
 			Blob blob = rs.getBlob(columnIndex);
 			return blob.getBytes(1, (int) blob.length());
-		}
-		else {
+		} else {
 			return rs.getBytes(columnIndex);
 		}
 	}
@@ -167,8 +153,7 @@ public class DefaultLobHandler extends AbstractLobHandler {
 		if (this.wrapAsLob) {
 			Blob blob = rs.getBlob(columnIndex);
 			return blob.getBinaryStream();
-		}
-		else {
+		} else {
 			return rs.getBinaryStream(columnIndex);
 		}
 	}
@@ -180,8 +165,7 @@ public class DefaultLobHandler extends AbstractLobHandler {
 		if (this.wrapAsLob) {
 			Clob clob = rs.getClob(columnIndex);
 			return clob.getSubString(1, (int) clob.length());
-		}
-		else {
+		} else {
 			return rs.getString(columnIndex);
 		}
 	}
@@ -192,8 +176,7 @@ public class DefaultLobHandler extends AbstractLobHandler {
 		if (this.wrapAsLob) {
 			Clob clob = rs.getClob(columnIndex);
 			return clob.getAsciiStream();
-		}
-		else {
+		} else {
 			return rs.getAsciiStream(columnIndex);
 		}
 	}
@@ -204,8 +187,7 @@ public class DefaultLobHandler extends AbstractLobHandler {
 		if (this.wrapAsLob) {
 			Clob clob = rs.getClob(columnIndex);
 			return clob.getCharacterStream();
-		}
-		else {
+		} else {
 			return rs.getCharacterStream(columnIndex);
 		}
 	}
@@ -229,20 +211,16 @@ public class DefaultLobHandler extends AbstractLobHandler {
 			if (streamAsLob) {
 				if (content != null) {
 					ps.setBlob(paramIndex, new ByteArrayInputStream(content), content.length);
-				}
-				else {
+				} else {
 					ps.setBlob(paramIndex, (Blob) null);
 				}
-			}
-			else if (wrapAsLob) {
+			} else if (wrapAsLob) {
 				if (content != null) {
 					ps.setBlob(paramIndex, new PassThroughBlob(content));
-				}
-				else {
+				} else {
 					ps.setBlob(paramIndex, (Blob) null);
 				}
-			}
-			else {
+			} else {
 				ps.setBytes(paramIndex, content);
 			}
 			if (logger.isDebugEnabled()) {
@@ -260,27 +238,21 @@ public class DefaultLobHandler extends AbstractLobHandler {
 				if (binaryStream != null) {
 					if (contentLength >= 0) {
 						ps.setBlob(paramIndex, binaryStream, contentLength);
-					}
-					else {
+					} else {
 						ps.setBlob(paramIndex, binaryStream);
 					}
-				}
-				else {
+				} else {
 					ps.setBlob(paramIndex, (Blob) null);
 				}
-			}
-			else if (wrapAsLob) {
+			} else if (wrapAsLob) {
 				if (binaryStream != null) {
 					ps.setBlob(paramIndex, new PassThroughBlob(binaryStream, contentLength));
-				}
-				else {
+				} else {
 					ps.setBlob(paramIndex, (Blob) null);
 				}
-			}
-			else if (contentLength >= 0) {
+			} else if (contentLength >= 0) {
 				ps.setBinaryStream(paramIndex, binaryStream, contentLength);
-			}
-			else {
+			} else {
 				ps.setBinaryStream(paramIndex, binaryStream);
 			}
 			if (logger.isDebugEnabled()) {
@@ -296,20 +268,16 @@ public class DefaultLobHandler extends AbstractLobHandler {
 			if (streamAsLob) {
 				if (content != null) {
 					ps.setClob(paramIndex, new StringReader(content), content.length());
-				}
-				else {
+				} else {
 					ps.setClob(paramIndex, (Clob) null);
 				}
-			}
-			else if (wrapAsLob) {
+			} else if (wrapAsLob) {
 				if (content != null) {
 					ps.setClob(paramIndex, new PassThroughClob(content));
-				}
-				else {
+				} else {
 					ps.setClob(paramIndex, (Clob) null);
 				}
-			}
-			else {
+			} else {
 				ps.setString(paramIndex, content);
 			}
 			if (logger.isDebugEnabled()) {
@@ -328,27 +296,21 @@ public class DefaultLobHandler extends AbstractLobHandler {
 					Reader reader = new InputStreamReader(asciiStream, StandardCharsets.US_ASCII);
 					if (contentLength >= 0) {
 						ps.setClob(paramIndex, reader, contentLength);
-					}
-					else {
+					} else {
 						ps.setClob(paramIndex, reader);
 					}
-				}
-				else {
+				} else {
 					ps.setClob(paramIndex, (Clob) null);
 				}
-			}
-			else if (wrapAsLob) {
+			} else if (wrapAsLob) {
 				if (asciiStream != null) {
 					ps.setClob(paramIndex, new PassThroughClob(asciiStream, contentLength));
-				}
-				else {
+				} else {
 					ps.setClob(paramIndex, (Clob) null);
 				}
-			}
-			else if (contentLength >= 0) {
+			} else if (contentLength >= 0) {
 				ps.setAsciiStream(paramIndex, asciiStream, contentLength);
-			}
-			else {
+			} else {
 				ps.setAsciiStream(paramIndex, asciiStream);
 			}
 			if (logger.isDebugEnabled()) {
@@ -366,27 +328,21 @@ public class DefaultLobHandler extends AbstractLobHandler {
 				if (characterStream != null) {
 					if (contentLength >= 0) {
 						ps.setClob(paramIndex, characterStream, contentLength);
-					}
-					else {
+					} else {
 						ps.setClob(paramIndex, characterStream);
 					}
-				}
-				else {
+				} else {
 					ps.setClob(paramIndex, (Clob) null);
 				}
-			}
-			else if (wrapAsLob) {
+			} else if (wrapAsLob) {
 				if (characterStream != null) {
 					ps.setClob(paramIndex, new PassThroughClob(characterStream, contentLength));
-				}
-				else {
+				} else {
 					ps.setClob(paramIndex, (Clob) null);
 				}
-			}
-			else if (contentLength >= 0) {
+			} else if (contentLength >= 0) {
 				ps.setCharacterStream(paramIndex, characterStream, contentLength);
-			}
-			else {
+			} else {
 				ps.setCharacterStream(paramIndex, characterStream);
 			}
 			if (logger.isDebugEnabled()) {

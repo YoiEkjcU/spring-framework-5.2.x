@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.object;
 
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -43,11 +27,15 @@ public abstract class SqlOperation extends RdbmsOperation {
 	@Nullable
 	private PreparedStatementCreatorFactory preparedStatementFactory;
 
-	/** Parsed representation of the SQL statement. */
+	/**
+	 * Parsed representation of the SQL statement.
+	 */
 	@Nullable
 	private ParsedSql cachedSql;
 
-	/** Monitor for locking the cached representation of the parsed SQL statement. */
+	/**
+	 * Monitor for locking the cached representation of the parsed SQL statement.
+	 */
 	private final Object parsedSqlMonitor = new Object();
 
 
@@ -71,6 +59,7 @@ public abstract class SqlOperation extends RdbmsOperation {
 	/**
 	 * Hook method that subclasses may override to post-process compilation.
 	 * This implementation does nothing.
+	 *
 	 * @see #compileInternal
 	 */
 	protected void onCompileInternal() {
@@ -93,6 +82,7 @@ public abstract class SqlOperation extends RdbmsOperation {
 	/**
 	 * Return a PreparedStatementSetter to perform an operation
 	 * with the given parameters.
+	 *
 	 * @param params the parameter array (may be {@code null})
 	 */
 	protected final PreparedStatementSetter newPreparedStatementSetter(@Nullable Object[] params) {
@@ -103,6 +93,7 @@ public abstract class SqlOperation extends RdbmsOperation {
 	/**
 	 * Return a PreparedStatementCreator to perform an operation
 	 * with the given parameters.
+	 *
 	 * @param params the parameter array (may be {@code null})
 	 */
 	protected final PreparedStatementCreator newPreparedStatementCreator(@Nullable Object[] params) {
@@ -113,9 +104,10 @@ public abstract class SqlOperation extends RdbmsOperation {
 	/**
 	 * Return a PreparedStatementCreator to perform an operation
 	 * with the given parameters.
+	 *
 	 * @param sqlToUse the actual SQL statement to use (if different from
-	 * the factory's, for example because of named parameter expanding)
-	 * @param params the parameter array (may be {@code null})
+	 *                 the factory's, for example because of named parameter expanding)
+	 * @param params   the parameter array (may be {@code null})
 	 */
 	protected final PreparedStatementCreator newPreparedStatementCreator(String sqlToUse, @Nullable Object[] params) {
 		Assert.state(this.preparedStatementFactory != null, "No PreparedStatementFactory available");

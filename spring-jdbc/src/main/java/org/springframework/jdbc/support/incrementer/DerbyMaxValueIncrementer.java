@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.support.incrementer;
 
 import javax.sql.DataSource;
@@ -35,7 +19,7 @@ import javax.sql.DataSource;
  * <pre class="code">create table tab (id int not null primary key, text varchar(100));
  * create table tab_sequence (value int generated always as identity, dummy char(1));
  * insert into tab_sequence (dummy) values(null);</pre>
- *
+ * <p>
  * If "cacheSize" is set, the intermediate values are served without querying the
  * database. If the server or your application is stopped or crashes or a transaction
  * is rolled back, the unused values will never be served. The maximum hole size in
@@ -55,15 +39,20 @@ import javax.sql.DataSource;
  */
 public class DerbyMaxValueIncrementer extends AbstractIdentityColumnMaxValueIncrementer {
 
-	/** The default for dummy name. */
+	/**
+	 * The default for dummy name.
+	 */
 	private static final String DEFAULT_DUMMY_NAME = "dummy";
 
-	/** The name of the dummy column used for inserts. */
+	/**
+	 * The name of the dummy column used for inserts.
+	 */
 	private String dummyName = DEFAULT_DUMMY_NAME;
 
 
 	/**
 	 * Default constructor for bean property style usage.
+	 *
 	 * @see #setDataSource
 	 * @see #setIncrementerName
 	 * @see #setColumnName
@@ -73,9 +62,10 @@ public class DerbyMaxValueIncrementer extends AbstractIdentityColumnMaxValueIncr
 
 	/**
 	 * Convenience constructor.
-	 * @param dataSource the DataSource to use
+	 *
+	 * @param dataSource      the DataSource to use
 	 * @param incrementerName the name of the sequence/table to use
-	 * @param columnName the name of the column in the sequence table to use
+	 * @param columnName      the name of the column in the sequence table to use
 	 */
 	public DerbyMaxValueIncrementer(DataSource dataSource, String incrementerName, String columnName) {
 		super(dataSource, incrementerName, columnName);
@@ -84,10 +74,11 @@ public class DerbyMaxValueIncrementer extends AbstractIdentityColumnMaxValueIncr
 
 	/**
 	 * Convenience constructor.
-	 * @param dataSource the DataSource to use
+	 *
+	 * @param dataSource      the DataSource to use
 	 * @param incrementerName the name of the sequence/table to use
-	 * @param columnName the name of the column in the sequence table to use
-	 * @param dummyName the name of the dummy column used for inserts
+	 * @param columnName      the name of the column in the sequence table to use
+	 * @param dummyName       the name of the dummy column used for inserts
 	 */
 	public DerbyMaxValueIncrementer(DataSource dataSource, String incrementerName, String columnName, String dummyName) {
 		super(dataSource, incrementerName, columnName);

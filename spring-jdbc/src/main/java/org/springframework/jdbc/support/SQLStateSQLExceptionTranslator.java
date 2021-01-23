@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.support;
 
 import java.sql.SQLException;
@@ -99,17 +83,13 @@ public class SQLStateSQLExceptionTranslator extends AbstractFallbackSQLException
 			}
 			if (BAD_SQL_GRAMMAR_CODES.contains(classCode)) {
 				return new BadSqlGrammarException(task, (sql != null ? sql : ""), ex);
-			}
-			else if (DATA_INTEGRITY_VIOLATION_CODES.contains(classCode)) {
+			} else if (DATA_INTEGRITY_VIOLATION_CODES.contains(classCode)) {
 				return new DataIntegrityViolationException(buildMessage(task, sql, ex), ex);
-			}
-			else if (DATA_ACCESS_RESOURCE_FAILURE_CODES.contains(classCode)) {
+			} else if (DATA_ACCESS_RESOURCE_FAILURE_CODES.contains(classCode)) {
 				return new DataAccessResourceFailureException(buildMessage(task, sql, ex), ex);
-			}
-			else if (TRANSIENT_DATA_ACCESS_RESOURCE_CODES.contains(classCode)) {
+			} else if (TRANSIENT_DATA_ACCESS_RESOURCE_CODES.contains(classCode)) {
 				return new TransientDataAccessResourceException(buildMessage(task, sql, ex), ex);
-			}
-			else if (CONCURRENCY_FAILURE_CODES.contains(classCode)) {
+			} else if (CONCURRENCY_FAILURE_CODES.contains(classCode)) {
 				return new ConcurrencyFailureException(buildMessage(task, sql, ex), ex);
 			}
 		}
@@ -128,8 +108,9 @@ public class SQLStateSQLExceptionTranslator extends AbstractFallbackSQLException
 	 * Gets the SQL state code from the supplied {@link SQLException exception}.
 	 * <p>Some JDBC drivers nest the actual exception from a batched update, so we
 	 * might need to dig down into the nested exception.
+	 *
 	 * @param ex the exception from which the {@link SQLException#getSQLState() SQL state}
-	 * is to be extracted
+	 *           is to be extracted
 	 * @return the SQL state code
 	 */
 	@Nullable

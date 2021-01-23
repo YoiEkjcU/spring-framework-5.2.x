@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2012 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.support.incrementer;
 
 import java.sql.Connection;
@@ -33,13 +17,14 @@ import org.springframework.jdbc.support.JdbcUtils;
  * a database sequence. Subclasses need to provide the database-specific SQL to use.
  *
  * @author Juergen Hoeller
- * @since 26.02.2004
  * @see #getSequenceQuery
+ * @since 26.02.2004
  */
 public abstract class AbstractSequenceMaxValueIncrementer extends AbstractDataFieldMaxValueIncrementer {
 
 	/**
 	 * Default constructor for bean property style usage.
+	 *
 	 * @see #setDataSource
 	 * @see #setIncrementerName
 	 */
@@ -48,7 +33,8 @@ public abstract class AbstractSequenceMaxValueIncrementer extends AbstractDataFi
 
 	/**
 	 * Convenience constructor.
-	 * @param dataSource the DataSource to use
+	 *
+	 * @param dataSource      the DataSource to use
 	 * @param incrementerName the name of the sequence/table to use
 	 */
 	public AbstractSequenceMaxValueIncrementer(DataSource dataSource, String incrementerName) {
@@ -70,15 +56,12 @@ public abstract class AbstractSequenceMaxValueIncrementer extends AbstractDataFi
 			rs = stmt.executeQuery(getSequenceQuery());
 			if (rs.next()) {
 				return rs.getLong(1);
-			}
-			else {
+			} else {
 				throw new DataAccessResourceFailureException("Sequence query did not return a result");
 			}
-		}
-		catch (SQLException ex) {
+		} catch (SQLException ex) {
 			throw new DataAccessResourceFailureException("Could not obtain sequence value", ex);
-		}
-		finally {
+		} finally {
 			JdbcUtils.closeResultSet(rs);
 			JdbcUtils.closeStatement(stmt);
 			DataSourceUtils.releaseConnection(con, getDataSource());

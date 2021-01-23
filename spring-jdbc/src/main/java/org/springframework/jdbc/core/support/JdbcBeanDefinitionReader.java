@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.core.support;
 
 import java.util.Properties;
@@ -57,6 +41,7 @@ public class JdbcBeanDefinitionReader {
 	 * Create a new JdbcBeanDefinitionReader for the given bean factory,
 	 * using a default PropertiesBeanDefinitionReader underneath.
 	 * <p>DataSource or JdbcTemplate still need to be set.
+	 *
 	 * @see #setDataSource
 	 * @see #setJdbcTemplate
 	 */
@@ -68,6 +53,7 @@ public class JdbcBeanDefinitionReader {
 	 * Create a new JdbcBeanDefinitionReader that delegates to the
 	 * given PropertiesBeanDefinitionReader underneath.
 	 * <p>DataSource or JdbcTemplate still need to be set.
+	 *
 	 * @see #setDataSource
 	 * @see #setJdbcTemplate
 	 */
@@ -97,12 +83,13 @@ public class JdbcBeanDefinitionReader {
 
 	/**
 	 * Load bean definitions from the database via the given SQL string.
+	 *
 	 * @param sql the SQL query to use for loading bean definitions.
-	 * The first three columns must be bean name, property name and value.
-	 * Any join and any other columns are permitted: e.g.
-	 * {@code SELECT BEAN_NAME, PROPERTY, VALUE FROM CONFIG WHERE CONFIG.APP_ID = 1}
-	 * It's also possible to perform a join. Column names are not significant --
-	 * only the ordering of these first three columns.
+	 *            The first three columns must be bean name, property name and value.
+	 *            Any join and any other columns are permitted: e.g.
+	 *            {@code SELECT BEAN_NAME, PROPERTY, VALUE FROM CONFIG WHERE CONFIG.APP_ID = 1}
+	 *            It's also possible to perform a join. Column names are not significant --
+	 *            only the ordering of these first three columns.
 	 */
 	public void loadBeanDefinitions(String sql) {
 		Assert.notNull(this.jdbcTemplate, "Not fully configured - specify DataSource or JdbcTemplate");

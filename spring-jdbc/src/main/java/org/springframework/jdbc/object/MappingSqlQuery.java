@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.object;
 
 import java.sql.ResultSet;
@@ -33,10 +17,10 @@ import org.springframework.lang.Nullable;
  * context. Most subclasses won't care about parameters. If you don't use
  * contextual information, subclass this instead of MappingSqlQueryWithParameters.
  *
+ * @param <T> the result type
  * @author Rod Johnson
  * @author Thomas Risberg
  * @author Jean-Pierre Pawlak
- * @param <T> the result type
  * @see MappingSqlQueryWithParameters
  */
 public abstract class MappingSqlQuery<T> extends MappingSqlQueryWithParameters<T> {
@@ -49,7 +33,8 @@ public abstract class MappingSqlQuery<T> extends MappingSqlQueryWithParameters<T
 
 	/**
 	 * Convenient constructor with DataSource and SQL string.
-	 * @param ds the DataSource to use to obtain connections
+	 *
+	 * @param ds  the DataSource to use to obtain connections
 	 * @param sql the SQL to run
 	 */
 	public MappingSqlQuery(DataSource ds, String sql) {
@@ -60,6 +45,7 @@ public abstract class MappingSqlQuery<T> extends MappingSqlQueryWithParameters<T
 	/**
 	 * This method is implemented to invoke the simpler mapRow
 	 * template method, ignoring parameters.
+	 *
 	 * @see #mapRow(ResultSet, int)
 	 */
 	@Override
@@ -76,12 +62,13 @@ public abstract class MappingSqlQuery<T> extends MappingSqlQueryWithParameters<T
 	 * <p>Subclasses of this class, as opposed to direct subclasses of
 	 * MappingSqlQueryWithParameters, don't need to concern themselves
 	 * with the parameters to the execute method of the query object.
-	 * @param rs the ResultSet we're working through
+	 *
+	 * @param rs     the ResultSet we're working through
 	 * @param rowNum row number (from 0) we're up to
 	 * @return an object of the result type
 	 * @throws SQLException if there's an error extracting data.
-	 * Subclasses can simply not catch SQLExceptions, relying on the
-	 * framework to clean up.
+	 *                      Subclasses can simply not catch SQLExceptions, relying on the
+	 *                      framework to clean up.
 	 */
 	@Nullable
 	protected abstract T mapRow(ResultSet rs, int rowNum) throws SQLException;

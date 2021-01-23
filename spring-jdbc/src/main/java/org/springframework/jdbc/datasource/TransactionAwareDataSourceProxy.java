@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.datasource;
 
 import java.lang.reflect.InvocationHandler;
@@ -67,12 +51,12 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
  * properly. Use {@link Connection#unwrap} to retrieve the native JDBC Connection.
  *
  * @author Juergen Hoeller
- * @since 1.1
  * @see javax.sql.DataSource#getConnection()
  * @see java.sql.Connection#close()
  * @see DataSourceUtils#doGetConnection
  * @see DataSourceUtils#applyTransactionTimeout
  * @see DataSourceUtils#doReleaseConnection
+ * @since 1.1
  */
 public class TransactionAwareDataSourceProxy extends DelegatingDataSource {
 
@@ -81,6 +65,7 @@ public class TransactionAwareDataSourceProxy extends DelegatingDataSource {
 
 	/**
 	 * Create a new TransactionAwareDataSourceProxy.
+	 *
 	 * @see #setTargetDataSource
 	 */
 	public TransactionAwareDataSourceProxy() {
@@ -88,6 +73,7 @@ public class TransactionAwareDataSourceProxy extends DelegatingDataSource {
 
 	/**
 	 * Create a new TransactionAwareDataSourceProxy.
+	 *
 	 * @param targetDataSource the target DataSource
 	 */
 	public TransactionAwareDataSourceProxy(DataSource targetDataSource) {
@@ -113,6 +99,7 @@ public class TransactionAwareDataSourceProxy extends DelegatingDataSource {
 	 * transactions. Throws the original SQLException, if any.
 	 * <p>The returned Connection handle implements the ConnectionProxy interface,
 	 * allowing to retrieve the underlying target Connection.
+	 *
 	 * @return a transactional Connection if any, a new one else
 	 * @see DataSourceUtils#doGetConnection
 	 * @see ConnectionProxy#getTargetConnection
@@ -125,6 +112,7 @@ public class TransactionAwareDataSourceProxy extends DelegatingDataSource {
 	/**
 	 * Wraps the given Connection with a proxy that delegates every method call to it
 	 * but delegates {@code close()} calls to DataSourceUtils.
+	 *
 	 * @param targetDataSource the DataSource that the Connection came from
 	 * @return the wrapped Connection
 	 * @see java.sql.Connection#close()
@@ -133,7 +121,7 @@ public class TransactionAwareDataSourceProxy extends DelegatingDataSource {
 	protected Connection getTransactionAwareConnectionProxy(DataSource targetDataSource) {
 		return (Connection) Proxy.newProxyInstance(
 				ConnectionProxy.class.getClassLoader(),
-				new Class<?>[] {ConnectionProxy.class},
+				new Class<?>[]{ConnectionProxy.class},
 				new TransactionAwareInvocationHandler(targetDataSource));
 	}
 
@@ -145,6 +133,7 @@ public class TransactionAwareDataSourceProxy extends DelegatingDataSource {
 	 * {@link #setReobtainTransactionalConnections "reobtainTransactionalConnections"}
 	 * flag, which enforces a non-fixed target Connection within an active transaction.
 	 * Note that non-transactional access will always use a fixed Connection.
+	 *
 	 * @param targetDataSource the target DataSource
 	 */
 	protected boolean shouldObtainFixedConnection(DataSource targetDataSource) {
@@ -187,8 +176,7 @@ public class TransactionAwareDataSourceProxy extends DelegatingDataSource {
 					StringBuilder sb = new StringBuilder("Transaction-aware proxy for target Connection ");
 					if (this.target != null) {
 						sb.append("[").append(this.target.toString()).append("]");
-					}
-					else {
+					} else {
 						sb.append(" from DataSource [").append(this.targetDataSource).append("]");
 					}
 					return sb.toString();
@@ -244,11 +232,9 @@ public class TransactionAwareDataSourceProxy extends DelegatingDataSource {
 				}
 
 				return retVal;
-			}
-			catch (InvocationTargetException ex) {
+			} catch (InvocationTargetException ex) {
 				throw ex.getTargetException();
-			}
-			finally {
+			} finally {
 				if (actualTarget != this.target) {
 					DataSourceUtils.doReleaseConnection(actualTarget, this.targetDataSource);
 				}

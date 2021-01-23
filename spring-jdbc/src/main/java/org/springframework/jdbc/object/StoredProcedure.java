@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.object;
 
 import java.util.HashMap;
@@ -48,8 +32,9 @@ public abstract class StoredProcedure extends SqlCall {
 
 	/**
 	 * Create a new object wrapper for a stored procedure.
-	 * @param ds the DataSource to use throughout the lifetime
-	 * of this object to obtain connections
+	 *
+	 * @param ds   the DataSource to use throughout the lifetime
+	 *             of this object to obtain connections
 	 * @param name the name of the stored procedure in the database
 	 */
 	protected StoredProcedure(DataSource ds, String name) {
@@ -59,8 +44,9 @@ public abstract class StoredProcedure extends SqlCall {
 
 	/**
 	 * Create a new object wrapper for a stored procedure.
+	 *
 	 * @param jdbcTemplate the JdbcTemplate which wraps DataSource
-	 * @param name the name of the stored procedure in the database
+	 * @param name         the name of the stored procedure in the database
 	 */
 	protected StoredProcedure(JdbcTemplate jdbcTemplate, String name) {
 		setJdbcTemplate(jdbcTemplate);
@@ -86,6 +72,7 @@ public abstract class StoredProcedure extends SqlCall {
 	 * <b>Note: Calls to declareParameter must be made in the same order as
 	 * they appear in the database's stored procedure parameter list.</b>
 	 * <p>Names are purely used to help mapping.
+	 *
 	 * @param param the parameter object
 	 */
 	@Override
@@ -100,9 +87,10 @@ public abstract class StoredProcedure extends SqlCall {
 	 * Execute the stored procedure with the provided parameter values. This is
 	 * a convenience method where the order of the passed in parameter values
 	 * must match the order that the parameters where declared in.
+	 *
 	 * @param inParams variable number of input parameters. Output parameters should
-	 * not be included in this map. It is legal for values to be {@code null}, and this
-	 * will produce the correct behavior using a NULL argument to the stored procedure.
+	 *                 not be included in this map. It is legal for values to be {@code null}, and this
+	 *                 will produce the correct behavior using a NULL argument to the stored procedure.
 	 * @return map of output params, keyed by name as in parameter declarations.
 	 * Output parameters will appear here, with their values after the stored procedure
 	 * has been called.
@@ -125,10 +113,11 @@ public abstract class StoredProcedure extends SqlCall {
 	 * the input map and extracting typed values from the output map. Subclass
 	 * execute methods will often take domain objects as arguments and return values.
 	 * Alternatively, they can return void.
+	 *
 	 * @param inParams map of input parameters, keyed by name as in parameter
-	 * declarations. Output parameters need not (but can) be included in this map.
-	 * It is legal for map entries to be {@code null}, and this will produce the
-	 * correct behavior using a NULL argument to the stored procedure.
+	 *                 declarations. Output parameters need not (but can) be included in this map.
+	 *                 It is legal for map entries to be {@code null}, and this will produce the
+	 *                 correct behavior using a NULL argument to the stored procedure.
 	 * @return map of output params, keyed by name as in parameter declarations.
 	 * Output parameters will appear here, with their values after the
 	 * stored procedure has been called.
@@ -146,10 +135,11 @@ public abstract class StoredProcedure extends SqlCall {
 	 * The execute method is also responsible for extracting typed values from the output map.
 	 * Subclass execute methods will often take domain objects as arguments and return values.
 	 * Alternatively, they can return void.
+	 *
 	 * @param inParamMapper map of input parameters, keyed by name as in parameter
-	 * declarations. Output parameters need not (but can) be included in this map.
-	 * It is legal for map entries to be {@code null}, and this will produce the correct
-	 * behavior using a NULL argument to the stored procedure.
+	 *                      declarations. Output parameters need not (but can) be included in this map.
+	 *                      It is legal for map entries to be {@code null}, and this will produce the correct
+	 *                      behavior using a NULL argument to the stored procedure.
 	 * @return map of output params, keyed by name as in parameter declarations.
 	 * Output parameters will appear here, with their values after the
 	 * stored procedure has been called.

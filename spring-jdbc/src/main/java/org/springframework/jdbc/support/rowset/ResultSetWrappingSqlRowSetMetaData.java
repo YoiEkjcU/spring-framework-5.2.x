@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.support.rowset;
 
 import java.sql.ResultSetMetaData;
@@ -31,8 +15,8 @@ import org.springframework.lang.Nullable;
  *
  * @author Thomas Risberg
  * @author Juergen Hoeller
- * @since 1.2
  * @see ResultSetWrappingSqlRowSet#getMetaData()
+ * @since 1.2
  */
 public class ResultSetWrappingSqlRowSetMetaData implements SqlRowSetMetaData {
 
@@ -45,8 +29,9 @@ public class ResultSetWrappingSqlRowSetMetaData implements SqlRowSetMetaData {
 	/**
 	 * Create a new ResultSetWrappingSqlRowSetMetaData object
 	 * for the given ResultSetMetaData instance.
+	 *
 	 * @param resultSetMetaData a disconnected ResultSetMetaData instance
-	 * to wrap (usually a {@code javax.sql.RowSetMetaData} instance)
+	 *                          to wrap (usually a {@code javax.sql.RowSetMetaData} instance)
 	 * @see java.sql.ResultSet#getMetaData
 	 * @see javax.sql.RowSetMetaData
 	 * @see ResultSetWrappingSqlRowSet#getMetaData
@@ -60,8 +45,7 @@ public class ResultSetWrappingSqlRowSetMetaData implements SqlRowSetMetaData {
 	public String getCatalogName(int column) throws InvalidResultSetAccessException {
 		try {
 			return this.resultSetMetaData.getCatalogName(column);
-		}
-		catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new InvalidResultSetAccessException(se);
 		}
 	}
@@ -70,8 +54,7 @@ public class ResultSetWrappingSqlRowSetMetaData implements SqlRowSetMetaData {
 	public String getColumnClassName(int column) throws InvalidResultSetAccessException {
 		try {
 			return this.resultSetMetaData.getColumnClassName(column);
-		}
-		catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new InvalidResultSetAccessException(se);
 		}
 	}
@@ -80,8 +63,7 @@ public class ResultSetWrappingSqlRowSetMetaData implements SqlRowSetMetaData {
 	public int getColumnCount() throws InvalidResultSetAccessException {
 		try {
 			return this.resultSetMetaData.getColumnCount();
-		}
-		catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new InvalidResultSetAccessException(se);
 		}
 	}
@@ -101,8 +83,7 @@ public class ResultSetWrappingSqlRowSetMetaData implements SqlRowSetMetaData {
 	public int getColumnDisplaySize(int column) throws InvalidResultSetAccessException {
 		try {
 			return this.resultSetMetaData.getColumnDisplaySize(column);
-		}
-		catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new InvalidResultSetAccessException(se);
 		}
 	}
@@ -111,8 +92,7 @@ public class ResultSetWrappingSqlRowSetMetaData implements SqlRowSetMetaData {
 	public String getColumnLabel(int column) throws InvalidResultSetAccessException {
 		try {
 			return this.resultSetMetaData.getColumnLabel(column);
-		}
-		catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new InvalidResultSetAccessException(se);
 		}
 	}
@@ -121,8 +101,7 @@ public class ResultSetWrappingSqlRowSetMetaData implements SqlRowSetMetaData {
 	public String getColumnName(int column) throws InvalidResultSetAccessException {
 		try {
 			return this.resultSetMetaData.getColumnName(column);
-		}
-		catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new InvalidResultSetAccessException(se);
 		}
 	}
@@ -131,8 +110,7 @@ public class ResultSetWrappingSqlRowSetMetaData implements SqlRowSetMetaData {
 	public int getColumnType(int column) throws InvalidResultSetAccessException {
 		try {
 			return this.resultSetMetaData.getColumnType(column);
-		}
-		catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new InvalidResultSetAccessException(se);
 		}
 	}
@@ -141,8 +119,7 @@ public class ResultSetWrappingSqlRowSetMetaData implements SqlRowSetMetaData {
 	public String getColumnTypeName(int column) throws InvalidResultSetAccessException {
 		try {
 			return this.resultSetMetaData.getColumnTypeName(column);
-		}
-		catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new InvalidResultSetAccessException(se);
 		}
 	}
@@ -151,8 +128,7 @@ public class ResultSetWrappingSqlRowSetMetaData implements SqlRowSetMetaData {
 	public int getPrecision(int column) throws InvalidResultSetAccessException {
 		try {
 			return this.resultSetMetaData.getPrecision(column);
-		}
-		catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new InvalidResultSetAccessException(se);
 		}
 	}
@@ -161,8 +137,7 @@ public class ResultSetWrappingSqlRowSetMetaData implements SqlRowSetMetaData {
 	public int getScale(int column) throws InvalidResultSetAccessException {
 		try {
 			return this.resultSetMetaData.getScale(column);
-		}
-		catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new InvalidResultSetAccessException(se);
 		}
 	}
@@ -171,8 +146,7 @@ public class ResultSetWrappingSqlRowSetMetaData implements SqlRowSetMetaData {
 	public String getSchemaName(int column) throws InvalidResultSetAccessException {
 		try {
 			return this.resultSetMetaData.getSchemaName(column);
-		}
-		catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new InvalidResultSetAccessException(se);
 		}
 	}
@@ -181,8 +155,7 @@ public class ResultSetWrappingSqlRowSetMetaData implements SqlRowSetMetaData {
 	public String getTableName(int column) throws InvalidResultSetAccessException {
 		try {
 			return this.resultSetMetaData.getTableName(column);
-		}
-		catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new InvalidResultSetAccessException(se);
 		}
 	}
@@ -191,8 +164,7 @@ public class ResultSetWrappingSqlRowSetMetaData implements SqlRowSetMetaData {
 	public boolean isCaseSensitive(int column) throws InvalidResultSetAccessException {
 		try {
 			return this.resultSetMetaData.isCaseSensitive(column);
-		}
-		catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new InvalidResultSetAccessException(se);
 		}
 	}
@@ -201,8 +173,7 @@ public class ResultSetWrappingSqlRowSetMetaData implements SqlRowSetMetaData {
 	public boolean isCurrency(int column) throws InvalidResultSetAccessException {
 		try {
 			return this.resultSetMetaData.isCurrency(column);
-		}
-		catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new InvalidResultSetAccessException(se);
 		}
 	}
@@ -211,8 +182,7 @@ public class ResultSetWrappingSqlRowSetMetaData implements SqlRowSetMetaData {
 	public boolean isSigned(int column) throws InvalidResultSetAccessException {
 		try {
 			return this.resultSetMetaData.isSigned(column);
-		}
-		catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new InvalidResultSetAccessException(se);
 		}
 	}

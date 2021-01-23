@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.support;
 
 import java.util.Iterator;
@@ -52,6 +36,7 @@ public class GeneratedKeyHolder implements KeyHolder {
 
 	/**
 	 * Create a new GeneratedKeyHolder with a given list.
+	 *
 	 * @param keyList a list to hold maps of keys
 	 */
 	public GeneratedKeyHolder(List<Map<String, Object>> keyList) {
@@ -74,7 +59,7 @@ public class GeneratedKeyHolder implements KeyHolder {
 		if (this.keyList.size() > 1 || this.keyList.get(0).size() > 1) {
 			throw new InvalidDataAccessApiUsageException(
 					"The getKey method should only be used when a single key is returned. " +
-					"The current key entry contains multiple keys: " + this.keyList);
+							"The current key entry contains multiple keys: " + this.keyList);
 		}
 		Iterator<Object> keyIter = this.keyList.get(0).values().iterator();
 		if (keyIter.hasNext()) {
@@ -82,12 +67,11 @@ public class GeneratedKeyHolder implements KeyHolder {
 			if (key == null || !(keyType.isAssignableFrom(key.getClass()))) {
 				throw new DataRetrievalFailureException(
 						"The generated key type is not supported. " +
-						"Unable to cast [" + (key != null ? key.getClass().getName() : null) +
-						"] to [" + keyType.getName() + "].");
+								"Unable to cast [" + (key != null ? key.getClass().getName() : null) +
+								"] to [" + keyType.getName() + "].");
 			}
 			return keyType.cast(key);
-		}
-		else {
+		} else {
 			throw new DataRetrievalFailureException("Unable to retrieve the generated key. " +
 					"Check that the table has an identity column enabled.");
 		}
@@ -102,7 +86,7 @@ public class GeneratedKeyHolder implements KeyHolder {
 		if (this.keyList.size() > 1) {
 			throw new InvalidDataAccessApiUsageException(
 					"The getKeys method should only be used when keys for a single row are returned. " +
-					"The current key list contains keys for multiple rows: " + this.keyList);
+							"The current key list contains keys for multiple rows: " + this.keyList);
 		}
 		return this.keyList.get(0);
 	}

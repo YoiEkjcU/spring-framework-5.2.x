@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.datasource;
 
 import java.sql.Connection;
@@ -61,8 +45,8 @@ import org.springframework.util.ClassUtils;
  * exposing a corresponding {@code HikariDataSource} instance to the application.
  *
  * @author Juergen Hoeller
- * @since 14.03.2003
  * @see SimpleDriverDataSource
+ * @since 14.03.2003
  */
 public class DriverManagerDataSource extends AbstractDriverBasedDataSource {
 
@@ -75,6 +59,7 @@ public class DriverManagerDataSource extends AbstractDriverBasedDataSource {
 	/**
 	 * Create a new DriverManagerDataSource with the given JDBC URL,
 	 * not specifying a username or password for JDBC access.
+	 *
 	 * @param url the JDBC URL to use for accessing the DriverManager
 	 * @see java.sql.DriverManager#getConnection(String)
 	 */
@@ -85,7 +70,8 @@ public class DriverManagerDataSource extends AbstractDriverBasedDataSource {
 	/**
 	 * Create a new DriverManagerDataSource with the given standard
 	 * DriverManager parameters.
-	 * @param url the JDBC URL to use for accessing the DriverManager
+	 *
+	 * @param url      the JDBC URL to use for accessing the DriverManager
 	 * @param username the JDBC username to use for accessing the DriverManager
 	 * @param password the JDBC password to use for accessing the DriverManager
 	 * @see java.sql.DriverManager#getConnection(String, String, String)
@@ -99,7 +85,8 @@ public class DriverManagerDataSource extends AbstractDriverBasedDataSource {
 	/**
 	 * Create a new DriverManagerDataSource with the given JDBC URL,
 	 * not specifying a username or password for JDBC access.
-	 * @param url the JDBC URL to use for accessing the DriverManager
+	 *
+	 * @param url      the JDBC URL to use for accessing the DriverManager
 	 * @param conProps the JDBC connection properties
 	 * @see java.sql.DriverManager#getConnection(String)
 	 */
@@ -118,6 +105,7 @@ public class DriverManagerDataSource extends AbstractDriverBasedDataSource {
 	 * initializing the JDBC driver yourself before instantiating this DataSource.
 	 * The "driverClassName" property is mainly preserved for backwards compatibility,
 	 * as well as for migrating between Commons DBCP and this DataSource.
+	 *
 	 * @see java.sql.DriverManager#registerDriver(java.sql.Driver)
 	 * @see SimpleDriverDataSource
 	 */
@@ -126,8 +114,7 @@ public class DriverManagerDataSource extends AbstractDriverBasedDataSource {
 		String driverClassNameToUse = driverClassName.trim();
 		try {
 			Class.forName(driverClassNameToUse, true, ClassUtils.getDefaultClassLoader());
-		}
-		catch (ClassNotFoundException ex) {
+		} catch (ClassNotFoundException ex) {
 			throw new IllegalStateException("Could not load JDBC driver class [" + driverClassNameToUse + "]", ex);
 		}
 		if (logger.isDebugEnabled()) {
@@ -149,6 +136,7 @@ public class DriverManagerDataSource extends AbstractDriverBasedDataSource {
 	/**
 	 * Getting a Connection using the nasty static from DriverManager is extracted
 	 * into a protected method to allow for easy unit testing.
+	 *
 	 * @see java.sql.DriverManager#getConnection(String, java.util.Properties)
 	 */
 	protected Connection getConnectionFromDriverManager(String url, Properties props) throws SQLException {

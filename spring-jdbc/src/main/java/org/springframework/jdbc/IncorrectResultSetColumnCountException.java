@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc;
 
 import org.springframework.dao.DataRetrievalFailureException;
@@ -23,8 +7,8 @@ import org.springframework.dao.DataRetrievalFailureException;
  * for example when expecting a single column but getting 0 or more than 1 columns.
  *
  * @author Juergen Hoeller
- * @since 2.0
  * @see org.springframework.dao.IncorrectResultSizeDataAccessException
+ * @since 2.0
  */
 @SuppressWarnings("serial")
 public class IncorrectResultSetColumnCountException extends DataRetrievalFailureException {
@@ -36,8 +20,9 @@ public class IncorrectResultSetColumnCountException extends DataRetrievalFailure
 
 	/**
 	 * Constructor for IncorrectResultSetColumnCountException.
+	 *
 	 * @param expectedCount the expected column count
-	 * @param actualCount the actual column count
+	 * @param actualCount   the actual column count
 	 */
 	public IncorrectResultSetColumnCountException(int expectedCount, int actualCount) {
 		super("Incorrect column count: expected " + expectedCount + ", actual " + actualCount);
@@ -47,9 +32,10 @@ public class IncorrectResultSetColumnCountException extends DataRetrievalFailure
 
 	/**
 	 * Constructor for IncorrectResultCountDataAccessException.
-	 * @param msg the detail message
+	 *
+	 * @param msg           the detail message
 	 * @param expectedCount the expected column count
-	 * @param actualCount the actual column count
+	 * @param actualCount   the actual column count
 	 */
 	public IncorrectResultSetColumnCountException(String msg, int expectedCount, int actualCount) {
 		super(msg);

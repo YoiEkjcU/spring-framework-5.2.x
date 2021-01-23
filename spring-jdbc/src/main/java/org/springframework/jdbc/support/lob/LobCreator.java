@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2016 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.support.lob;
 
 import java.io.Closeable;
@@ -42,11 +26,10 @@ import org.springframework.lang.Nullable;
  *
  * <p>For convenient working with a PreparedStatement and a LobCreator,
  * consider using {@link org.springframework.jdbc.core.JdbcTemplate} with an
- *{@link org.springframework.jdbc.core.support.AbstractLobCreatingPreparedStatementCallback}
+ * {@link org.springframework.jdbc.core.support.AbstractLobCreatingPreparedStatementCallback}
  * implementation. See the latter's javadoc for details.
  *
  * @author Juergen Hoeller
- * @since 04.12.2003
  * @see #close()
  * @see LobHandler#getLobCreator()
  * @see DefaultLobHandler.DefaultLobCreator
@@ -57,6 +40,7 @@ import org.springframework.lang.Nullable;
  * @see java.sql.PreparedStatement#setString
  * @see java.sql.PreparedStatement#setAsciiStream
  * @see java.sql.PreparedStatement#setCharacterStream
+ * @since 04.12.2003
  */
 public interface LobCreator extends Closeable {
 
@@ -64,9 +48,10 @@ public interface LobCreator extends Closeable {
 	 * Set the given content as bytes on the given statement, using the given
 	 * parameter index. Might simply invoke {@code PreparedStatement.setBytes}
 	 * or create a Blob instance for it, depending on the database and driver.
-	 * @param ps the PreparedStatement to the set the content on
+	 *
+	 * @param ps         the PreparedStatement to the set the content on
 	 * @param paramIndex the parameter index to use
-	 * @param content the content as byte array, or {@code null} for SQL NULL
+	 * @param content    the content as byte array, or {@code null} for SQL NULL
 	 * @throws SQLException if thrown by JDBC methods
 	 * @see java.sql.PreparedStatement#setBytes
 	 */
@@ -77,8 +62,9 @@ public interface LobCreator extends Closeable {
 	 * Set the given content as binary stream on the given statement, using the given
 	 * parameter index. Might simply invoke {@code PreparedStatement.setBinaryStream}
 	 * or create a Blob instance for it, depending on the database and driver.
-	 * @param ps the PreparedStatement to the set the content on
-	 * @param paramIndex the parameter index to use
+	 *
+	 * @param ps            the PreparedStatement to the set the content on
+	 * @param paramIndex    the parameter index to use
 	 * @param contentStream the content as binary stream, or {@code null} for SQL NULL
 	 * @throws SQLException if thrown by JDBC methods
 	 * @see java.sql.PreparedStatement#setBinaryStream
@@ -91,9 +77,10 @@ public interface LobCreator extends Closeable {
 	 * Set the given content as String on the given statement, using the given
 	 * parameter index. Might simply invoke {@code PreparedStatement.setString}
 	 * or create a Clob instance for it, depending on the database and driver.
-	 * @param ps the PreparedStatement to the set the content on
+	 *
+	 * @param ps         the PreparedStatement to the set the content on
 	 * @param paramIndex the parameter index to use
-	 * @param content the content as String, or {@code null} for SQL NULL
+	 * @param content    the content as String, or {@code null} for SQL NULL
 	 * @throws SQLException if thrown by JDBC methods
 	 * @see java.sql.PreparedStatement#setBytes
 	 */
@@ -104,8 +91,9 @@ public interface LobCreator extends Closeable {
 	 * Set the given content as ASCII stream on the given statement, using the given
 	 * parameter index. Might simply invoke {@code PreparedStatement.setAsciiStream}
 	 * or create a Clob instance for it, depending on the database and driver.
-	 * @param ps the PreparedStatement to the set the content on
-	 * @param paramIndex the parameter index to use
+	 *
+	 * @param ps          the PreparedStatement to the set the content on
+	 * @param paramIndex  the parameter index to use
 	 * @param asciiStream the content as ASCII stream, or {@code null} for SQL NULL
 	 * @throws SQLException if thrown by JDBC methods
 	 * @see java.sql.PreparedStatement#setAsciiStream
@@ -118,8 +106,9 @@ public interface LobCreator extends Closeable {
 	 * Set the given content as character stream on the given statement, using the given
 	 * parameter index. Might simply invoke {@code PreparedStatement.setCharacterStream}
 	 * or create a Clob instance for it, depending on the database and driver.
-	 * @param ps the PreparedStatement to the set the content on
-	 * @param paramIndex the parameter index to use
+	 *
+	 * @param ps              the PreparedStatement to the set the content on
+	 * @param paramIndex      the parameter index to use
 	 * @param characterStream the content as character stream, or {@code null} for SQL NULL
 	 * @throws SQLException if thrown by JDBC methods
 	 * @see java.sql.PreparedStatement#setCharacterStream

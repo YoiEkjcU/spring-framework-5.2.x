@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.core.metadata;
 
 import javax.sql.DataSource;
@@ -43,8 +27,9 @@ public final class TableMetaDataProviderFactory {
 
 	/**
 	 * Create a {@link TableMetaDataProvider} based on the database meta-data.
+	 *
 	 * @param dataSource used to retrieve meta-data
-	 * @param context the class that holds configuration and meta-data
+	 * @param context    the class that holds configuration and meta-data
 	 * @return instance of the TableMetaDataProvider implementation to be used
 	 */
 	public static TableMetaDataProvider createMetaDataProvider(DataSource dataSource, TableMetaDataContext context) {
@@ -58,17 +43,13 @@ public final class TableMetaDataProviderFactory {
 				if ("Oracle".equals(databaseProductName)) {
 					provider = new OracleTableMetaDataProvider(
 							databaseMetaData, context.isOverrideIncludeSynonymsDefault());
-				}
-				else if ("PostgreSQL".equals(databaseProductName)) {
+				} else if ("PostgreSQL".equals(databaseProductName)) {
 					provider = new PostgresTableMetaDataProvider(databaseMetaData);
-				}
-				else if ("Apache Derby".equals(databaseProductName)) {
+				} else if ("Apache Derby".equals(databaseProductName)) {
 					provider = new DerbyTableMetaDataProvider(databaseMetaData);
-				}
-				else if ("HSQL Database Engine".equals(databaseProductName)) {
+				} else if ("HSQL Database Engine".equals(databaseProductName)) {
 					provider = new HsqlTableMetaDataProvider(databaseMetaData);
-				}
-				else {
+				} else {
 					provider = new GenericTableMetaDataProvider(databaseMetaData);
 				}
 
@@ -82,8 +63,7 @@ public final class TableMetaDataProviderFactory {
 				}
 				return provider;
 			});
-		}
-		catch (MetaDataAccessException ex) {
+		} catch (MetaDataAccessException ex) {
 			throw new DataAccessResourceFailureException("Error retrieving database meta-data", ex);
 		}
 	}

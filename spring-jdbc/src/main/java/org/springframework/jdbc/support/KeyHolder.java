@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.support;
 
 import java.util.List;
@@ -39,9 +23,9 @@ import org.springframework.lang.Nullable;
  * @author Thomas Risberg
  * @author Juergen Hoeller
  * @author Slawomir Dymitrow
- * @since 1.1
  * @see org.springframework.jdbc.core.JdbcTemplate
  * @see org.springframework.jdbc.object.SqlUpdate
+ * @since 1.1
  */
 public interface KeyHolder {
 
@@ -54,6 +38,7 @@ public interface KeyHolder {
 	 * multiple entries as well. If this method encounters multiple entries in
 	 * either the map or the list meaning that multiple keys were returned,
 	 * then an InvalidDataAccessApiUsageException is thrown.
+	 *
 	 * @return the generated key as a number
 	 * @throws InvalidDataAccessApiUsageException if multiple keys are encountered
 	 * @see #getKeyAs(Class)
@@ -70,11 +55,12 @@ public interface KeyHolder {
 	 * multiple entries as well. If this method encounters multiple entries in
 	 * either the map or the list meaning that multiple keys were returned,
 	 * then an InvalidDataAccessApiUsageException is thrown.
+	 *
 	 * @param keyType the type of the auto-generated key
 	 * @return the generated key as an instance of specified type
 	 * @throws InvalidDataAccessApiUsageException if multiple keys are encountered
-	 * @since 5.3
 	 * @see #getKey()
+	 * @since 5.3
 	 */
 	@Nullable
 	<T> T getKeyAs(Class<T> keyType) throws InvalidDataAccessApiUsageException;
@@ -83,6 +69,7 @@ public interface KeyHolder {
 	 * Retrieve the first map of keys.
 	 * <p>If there are multiple entries in the list (meaning that multiple rows
 	 * had keys returned), then an InvalidDataAccessApiUsageException is thrown.
+	 *
 	 * @return the Map of generated keys for a single row
 	 * @throws InvalidDataAccessApiUsageException if keys for multiple rows are encountered
 	 */
@@ -93,6 +80,7 @@ public interface KeyHolder {
 	 * Return a reference to the List that contains the keys.
 	 * <p>Can be used for extracting keys for multiple rows (an unusual case),
 	 * and also for adding new maps of keys.
+	 *
 	 * @return the List for the generated keys, with each entry representing
 	 * an individual row through a Map of column names and key values
 	 */

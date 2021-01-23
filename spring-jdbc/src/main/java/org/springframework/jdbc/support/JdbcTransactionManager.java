@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.support;
 
 import java.sql.SQLException;
@@ -45,10 +29,10 @@ import org.springframework.lang.Nullable;
  *
  * @author Juergen Hoeller
  * @author Sebastien Deleuze
- * @since 5.3
  * @see DataSourceTransactionManager
  * @see #setDataSource
  * @see #setExceptionTranslator
+ * @since 5.3
  */
 @SuppressWarnings("serial")
 public class JdbcTransactionManager extends DataSourceTransactionManager {
@@ -70,6 +54,7 @@ public class JdbcTransactionManager extends DataSourceTransactionManager {
 	/**
 	 * Create a new JdbcTransactionManager instance.
 	 * A DataSource has to be set to be able to use it.
+	 *
 	 * @see #setDataSource
 	 */
 	public JdbcTransactionManager() {
@@ -78,6 +63,7 @@ public class JdbcTransactionManager extends DataSourceTransactionManager {
 
 	/**
 	 * Create a new JdbcTransactionManager instance.
+	 *
 	 * @param dataSource the JDBC DataSource to manage transactions for
 	 */
 	public JdbcTransactionManager(DataSource dataSource) {
@@ -91,6 +77,7 @@ public class JdbcTransactionManager extends DataSourceTransactionManager {
 	 * Specify the database product name for the DataSource that this transaction manager
 	 * uses. This allows to initialize an SQLErrorCodeSQLExceptionTranslator without
 	 * obtaining a Connection from the DataSource to get the meta-data.
+	 *
 	 * @param dbName the database product name that identifies the error codes entry
 	 * @see JdbcAccessor#setDatabaseProductName
 	 * @see SQLErrorCodeSQLExceptionTranslator#setDatabaseProductName
@@ -107,6 +94,7 @@ public class JdbcTransactionManager extends DataSourceTransactionManager {
 	 * <p>If no custom translator is provided, a default
 	 * {@link SQLErrorCodeSQLExceptionTranslator} is used
 	 * which examines the SQLException's vendor-specific error code.
+	 *
 	 * @see JdbcAccessor#setExceptionTranslator
 	 * @see org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator
 	 */
@@ -118,6 +106,7 @@ public class JdbcTransactionManager extends DataSourceTransactionManager {
 	 * Return the exception translator for this instance.
 	 * <p>Creates a default {@link SQLErrorCodeSQLExceptionTranslator}
 	 * for the specified DataSource if none set.
+	 *
 	 * @see #getDataSource()
 	 */
 	public SQLExceptionTranslator getExceptionTranslator() {
@@ -130,8 +119,7 @@ public class JdbcTransactionManager extends DataSourceTransactionManager {
 			if (exceptionTranslator == null) {
 				if (shouldIgnoreXml) {
 					exceptionTranslator = new SQLExceptionSubclassTranslator();
-				}
-				else {
+				} else {
 					exceptionTranslator = new SQLErrorCodeSQLExceptionTranslator(obtainDataSource());
 				}
 				this.exceptionTranslator = exceptionTranslator;
@@ -145,6 +133,7 @@ public class JdbcTransactionManager extends DataSourceTransactionManager {
 	 * on first encounter of an SQLException. Default is "true"; can be switched to
 	 * "false" for initialization on startup.
 	 * <p>Early initialization just applies if {@code afterPropertiesSet()} is called.
+	 *
 	 * @see #getExceptionTranslator()
 	 * @see #afterPropertiesSet()
 	 */
@@ -154,6 +143,7 @@ public class JdbcTransactionManager extends DataSourceTransactionManager {
 
 	/**
 	 * Return whether to lazily initialize the SQLExceptionTranslator for this transaction manager.
+	 *
 	 * @see #getExceptionTranslator()
 	 */
 	public boolean isLazyInit() {
@@ -176,6 +166,7 @@ public class JdbcTransactionManager extends DataSourceTransactionManager {
 	/**
 	 * This implementation attempts to use the {@link SQLExceptionTranslator},
 	 * falling back to a {@link org.springframework.transaction.TransactionSystemException}.
+	 *
 	 * @see #getExceptionTranslator()
 	 * @see DataSourceTransactionManager#translateException
 	 */

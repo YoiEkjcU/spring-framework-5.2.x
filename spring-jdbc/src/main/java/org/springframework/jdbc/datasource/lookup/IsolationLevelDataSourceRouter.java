@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.datasource.lookup;
 
 import org.springframework.core.Constants;
@@ -52,7 +36,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
  *   &lt;/property&gt;
  *   &lt;property name="defaultTargetDataSource" ref="myDefaultDataSource"/&gt;
  * &lt;/bean&gt;</pre>
- *
+ * <p>
  * Alternatively, the keyed values can also be data source names, to be resolved
  * through a {@link #setDataSourceLookup DataSourceLookup}: by default, JNDI
  * names for a standard JNDI lookup. This allows for a single concise definition
@@ -68,7 +52,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
  *   &lt;/property&gt;
  *   &lt;property name="defaultTargetDataSource" value="java:comp/env/jdbc/mydefds"/&gt;
  * &lt;/bean&gt;</pre>
- *
+ * <p>
  * Note: If you are using this router in combination with Spring's
  * {@link org.springframework.transaction.jta.JtaTransactionManager},
  * don't forget to switch the "allowCustomIsolationLevels" flag to "true".
@@ -81,7 +65,6 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
  * &lt;/bean&gt;</pre>
  *
  * @author Juergen Hoeller
- * @since 2.0.1
  * @see #setTargetDataSources
  * @see #setDefaultTargetDataSource
  * @see org.springframework.transaction.TransactionDefinition#ISOLATION_READ_UNCOMMITTED
@@ -89,10 +72,13 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
  * @see org.springframework.transaction.TransactionDefinition#ISOLATION_REPEATABLE_READ
  * @see org.springframework.transaction.TransactionDefinition#ISOLATION_SERIALIZABLE
  * @see org.springframework.transaction.jta.JtaTransactionManager
+ * @since 2.0.1
  */
 public class IsolationLevelDataSourceRouter extends AbstractRoutingDataSource {
 
-	/** Constants instance for TransactionDefinition. */
+	/**
+	 * Constants instance for TransactionDefinition.
+	 */
 	private static final Constants constants = new Constants(TransactionDefinition.class);
 
 
@@ -105,15 +91,13 @@ public class IsolationLevelDataSourceRouter extends AbstractRoutingDataSource {
 	protected Object resolveSpecifiedLookupKey(Object lookupKey) {
 		if (lookupKey instanceof Integer) {
 			return lookupKey;
-		}
-		else if (lookupKey instanceof String) {
+		} else if (lookupKey instanceof String) {
 			String constantName = (String) lookupKey;
 			if (!constantName.startsWith(DefaultTransactionDefinition.PREFIX_ISOLATION)) {
 				throw new IllegalArgumentException("Only isolation constants allowed");
 			}
 			return constants.asNumber(constantName);
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException(
 					"Invalid lookup key - needs to be isolation level Integer or isolation level name String: " + lookupKey);
 		}

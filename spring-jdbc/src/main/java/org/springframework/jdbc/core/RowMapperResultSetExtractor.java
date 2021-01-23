@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.core;
 
 import java.sql.ResultSet;
@@ -51,12 +35,12 @@ import org.springframework.util.Assert;
  * package: Instead of working with separate JdbcTemplate and RowMapper objects,
  * you can have executable query objects (containing row-mapping logic) there.
  *
- * @author Juergen Hoeller
- * @since 1.0.2
  * @param <T> the result element type
+ * @author Juergen Hoeller
  * @see RowMapper
  * @see JdbcTemplate
  * @see org.springframework.jdbc.object.MappingSqlQuery
+ * @since 1.0.2
  */
 public class RowMapperResultSetExtractor<T> implements ResultSetExtractor<List<T>> {
 
@@ -67,6 +51,7 @@ public class RowMapperResultSetExtractor<T> implements ResultSetExtractor<List<T
 
 	/**
 	 * Create a new RowMapperResultSetExtractor.
+	 *
 	 * @param rowMapper the RowMapper which creates an object for each row
 	 */
 	public RowMapperResultSetExtractor(RowMapper<T> rowMapper) {
@@ -75,9 +60,10 @@ public class RowMapperResultSetExtractor<T> implements ResultSetExtractor<List<T
 
 	/**
 	 * Create a new RowMapperResultSetExtractor.
-	 * @param rowMapper the RowMapper which creates an object for each row
+	 *
+	 * @param rowMapper    the RowMapper which creates an object for each row
 	 * @param rowsExpected the number of expected rows
-	 * (just used for optimized collection handling)
+	 *                     (just used for optimized collection handling)
 	 */
 	public RowMapperResultSetExtractor(RowMapper<T> rowMapper, int rowsExpected) {
 		Assert.notNull(rowMapper, "RowMapper is required");

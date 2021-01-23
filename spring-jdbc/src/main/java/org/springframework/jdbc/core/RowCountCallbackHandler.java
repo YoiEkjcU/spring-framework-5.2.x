@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.core;
 
 import java.sql.ResultSet;
@@ -45,10 +29,14 @@ import org.springframework.lang.Nullable;
  */
 public class RowCountCallbackHandler implements RowCallbackHandler {
 
-	/** Rows we've seen so far. */
+	/**
+	 * Rows we've seen so far.
+	 */
 	private int rowCount;
 
-	/** Columns we've seen so far. */
+	/**
+	 * Columns we've seen so far.
+	 */
 	private int columnCount;
 
 	/**
@@ -70,6 +58,7 @@ public class RowCountCallbackHandler implements RowCallbackHandler {
 	 * Work out column size if this is the first row, otherwise just count rows.
 	 * <p>Subclasses can perform custom extraction or processing
 	 * by overriding the {@code processRow(ResultSet, int)} method.
+	 *
 	 * @see #processRow(java.sql.ResultSet, int)
 	 */
 	@Override
@@ -91,8 +80,9 @@ public class RowCountCallbackHandler implements RowCallbackHandler {
 	/**
 	 * Subclasses may override this to perform custom extraction
 	 * or processing. This class's implementation does nothing.
-	 * @param rs the ResultSet to extract data from. This method is
-	 * invoked for each row
+	 *
+	 * @param rs     the ResultSet to extract data from. This method is
+	 *               invoked for each row
 	 * @param rowNum number of the current row (starting from 0)
 	 */
 	protected void processRow(ResultSet rs, int rowNum) throws SQLException {
@@ -102,6 +92,7 @@ public class RowCountCallbackHandler implements RowCallbackHandler {
 	/**
 	 * Return the types of the columns as java.sql.Types constants
 	 * Valid after processRow is invoked the first time.
+	 *
 	 * @return the types of the columns as java.sql.Types constants.
 	 * <b>Indexed from 0 to n-1.</b>
 	 */
@@ -113,6 +104,7 @@ public class RowCountCallbackHandler implements RowCallbackHandler {
 	/**
 	 * Return the names of the columns.
 	 * Valid after processRow is invoked the first time.
+	 *
 	 * @return the names of the columns.
 	 * <b>Indexed from 0 to n-1.</b>
 	 */
@@ -124,6 +116,7 @@ public class RowCountCallbackHandler implements RowCallbackHandler {
 	/**
 	 * Return the row count of this ResultSet.
 	 * Only valid after processing is complete
+	 *
 	 * @return the number of rows in this ResultSet
 	 */
 	public final int getRowCount() {
@@ -134,6 +127,7 @@ public class RowCountCallbackHandler implements RowCallbackHandler {
 	 * Return the number of columns in this result set.
 	 * Valid once we've seen the first row,
 	 * so subclasses can use it during processing
+	 *
 	 * @return the number of columns in this result set
 	 */
 	public final int getColumnCount() {

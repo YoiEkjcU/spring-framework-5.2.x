@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.datasource.embedded;
 
 import java.io.PrintWriter;
@@ -92,8 +76,9 @@ public class EmbeddedDatabaseFactory {
 	 * generation of a pseudo-random unique ID to be used as the database name.
 	 * <p>Setting this flag to {@code true} overrides any explicit name set
 	 * via {@link #setDatabaseName}.
-	 * @since 4.2
+	 *
 	 * @see #setDatabaseName
+	 * @since 4.2
 	 */
 	public void setGenerateUniqueDatabaseName(boolean generateUniqueDatabaseName) {
 		this.generateUniqueDatabaseName = generateUniqueDatabaseName;
@@ -104,6 +89,7 @@ public class EmbeddedDatabaseFactory {
 	 * <p>Defaults to {@value #DEFAULT_DATABASE_NAME}.
 	 * <p>Will be overridden if the {@code generateUniqueDatabaseName} flag
 	 * has been set to {@code true}.
+	 *
 	 * @param databaseName name of the embedded database
 	 * @see #setGenerateUniqueDatabaseName
 	 */
@@ -126,6 +112,7 @@ public class EmbeddedDatabaseFactory {
 	 * Set the type of embedded database to use.
 	 * <p>Call this when you wish to configure one of the pre-supported types.
 	 * <p>Defaults to HSQL.
+	 *
 	 * @param type the database type
 	 */
 	public void setDatabaseType(EmbeddedDatabaseType type) {
@@ -189,8 +176,7 @@ public class EmbeddedDatabaseFactory {
 				SimpleDriverDataSource simpleDriverDataSource = (SimpleDriverDataSource) this.dataSource;
 				logger.info(String.format("Starting embedded database: url='%s', username='%s'",
 						simpleDriverDataSource.getUrl(), simpleDriverDataSource.getUsername()));
-			}
-			else {
+			} else {
 				logger.info(String.format("Starting embedded database '%s'", this.databaseName));
 			}
 		}
@@ -199,8 +185,7 @@ public class EmbeddedDatabaseFactory {
 		if (this.databasePopulator != null) {
 			try {
 				DatabasePopulatorUtils.execute(this.databasePopulator, this.dataSource);
-			}
-			catch (RuntimeException ex) {
+			} catch (RuntimeException ex) {
 				// failed to populate, so leave it as not initialized
 				shutdownDatabase();
 				throw ex;
@@ -219,9 +204,8 @@ public class EmbeddedDatabaseFactory {
 			if (logger.isInfoEnabled()) {
 				if (this.dataSource instanceof SimpleDriverDataSource) {
 					logger.info(String.format("Shutting down embedded database: url='%s'",
-						((SimpleDriverDataSource) this.dataSource).getUrl()));
-				}
-				else {
+							((SimpleDriverDataSource) this.dataSource).getUrl()));
+				} else {
 					logger.info(String.format("Shutting down embedded database '%s'", this.databaseName));
 				}
 			}

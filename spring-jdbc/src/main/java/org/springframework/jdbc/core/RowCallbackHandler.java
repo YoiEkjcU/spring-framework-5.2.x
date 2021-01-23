@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2016 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.core;
 
 import java.sql.ResultSet;
@@ -52,9 +36,10 @@ public interface RowCallbackHandler {
 	 * <p>Exactly what the implementation chooses to do is up to it:
 	 * A trivial implementation might simply count rows, while another
 	 * implementation might build an XML document.
+	 *
 	 * @param rs the ResultSet to process (pre-initialized for the current row)
 	 * @throws SQLException if an SQLException is encountered getting
-	 * column values (that is, there's no need to catch SQLException)
+	 *                      column values (that is, there's no need to catch SQLException)
 	 */
 	void processRow(ResultSet rs) throws SQLException;
 

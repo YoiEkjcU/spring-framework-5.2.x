@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.support;
 
 import java.sql.Connection;
@@ -77,6 +61,7 @@ public class DatabaseStartupValidator implements InitializingBean {
 
 	/**
 	 * Set the SQL query string to use for validation.
+	 *
 	 * @deprecated as of 5.3, in favor of the JDBC 4.0 connection validation
 	 */
 	@Deprecated
@@ -129,20 +114,17 @@ public class DatabaseStartupValidator implements InitializingBean {
 					}
 					if (this.validationQuery == null) {
 						validated = con.isValid(this.interval);
-					}
-					else {
+					} else {
 						stmt = con.createStatement();
 						stmt.execute(this.validationQuery);
 						validated = true;
 					}
-				}
-				catch (SQLException ex) {
+				} catch (SQLException ex) {
 					latestEx = ex;
 					if (logger.isDebugEnabled()) {
 						if (this.validationQuery != null) {
 							logger.debug("Validation query [" + this.validationQuery + "] threw exception", ex);
-						}
-						else {
+						} else {
 							logger.debug("Validation check threw exception", ex);
 						}
 					}
@@ -153,8 +135,7 @@ public class DatabaseStartupValidator implements InitializingBean {
 									" seconds (timeout in " + rest + " seconds)");
 						}
 					}
-				}
-				finally {
+				} finally {
 					JdbcUtils.closeStatement(stmt);
 					JdbcUtils.closeConnection(con);
 				}
@@ -173,8 +154,7 @@ public class DatabaseStartupValidator implements InitializingBean {
 				float duration = ((float) (System.currentTimeMillis() - beginTime)) / 1000;
 				logger.info("Database startup detected after " + duration + " seconds");
 			}
-		}
-		catch (InterruptedException ex) {
+		} catch (InterruptedException ex) {
 			// Re-interrupt current thread, to allow other threads to react.
 			Thread.currentThread().interrupt();
 		}

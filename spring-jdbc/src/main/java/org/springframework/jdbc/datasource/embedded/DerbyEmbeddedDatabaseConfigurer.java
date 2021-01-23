@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.datasource.embedded;
 
 import java.sql.SQLException;
@@ -45,6 +29,7 @@ final class DerbyEmbeddedDatabaseConfigurer implements EmbeddedDatabaseConfigure
 
 	/**
 	 * Get the singleton {@link DerbyEmbeddedDatabaseConfigurer} instance.
+	 *
 	 * @return the configurer instance
 	 */
 	public static synchronized DerbyEmbeddedDatabaseConfigurer getInstance() {
@@ -74,8 +59,7 @@ final class DerbyEmbeddedDatabaseConfigurer implements EmbeddedDatabaseConfigure
 		try {
 			new EmbeddedDriver().connect(
 					String.format(URL_TEMPLATE, databaseName, "drop=true"), new Properties());
-		}
-		catch (SQLException ex) {
+		} catch (SQLException ex) {
 			// Error code that indicates successful shutdown
 			if (!"08006".equals(ex.getSQLState())) {
 				LogFactory.getLog(getClass()).warn("Could not shut down embedded Derby database", ex);

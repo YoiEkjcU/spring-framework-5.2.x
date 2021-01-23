@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.datasource.init;
 
 import java.sql.Connection;
@@ -49,9 +33,9 @@ import org.springframework.util.StringUtils;
  * @author Sam Brannen
  * @author Chris Baldwin
  * @author Phillip Webb
- * @since 3.0
  * @see DatabasePopulatorUtils
  * @see ScriptUtils
+ * @since 3.0
  */
 public class ResourceDatabasePopulator implements DatabasePopulator {
 
@@ -75,6 +59,7 @@ public class ResourceDatabasePopulator implements DatabasePopulator {
 
 	/**
 	 * Construct a new {@code ResourceDatabasePopulator} with default settings.
+	 *
 	 * @since 4.0.3
 	 */
 	public ResourceDatabasePopulator() {
@@ -83,8 +68,9 @@ public class ResourceDatabasePopulator implements DatabasePopulator {
 	/**
 	 * Construct a new {@code ResourceDatabasePopulator} with default settings
 	 * for the supplied scripts.
+	 *
 	 * @param scripts the scripts to execute to initialize or clean up the database
-	 * (never {@code null})
+	 *                (never {@code null})
 	 * @since 4.0.3
 	 */
 	public ResourceDatabasePopulator(Resource... scripts) {
@@ -93,18 +79,19 @@ public class ResourceDatabasePopulator implements DatabasePopulator {
 
 	/**
 	 * Construct a new {@code ResourceDatabasePopulator} with the supplied values.
-	 * @param continueOnError flag to indicate that all failures in SQL should be
-	 * logged but not cause a failure
+	 *
+	 * @param continueOnError   flag to indicate that all failures in SQL should be
+	 *                          logged but not cause a failure
 	 * @param ignoreFailedDrops flag to indicate that a failed SQL {@code DROP}
-	 * statement can be ignored
+	 *                          statement can be ignored
 	 * @param sqlScriptEncoding the encoding for the supplied SQL scripts
-	 * (may be {@code null} or <em>empty</em> to indicate platform encoding)
-	 * @param scripts the scripts to execute to initialize or clean up the database
-	 * (never {@code null})
+	 *                          (may be {@code null} or <em>empty</em> to indicate platform encoding)
+	 * @param scripts           the scripts to execute to initialize or clean up the database
+	 *                          (never {@code null})
 	 * @since 4.0.3
 	 */
 	public ResourceDatabasePopulator(boolean continueOnError, boolean ignoreFailedDrops,
-			@Nullable String sqlScriptEncoding, Resource... scripts) {
+									 @Nullable String sqlScriptEncoding, Resource... scripts) {
 
 		this.continueOnError = continueOnError;
 		this.ignoreFailedDrops = ignoreFailedDrops;
@@ -115,6 +102,7 @@ public class ResourceDatabasePopulator implements DatabasePopulator {
 
 	/**
 	 * Add a script to execute to initialize or clean up the database.
+	 *
 	 * @param script the path to an SQL script (never {@code null})
 	 */
 	public void addScript(Resource script) {
@@ -124,6 +112,7 @@ public class ResourceDatabasePopulator implements DatabasePopulator {
 
 	/**
 	 * Add multiple scripts to execute to initialize or clean up the database.
+	 *
 	 * @param scripts the scripts to execute (never {@code null})
 	 */
 	public void addScripts(Resource... scripts) {
@@ -134,6 +123,7 @@ public class ResourceDatabasePopulator implements DatabasePopulator {
 	/**
 	 * Set the scripts to execute to initialize or clean up the database,
 	 * replacing any previously added scripts.
+	 *
 	 * @param scripts the scripts to execute (never {@code null})
 	 */
 	public void setScripts(Resource... scripts) {
@@ -150,8 +140,9 @@ public class ResourceDatabasePopulator implements DatabasePopulator {
 	/**
 	 * Specify the encoding for the configured SQL scripts,
 	 * if different from the platform encoding.
+	 *
 	 * @param sqlScriptEncoding the encoding used in scripts
-	 * (may be {@code null} or empty to indicate platform encoding)
+	 *                          (may be {@code null} or empty to indicate platform encoding)
 	 * @see #addScript(Resource)
 	 */
 	public void setSqlScriptEncoding(@Nullable String sqlScriptEncoding) {
@@ -163,6 +154,7 @@ public class ResourceDatabasePopulator implements DatabasePopulator {
 	 * <p>Defaults to {@code ";"} if not specified and falls back to {@code "\n"}
 	 * as a last resort; may be set to {@link ScriptUtils#EOF_STATEMENT_SEPARATOR}
 	 * to signal that each script contains a single statement without a separator.
+	 *
 	 * @param separator the script statement separator
 	 */
 	public void setSeparator(String separator) {
@@ -172,17 +164,19 @@ public class ResourceDatabasePopulator implements DatabasePopulator {
 	/**
 	 * Set the prefix that identifies single-line comments within the SQL scripts.
 	 * <p>Defaults to {@code "--"}.
+	 *
 	 * @param commentPrefix the prefix for single-line comments
 	 * @see #setCommentPrefixes(String...)
 	 */
 	public void setCommentPrefix(String commentPrefix) {
 		Assert.hasText(commentPrefix, "'commentPrefix' must not be null or empty");
-		this.commentPrefixes = new String[] { commentPrefix };
+		this.commentPrefixes = new String[]{commentPrefix};
 	}
 
 	/**
 	 * Set the prefixes that identify single-line comments within the SQL scripts.
 	 * <p>Defaults to {@code ["--"]}.
+	 *
 	 * @param commentPrefixes the prefixes for single-line comments
 	 * @since 5.2
 	 */
@@ -196,10 +190,11 @@ public class ResourceDatabasePopulator implements DatabasePopulator {
 	 * Set the start delimiter that identifies block comments within the SQL
 	 * scripts.
 	 * <p>Defaults to {@code "/*"}.
+	 *
 	 * @param blockCommentStartDelimiter the start delimiter for block comments
-	 * (never {@code null} or empty)
-	 * @since 4.0.3
+	 *                                   (never {@code null} or empty)
 	 * @see #setBlockCommentEndDelimiter
+	 * @since 4.0.3
 	 */
 	public void setBlockCommentStartDelimiter(String blockCommentStartDelimiter) {
 		Assert.hasText(blockCommentStartDelimiter, "'blockCommentStartDelimiter' must not be null or empty");
@@ -210,10 +205,11 @@ public class ResourceDatabasePopulator implements DatabasePopulator {
 	 * Set the end delimiter that identifies block comments within the SQL
 	 * scripts.
 	 * <p>Defaults to <code>"*&#47;"</code>.
+	 *
 	 * @param blockCommentEndDelimiter the end delimiter for block comments
-	 * (never {@code null} or empty)
-	 * @since 4.0.3
+	 *                                 (never {@code null} or empty)
 	 * @see #setBlockCommentStartDelimiter
+	 * @since 4.0.3
 	 */
 	public void setBlockCommentEndDelimiter(String blockCommentEndDelimiter) {
 		Assert.hasText(blockCommentEndDelimiter, "'blockCommentEndDelimiter' must not be null or empty");
@@ -223,6 +219,7 @@ public class ResourceDatabasePopulator implements DatabasePopulator {
 	/**
 	 * Flag to indicate that all failures in SQL should be logged but not cause a failure.
 	 * <p>Defaults to {@code false}.
+	 *
 	 * @param continueOnError {@code true} if script execution should continue on error
 	 */
 	public void setContinueOnError(boolean continueOnError) {
@@ -235,6 +232,7 @@ public class ResourceDatabasePopulator implements DatabasePopulator {
 	 * support an {@code IF EXISTS} clause in a {@code DROP} statement.
 	 * <p>The default is {@code false} so that if the populator runs accidentally, it will
 	 * fail fast if a script starts with a {@code DROP} statement.
+	 *
 	 * @param ignoreFailedDrops {@code true} if failed drop statements should be ignored
 	 */
 	public void setIgnoreFailedDrops(boolean ignoreFailedDrops) {
@@ -244,6 +242,7 @@ public class ResourceDatabasePopulator implements DatabasePopulator {
 
 	/**
 	 * {@inheritDoc}
+	 *
 	 * @see #execute(DataSource)
 	 */
 	@Override
@@ -260,10 +259,11 @@ public class ResourceDatabasePopulator implements DatabasePopulator {
 	 * Execute this {@code ResourceDatabasePopulator} against the given
 	 * {@link DataSource}.
 	 * <p>Delegates to {@link DatabasePopulatorUtils#execute}.
+	 *
 	 * @param dataSource the {@code DataSource} to execute against (never {@code null})
 	 * @throws ScriptException if an error occurs
-	 * @since 4.1
 	 * @see #populate(Connection)
+	 * @since 4.1
 	 */
 	public void execute(DataSource dataSource) throws ScriptException {
 		DatabasePopulatorUtils.execute(this, dataSource);

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.core.support;
 
 import java.io.InputStream;
@@ -57,12 +41,12 @@ import org.springframework.lang.Nullable;
  *
  * @author Thomas Risberg
  * @author Juergen Hoeller
- * @since 1.1
  * @see org.springframework.jdbc.support.lob.LobHandler
  * @see org.springframework.jdbc.support.lob.LobCreator
  * @see org.springframework.jdbc.core.JdbcTemplate#update(String, Object[], int[])
  * @see org.springframework.jdbc.object.SqlUpdate#update(Object[])
  * @see org.springframework.jdbc.object.StoredProcedure#execute(java.util.Map)
+ * @since 1.1
  */
 public class SqlLobValue implements DisposableSqlTypeValue {
 
@@ -81,6 +65,7 @@ public class SqlLobValue implements DisposableSqlTypeValue {
 	/**
 	 * Create a new BLOB value with the given byte array,
 	 * using a DefaultLobHandler.
+	 *
 	 * @param bytes the byte array containing the BLOB value
 	 * @see org.springframework.jdbc.support.lob.DefaultLobHandler
 	 */
@@ -90,7 +75,8 @@ public class SqlLobValue implements DisposableSqlTypeValue {
 
 	/**
 	 * Create a new BLOB value with the given byte array.
-	 * @param bytes the byte array containing the BLOB value
+	 *
+	 * @param bytes      the byte array containing the BLOB value
 	 * @param lobHandler the LobHandler to be used
 	 */
 	public SqlLobValue(@Nullable byte[] bytes, LobHandler lobHandler) {
@@ -102,6 +88,7 @@ public class SqlLobValue implements DisposableSqlTypeValue {
 	/**
 	 * Create a new CLOB value with the given content string,
 	 * using a DefaultLobHandler.
+	 *
 	 * @param content the String containing the CLOB value
 	 * @see org.springframework.jdbc.support.lob.DefaultLobHandler
 	 */
@@ -111,7 +98,8 @@ public class SqlLobValue implements DisposableSqlTypeValue {
 
 	/**
 	 * Create a new CLOB value with the given content string.
-	 * @param content the String containing the CLOB value
+	 *
+	 * @param content    the String containing the CLOB value
 	 * @param lobHandler the LobHandler to be used
 	 */
 	public SqlLobValue(@Nullable String content, LobHandler lobHandler) {
@@ -123,6 +111,7 @@ public class SqlLobValue implements DisposableSqlTypeValue {
 	/**
 	 * Create a new BLOB/CLOB value with the given stream,
 	 * using a DefaultLobHandler.
+	 *
 	 * @param stream the stream containing the LOB value
 	 * @param length the length of the LOB value
 	 * @see org.springframework.jdbc.support.lob.DefaultLobHandler
@@ -133,8 +122,9 @@ public class SqlLobValue implements DisposableSqlTypeValue {
 
 	/**
 	 * Create a new BLOB/CLOB value with the given stream.
-	 * @param stream the stream containing the LOB value
-	 * @param length the length of the LOB value
+	 *
+	 * @param stream     the stream containing the LOB value
+	 * @param length     the length of the LOB value
 	 * @param lobHandler the LobHandler to be used
 	 */
 	public SqlLobValue(InputStream stream, int length, LobHandler lobHandler) {
@@ -146,6 +136,7 @@ public class SqlLobValue implements DisposableSqlTypeValue {
 	/**
 	 * Create a new CLOB value with the given character stream,
 	 * using a DefaultLobHandler.
+	 *
 	 * @param reader the character stream containing the CLOB value
 	 * @param length the length of the CLOB value
 	 * @see org.springframework.jdbc.support.lob.DefaultLobHandler
@@ -156,8 +147,9 @@ public class SqlLobValue implements DisposableSqlTypeValue {
 
 	/**
 	 * Create a new CLOB value with the given character stream.
-	 * @param reader the character stream containing the CLOB value
-	 * @param length the length of the CLOB value
+	 *
+	 * @param reader     the character stream containing the CLOB value
+	 * @param length     the length of the CLOB value
 	 * @param lobHandler the LobHandler to be used
 	 */
 	public SqlLobValue(Reader reader, int length, LobHandler lobHandler) {
@@ -177,34 +169,26 @@ public class SqlLobValue implements DisposableSqlTypeValue {
 		if (sqlType == Types.BLOB) {
 			if (this.content instanceof byte[] || this.content == null) {
 				this.lobCreator.setBlobAsBytes(ps, paramIndex, (byte[]) this.content);
-			}
-			else if (this.content instanceof String) {
+			} else if (this.content instanceof String) {
 				this.lobCreator.setBlobAsBytes(ps, paramIndex, ((String) this.content).getBytes());
-			}
-			else if (this.content instanceof InputStream) {
+			} else if (this.content instanceof InputStream) {
 				this.lobCreator.setBlobAsBinaryStream(ps, paramIndex, (InputStream) this.content, this.length);
-			}
-			else {
+			} else {
 				throw new IllegalArgumentException(
 						"Content type [" + this.content.getClass().getName() + "] not supported for BLOB columns");
 			}
-		}
-		else if (sqlType == Types.CLOB) {
+		} else if (sqlType == Types.CLOB) {
 			if (this.content instanceof String || this.content == null) {
 				this.lobCreator.setClobAsString(ps, paramIndex, (String) this.content);
-			}
-			else if (this.content instanceof InputStream) {
+			} else if (this.content instanceof InputStream) {
 				this.lobCreator.setClobAsAsciiStream(ps, paramIndex, (InputStream) this.content, this.length);
-			}
-			else if (this.content instanceof Reader) {
+			} else if (this.content instanceof Reader) {
 				this.lobCreator.setClobAsCharacterStream(ps, paramIndex, (Reader) this.content, this.length);
-			}
-			else {
+			} else {
 				throw new IllegalArgumentException(
 						"Content type [" + this.content.getClass().getName() + "] not supported for CLOB columns");
 			}
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException("SqlLobValue only supports SQL types BLOB and CLOB");
 		}
 	}

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.core;
 
 import java.sql.PreparedStatement;
@@ -32,18 +16,19 @@ import java.sql.SQLException;
  * that may be thrown from operations they attempt. The JdbcTemplate class will
  * catch and handle SQLExceptions appropriately.
  *
+ * @param <T> the argument type
  * @author Nicolas Fabre
  * @author Thomas Risberg
- * @since 3.1
- * @param <T> the argument type
  * @see JdbcTemplate#batchUpdate(String, java.util.Collection, int, ParameterizedPreparedStatementSetter)
+ * @since 3.1
  */
 @FunctionalInterface
 public interface ParameterizedPreparedStatementSetter<T> {
 
 	/**
 	 * Set parameter values on the given PreparedStatement.
-	 * @param ps the PreparedStatement to invoke setter methods on
+	 *
+	 * @param ps       the PreparedStatement to invoke setter methods on
 	 * @param argument the object containing the values to be set
 	 * @throws SQLException if an SQLException is encountered (i.e. there is no need to catch SQLException)
 	 */

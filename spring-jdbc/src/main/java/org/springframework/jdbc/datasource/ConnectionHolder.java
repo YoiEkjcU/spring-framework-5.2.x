@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.datasource;
 
 import java.sql.Connection;
@@ -35,9 +19,9 @@ import org.springframework.util.Assert;
  * <p>Note: This is an SPI class, not intended to be used by applications.
  *
  * @author Juergen Hoeller
- * @since 06.05.2003
  * @see DataSourceTransactionManager
  * @see DataSourceUtils
+ * @since 06.05.2003
  */
 public class ConnectionHolder extends ResourceHolderSupport {
 
@@ -63,6 +47,7 @@ public class ConnectionHolder extends ResourceHolderSupport {
 
 	/**
 	 * Create a new ConnectionHolder for the given ConnectionHandle.
+	 *
 	 * @param connectionHandle the ConnectionHandle to hold
 	 */
 	public ConnectionHolder(ConnectionHandle connectionHandle) {
@@ -74,6 +59,7 @@ public class ConnectionHolder extends ResourceHolderSupport {
 	 * Create a new ConnectionHolder for the given JDBC Connection,
 	 * wrapping it with a {@link SimpleConnectionHandle},
 	 * assuming that there is no ongoing transaction.
+	 *
 	 * @param connection the JDBC Connection to hold
 	 * @see SimpleConnectionHandle
 	 * @see #ConnectionHolder(java.sql.Connection, boolean)
@@ -85,9 +71,10 @@ public class ConnectionHolder extends ResourceHolderSupport {
 	/**
 	 * Create a new ConnectionHolder for the given JDBC Connection,
 	 * wrapping it with a {@link SimpleConnectionHandle}.
-	 * @param connection the JDBC Connection to hold
+	 *
+	 * @param connection        the JDBC Connection to hold
 	 * @param transactionActive whether the given Connection is involved
-	 * in an ongoing transaction
+	 *                          in an ongoing transaction
 	 * @see SimpleConnectionHandle
 	 */
 	public ConnectionHolder(Connection connection, boolean transactionActive) {
@@ -113,6 +100,7 @@ public class ConnectionHolder extends ResourceHolderSupport {
 
 	/**
 	 * Set whether this holder represents an active, JDBC-managed transaction.
+	 *
 	 * @see DataSourceTransactionManager
 	 */
 	protected void setTransactionActive(boolean transactionActive) {
@@ -142,8 +130,7 @@ public class ConnectionHolder extends ResourceHolderSupport {
 		}
 		if (connection != null) {
 			this.connectionHandle = new SimpleConnectionHandle(connection);
-		}
-		else {
+		} else {
 			this.connectionHandle = null;
 		}
 	}
@@ -153,6 +140,7 @@ public class ConnectionHolder extends ResourceHolderSupport {
 	 * <p>This will be the same Connection until {@code released}
 	 * gets called on the ConnectionHolder, which will reset the
 	 * held Connection, fetching a new Connection on demand.
+	 *
 	 * @see ConnectionHandle#getConnection()
 	 * @see #released()
 	 */
@@ -167,6 +155,7 @@ public class ConnectionHolder extends ResourceHolderSupport {
 	/**
 	 * Return whether JDBC 3.0 Savepoints are supported.
 	 * Caches the flag for the lifetime of this ConnectionHolder.
+	 *
 	 * @throws SQLException if thrown by the JDBC driver
 	 */
 	public boolean supportsSavepoints() throws SQLException {
@@ -179,6 +168,7 @@ public class ConnectionHolder extends ResourceHolderSupport {
 	/**
 	 * Create a new JDBC 3.0 Savepoint for the current Connection,
 	 * using generated savepoint names that are unique for the Connection.
+	 *
 	 * @return the new Savepoint
 	 * @throws SQLException if thrown by the JDBC driver
 	 */

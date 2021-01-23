@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jdbc.core;
 
 import java.sql.CallableStatement;
@@ -32,10 +16,10 @@ import org.springframework.lang.Nullable;
  * should be needed to create any database-specific objects.
  *
  * @author Thomas Risberg
- * @since 1.1
  * @see java.sql.Types
  * @see java.sql.CallableStatement#getObject
  * @see org.springframework.jdbc.object.StoredProcedure#execute(java.util.Map)
+ * @since 1.1
  */
 public interface SqlReturnType {
 
@@ -43,6 +27,7 @@ public interface SqlReturnType {
 	 * Constant that indicates an unknown (or unspecified) SQL type.
 	 * Passed into setTypeValue if the original operation method does
 	 * not specify an SQL type.
+	 *
 	 * @see java.sql.Types
 	 * @see JdbcOperations#update(String, Object[])
 	 */
@@ -51,13 +36,14 @@ public interface SqlReturnType {
 
 	/**
 	 * Get the type value from the specific object.
-	 * @param cs the CallableStatement to operate on
+	 *
+	 * @param cs         the CallableStatement to operate on
 	 * @param paramIndex the index of the parameter for which we need to set the value
-	 * @param sqlType the SQL type of the parameter we are setting
-	 * @param typeName the type name of the parameter (optional)
+	 * @param sqlType    the SQL type of the parameter we are setting
+	 * @param typeName   the type name of the parameter (optional)
 	 * @return the target value
 	 * @throws SQLException if an SQLException is encountered setting parameter values
-	 * (that is, there's no need to catch SQLException)
+	 *                      (that is, there's no need to catch SQLException)
 	 * @see java.sql.Types
 	 * @see java.sql.CallableStatement#getObject
 	 */
