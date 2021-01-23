@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.orm.jpa;
 
 import java.io.Serializable;
@@ -39,8 +23,8 @@ import org.springframework.transaction.TransactionException;
  * <p><b>NOTE: Spring's JPA support requires JPA 2.1 or higher, as of Spring 5.0.</b>
  *
  * @author Juergen Hoeller
- * @since 2.0
  * @see JpaTransactionManager#setJpaDialect
+ * @since 2.0
  */
 @SuppressWarnings("serial")
 public class DefaultJpaDialect implements JpaDialect, Serializable {
@@ -53,6 +37,7 @@ public class DefaultJpaDialect implements JpaDialect, Serializable {
 	 * is no state to be kept for a standard JPA transaction. Hence, subclasses do not
 	 * have to care about the return value ({@code null}) of this implementation
 	 * and are free to return their own transaction data Object.
+	 *
 	 * @see javax.persistence.EntityTransaction#begin
 	 * @see org.springframework.transaction.InvalidIsolationLevelException
 	 * @see #cleanupTransaction
@@ -82,6 +67,7 @@ public class DefaultJpaDialect implements JpaDialect, Serializable {
 	/**
 	 * This implementation does nothing, since the default {@code beginTransaction}
 	 * implementation does not require any cleanup.
+	 *
 	 * @see #beginTransaction
 	 */
 	@Override
@@ -106,6 +92,7 @@ public class DefaultJpaDialect implements JpaDialect, Serializable {
 	 * <p>If the JPA implementation returns a Connection handle that it expects
 	 * the application to close after use, the dialect implementation needs to invoke
 	 * {@code Connection.close()} (or some other method with similar effect) here.
+	 *
 	 * @see java.sql.Connection#close()
 	 */
 	@Override
@@ -120,6 +107,7 @@ public class DefaultJpaDialect implements JpaDialect, Serializable {
 
 	/**
 	 * This implementation delegates to EntityManagerFactoryUtils.
+	 *
 	 * @see EntityManagerFactoryUtils#convertJpaAccessExceptionIfPossible
 	 */
 	@Override

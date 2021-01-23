@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.orm.hibernate5;
 
 import javax.transaction.Status;
@@ -58,6 +42,7 @@ public class SpringSessionContext implements CurrentSessionContext {
 
 	/**
 	 * Create a new SpringSessionContext for the given Hibernate SessionFactory.
+	 *
 	 * @param sessionFactory the SessionFactory to provide current Sessions for
 	 */
 	public SpringSessionContext(SessionFactoryImplementor sessionFactory) {
@@ -68,8 +53,7 @@ public class SpringSessionContext implements CurrentSessionContext {
 			if (this.transactionManager != null) {
 				this.jtaSessionContext = new SpringJtaSessionContext(sessionFactory);
 			}
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			LogFactory.getLog(SpringSessionContext.class).warn(
 					"Could not introspect Hibernate JtaPlatform for SpringJtaSessionContext", ex);
 		}
@@ -84,8 +68,7 @@ public class SpringSessionContext implements CurrentSessionContext {
 		Object value = TransactionSynchronizationManager.getResource(this.sessionFactory);
 		if (value instanceof Session) {
 			return (Session) value;
-		}
-		else if (value instanceof SessionHolder) {
+		} else if (value instanceof SessionHolder) {
 			// HibernateTransactionManager
 			SessionHolder sessionHolder = (SessionHolder) value;
 			Session session = sessionHolder.getSession();
@@ -104,8 +87,7 @@ public class SpringSessionContext implements CurrentSessionContext {
 				}
 			}
 			return session;
-		}
-		else if (value instanceof EntityManagerHolder) {
+		} else if (value instanceof EntityManagerHolder) {
 			// JpaTransactionManager
 			return ((EntityManagerHolder) value).getEntityManager().unwrap(Session.class);
 		}
@@ -120,8 +102,7 @@ public class SpringSessionContext implements CurrentSessionContext {
 					}
 					return session;
 				}
-			}
-			catch (SystemException ex) {
+			} catch (SystemException ex) {
 				throw new HibernateException("JTA TransactionManager found but status check failed", ex);
 			}
 		}
@@ -137,8 +118,7 @@ public class SpringSessionContext implements CurrentSessionContext {
 			TransactionSynchronizationManager.bindResource(this.sessionFactory, sessionHolder);
 			sessionHolder.setSynchronizedWithTransaction(true);
 			return session;
-		}
-		else {
+		} else {
 			throw new HibernateException("Could not obtain transaction-synchronized Session for current thread");
 		}
 	}

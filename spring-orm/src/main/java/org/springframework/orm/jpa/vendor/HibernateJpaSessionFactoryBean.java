@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.orm.jpa.vendor;
 
 import java.lang.reflect.Method;
@@ -50,16 +34,16 @@ import org.springframework.util.ReflectionUtils;
  *     return emf.unwrap(SessionFactory.class);
  * }
  * </pre>
- *
+ * <p>
  * Please note: Since Hibernate 5.2 changed its {@code SessionFactory} interface to extend JPA's
  * {@code EntityManagerFactory}, you may get conflicts when injecting by type, with both the
  * original factory and your custom {@code SessionFactory} matching {@code EntityManagerFactory}.
  * An explicit qualifier for the original factory (as indicated above) is recommended here.
  *
  * @author Juergen Hoeller
- * @since 3.1
  * @see #setPersistenceUnitName
  * @see #setEntityManagerFactory
+ * @since 3.1
  * @deprecated as of Spring Framework 4.3.12 against Hibernate 5.2, in favor of a custom solution
  * based on {@link EntityManagerFactory#unwrap} with explicit qualifiers and/or primary markers
  */
@@ -74,8 +58,7 @@ public class HibernateJpaSessionFactoryBean extends EntityManagerFactoryAccessor
 		try {
 			Method getSessionFactory = emf.getClass().getMethod("getSessionFactory");
 			return (SessionFactory) ReflectionUtils.invokeMethod(getSessionFactory, emf);
-		}
-		catch (NoSuchMethodException ex) {
+		} catch (NoSuchMethodException ex) {
 			throw new IllegalStateException("No compatible Hibernate EntityManagerFactory found: " + ex);
 		}
 	}

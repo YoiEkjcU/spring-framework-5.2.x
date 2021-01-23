@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.orm.hibernate5.support;
 
 import org.aopalliance.intercept.MethodInterceptor;
@@ -41,12 +25,12 @@ import org.springframework.util.Assert;
  * Session is only meant for reading, except when participating in a transaction.
  *
  * @author Juergen Hoeller
- * @since 4.2
  * @see OpenSessionInViewInterceptor
  * @see OpenSessionInViewFilter
  * @see org.springframework.orm.hibernate5.HibernateTransactionManager
  * @see TransactionSynchronizationManager
  * @see SessionFactory#getCurrentSession()
+ * @since 4.2
  */
 public class OpenSessionInterceptor implements MethodInterceptor, InitializingBean {
 
@@ -89,13 +73,11 @@ public class OpenSessionInterceptor implements MethodInterceptor, InitializingBe
 			try {
 				TransactionSynchronizationManager.bindResource(sf, new SessionHolder(session));
 				return invocation.proceed();
-			}
-			finally {
+			} finally {
 				SessionFactoryUtils.closeSession(session);
 				TransactionSynchronizationManager.unbindResource(sf);
 			}
-		}
-		else {
+		} else {
 			// Pre-bound Session found -> simply proceed.
 			return invocation.proceed();
 		}
@@ -105,11 +87,12 @@ public class OpenSessionInterceptor implements MethodInterceptor, InitializingBe
 	 * Open a Session for the given SessionFactory.
 	 * <p>The default implementation delegates to the {@link SessionFactory#openSession}
 	 * method and sets the {@link Session}'s flush mode to "MANUAL".
+	 *
 	 * @param sessionFactory the SessionFactory to use
 	 * @return the Session to use
 	 * @throws DataAccessResourceFailureException if the Session could not be created
-	 * @since 5.0
 	 * @see FlushMode#MANUAL
+	 * @since 5.0
 	 */
 	protected Session openSession(SessionFactory sessionFactory) throws DataAccessResourceFailureException {
 		Session session = openSession();
@@ -117,8 +100,7 @@ public class OpenSessionInterceptor implements MethodInterceptor, InitializingBe
 			try {
 				session = sessionFactory.openSession();
 				session.setHibernateFlushMode(FlushMode.MANUAL);
-			}
-			catch (HibernateException ex) {
+			} catch (HibernateException ex) {
 				throw new DataAccessResourceFailureException("Could not open Hibernate Session", ex);
 			}
 		}
@@ -127,6 +109,7 @@ public class OpenSessionInterceptor implements MethodInterceptor, InitializingBe
 
 	/**
 	 * Open a Session for the given SessionFactory.
+	 *
 	 * @deprecated as of 5.0, in favor of {@link #openSession(SessionFactory)}
 	 */
 	@Deprecated

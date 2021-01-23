@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.orm.hibernate5;
 
 import javax.transaction.Status;
@@ -52,12 +36,13 @@ class ConfigurableJtaPlatform implements JtaPlatform {
 	/**
 	 * Create a new ConfigurableJtaPlatform instance with the given
 	 * JTA TransactionManager and optionally a given UserTransaction.
-	 * @param tm the JTA TransactionManager reference (required)
-	 * @param ut the JTA UserTransaction reference (optional)
+	 *
+	 * @param tm  the JTA TransactionManager reference (required)
+	 * @param ut  the JTA UserTransaction reference (optional)
 	 * @param tsr the JTA 1.1 TransactionSynchronizationRegistry (optional)
 	 */
 	public ConfigurableJtaPlatform(TransactionManager tm, @Nullable UserTransaction ut,
-			@Nullable TransactionSynchronizationRegistry tsr) {
+								   @Nullable TransactionSynchronizationRegistry tsr) {
 
 		Assert.notNull(tm, "TransactionManager reference must not be null");
 		this.transactionManager = tm;
@@ -85,8 +70,7 @@ class ConfigurableJtaPlatform implements JtaPlatform {
 	public boolean canRegisterSynchronization() {
 		try {
 			return (this.transactionManager.getStatus() == Status.STATUS_ACTIVE);
-		}
-		catch (SystemException ex) {
+		} catch (SystemException ex) {
 			throw new TransactionException("Could not determine JTA transaction status", ex);
 		}
 	}
@@ -95,12 +79,10 @@ class ConfigurableJtaPlatform implements JtaPlatform {
 	public void registerSynchronization(Synchronization synchronization) {
 		if (this.transactionSynchronizationRegistry != null) {
 			this.transactionSynchronizationRegistry.registerInterposedSynchronization(synchronization);
-		}
-		else {
+		} else {
 			try {
 				this.transactionManager.getTransaction().registerSynchronization(synchronization);
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				throw new TransactionException("Could not access JTA Transaction to register synchronization", ex);
 			}
 		}

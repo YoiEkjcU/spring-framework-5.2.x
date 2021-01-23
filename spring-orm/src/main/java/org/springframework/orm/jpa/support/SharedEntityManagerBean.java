@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.orm.jpa.support;
 
 import javax.persistence.EntityManager;
@@ -43,11 +27,11 @@ import org.springframework.util.Assert;
  * always needs an EntityManagerFactory in order to create new transactional EntityManager instances.
  *
  * @author Juergen Hoeller
- * @since 2.0
  * @see #setEntityManagerFactory
  * @see #setEntityManagerInterface
  * @see org.springframework.orm.jpa.LocalEntityManagerFactoryBean
  * @see org.springframework.orm.jpa.JpaTransactionManager
+ * @since 2.0
  */
 public class SharedEntityManagerBean extends EntityManagerFactoryAccessor
 		implements FactoryBean<EntityManager>, InitializingBean {
@@ -66,6 +50,7 @@ public class SharedEntityManagerBean extends EntityManagerFactoryAccessor
 	 * <p>Default is the EntityManager interface as defined by the
 	 * EntityManagerFactoryInfo, if available. Else, the standard
 	 * {@code javax.persistence.EntityManager} interface will be used.
+	 *
 	 * @see org.springframework.orm.jpa.EntityManagerFactoryInfo#getEntityManagerInterface()
 	 * @see javax.persistence.EntityManager
 	 */
@@ -97,8 +82,7 @@ public class SharedEntityManagerBean extends EntityManagerFactoryAccessor
 					this.entityManagerInterface = EntityManager.class;
 				}
 			}
-		}
-		else {
+		} else {
 			if (this.entityManagerInterface == null) {
 				this.entityManagerInterface = EntityManager.class;
 			}

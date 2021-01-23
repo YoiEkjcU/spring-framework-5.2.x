@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.orm.jpa.persistenceunit;
 
 import java.io.IOException;
@@ -95,9 +79,10 @@ final class PersistenceUnitReader {
 
 	/**
 	 * Create a new PersistenceUnitReader.
+	 *
 	 * @param resourcePatternResolver the ResourcePatternResolver to use for loading resources
-	 * @param dataSourceLookup the DataSourceLookup to resolve DataSource names in
-	 * {@code persistence.xml} files against
+	 * @param dataSourceLookup        the DataSourceLookup to resolve DataSource names in
+	 *                                {@code persistence.xml} files against
 	 */
 	public PersistenceUnitReader(ResourcePatternResolver resourcePatternResolver, DataSourceLookup dataSourceLookup) {
 		Assert.notNull(resourcePatternResolver, "ResourceLoader must not be null");
@@ -109,15 +94,17 @@ final class PersistenceUnitReader {
 
 	/**
 	 * Parse and build all persistence unit infos defined in the specified XML file(s).
+	 *
 	 * @param persistenceXmlLocation the resource location (can be a pattern)
 	 * @return the resulting PersistenceUnitInfo instances
 	 */
 	public SpringPersistenceUnitInfo[] readPersistenceUnitInfos(String persistenceXmlLocation) {
-		return readPersistenceUnitInfos(new String[] {persistenceXmlLocation});
+		return readPersistenceUnitInfos(new String[]{persistenceXmlLocation});
 	}
 
 	/**
 	 * Parse and build all persistence unit infos defined in the given XML files.
+	 *
 	 * @param persistenceXmlLocations the resource locations (can be patterns)
 	 * @return the resulting PersistenceUnitInfo instances
 	 */
@@ -136,14 +123,11 @@ final class PersistenceUnitReader {
 					}
 				}
 			}
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new IllegalArgumentException("Cannot parse persistence unit from " + resourceLocation, ex);
-		}
-		catch (SAXException ex) {
+		} catch (SAXException ex) {
 			throw new IllegalArgumentException("Invalid XML in persistence unit from " + resourceLocation, ex);
-		}
-		catch (ParserConfigurationException ex) {
+		} catch (ParserConfigurationException ex) {
 			throw new IllegalArgumentException("Internal error parsing persistence unit from " + resourceLocation);
 		}
 
@@ -313,8 +297,7 @@ final class PersistenceUnitReader {
 					URL rootUrl = unitInfo.getPersistenceUnitRootUrl();
 					if (rootUrl != null) {
 						unitInfo.addJarFileUrl(new URL(rootUrl, value));
-					}
-					else {
+					} else {
 						logger.warn("Cannot resolve jar-file entry [" + value + "] in persistence unit '" +
 								unitInfo.getPersistenceUnitName() + "' without root URL");
 					}
@@ -327,6 +310,7 @@ final class PersistenceUnitReader {
 	/**
 	 * Determine the persistence unit root URL based on the given resource
 	 * (which points to the {@code persistence.xml} file we're reading).
+	 *
 	 * @param resource the resource to check
 	 * @return the corresponding persistence unit root URL
 	 * @throws IOException if the checking failed

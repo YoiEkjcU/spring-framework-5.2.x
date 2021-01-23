@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.orm.jpa.support;
 
 import javax.persistence.EntityManager;
@@ -50,11 +34,11 @@ import org.springframework.web.context.request.async.WebAsyncUtils;
  * up in a Spring application context and can thus take advantage of bean wiring.
  *
  * @author Juergen Hoeller
- * @since 2.0
  * @see OpenEntityManagerInViewFilter
  * @see org.springframework.orm.jpa.JpaTransactionManager
  * @see org.springframework.orm.jpa.SharedEntityManagerCreator
  * @see org.springframework.transaction.support.TransactionSynchronizationManager
+ * @since 2.0
  */
 public class OpenEntityManagerInViewInterceptor extends EntityManagerFactoryAccessor implements AsyncWebRequestInterceptor {
 
@@ -62,6 +46,7 @@ public class OpenEntityManagerInViewInterceptor extends EntityManagerFactoryAcce
 	 * Suffix that gets appended to the EntityManagerFactory toString
 	 * representation for the "participate in existing entity manager
 	 * handling" request attribute.
+	 *
 	 * @see #getParticipateAttributeName
 	 */
 	public static final String PARTICIPATE_SUFFIX = ".PARTICIPATE";
@@ -81,8 +66,7 @@ public class OpenEntityManagerInViewInterceptor extends EntityManagerFactoryAcce
 			Integer count = (Integer) request.getAttribute(key, WebRequest.SCOPE_REQUEST);
 			int newCount = (count != null ? count + 1 : 1);
 			request.setAttribute(getParticipateAttributeName(), newCount, WebRequest.SCOPE_REQUEST);
-		}
-		else {
+		} else {
 			logger.debug("Opening JPA EntityManager in OpenEntityManagerInViewInterceptor");
 			try {
 				EntityManager em = createEntityManager();
@@ -92,8 +76,7 @@ public class OpenEntityManagerInViewInterceptor extends EntityManagerFactoryAcce
 				AsyncRequestInterceptor interceptor = new AsyncRequestInterceptor(emf, emHolder);
 				asyncManager.registerCallableInterceptor(key, interceptor);
 				asyncManager.registerDeferredResultInterceptor(key, interceptor);
-			}
-			catch (PersistenceException ex) {
+			} catch (PersistenceException ex) {
 				throw new DataAccessResourceFailureException("Could not create JPA EntityManager", ex);
 			}
 		}
@@ -122,8 +105,7 @@ public class OpenEntityManagerInViewInterceptor extends EntityManagerFactoryAcce
 		// Do not modify the Session: just clear the marker.
 		if (count > 1) {
 			request.setAttribute(participateAttributeName, count - 1, WebRequest.SCOPE_REQUEST);
-		}
-		else {
+		} else {
 			request.removeAttribute(participateAttributeName, WebRequest.SCOPE_REQUEST);
 		}
 		return true;
@@ -140,6 +122,7 @@ public class OpenEntityManagerInViewInterceptor extends EntityManagerFactoryAcce
 	 * Return the name of the request attribute that identifies that a request is
 	 * already filtered. Default implementation takes the toString representation
 	 * of the EntityManagerFactory instance and appends ".FILTERED".
+	 *
 	 * @see #PARTICIPATE_SUFFIX
 	 */
 	protected String getParticipateAttributeName() {

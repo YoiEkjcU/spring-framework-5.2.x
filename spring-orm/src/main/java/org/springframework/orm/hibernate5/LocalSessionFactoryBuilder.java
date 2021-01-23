@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.orm.hibernate5;
 
 import java.io.IOException;
@@ -88,12 +72,12 @@ import org.springframework.util.ClassUtils;
  * standard JPA bootstrap contract.
  *
  * @author Juergen Hoeller
- * @since 4.2
  * @see HibernateTransactionManager
  * @see LocalSessionFactoryBean
  * @see #setBeanContainer
  * @see #LocalSessionFactoryBuilder(DataSource, ResourceLoader, MetadataSources)
  * @see BootstrapServiceRegistryBuilder
+ * @since 4.2
  */
 @SuppressWarnings("serial")
 public class LocalSessionFactoryBuilder extends Configuration {
@@ -102,7 +86,7 @@ public class LocalSessionFactoryBuilder extends Configuration {
 
 	private static final String PACKAGE_INFO_SUFFIX = ".package-info";
 
-	private static final TypeFilter[] DEFAULT_ENTITY_TYPE_FILTERS = new TypeFilter[] {
+	private static final TypeFilter[] DEFAULT_ENTITY_TYPE_FILTERS = new TypeFilter[]{
 			new AnnotationTypeFilter(Entity.class, false),
 			new AnnotationTypeFilter(Embeddable.class, false),
 			new AnnotationTypeFilter(MappedSuperclass.class, false)};
@@ -118,8 +102,9 @@ public class LocalSessionFactoryBuilder extends Configuration {
 
 	/**
 	 * Create a new LocalSessionFactoryBuilder for the given DataSource.
+	 *
 	 * @param dataSource the JDBC DataSource that the resulting Hibernate SessionFactory should be using
-	 * (may be {@code null})
+	 *                   (may be {@code null})
 	 */
 	public LocalSessionFactoryBuilder(@Nullable DataSource dataSource) {
 		this(dataSource, new PathMatchingResourcePatternResolver());
@@ -127,8 +112,9 @@ public class LocalSessionFactoryBuilder extends Configuration {
 
 	/**
 	 * Create a new LocalSessionFactoryBuilder for the given DataSource.
-	 * @param dataSource the JDBC DataSource that the resulting Hibernate SessionFactory should be using
-	 * (may be {@code null})
+	 *
+	 * @param dataSource  the JDBC DataSource that the resulting Hibernate SessionFactory should be using
+	 *                    (may be {@code null})
 	 * @param classLoader the ClassLoader to load application classes from
 	 */
 	public LocalSessionFactoryBuilder(@Nullable DataSource dataSource, ClassLoader classLoader) {
@@ -137,8 +123,9 @@ public class LocalSessionFactoryBuilder extends Configuration {
 
 	/**
 	 * Create a new LocalSessionFactoryBuilder for the given DataSource.
-	 * @param dataSource the JDBC DataSource that the resulting Hibernate SessionFactory should be using
-	 * (may be {@code null})
+	 *
+	 * @param dataSource     the JDBC DataSource that the resulting Hibernate SessionFactory should be using
+	 *                       (may be {@code null})
 	 * @param resourceLoader the ResourceLoader to load application classes from
 	 */
 	public LocalSessionFactoryBuilder(@Nullable DataSource dataSource, ResourceLoader resourceLoader) {
@@ -148,9 +135,10 @@ public class LocalSessionFactoryBuilder extends Configuration {
 
 	/**
 	 * Create a new LocalSessionFactoryBuilder for the given DataSource.
-	 * @param dataSource the JDBC DataSource that the resulting Hibernate SessionFactory should be using
-	 * (may be {@code null})
-	 * @param resourceLoader the ResourceLoader to load application classes from
+	 *
+	 * @param dataSource      the JDBC DataSource that the resulting Hibernate SessionFactory should be using
+	 *                        (may be {@code null})
+	 * @param resourceLoader  the ResourceLoader to load application classes from
 	 * @param metadataSources the Hibernate MetadataSources service to use (e.g. reusing an existing one)
 	 * @since 4.3
 	 */
@@ -190,8 +178,7 @@ public class LocalSessionFactoryBuilder extends Configuration {
 			if (webspherePresent) {
 				getProperties().put(AvailableSettings.JTA_PLATFORM,
 						"org.hibernate.engine.transaction.jta.platform.internal.WebSphereExtendedJtaPlatform");
-			}
-			else {
+			} else {
 				JtaTransactionManager jtaTm = (JtaTransactionManager) jtaTransactionManager;
 				if (jtaTm.getTransactionManager() == null) {
 					throw new IllegalArgumentException(
@@ -201,12 +188,10 @@ public class LocalSessionFactoryBuilder extends Configuration {
 						new ConfigurableJtaPlatform(jtaTm.getTransactionManager(), jtaTm.getUserTransaction(),
 								jtaTm.getTransactionSynchronizationRegistry()));
 			}
-		}
-		else if (jtaTransactionManager instanceof TransactionManager) {
+		} else if (jtaTransactionManager instanceof TransactionManager) {
 			getProperties().put(AvailableSettings.JTA_PLATFORM,
 					new ConfigurableJtaPlatform((TransactionManager) jtaTransactionManager, null, null));
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException(
 					"Unknown transaction manager type: " + jtaTransactionManager.getClass().getName());
 		}
@@ -222,9 +207,10 @@ public class LocalSessionFactoryBuilder extends Configuration {
 	 * for the given Spring {@link ConfigurableListableBeanFactory}.
 	 * <p>Note: Bean container integration requires Hibernate 5.3 or higher.
 	 * It enables autowiring of Hibernate attribute converters and entity listeners.
-	 * @since 5.1
+	 *
 	 * @see SpringBeanContainer
 	 * @see AvailableSettings#BEAN_CONTAINER
+	 * @since 5.1
 	 */
 	public LocalSessionFactoryBuilder setBeanContainer(ConfigurableListableBeanFactory beanFactory) {
 		getProperties().put(AvailableSettings.BEAN_CONTAINER, new SpringBeanContainer(beanFactory));
@@ -236,8 +222,9 @@ public class LocalSessionFactoryBuilder extends Configuration {
 	 * Allows for using a Spring-managed {@code RegionFactory} instance.
 	 * <p>Note: If this is set, the Hibernate settings should not define a
 	 * cache provider to avoid meaningless double configuration.
-	 * @since 5.1
+	 *
 	 * @see AvailableSettings#CACHE_REGION_FACTORY
+	 * @since 5.1
 	 */
 	public LocalSessionFactoryBuilder setCacheRegionFactory(RegionFactory cacheRegionFactory) {
 		getProperties().put(AvailableSettings.CACHE_REGION_FACTORY, cacheRegionFactory);
@@ -246,8 +233,9 @@ public class LocalSessionFactoryBuilder extends Configuration {
 
 	/**
 	 * Set a {@link MultiTenantConnectionProvider} to be passed on to the SessionFactory.
-	 * @since 4.3
+	 *
 	 * @see AvailableSettings#MULTI_TENANT_CONNECTION_PROVIDER
+	 * @since 4.3
 	 */
 	public LocalSessionFactoryBuilder setMultiTenantConnectionProvider(MultiTenantConnectionProvider multiTenantConnectionProvider) {
 		getProperties().put(AvailableSettings.MULTI_TENANT_CONNECTION_PROVIDER, multiTenantConnectionProvider);
@@ -256,8 +244,9 @@ public class LocalSessionFactoryBuilder extends Configuration {
 
 	/**
 	 * Overridden to reliably pass a {@link CurrentTenantIdentifierResolver} to the SessionFactory.
-	 * @since 4.3.2
+	 *
 	 * @see AvailableSettings#MULTI_TENANT_IDENTIFIER_RESOLVER
+	 * @since 4.3.2
 	 */
 	@Override
 	public void setCurrentTenantIdentifierResolver(CurrentTenantIdentifierResolver currentTenantIdentifierResolver) {
@@ -270,6 +259,7 @@ public class LocalSessionFactoryBuilder extends Configuration {
 	 * <p>Default is to search all specified packages for classes annotated with
 	 * {@code @javax.persistence.Entity}, {@code @javax.persistence.Embeddable}
 	 * or {@code @javax.persistence.MappedSuperclass}.
+	 *
 	 * @see #scanPackages
 	 */
 	public LocalSessionFactoryBuilder setEntityTypeFilters(TypeFilter... entityTypeFilters) {
@@ -279,6 +269,7 @@ public class LocalSessionFactoryBuilder extends Configuration {
 
 	/**
 	 * Add the given annotated classes in a batch.
+	 *
 	 * @see #addAnnotatedClass
 	 * @see #scanPackages
 	 */
@@ -291,6 +282,7 @@ public class LocalSessionFactoryBuilder extends Configuration {
 
 	/**
 	 * Add the given annotated packages in a batch.
+	 *
 	 * @see #addPackage
 	 * @see #scanPackages
 	 */
@@ -304,6 +296,7 @@ public class LocalSessionFactoryBuilder extends Configuration {
 	/**
 	 * Perform Spring-based scanning for entity classes, registering them
 	 * as annotated classes with this {@code Configuration}.
+	 *
 	 * @param packagesToScan one or more Java package names
 	 * @throws HibernateException if scanning fails for any reason
 	 */
@@ -324,18 +317,15 @@ public class LocalSessionFactoryBuilder extends Configuration {
 						String className = reader.getClassMetadata().getClassName();
 						if (matchesEntityTypeFilter(reader, readerFactory)) {
 							entityClassNames.add(className);
-						}
-						else if (CONVERTER_TYPE_FILTER.match(reader, readerFactory)) {
+						} else if (CONVERTER_TYPE_FILTER.match(reader, readerFactory)) {
 							converterClassNames.add(className);
-						}
-						else if (className.endsWith(PACKAGE_INFO_SUFFIX)) {
+						} else if (className.endsWith(PACKAGE_INFO_SUFFIX)) {
 							packageNames.add(className.substring(0, className.length() - PACKAGE_INFO_SUFFIX.length()));
 						}
 					}
 				}
 			}
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new MappingException("Failed to scan classpath for unlisted classes", ex);
 		}
 		try {
@@ -349,8 +339,7 @@ public class LocalSessionFactoryBuilder extends Configuration {
 			for (String packageName : packageNames) {
 				addPackage(packageName);
 			}
-		}
-		catch (ClassNotFoundException ex) {
+		} catch (ClassNotFoundException ex) {
 			throw new MappingException("Failed to load annotated classes from classpath", ex);
 		}
 		return this;
@@ -382,13 +371,14 @@ public class LocalSessionFactoryBuilder extends Configuration {
 	 * then block until Hibernate's bootstrapping completed, if not ready by then.
 	 * For maximum benefit, make sure to avoid early {@code SessionFactory} calls
 	 * in init methods of related beans, even for metadata introspection purposes.
-	 * @since 4.3
+	 *
 	 * @see #buildSessionFactory()
+	 * @since 4.3
 	 */
 	public SessionFactory buildSessionFactory(AsyncTaskExecutor bootstrapExecutor) {
 		Assert.notNull(bootstrapExecutor, "AsyncTaskExecutor must not be null");
 		return (SessionFactory) Proxy.newProxyInstance(this.resourcePatternResolver.getClassLoader(),
-				new Class<?>[] {SessionFactoryImplementor.class, InfrastructureProxy.class},
+				new Class<?>[]{SessionFactoryImplementor.class, InfrastructureProxy.class},
 				new BootstrapSessionFactoryInvocationHandler(bootstrapExecutor));
 	}
 
@@ -396,6 +386,7 @@ public class LocalSessionFactoryBuilder extends Configuration {
 	/**
 	 * Proxy invocation handler for background bootstrapping, only enforcing
 	 * a fully initialized target {@code SessionFactory} when actually needed.
+	 *
 	 * @since 4.3
 	 */
 	private class BootstrapSessionFactoryInvocationHandler implements InvocationHandler {
@@ -427,8 +418,7 @@ public class LocalSessionFactoryBuilder extends Configuration {
 			// enforcing its full initialization...
 			try {
 				return method.invoke(getSessionFactory(), args);
-			}
-			catch (InvocationTargetException ex) {
+			} catch (InvocationTargetException ex) {
 				throw ex.getTargetException();
 			}
 		}
@@ -436,12 +426,10 @@ public class LocalSessionFactoryBuilder extends Configuration {
 		private SessionFactory getSessionFactory() {
 			try {
 				return this.sessionFactoryFuture.get();
-			}
-			catch (InterruptedException ex) {
+			} catch (InterruptedException ex) {
 				Thread.currentThread().interrupt();
 				throw new IllegalStateException("Interrupted during initialization of Hibernate SessionFactory", ex);
-			}
-			catch (ExecutionException ex) {
+			} catch (ExecutionException ex) {
 				Throwable cause = ex.getCause();
 				if (cause instanceof HibernateException) {
 					// Rethrow a provider configuration exception (possibly with a nested cause) directly

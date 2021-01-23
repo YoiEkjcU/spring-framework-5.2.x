@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.orm;
 
 import org.springframework.dao.DataRetrievalFailureException;
@@ -39,7 +23,8 @@ public class ObjectRetrievalFailureException extends DataRetrievalFailureExcepti
 	/**
 	 * Create a general ObjectRetrievalFailureException with the given message,
 	 * without any information on the affected object.
-	 * @param msg the detail message
+	 *
+	 * @param msg   the detail message
 	 * @param cause the source exception
 	 */
 	public ObjectRetrievalFailureException(String msg, Throwable cause) {
@@ -51,8 +36,9 @@ public class ObjectRetrievalFailureException extends DataRetrievalFailureExcepti
 	/**
 	 * Create a new ObjectRetrievalFailureException for the given object,
 	 * with the default "not found" message.
+	 *
 	 * @param persistentClass the persistent class
-	 * @param identifier the ID of the object that should have been retrieved
+	 * @param identifier      the ID of the object that should have been retrieved
 	 */
 	public ObjectRetrievalFailureException(Class<?> persistentClass, Object identifier) {
 		this(persistentClass, identifier,
@@ -63,10 +49,11 @@ public class ObjectRetrievalFailureException extends DataRetrievalFailureExcepti
 	/**
 	 * Create a new ObjectRetrievalFailureException for the given object,
 	 * with the given explicit message and exception.
+	 *
 	 * @param persistentClass the persistent class
-	 * @param identifier the ID of the object that should have been retrieved
-	 * @param msg the detail message
-	 * @param cause the source exception
+	 * @param identifier      the ID of the object that should have been retrieved
+	 * @param msg             the detail message
+	 * @param cause           the source exception
 	 */
 	public ObjectRetrievalFailureException(
 			Class<?> persistentClass, Object identifier, String msg, @Nullable Throwable cause) {
@@ -79,8 +66,9 @@ public class ObjectRetrievalFailureException extends DataRetrievalFailureExcepti
 	/**
 	 * Create a new ObjectRetrievalFailureException for the given object,
 	 * with the default "not found" message.
+	 *
 	 * @param persistentClassName the name of the persistent class
-	 * @param identifier the ID of the object that should have been retrieved
+	 * @param identifier          the ID of the object that should have been retrieved
 	 */
 	public ObjectRetrievalFailureException(String persistentClassName, Object identifier) {
 		this(persistentClassName, identifier,
@@ -91,10 +79,11 @@ public class ObjectRetrievalFailureException extends DataRetrievalFailureExcepti
 	/**
 	 * Create a new ObjectRetrievalFailureException for the given object,
 	 * with the given explicit message and exception.
+	 *
 	 * @param persistentClassName the name of the persistent class
-	 * @param identifier the ID of the object that should have been retrieved
-	 * @param msg the detail message
-	 * @param cause the source exception
+	 * @param identifier          the ID of the object that should have been retrieved
+	 * @param msg                 the detail message
+	 * @param cause               the source exception
 	 */
 	public ObjectRetrievalFailureException(
 			String persistentClassName, Object identifier, String msg, @Nullable Throwable cause) {

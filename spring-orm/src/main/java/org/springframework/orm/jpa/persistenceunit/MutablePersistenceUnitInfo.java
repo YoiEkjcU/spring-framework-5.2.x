@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.orm.jpa.persistenceunit;
 
 import java.net.URL;
@@ -114,8 +98,7 @@ public class MutablePersistenceUnitInfo implements SmartPersistenceUnitInfo {
 	public PersistenceUnitTransactionType getTransactionType() {
 		if (this.transactionType != null) {
 			return this.transactionType;
-		}
-		else {
+		} else {
 			return (this.jtaDataSource != null ?
 					PersistenceUnitTransactionType.JTA : PersistenceUnitTransactionType.RESOURCE_LOCAL);
 		}
@@ -171,6 +154,7 @@ public class MutablePersistenceUnitInfo implements SmartPersistenceUnitInfo {
 
 	/**
 	 * Add a managed class name to the persistence provider's metadata.
+	 *
 	 * @see javax.persistence.spi.PersistenceUnitInfo#getManagedClassNames()
 	 * @see #addManagedPackage
 	 */
@@ -188,9 +172,10 @@ public class MutablePersistenceUnitInfo implements SmartPersistenceUnitInfo {
 	 * <p>Note: This refers to annotated {@code package-info.java} files. It does
 	 * <i>not</i> trigger entity scanning in the specified package; this is
 	 * rather the job of {@link DefaultPersistenceUnitManager#setPackagesToScan}.
-	 * @since 4.1
+	 *
 	 * @see SmartPersistenceUnitInfo#getManagedPackages()
 	 * @see #addManagedClassName
+	 * @since 4.1
 	 */
 	public void addManagedPackage(String packageName) {
 		this.managedPackages.add(packageName);
@@ -264,6 +249,7 @@ public class MutablePersistenceUnitInfo implements SmartPersistenceUnitInfo {
 
 	/**
 	 * This implementation returns the default ClassLoader.
+	 *
 	 * @see org.springframework.util.ClassUtils#getDefaultClassLoader()
 	 */
 	@Override

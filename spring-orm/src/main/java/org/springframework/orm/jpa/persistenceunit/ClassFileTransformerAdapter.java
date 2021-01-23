@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2016 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.orm.jpa.persistenceunit;
 
 import java.lang.instrument.ClassFileTransformer;
@@ -34,8 +18,8 @@ import org.springframework.util.Assert;
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
- * @since 2.0
  * @see javax.persistence.spi.PersistenceUnitInfo#addTransformer(javax.persistence.spi.ClassTransformer)
+ * @since 2.0
  */
 class ClassFileTransformerAdapter implements ClassFileTransformer {
 
@@ -76,23 +60,20 @@ class ClassFileTransformerAdapter implements ClassFileTransformer {
 							classfileBuffer.length + "; bytes out=" + transformed.length);
 				}
 				return transformed;
-			}
-			catch (ClassCircularityError ex) {
+			} catch (ClassCircularityError ex) {
 				if (logger.isErrorEnabled()) {
 					logger.error("Circularity error while weaving class [" + className + "] with " +
 							"transformer of class [" + this.classTransformer.getClass().getName() + "]", ex);
 				}
 				throw new IllegalStateException("Failed to weave class [" + className + "]", ex);
-			}
-			catch (Throwable ex) {
+			} catch (Throwable ex) {
 				if (logger.isWarnEnabled()) {
 					logger.warn("Error weaving class [" + className + "] with transformer of class [" +
 							this.classTransformer.getClass().getName() + "]", ex);
 				}
 				// The exception will be ignored by the class loader, anyway...
 				throw new IllegalStateException("Could not weave class [" + className + "]", ex);
-			}
-			finally {
+			} finally {
 				this.currentlyTransforming = false;
 			}
 		}
