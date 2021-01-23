@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.propertyeditors;
 
 import java.beans.PropertyEditorSupport;
@@ -28,7 +12,7 @@ import org.springframework.util.StringUtils;
  * {@link java.util.ResourceBundle ResourceBundles}.
  *
  * <p>Only supports conversion <i>from</i> a String, but not <i>to</i> a String.
- *
+ * <p>
  * Find below some examples of using this class in a (properly configured)
  * Spring container using XML-based metadata:
  *
@@ -87,8 +71,7 @@ public class ResourceBundleEditor extends PropertyEditorSupport {
 		int separator = name.indexOf(BASE_NAME_SEPARATOR);
 		if (separator == -1) {
 			setValue(ResourceBundle.getBundle(name));
-		}
-		else {
+		} else {
 			// The name potentially contains locale information
 			String baseName = name.substring(0, separator);
 			if (!StringUtils.hasText(baseName)) {

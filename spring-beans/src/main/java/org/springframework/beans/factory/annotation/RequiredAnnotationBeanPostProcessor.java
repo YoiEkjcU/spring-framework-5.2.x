@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.factory.annotation;
 
 import java.beans.PropertyDescriptor;
@@ -68,9 +52,9 @@ import org.springframework.util.Assert;
  *
  * @author Rob Harrop
  * @author Juergen Hoeller
- * @since 2.0
  * @see #setRequiredAnnotationType
  * @see Required
+ * @since 2.0
  * @deprecated as of 5.1, in favor of using constructor injection for required settings
  * (or a custom {@link org.springframework.beans.factory.InitializingBean} implementation)
  */
@@ -81,6 +65,7 @@ public class RequiredAnnotationBeanPostProcessor implements SmartInstantiationAw
 	/**
 	 * Bean definition attribute that may indicate whether a given bean is supposed
 	 * to be skipped when performing this post-processor's required property check.
+	 *
 	 * @see #shouldSkip
 	 */
 	public static final String SKIP_REQUIRED_CHECK_ATTRIBUTE =
@@ -170,8 +155,9 @@ public class RequiredAnnotationBeanPostProcessor implements SmartInstantiationAw
 	 * {@link #SKIP_REQUIRED_CHECK_ATTRIBUTE} attribute in the bean definition, if any.
 	 * It also suggests skipping in case of a bean definition with a "factory-bean"
 	 * reference set, assuming that instance-based factories pre-populate the bean.
+	 *
 	 * @param beanFactory the BeanFactory to check against
-	 * @param beanName the name of the bean to check against
+	 * @param beanName    the name of the bean to check against
 	 * @return {@code true} to skip the bean; {@code false} to process it
 	 */
 	protected boolean shouldSkip(@Nullable ConfigurableListableBeanFactory beanFactory, String beanName) {
@@ -191,6 +177,7 @@ public class RequiredAnnotationBeanPostProcessor implements SmartInstantiationAw
 	 * <p>This implementation looks for the existence of a
 	 * {@link #setRequiredAnnotationType "required" annotation}
 	 * on the supplied {@link PropertyDescriptor property}.
+	 *
 	 * @param propertyDescriptor the target PropertyDescriptor (never {@code null})
 	 * @return {@code true} if the supplied property has been marked as being required;
 	 * {@code false} if not, or if the supplied property does not have a setter method
@@ -202,8 +189,9 @@ public class RequiredAnnotationBeanPostProcessor implements SmartInstantiationAw
 
 	/**
 	 * Build an exception message for the given list of invalid properties.
+	 *
 	 * @param invalidProperties the list of names of invalid properties
-	 * @param beanName the name of the bean
+	 * @param beanName          the name of the bean
 	 * @return the exception message
 	 */
 	private String buildExceptionMessage(List<String> invalidProperties, String beanName) {
@@ -215,8 +203,7 @@ public class RequiredAnnotationBeanPostProcessor implements SmartInstantiationAw
 			if (i > 0) {
 				if (i == (size - 1)) {
 					sb.append(" and");
-				}
-				else {
+				} else {
 					sb.append(",");
 				}
 			}

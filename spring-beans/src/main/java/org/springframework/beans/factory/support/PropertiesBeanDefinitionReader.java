@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.factory.support;
 
 import java.io.IOException;
@@ -72,8 +56,8 @@ import org.springframework.util.StringUtils;
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @author Rob Harrop
- * @since 26.11.2003
  * @see DefaultListableBeanFactory
+ * @since 26.11.2003
  * @deprecated as of 5.3, in favor of Spring's common bean definition formats
  * and/or custom reader implementations
  */
@@ -153,8 +137,9 @@ public class PropertiesBeanDefinitionReader extends AbstractBeanDefinitionReader
 
 	/**
 	 * Create new PropertiesBeanDefinitionReader for the given bean factory.
+	 *
 	 * @param registry the BeanFactory to load bean definitions into,
-	 * in the form of a BeanDefinitionRegistry
+	 *                 in the form of a BeanDefinitionRegistry
 	 */
 	public PropertiesBeanDefinitionReader(BeanDefinitionRegistry registry) {
 		super(registry);
@@ -188,6 +173,7 @@ public class PropertiesBeanDefinitionReader extends AbstractBeanDefinitionReader
 	/**
 	 * Set the PropertiesPersister to use for parsing properties files.
 	 * The default is ResourcePropertiesPersister.
+	 *
 	 * @see ResourcePropertiesPersister#INSTANCE
 	 */
 	public void setPropertiesPersister(@Nullable PropertiesPersister propertiesPersister) {
@@ -206,6 +192,7 @@ public class PropertiesBeanDefinitionReader extends AbstractBeanDefinitionReader
 	/**
 	 * Load bean definitions from the specified properties file,
 	 * using all property keys (i.e. not filtering by prefix).
+	 *
 	 * @param resource the resource descriptor for the properties file
 	 * @return the number of bean definitions found
 	 * @throws BeanDefinitionStoreException in case of loading or parsing errors
@@ -218,9 +205,10 @@ public class PropertiesBeanDefinitionReader extends AbstractBeanDefinitionReader
 
 	/**
 	 * Load bean definitions from the specified properties file.
+	 *
 	 * @param resource the resource descriptor for the properties file
-	 * @param prefix a filter within the keys in the map: e.g. 'beans.'
-	 * (can be empty or {@code null})
+	 * @param prefix   a filter within the keys in the map: e.g. 'beans.'
+	 *                 (can be empty or {@code null})
 	 * @return the number of bean definitions found
 	 * @throws BeanDefinitionStoreException in case of loading or parsing errors
 	 */
@@ -230,8 +218,9 @@ public class PropertiesBeanDefinitionReader extends AbstractBeanDefinitionReader
 
 	/**
 	 * Load bean definitions from the specified properties file.
+	 *
 	 * @param encodedResource the resource descriptor for the properties file,
-	 * allowing to specify an encoding to use for parsing the file
+	 *                        allowing to specify an encoding to use for parsing the file
 	 * @return the number of bean definitions found
 	 * @throws BeanDefinitionStoreException in case of loading or parsing errors
 	 */
@@ -241,10 +230,11 @@ public class PropertiesBeanDefinitionReader extends AbstractBeanDefinitionReader
 
 	/**
 	 * Load bean definitions from the specified properties file.
+	 *
 	 * @param encodedResource the resource descriptor for the properties file,
-	 * allowing to specify an encoding to use for parsing the file
-	 * @param prefix a filter within the keys in the map: e.g. 'beans.'
-	 * (can be empty or {@code null})
+	 *                        allowing to specify an encoding to use for parsing the file
+	 * @param prefix          a filter within the keys in the map: e.g. 'beans.'
+	 *                        (can be empty or {@code null})
 	 * @return the number of bean definitions found
 	 * @throws BeanDefinitionStoreException in case of loading or parsing errors
 	 */
@@ -260,8 +250,7 @@ public class PropertiesBeanDefinitionReader extends AbstractBeanDefinitionReader
 			try (InputStream is = encodedResource.getResource().getInputStream()) {
 				if (encodedResource.getEncoding() != null) {
 					getPropertiesPersister().load(props, new InputStreamReader(is, encodedResource.getEncoding()));
-				}
-				else {
+				} else {
 					getPropertiesPersister().load(props, is);
 				}
 			}
@@ -271,8 +260,7 @@ public class PropertiesBeanDefinitionReader extends AbstractBeanDefinitionReader
 				logger.debug("Loaded " + count + " bean definitions from " + encodedResource);
 			}
 			return count;
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new BeanDefinitionStoreException("Could not parse properties from " + encodedResource.getResource(), ex);
 		}
 	}
@@ -280,6 +268,7 @@ public class PropertiesBeanDefinitionReader extends AbstractBeanDefinitionReader
 	/**
 	 * Register bean definitions contained in a resource bundle,
 	 * using all property keys (i.e. not filtering by prefix).
+	 *
 	 * @param rb the ResourceBundle to load from
 	 * @return the number of bean definitions found
 	 * @throws BeanDefinitionStoreException in case of loading or parsing errors
@@ -293,9 +282,10 @@ public class PropertiesBeanDefinitionReader extends AbstractBeanDefinitionReader
 	 * Register bean definitions contained in a ResourceBundle.
 	 * <p>Similar syntax as for a Map. This method is useful to enable
 	 * standard Java internationalization support.
-	 * @param rb the ResourceBundle to load from
+	 *
+	 * @param rb     the ResourceBundle to load from
 	 * @param prefix a filter within the keys in the map: e.g. 'beans.'
-	 * (can be empty or {@code null})
+	 *               (can be empty or {@code null})
 	 * @return the number of bean definitions found
 	 * @throws BeanDefinitionStoreException in case of loading or parsing errors
 	 */
@@ -314,9 +304,10 @@ public class PropertiesBeanDefinitionReader extends AbstractBeanDefinitionReader
 	/**
 	 * Register bean definitions contained in a Map, using all property keys (i.e. not
 	 * filtering by prefix).
+	 *
 	 * @param map a map of {@code name} to {@code property} (String or Object). Property
-	 * values will be strings if coming from a Properties file etc. Property names
-	 * (keys) <b>must</b> be Strings. Class keys must be Strings.
+	 *            values will be strings if coming from a Properties file etc. Property names
+	 *            (keys) <b>must</b> be Strings. Class keys must be Strings.
 	 * @return the number of bean definitions found
 	 * @throws BeansException in case of loading or parsing errors
 	 * @see #registerBeanDefinitions(java.util.Map, String, String)
@@ -328,11 +319,12 @@ public class PropertiesBeanDefinitionReader extends AbstractBeanDefinitionReader
 	/**
 	 * Register bean definitions contained in a Map.
 	 * Ignore ineligible properties.
-	 * @param map a map of {@code name} to {@code property} (String or Object). Property
-	 * values will be strings if coming from a Properties file etc. Property names
-	 * (keys) <b>must</b> be Strings. Class keys must be Strings.
+	 *
+	 * @param map    a map of {@code name} to {@code property} (String or Object). Property
+	 *               values will be strings if coming from a Properties file etc. Property names
+	 *               (keys) <b>must</b> be Strings. Class keys must be Strings.
 	 * @param prefix a filter within the keys in the map: e.g. 'beans.'
-	 * (can be empty or {@code null})
+	 *               (can be empty or {@code null})
 	 * @return the number of bean definitions found
 	 * @throws BeansException in case of loading or parsing errors
 	 */
@@ -343,13 +335,14 @@ public class PropertiesBeanDefinitionReader extends AbstractBeanDefinitionReader
 	/**
 	 * Register bean definitions contained in a Map.
 	 * Ignore ineligible properties.
-	 * @param map a map of {@code name} to {@code property} (String or Object). Property
-	 * values will be strings if coming from a Properties file etc. Property names
-	 * (keys) <b>must</b> be Strings. Class keys must be Strings.
-	 * @param prefix a filter within the keys in the map: e.g. 'beans.'
-	 * (can be empty or {@code null})
+	 *
+	 * @param map                 a map of {@code name} to {@code property} (String or Object). Property
+	 *                            values will be strings if coming from a Properties file etc. Property names
+	 *                            (keys) <b>must</b> be Strings. Class keys must be Strings.
+	 * @param prefix              a filter within the keys in the map: e.g. 'beans.'
+	 *                            (can be empty or {@code null})
 	 * @param resourceDescription description of the resource that the
-	 * Map came from (for logging purposes)
+	 *                            Map came from (for logging purposes)
 	 * @return the number of bean definitions found
 	 * @throws BeansException in case of loading or parsing errors
 	 * @see #registerBeanDefinitions(Map, String)
@@ -371,12 +364,11 @@ public class PropertiesBeanDefinitionReader extends AbstractBeanDefinitionReader
 				// Key is of form: prefix<name>.property
 				String nameAndProperty = keyString.substring(prefix.length());
 				// Find dot before property name, ignoring dots in property keys.
-				int sepIdx ;
+				int sepIdx;
 				int propKeyIdx = nameAndProperty.indexOf(PropertyAccessor.PROPERTY_KEY_PREFIX);
 				if (propKeyIdx != -1) {
 					sepIdx = nameAndProperty.lastIndexOf(SEPARATOR, propKeyIdx);
-				}
-				else {
+				} else {
 					sepIdx = nameAndProperty.lastIndexOf(SEPARATOR);
 				}
 				if (sepIdx != -1) {
@@ -389,8 +381,7 @@ public class PropertiesBeanDefinitionReader extends AbstractBeanDefinitionReader
 						registerBeanDefinition(beanName, map, prefix + beanName, resourceDescription);
 						++beanCount;
 					}
-				}
-				else {
+				} else {
 					// Ignore it: It wasn't a valid bean name and property,
 					// although it did start with the required prefix.
 					if (logger.isDebugEnabled()) {
@@ -406,11 +397,12 @@ public class PropertiesBeanDefinitionReader extends AbstractBeanDefinitionReader
 	/**
 	 * Get all property values, given a prefix (which will be stripped)
 	 * and add the bean they define to the factory with the given name.
-	 * @param beanName name of the bean to define
-	 * @param map a Map containing string pairs
-	 * @param prefix prefix of each entry, which will be stripped
+	 *
+	 * @param beanName            name of the bean to define
+	 * @param map                 a Map containing string pairs
+	 * @param prefix              prefix of each entry, which will be stripped
 	 * @param resourceDescription description of the resource that the
-	 * Map came from (for logging purposes)
+	 *                            Map came from (for logging purposes)
 	 * @throws BeansException if the bean definition could not be parsed or registered
 	 */
 	protected void registerBeanDefinition(String beanName, Map<?, ?> map, String prefix, String resourceDescription)
@@ -434,39 +426,31 @@ public class PropertiesBeanDefinitionReader extends AbstractBeanDefinitionReader
 				String property = key.substring(beginIndex);
 				if (CLASS_KEY.equals(property)) {
 					className = StringUtils.trimWhitespace((String) entry.getValue());
-				}
-				else if (PARENT_KEY.equals(property)) {
+				} else if (PARENT_KEY.equals(property)) {
 					parent = StringUtils.trimWhitespace((String) entry.getValue());
-				}
-				else if (ABSTRACT_KEY.equals(property)) {
+				} else if (ABSTRACT_KEY.equals(property)) {
 					String val = StringUtils.trimWhitespace((String) entry.getValue());
 					isAbstract = TRUE_VALUE.equals(val);
-				}
-				else if (SCOPE_KEY.equals(property)) {
+				} else if (SCOPE_KEY.equals(property)) {
 					// Spring 2.0 style
 					scope = StringUtils.trimWhitespace((String) entry.getValue());
-				}
-				else if (SINGLETON_KEY.equals(property)) {
+				} else if (SINGLETON_KEY.equals(property)) {
 					// Spring 1.2 style
 					String val = StringUtils.trimWhitespace((String) entry.getValue());
 					scope = ("".equals(val) || TRUE_VALUE.equals(val) ? BeanDefinition.SCOPE_SINGLETON :
 							BeanDefinition.SCOPE_PROTOTYPE);
-				}
-				else if (LAZY_INIT_KEY.equals(property)) {
+				} else if (LAZY_INIT_KEY.equals(property)) {
 					String val = StringUtils.trimWhitespace((String) entry.getValue());
 					lazyInit = TRUE_VALUE.equals(val);
-				}
-				else if (property.startsWith(CONSTRUCTOR_ARG_PREFIX)) {
+				} else if (property.startsWith(CONSTRUCTOR_ARG_PREFIX)) {
 					if (property.endsWith(REF_SUFFIX)) {
 						int index = Integer.parseInt(property.substring(1, property.length() - REF_SUFFIX.length()));
 						cas.addIndexedArgumentValue(index, new RuntimeBeanReference(entry.getValue().toString()));
-					}
-					else {
+					} else {
 						int index = Integer.parseInt(property.substring(1));
 						cas.addIndexedArgumentValue(index, readValue(entry));
 					}
-				}
-				else if (property.endsWith(REF_SUFFIX)) {
+				} else if (property.endsWith(REF_SUFFIX)) {
 					// This isn't a real property, but a reference to another prototype
 					// Extract property name: property is of form dog(ref)
 					property = property.substring(0, property.length() - REF_SUFFIX.length());
@@ -476,8 +460,7 @@ public class PropertiesBeanDefinitionReader extends AbstractBeanDefinitionReader
 					// this will ensure that the reference is resolved at runtime.
 					Object val = new RuntimeBeanReference(ref);
 					pvs.add(property, val);
-				}
-				else {
+				} else {
 					// It's a normal bean property.
 					pvs.add(property, readValue(entry));
 				}
@@ -504,11 +487,9 @@ public class PropertiesBeanDefinitionReader extends AbstractBeanDefinitionReader
 			bd.setConstructorArgumentValues(cas);
 			bd.setPropertyValues(pvs);
 			getRegistry().registerBeanDefinition(beanName, bd);
-		}
-		catch (ClassNotFoundException ex) {
+		} catch (ClassNotFoundException ex) {
 			throw new CannotLoadBeanClassException(resourceDescription, beanName, className, ex);
-		}
-		catch (LinkageError err) {
+		} catch (LinkageError err) {
 			throw new CannotLoadBeanClassException(resourceDescription, beanName, className, err);
 		}
 	}
@@ -528,8 +509,7 @@ public class PropertiesBeanDefinitionReader extends AbstractBeanDefinitionReader
 				if (targetName.startsWith(REF_PREFIX)) {
 					// Escaped prefix -> use plain value.
 					val = targetName;
-				}
-				else {
+				} else {
 					val = new RuntimeBeanReference(targetName);
 				}
 			}

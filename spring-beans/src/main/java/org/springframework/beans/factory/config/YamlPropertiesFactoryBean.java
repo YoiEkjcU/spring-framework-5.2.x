@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.factory.config;
 
 import java.util.Properties;
@@ -48,7 +32,7 @@ import org.springframework.lang.Nullable;
  *     url: https://foo.bar.com
  *     name: My Cool App
  * </pre>
- *
+ * <p>
  * is transformed into these properties:
  *
  * <pre class="code">
@@ -57,7 +41,7 @@ import org.springframework.lang.Nullable;
  * environments.prod.url=https://foo.bar.com
  * environments.prod.name=My Cool App
  * </pre>
- *
+ * <p>
  * Lists are split as property keys with <code>[]</code> dereferencers, for
  * example this YAML:
  *
@@ -66,7 +50,7 @@ import org.springframework.lang.Nullable;
  * - dev.bar.com
  * - foo.bar.com
  * </pre>
- *
+ * <p>
  * becomes properties like this:
  *
  * <pre class="code">
@@ -127,6 +111,7 @@ public class YamlPropertiesFactoryBean extends YamlProcessor implements FactoryB
 	 * properties with the content of all resources.
 	 * <p>Invoked lazily the first time {@link #getObject()} is invoked in
 	 * case of a shared singleton; else, on each {@link #getObject()} call.
+	 *
 	 * @return the object returned by this factory
 	 * @see #process(MatchCallback)
 	 */

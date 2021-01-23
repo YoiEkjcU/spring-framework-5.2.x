@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.propertyeditors;
 
 import java.beans.PropertyEditorSupport;
@@ -42,13 +26,13 @@ import org.springframework.util.Assert;
  * if no existing context-relative resource could be found.
  *
  * @author Juergen Hoeller
- * @since 4.3.2
  * @see java.nio.file.Path
  * @see Paths#get(URI)
  * @see ResourceEditor
  * @see org.springframework.core.io.ResourceLoader
  * @see FileEditor
  * @see URLEditor
+ * @since 4.3.2
  */
 public class PathEditor extends PropertyEditorSupport {
 
@@ -64,6 +48,7 @@ public class PathEditor extends PropertyEditorSupport {
 
 	/**
 	 * Create a new PathEditor, using the given ResourceEditor underneath.
+	 *
 	 * @param resourceEditor the ResourceEditor to use
 	 */
 	public PathEditor(ResourceEditor resourceEditor) {
@@ -84,8 +69,7 @@ public class PathEditor extends PropertyEditorSupport {
 					setValue(Paths.get(uri).normalize());
 					return;
 				}
-			}
-			catch (URISyntaxException | FileSystemNotFoundException ex) {
+			} catch (URISyntaxException | FileSystemNotFoundException ex) {
 				// Not a valid URI (let's try as Spring resource location),
 				// or a URI scheme not registered for NIO (let's try URL
 				// protocol handlers via Spring's resource mechanism).
@@ -96,15 +80,12 @@ public class PathEditor extends PropertyEditorSupport {
 		Resource resource = (Resource) this.resourceEditor.getValue();
 		if (resource == null) {
 			setValue(null);
-		}
-		else if (!resource.exists() && nioPathCandidate) {
+		} else if (!resource.exists() && nioPathCandidate) {
 			setValue(Paths.get(text).normalize());
-		}
-		else {
+		} else {
 			try {
 				setValue(resource.getFile().toPath());
-			}
-			catch (IOException ex) {
+			} catch (IOException ex) {
 				throw new IllegalArgumentException("Failed to retrieve file for " + resource, ex);
 			}
 		}

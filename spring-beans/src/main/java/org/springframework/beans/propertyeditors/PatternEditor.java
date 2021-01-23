@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.propertyeditors;
 
 import java.beans.PropertyEditorSupport;
@@ -26,9 +10,9 @@ import org.springframework.lang.Nullable;
  * Expects the same syntax as Pattern's {@code compile} method.
  *
  * @author Juergen Hoeller
- * @since 2.0.1
  * @see java.util.regex.Pattern
  * @see java.util.regex.Pattern#compile(String)
+ * @since 2.0.1
  */
 public class PatternEditor extends PropertyEditorSupport {
 
@@ -44,6 +28,7 @@ public class PatternEditor extends PropertyEditorSupport {
 
 	/**
 	 * Create a new PatternEditor with the given settings.
+	 *
 	 * @param flags the {@code java.util.regex.Pattern} flags to apply
 	 * @see java.util.regex.Pattern#compile(String, int)
 	 * @see java.util.regex.Pattern#CASE_INSENSITIVE

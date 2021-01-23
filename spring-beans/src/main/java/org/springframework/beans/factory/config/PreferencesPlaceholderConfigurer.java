@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.factory.config;
 
 import java.util.Properties;
@@ -38,10 +22,10 @@ import org.springframework.lang.Nullable;
  * Uses the respective root node if not specified.
  *
  * @author Juergen Hoeller
- * @since 16.02.2004
  * @see #setSystemTreePath
  * @see #setUserTreePath
  * @see java.util.prefs.Preferences
+ * @since 16.02.2004
  * @deprecated as of 5.2, along with {@link PropertyPlaceholderConfigurer}
  */
 @Deprecated
@@ -115,8 +99,9 @@ public class PreferencesPlaceholderConfigurer extends PropertyPlaceholderConfigu
 
 	/**
 	 * Resolve the given path and key against the given Preferences.
-	 * @param path the preferences path (placeholder part before '/')
-	 * @param key the preferences key (placeholder part after '/')
+	 *
+	 * @param path        the preferences path (placeholder part before '/')
+	 * @param key         the preferences key (placeholder part after '/')
 	 * @param preferences the Preferences to resolve against
 	 * @return the value for the placeholder, or {@code null} if none found
 	 */
@@ -127,16 +112,13 @@ public class PreferencesPlaceholderConfigurer extends PropertyPlaceholderConfigu
 			try {
 				if (preferences.nodeExists(path)) {
 					return preferences.node(path).get(key, null);
-				}
-				else {
+				} else {
 					return null;
 				}
-			}
-			catch (BackingStoreException ex) {
+			} catch (BackingStoreException ex) {
 				throw new BeanDefinitionStoreException("Cannot access specified node path [" + path + "]", ex);
 			}
-		}
-		else {
+		} else {
 			return preferences.get(key, null);
 		}
 	}

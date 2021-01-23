@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.factory.config;
 
 import java.util.LinkedHashMap;
@@ -41,7 +25,7 @@ import org.springframework.lang.Nullable;
  *    one: two
  * three: four
  * </pre>
- *
+ * <p>
  * plus (later in the list)
  *
  * <pre class="code">
@@ -50,7 +34,7 @@ import org.springframework.lang.Nullable;
  *    one: 2
  * five: six
  * </pre>
- *
+ * <p>
  * results in an effective input of
  *
  * <pre class="code">
@@ -60,7 +44,7 @@ import org.springframework.lang.Nullable;
  * three: four
  * five: six
  * </pre>
- *
+ * <p>
  * Note that the value of "foo" in the first document is not simply replaced
  * with the value in the second, but its nested values are merged.
  *
@@ -116,6 +100,7 @@ public class YamlMapFactoryBean extends YamlProcessor implements FactoryBean<Map
 	 * <p>Invoked lazily the first time {@link #getObject()} is invoked in
 	 * case of a shared singleton; else, on each {@link #getObject()} call.
 	 * <p>The default implementation returns the merged {@code Map} instance.
+	 *
 	 * @return the object returned by this factory
 	 * @see #process(MatchCallback)
 	 */
@@ -134,8 +119,7 @@ public class YamlMapFactoryBean extends YamlProcessor implements FactoryBean<Map
 				Map<String, Object> result = new LinkedHashMap<>((Map<String, Object>) existing);
 				merge(result, (Map) value);
 				output.put(key, result);
-			}
-			else {
+			} else {
 				output.put(key, value);
 			}
 		});

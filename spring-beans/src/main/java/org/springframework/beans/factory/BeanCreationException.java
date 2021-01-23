@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.factory;
 
 import java.io.PrintStream;
@@ -46,6 +30,7 @@ public class BeanCreationException extends FatalBeanException {
 
 	/**
 	 * Create a new BeanCreationException.
+	 *
 	 * @param msg the detail message
 	 */
 	public BeanCreationException(String msg) {
@@ -56,7 +41,8 @@ public class BeanCreationException extends FatalBeanException {
 
 	/**
 	 * Create a new BeanCreationException.
-	 * @param msg the detail message
+	 *
+	 * @param msg   the detail message
 	 * @param cause the root cause
 	 */
 	public BeanCreationException(String msg, Throwable cause) {
@@ -67,8 +53,9 @@ public class BeanCreationException extends FatalBeanException {
 
 	/**
 	 * Create a new BeanCreationException.
+	 *
 	 * @param beanName the name of the bean requested
-	 * @param msg the detail message
+	 * @param msg      the detail message
 	 */
 	public BeanCreationException(String beanName, String msg) {
 		super("Error creating bean with name '" + beanName + "': " + msg);
@@ -78,9 +65,10 @@ public class BeanCreationException extends FatalBeanException {
 
 	/**
 	 * Create a new BeanCreationException.
+	 *
 	 * @param beanName the name of the bean requested
-	 * @param msg the detail message
-	 * @param cause the root cause
+	 * @param msg      the detail message
+	 * @param cause    the root cause
 	 */
 	public BeanCreationException(String beanName, String msg, Throwable cause) {
 		this(beanName, msg);
@@ -89,10 +77,11 @@ public class BeanCreationException extends FatalBeanException {
 
 	/**
 	 * Create a new BeanCreationException.
+	 *
 	 * @param resourceDescription description of the resource
-	 * that the bean definition came from
-	 * @param beanName the name of the bean requested
-	 * @param msg the detail message
+	 *                            that the bean definition came from
+	 * @param beanName            the name of the bean requested
+	 * @param msg                 the detail message
 	 */
 	public BeanCreationException(@Nullable String resourceDescription, @Nullable String beanName, String msg) {
 		super("Error creating bean with name '" + beanName + "'" +
@@ -104,11 +93,12 @@ public class BeanCreationException extends FatalBeanException {
 
 	/**
 	 * Create a new BeanCreationException.
+	 *
 	 * @param resourceDescription description of the resource
-	 * that the bean definition came from
-	 * @param beanName the name of the bean requested
-	 * @param msg the detail message
-	 * @param cause the root cause
+	 *                            that the bean definition came from
+	 * @param beanName            the name of the bean requested
+	 * @param msg                 the detail message
+	 * @param cause               the root cause
 	 */
 	public BeanCreationException(@Nullable String resourceDescription, String beanName, String msg, Throwable cause) {
 		this(resourceDescription, beanName, msg);
@@ -137,6 +127,7 @@ public class BeanCreationException extends FatalBeanException {
 	 * Add a related cause to this bean creation exception,
 	 * not being a direct cause of the failure but having occurred
 	 * earlier in the creation of the same bean instance.
+	 *
 	 * @param ex the related cause to add
 	 */
 	public void addRelatedCause(Throwable ex) {
@@ -148,6 +139,7 @@ public class BeanCreationException extends FatalBeanException {
 
 	/**
 	 * Return the related causes, if any.
+	 *
 	 * @return the array of related causes, or {@code null} if none
 	 */
 	@Nullable

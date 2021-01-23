@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2012 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.support;
 
 import java.io.Serializable;
@@ -27,8 +11,8 @@ import org.springframework.util.StringUtils;
  *
  * @author Juergen Hoeller
  * @author Jean-Pierre Pawlak
- * @since 26.05.2003
  * @see #setToggleAscendingOnProperty
+ * @since 26.05.2003
  */
 @SuppressWarnings("serial")
 public class MutableSortDefinition implements SortDefinition, Serializable {
@@ -45,6 +29,7 @@ public class MutableSortDefinition implements SortDefinition, Serializable {
 	/**
 	 * Create an empty MutableSortDefinition,
 	 * to be populated via its bean properties.
+	 *
 	 * @see #setProperty
 	 * @see #setIgnoreCase
 	 * @see #setAscending
@@ -55,6 +40,7 @@ public class MutableSortDefinition implements SortDefinition, Serializable {
 	/**
 	 * Copy constructor: create a new MutableSortDefinition
 	 * that mirrors the given sort definition.
+	 *
 	 * @param source the original sort definition
 	 */
 	public MutableSortDefinition(SortDefinition source) {
@@ -65,9 +51,10 @@ public class MutableSortDefinition implements SortDefinition, Serializable {
 
 	/**
 	 * Create a MutableSortDefinition for the given settings.
-	 * @param property the property to compare
+	 *
+	 * @param property   the property to compare
 	 * @param ignoreCase whether upper and lower case in String values should be ignored
-	 * @param ascending whether to sort ascending (true) or descending (false)
+	 * @param ascending  whether to sort ascending (true) or descending (false)
 	 */
 	public MutableSortDefinition(String property, boolean ignoreCase, boolean ascending) {
 		this.property = property;
@@ -77,9 +64,10 @@ public class MutableSortDefinition implements SortDefinition, Serializable {
 
 	/**
 	 * Create a new MutableSortDefinition.
+	 *
 	 * @param toggleAscendingOnSameProperty whether to toggle the ascending flag
-	 * if the same property gets set again (that is, {@code setProperty} gets
-	 * called with already set property name again).
+	 *                                      if the same property gets set again (that is, {@code setProperty} gets
+	 *                                      called with already set property name again).
 	 */
 	public MutableSortDefinition(boolean toggleAscendingOnSameProperty) {
 		this.toggleAscendingOnProperty = toggleAscendingOnSameProperty;
@@ -90,13 +78,13 @@ public class MutableSortDefinition implements SortDefinition, Serializable {
 	 * Set the property to compare.
 	 * <p>If the property was the same as the current, the sort is reversed if
 	 * "toggleAscendingOnProperty" is activated, else simply ignored.
+	 *
 	 * @see #setToggleAscendingOnProperty
 	 */
 	public void setProperty(String property) {
 		if (!StringUtils.hasLength(property)) {
 			this.property = "";
-		}
-		else {
+		} else {
 			// Implicit toggling of ascending?
 			if (isToggleAscendingOnProperty()) {
 				this.ascending = (!property.equals(this.property) || !this.ascending);

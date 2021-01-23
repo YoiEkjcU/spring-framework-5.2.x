@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.factory.support;
 
 import org.springframework.beans.factory.BeanDefinitionStoreException;
@@ -26,9 +10,9 @@ import org.springframework.lang.NonNull;
  * {@link DefaultListableBeanFactory#isAllowBeanDefinitionOverriding()} is {@code false}.
  *
  * @author Juergen Hoeller
- * @since 5.1
  * @see DefaultListableBeanFactory#setAllowBeanDefinitionOverriding
  * @see DefaultListableBeanFactory#registerBeanDefinition
+ * @since 5.1
  */
 @SuppressWarnings("serial")
 public class BeanDefinitionOverrideException extends BeanDefinitionStoreException {
@@ -40,8 +24,9 @@ public class BeanDefinitionOverrideException extends BeanDefinitionStoreExceptio
 
 	/**
 	 * Create a new BeanDefinitionOverrideException for the given new and existing definition.
-	 * @param beanName the name of the bean
-	 * @param beanDefinition the newly registered bean definition
+	 *
+	 * @param beanName           the name of the bean
+	 * @param beanDefinition     the newly registered bean definition
 	 * @param existingDefinition the existing bean definition for the same name
 	 */
 	public BeanDefinitionOverrideException(
@@ -49,7 +34,7 @@ public class BeanDefinitionOverrideException extends BeanDefinitionStoreExceptio
 
 		super(beanDefinition.getResourceDescription(), beanName,
 				"Cannot register bean definition [" + beanDefinition + "] for bean '" + beanName +
-				"': There is already [" + existingDefinition + "] bound.");
+						"': There is already [" + existingDefinition + "] bound.");
 		this.beanDefinition = beanDefinition;
 		this.existingDefinition = existingDefinition;
 	}
@@ -75,6 +60,7 @@ public class BeanDefinitionOverrideException extends BeanDefinitionStoreExceptio
 
 	/**
 	 * Return the newly registered bean definition.
+	 *
 	 * @see #getBeanName()
 	 */
 	public BeanDefinition getBeanDefinition() {
@@ -83,6 +69,7 @@ public class BeanDefinitionOverrideException extends BeanDefinitionStoreExceptio
 
 	/**
 	 * Return the existing bean definition for the same name.
+	 *
 	 * @see #getBeanName()
 	 */
 	public BeanDefinition getExistingDefinition() {

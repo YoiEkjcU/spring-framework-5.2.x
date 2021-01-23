@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.factory.config;
 
 import java.util.LinkedHashMap;
@@ -29,9 +13,9 @@ import org.springframework.lang.Nullable;
  * of Maps via the "map" element in XML bean definitions.
  *
  * @author Juergen Hoeller
- * @since 09.12.2003
  * @see SetFactoryBean
  * @see ListFactoryBean
+ * @since 09.12.2003
  */
 public class MapFactoryBean extends AbstractFactoryBean<Map<Object, Object>> {
 
@@ -54,6 +38,7 @@ public class MapFactoryBean extends AbstractFactoryBean<Map<Object, Object>> {
 	 * Set the class to use for the target Map. Can be populated with a fully
 	 * qualified class name when defined in a Spring application context.
 	 * <p>Default is a linked HashMap, keeping the registration order.
+	 *
 	 * @see java.util.LinkedHashMap
 	 */
 	@SuppressWarnings("rawtypes")
@@ -83,8 +68,7 @@ public class MapFactoryBean extends AbstractFactoryBean<Map<Object, Object>> {
 		Map<Object, Object> result = null;
 		if (this.targetMapClass != null) {
 			result = BeanUtils.instantiateClass(this.targetMapClass);
-		}
-		else {
+		} else {
 			result = new LinkedHashMap<>(this.sourceMap.size());
 		}
 		Class<?> keyType = null;
@@ -101,8 +85,7 @@ public class MapFactoryBean extends AbstractFactoryBean<Map<Object, Object>> {
 				Object convertedValue = converter.convertIfNecessary(entry.getValue(), valueType);
 				result.put(convertedKey, convertedValue);
 			}
-		}
-		else {
+		} else {
 			result.putAll(this.sourceMap);
 		}
 		return result;

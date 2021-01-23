@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.factory.annotation;
 
 import java.lang.annotation.Annotation;
@@ -38,9 +22,9 @@ import org.springframework.util.ClassUtils;
  *
  * @author Sam Brannen
  * @author Juergen Hoeller
- * @since 5.2
  * @see #isAutowirable
  * @see #resolveDependency
+ * @since 5.2
  */
 public final class ParameterResolutionDelegate {
 
@@ -50,10 +34,12 @@ public final class ParameterResolutionDelegate {
 		public <T extends Annotation> T getAnnotation(Class<T> annotationClass) {
 			return null;
 		}
+
 		@Override
 		public Annotation[] getAnnotations() {
 			return new Annotation[0];
 		}
+
 		@Override
 		public Annotation[] getDeclaredAnnotations() {
 			return new Annotation[0];
@@ -73,10 +59,11 @@ public final class ParameterResolutionDelegate {
 	 * {@link Qualifier @Qualifier}, or {@link Value @Value}.
 	 * <p>Note that {@link #resolveDependency} may still be able to resolve the
 	 * dependency for the supplied parameter even if this method returns {@code false}.
-	 * @param parameter the parameter whose dependency should be autowired
-	 * (must not be {@code null})
+	 *
+	 * @param parameter      the parameter whose dependency should be autowired
+	 *                       (must not be {@code null})
 	 * @param parameterIndex the index of the parameter in the constructor or method
-	 * that declares the parameter
+	 *                       that declares the parameter
 	 * @see #resolveDependency
 	 */
 	public static boolean isAutowirable(Parameter parameter, int parameterIndex) {
@@ -100,15 +87,16 @@ public final class ParameterResolutionDelegate {
 	 * flag set to {@code false}.
 	 * <p>If an explicit <em>qualifier</em> is not declared, the name of the parameter
 	 * will be used as the qualifier for resolving ambiguities.
-	 * @param parameter the parameter whose dependency should be resolved (must not be
-	 * {@code null})
-	 * @param parameterIndex the index of the parameter in the constructor or method
-	 * that declares the parameter
+	 *
+	 * @param parameter       the parameter whose dependency should be resolved (must not be
+	 *                        {@code null})
+	 * @param parameterIndex  the index of the parameter in the constructor or method
+	 *                        that declares the parameter
 	 * @param containingClass the concrete class that contains the parameter; this may
-	 * differ from the class that declares the parameter in that it may be a subclass
-	 * thereof, potentially substituting type variables (must not be {@code null})
-	 * @param beanFactory the {@code AutowireCapableBeanFactory} from which to resolve
-	 * the dependency (must not be {@code null})
+	 *                        differ from the class that declares the parameter in that it may be a subclass
+	 *                        thereof, potentially substituting type variables (must not be {@code null})
+	 * @param beanFactory     the {@code AutowireCapableBeanFactory} from which to resolve
+	 *                        the dependency (must not be {@code null})
 	 * @return the resolved object, or {@code null} if none found
 	 * @throws BeansException if dependency resolution failed
 	 * @see #isAutowirable
@@ -154,6 +142,7 @@ public final class ParameterResolutionDelegate {
 	 * treated as a {@code Parameter} since the metadata (e.g., {@link Parameter#getName()},
 	 * {@link Parameter#getType()}, etc.) will not match those for the declared parameter
 	 * at the given index in an inner class constructor.
+	 *
 	 * @return the supplied {@code parameter} or the <em>effective</em> {@code Parameter}
 	 * if the aforementioned bug is in effect
 	 */

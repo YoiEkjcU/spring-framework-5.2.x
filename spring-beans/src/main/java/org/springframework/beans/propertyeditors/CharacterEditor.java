@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.propertyeditors;
 
 import java.beans.PropertyEditorSupport;
@@ -36,9 +20,9 @@ import org.springframework.util.StringUtils;
  * @author Juergen Hoeller
  * @author Rob Harrop
  * @author Rick Evans
- * @since 1.2
  * @see Character
  * @see org.springframework.beans.BeanWrapperImpl
+ * @since 1.2
  */
 public class CharacterEditor extends PropertyEditorSupport {
 
@@ -62,6 +46,7 @@ public class CharacterEditor extends PropertyEditorSupport {
 	 * allowed in parsing, i.e. be interpreted as the {@code null} value when
 	 * {@link #setAsText(String) text is being converted}. If {@code false},
 	 * an {@link IllegalArgumentException} will be thrown at that time.
+	 *
 	 * @param allowEmpty if empty strings are to be allowed
 	 */
 	public CharacterEditor(boolean allowEmpty) {
@@ -74,17 +59,13 @@ public class CharacterEditor extends PropertyEditorSupport {
 		if (this.allowEmpty && !StringUtils.hasLength(text)) {
 			// Treat empty String as null value.
 			setValue(null);
-		}
-		else if (text == null) {
+		} else if (text == null) {
 			throw new IllegalArgumentException("null String cannot be converted to char type");
-		}
-		else if (isUnicodeCharacterSequence(text)) {
+		} else if (isUnicodeCharacterSequence(text)) {
 			setAsUnicode(text);
-		}
-		else if (text.length() == 1) {
+		} else if (text.length() == 1) {
 			setValue(text.charAt(0));
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException("String [" + text + "] with length " +
 					text.length() + " cannot be converted to char type: neither Unicode nor single character");
 		}

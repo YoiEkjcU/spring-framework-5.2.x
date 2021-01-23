@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.factory.annotation;
 
 import java.lang.reflect.Method;
@@ -42,8 +26,8 @@ import org.springframework.util.Assert;
  *
  * @author Juergen Hoeller
  * @author Chris Beams
- * @since 3.1.2
  * @see BeanFactoryUtils
+ * @since 3.1.2
  */
 public abstract class BeanFactoryAnnotationUtils {
 
@@ -51,13 +35,14 @@ public abstract class BeanFactoryAnnotationUtils {
 	 * Retrieve all bean of type {@code T} from the given {@code BeanFactory} declaring a
 	 * qualifier (e.g. via {@code <qualifier>} or {@code @Qualifier}) matching the given
 	 * qualifier, or having a bean name matching the given qualifier.
+	 *
 	 * @param beanFactory the factory to get the target beans from (also searching ancestors)
-	 * @param beanType the type of beans to retrieve
-	 * @param qualifier the qualifier for selecting among all type matches
+	 * @param beanType    the type of beans to retrieve
+	 * @param qualifier   the qualifier for selecting among all type matches
 	 * @return the matching beans of type {@code T}
 	 * @throws BeansException if any of the matching beans could not be created
-	 * @since 5.1.1
 	 * @see BeanFactoryUtils#beansOfTypeIncludingAncestors(ListableBeanFactory, Class)
+	 * @since 5.1.1
 	 */
 	public static <T> Map<String, T> qualifiedBeansOfType(
 			ListableBeanFactory beanFactory, Class<T> beanType, String qualifier) throws BeansException {
@@ -76,13 +61,14 @@ public abstract class BeanFactoryAnnotationUtils {
 	 * Obtain a bean of type {@code T} from the given {@code BeanFactory} declaring a
 	 * qualifier (e.g. via {@code <qualifier>} or {@code @Qualifier}) matching the given
 	 * qualifier, or having a bean name matching the given qualifier.
+	 *
 	 * @param beanFactory the factory to get the target bean from (also searching ancestors)
-	 * @param beanType the type of bean to retrieve
-	 * @param qualifier the qualifier for selecting between multiple bean matches
+	 * @param beanType    the type of bean to retrieve
+	 * @param qualifier   the qualifier for selecting between multiple bean matches
 	 * @return the matching bean of type {@code T} (never {@code null})
 	 * @throws NoUniqueBeanDefinitionException if multiple matching beans of type {@code T} found
-	 * @throws NoSuchBeanDefinitionException if no matching bean of type {@code T} found
-	 * @throws BeansException if the bean could not be created
+	 * @throws NoSuchBeanDefinitionException   if no matching bean of type {@code T} found
+	 * @throws BeansException                  if the bean could not be created
 	 * @see BeanFactoryUtils#beanOfTypeIncludingAncestors(ListableBeanFactory, Class)
 	 */
 	public static <T> T qualifiedBeanOfType(BeanFactory beanFactory, Class<T> beanType, String qualifier)
@@ -93,12 +79,10 @@ public abstract class BeanFactoryAnnotationUtils {
 		if (beanFactory instanceof ListableBeanFactory) {
 			// Full qualifier matching supported.
 			return qualifiedBeanOfType((ListableBeanFactory) beanFactory, beanType, qualifier);
-		}
-		else if (beanFactory.containsBean(qualifier)) {
+		} else if (beanFactory.containsBean(qualifier)) {
 			// Fallback: target bean at least found by bean name.
 			return beanFactory.getBean(qualifier, beanType);
-		}
-		else {
+		} else {
 			throw new NoSuchBeanDefinitionException(qualifier, "No matching " + beanType.getSimpleName() +
 					" bean found for bean name '" + qualifier +
 					"'! (Note: Qualifier matching not supported because given " +
@@ -109,8 +93,9 @@ public abstract class BeanFactoryAnnotationUtils {
 	/**
 	 * Obtain a bean of type {@code T} from the given {@code BeanFactory} declaring a qualifier
 	 * (e.g. {@code <qualifier>} or {@code @Qualifier}) matching the given qualifier).
-	 * @param bf the factory to get the target bean from
-	 * @param beanType the type of bean to retrieve
+	 *
+	 * @param bf        the factory to get the target bean from
+	 * @param beanType  the type of bean to retrieve
 	 * @param qualifier the qualifier for selecting between multiple bean matches
 	 * @return the matching bean of type {@code T} (never {@code null})
 	 */
@@ -127,12 +112,10 @@ public abstract class BeanFactoryAnnotationUtils {
 		}
 		if (matchingBean != null) {
 			return bf.getBean(matchingBean, beanType);
-		}
-		else if (bf.containsBean(qualifier)) {
+		} else if (bf.containsBean(qualifier)) {
 			// Fallback: target bean at least found by bean name - probably a manually registered singleton.
 			return bf.getBean(qualifier, beanType);
-		}
-		else {
+		} else {
 			throw new NoSuchBeanDefinitionException(qualifier, "No matching " + beanType.getSimpleName() +
 					" bean found for qualifier '" + qualifier + "' - neither qualifier match nor bean name match!");
 		}
@@ -140,8 +123,9 @@ public abstract class BeanFactoryAnnotationUtils {
 
 	/**
 	 * Check whether the named bean declares a qualifier of the given name.
-	 * @param qualifier the qualifier to match
-	 * @param beanName the name of the candidate bean
+	 *
+	 * @param qualifier   the qualifier to match
+	 * @param beanName    the name of the candidate bean
 	 * @param beanFactory the factory from which to retrieve the named bean
 	 * @return {@code true} if either the bean definition (in the XML case)
 	 * or the bean's factory method (in the {@code @Bean} case) defines a matching
@@ -194,8 +178,7 @@ public abstract class BeanFactoryAnnotationUtils {
 						return qualifier.test(targetAnnotation.value());
 					}
 				}
-			}
-			catch (NoSuchBeanDefinitionException ex) {
+			} catch (NoSuchBeanDefinitionException ex) {
 				// Ignore - can't compare qualifiers for a manually registered singleton object
 			}
 		}

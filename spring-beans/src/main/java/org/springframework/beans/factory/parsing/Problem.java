@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.factory.parsing;
 
 import org.springframework.lang.Nullable;
@@ -27,8 +11,8 @@ import org.springframework.util.Assert;
  *
  * @author Rob Harrop
  * @author Juergen Hoeller
- * @since 2.0
  * @see ProblemReporter
+ * @since 2.0
  */
 public class Problem {
 
@@ -45,7 +29,8 @@ public class Problem {
 
 	/**
 	 * Create a new instance of the {@link Problem} class.
-	 * @param message a message detailing the problem
+	 *
+	 * @param message  a message detailing the problem
 	 * @param location the location within a bean configuration source that triggered the error
 	 */
 	public Problem(String message, Location location) {
@@ -54,9 +39,10 @@ public class Problem {
 
 	/**
 	 * Create a new instance of the {@link Problem} class.
-	 * @param message a message detailing the problem
+	 *
+	 * @param message    a message detailing the problem
 	 * @param parseState the {@link ParseState} at the time of the error
-	 * @param location the location within a bean configuration source that triggered the error
+	 * @param location   the location within a bean configuration source that triggered the error
 	 */
 	public Problem(String message, Location location, ParseState parseState) {
 		this(message, location, parseState, null);
@@ -64,10 +50,11 @@ public class Problem {
 
 	/**
 	 * Create a new instance of the {@link Problem} class.
-	 * @param message a message detailing the problem
-	 * @param rootCause the underlying exception that caused the error (may be {@code null})
+	 *
+	 * @param message    a message detailing the problem
+	 * @param rootCause  the underlying exception that caused the error (may be {@code null})
 	 * @param parseState the {@link ParseState} at the time of the error
-	 * @param location the location within a bean configuration source that triggered the error
+	 * @param location   the location within a bean configuration source that triggered the error
 	 */
 	public Problem(String message, Location location, @Nullable ParseState parseState, @Nullable Throwable rootCause) {
 		Assert.notNull(message, "Message must not be null");
@@ -96,6 +83,7 @@ public class Problem {
 	/**
 	 * Get the description of the bean configuration source that triggered the error,
 	 * as contained within this Problem's Location object.
+	 *
 	 * @see #getLocation()
 	 */
 	public String getResourceDescription() {

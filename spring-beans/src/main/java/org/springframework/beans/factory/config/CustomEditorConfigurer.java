@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.factory.config;
 
 import java.beans.PropertyEditor;
@@ -86,12 +70,12 @@ import org.springframework.util.ClassUtils;
  * implementations to reuse editor registration there.
  *
  * @author Juergen Hoeller
- * @since 27.02.2004
  * @see java.beans.PropertyEditor
  * @see org.springframework.beans.PropertyEditorRegistrar
  * @see ConfigurableBeanFactory#addPropertyEditorRegistrar
  * @see ConfigurableBeanFactory#registerCustomEditor
  * @see org.springframework.validation.DataBinder#registerCustomEditor
+ * @since 27.02.2004
  */
 public class CustomEditorConfigurer implements BeanFactoryPostProcessor, Ordered {
 
@@ -123,6 +107,7 @@ public class CustomEditorConfigurer implements BeanFactoryPostProcessor, Ordered
 	 * Furthermore, it avoids the need for synchronization on custom editors:
 	 * A {@code PropertyEditorRegistrar} will always create fresh editor
 	 * instances for each bean creation attempt.
+	 *
 	 * @see ConfigurableListableBeanFactory#addPropertyEditorRegistrar
 	 */
 	public void setPropertyEditorRegistrars(PropertyEditorRegistrar[] propertyEditorRegistrars) {
@@ -133,6 +118,7 @@ public class CustomEditorConfigurer implements BeanFactoryPostProcessor, Ordered
 	 * Specify the custom editors to register via a {@link Map}, using the
 	 * class name of the required type as the key and the class name of the
 	 * associated {@link PropertyEditor} as value.
+	 *
 	 * @see ConfigurableListableBeanFactory#registerCustomEditor
 	 */
 	public void setCustomEditors(Map<Class<?>, Class<? extends PropertyEditor>> customEditors) {

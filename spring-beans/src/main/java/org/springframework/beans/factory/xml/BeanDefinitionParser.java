@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2011 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.factory.xml;
 
 import org.w3c.dom.Element;
@@ -32,9 +16,9 @@ import org.springframework.lang.Nullable;
  * {@link NamespaceHandler} for the namespace in which the custom tag resides.
  *
  * @author Rob Harrop
- * @since 2.0
  * @see NamespaceHandler
  * @see AbstractBeanDefinitionParser
+ * @since 2.0
  */
 public interface BeanDefinitionParser {
 
@@ -47,9 +31,10 @@ public interface BeanDefinitionParser {
 	 * from the parse if they will ever be used in a nested fashion (for example as
 	 * an inner tag in a {@code <property/>} tag). Implementations may return
 	 * {@code null} if they will <strong>not</strong> be used in a nested fashion.
-	 * @param element the element that is to be parsed into one or more {@link BeanDefinition BeanDefinitions}
+	 *
+	 * @param element       the element that is to be parsed into one or more {@link BeanDefinition BeanDefinitions}
 	 * @param parserContext the object encapsulating the current state of the parsing process;
-	 * provides access to a {@link org.springframework.beans.factory.support.BeanDefinitionRegistry}
+	 *                      provides access to a {@link org.springframework.beans.factory.support.BeanDefinitionRegistry}
 	 * @return the primary {@link BeanDefinition}
 	 */
 	@Nullable

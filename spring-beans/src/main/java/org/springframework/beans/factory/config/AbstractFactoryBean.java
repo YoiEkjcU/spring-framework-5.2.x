@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.factory.config;
 
 import java.lang.reflect.InvocationHandler;
@@ -53,17 +37,19 @@ import org.springframework.util.ReflectionUtils;
  * for implementing the abstract {@link #createInstance()} template
  * method to actually create the object(s) to expose.
  *
+ * @param <T> the bean type
  * @author Juergen Hoeller
  * @author Keith Donald
- * @since 1.0.2
- * @param <T> the bean type
  * @see #setSingleton
  * @see #createInstance()
+ * @since 1.0.2
  */
 public abstract class AbstractFactoryBean<T>
 		implements FactoryBean<T>, BeanClassLoaderAware, BeanFactoryAware, InitializingBean, DisposableBean {
 
-	/** Logger available to subclasses. */
+	/**
+	 * Logger available to subclasses.
+	 */
 	protected final Log logger = LogFactory.getLog(getClass());
 
 	private boolean singleton = true;
@@ -119,6 +105,7 @@ public abstract class AbstractFactoryBean<T>
 	 * runs in. This is typically a fresh instance for each call,
 	 * since TypeConverters are usually <i>not</i> thread-safe.
 	 * <p>Falls back to a SimpleTypeConverter when not running in a BeanFactory.
+	 *
 	 * @see ConfigurableBeanFactory#getTypeConverter()
 	 * @see org.springframework.beans.SimpleTypeConverter
 	 */
@@ -126,8 +113,7 @@ public abstract class AbstractFactoryBean<T>
 		BeanFactory beanFactory = getBeanFactory();
 		if (beanFactory instanceof ConfigurableBeanFactory) {
 			return ((ConfigurableBeanFactory) beanFactory).getTypeConverter();
-		}
-		else {
+		} else {
 			return new SimpleTypeConverter();
 		}
 	}
@@ -147,6 +133,7 @@ public abstract class AbstractFactoryBean<T>
 
 	/**
 	 * Expose the singleton instance or create a new prototype instance.
+	 *
 	 * @see #createInstance()
 	 * @see #getEarlySingletonInterfaces()
 	 */
@@ -154,8 +141,7 @@ public abstract class AbstractFactoryBean<T>
 	public final T getObject() throws Exception {
 		if (isSingleton()) {
 			return (this.initialized ? this.singletonInstance : getEarlySingletonInstance());
-		}
-		else {
+		} else {
 			return createInstance();
 		}
 	}
@@ -180,6 +166,7 @@ public abstract class AbstractFactoryBean<T>
 
 	/**
 	 * Expose the singleton instance (for access through the 'early singleton' proxy).
+	 *
 	 * @return the singleton instance that this FactoryBean holds
 	 * @throws IllegalStateException if the singleton instance is not initialized
 	 */
@@ -191,6 +178,7 @@ public abstract class AbstractFactoryBean<T>
 
 	/**
 	 * Destroy the singleton instance, if any.
+	 *
 	 * @see #destroyInstance(Object)
 	 */
 	@Override
@@ -204,6 +192,7 @@ public abstract class AbstractFactoryBean<T>
 	/**
 	 * This abstract method declaration mirrors the method in the FactoryBean
 	 * interface, for a consistent offering of abstract template methods.
+	 *
 	 * @see org.springframework.beans.factory.FactoryBean#getObjectType()
 	 */
 	@Override
@@ -215,6 +204,7 @@ public abstract class AbstractFactoryBean<T>
 	 * the object returned by this factory.
 	 * <p>Invoked on initialization of this FactoryBean in case of
 	 * a singleton; else, on each {@link #getObject()} call.
+	 *
 	 * @return the object returned by this factory
 	 * @throws Exception if an exception occurred during object creation
 	 * @see #getObject()
@@ -229,6 +219,7 @@ public abstract class AbstractFactoryBean<T>
 	 * provided that it is an interface, or {@code null} otherwise. The latter
 	 * indicates that early singleton access is not supported by this FactoryBean.
 	 * This will lead to a FactoryBeanNotInitializedException getting thrown.
+	 *
 	 * @return the interfaces to use for 'early singletons',
 	 * or {@code null} to indicate a FactoryBeanNotInitializedException
 	 * @see org.springframework.beans.factory.FactoryBeanNotInitializedException
@@ -236,15 +227,16 @@ public abstract class AbstractFactoryBean<T>
 	@Nullable
 	protected Class<?>[] getEarlySingletonInterfaces() {
 		Class<?> type = getObjectType();
-		return (type != null && type.isInterface() ? new Class<?>[] {type} : null);
+		return (type != null && type.isInterface() ? new Class<?>[]{type} : null);
 	}
 
 	/**
 	 * Callback for destroying a singleton instance. Subclasses may
 	 * override this to destroy the previously created instance.
 	 * <p>The default implementation is empty.
+	 *
 	 * @param instance the singleton instance, as returned by
-	 * {@link #createInstance()}
+	 *                 {@link #createInstance()}
 	 * @throws Exception in case of shutdown errors
 	 * @see #createInstance()
 	 */
@@ -262,19 +254,16 @@ public abstract class AbstractFactoryBean<T>
 			if (ReflectionUtils.isEqualsMethod(method)) {
 				// Only consider equal when proxies are identical.
 				return (proxy == args[0]);
-			}
-			else if (ReflectionUtils.isHashCodeMethod(method)) {
+			} else if (ReflectionUtils.isHashCodeMethod(method)) {
 				// Use hashCode of reference proxy.
 				return System.identityHashCode(proxy);
-			}
-			else if (!initialized && ReflectionUtils.isToStringMethod(method)) {
+			} else if (!initialized && ReflectionUtils.isToStringMethod(method)) {
 				return "Early singleton proxy for interfaces " +
 						ObjectUtils.nullSafeToString(getEarlySingletonInterfaces());
 			}
 			try {
 				return method.invoke(getSingletonInstance(), args);
-			}
-			catch (InvocationTargetException ex) {
+			} catch (InvocationTargetException ex) {
 				throw ex.getTargetException();
 			}
 		}

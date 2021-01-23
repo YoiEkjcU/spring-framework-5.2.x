@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.factory.support;
 
 import java.lang.reflect.Method;
@@ -31,8 +15,8 @@ import org.springframework.lang.Nullable;
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
- * @since 1.1
  * @see MethodOverride
+ * @since 1.1
  */
 public class MethodOverrides {
 
@@ -71,6 +55,7 @@ public class MethodOverrides {
 
 	/**
 	 * Return all method overrides contained by this object.
+	 *
 	 * @return a Set of MethodOverride objects
 	 * @see MethodOverride
 	 */
@@ -87,6 +72,7 @@ public class MethodOverrides {
 
 	/**
 	 * Return the override for the given method, if any.
+	 *
 	 * @param method method to check for overrides for
 	 * @return the method override, or {@code null} if none
 	 */

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans;
 
 import org.springframework.lang.Nullable;
@@ -29,8 +13,9 @@ public abstract class PropertyAccessorUtils {
 
 	/**
 	 * Return the actual property name for the given property path.
+	 *
 	 * @param propertyPath the property path to determine the property name
-	 * for (can include property keys, for example for specifying a map entry)
+	 *                     for (can include property keys, for example for specifying a map entry)
 	 * @return the actual property name, without any key elements
 	 */
 	public static String getPropertyName(String propertyPath) {
@@ -41,6 +26,7 @@ public abstract class PropertyAccessorUtils {
 
 	/**
 	 * Check whether the given property path indicates an indexed or nested property.
+	 *
 	 * @param propertyPath the property path to check
 	 * @return whether the path indicates an indexed or nested property
 	 */
@@ -61,6 +47,7 @@ public abstract class PropertyAccessorUtils {
 	/**
 	 * Determine the first nested property separator in the
 	 * given property path, ignoring dots in keys (like "map[my.key]").
+	 *
 	 * @param propertyPath the property path to check
 	 * @return the index of the nested property separator, or -1 if none
 	 */
@@ -71,6 +58,7 @@ public abstract class PropertyAccessorUtils {
 	/**
 	 * Determine the first nested property separator in the
 	 * given property path, ignoring dots in keys (like "map[my.key]").
+	 *
 	 * @param propertyPath the property path to check
 	 * @return the index of the nested property separator, or -1 if none
 	 */
@@ -81,8 +69,9 @@ public abstract class PropertyAccessorUtils {
 	/**
 	 * Determine the first (or last) nested property separator in the
 	 * given property path, ignoring dots in keys (like "map[my.key]").
+	 *
 	 * @param propertyPath the property path to check
-	 * @param last whether to return the last separator rather than the first
+	 * @param last         whether to return the last separator rather than the first
 	 * @return the index of the nested property separator, or -1 if none
 	 */
 	private static int getNestedPropertySeparatorIndex(String propertyPath, boolean last) {
@@ -102,8 +91,7 @@ public abstract class PropertyAccessorUtils {
 			}
 			if (last) {
 				i--;
-			}
-			else {
+			} else {
 				i++;
 			}
 		}
@@ -113,7 +101,8 @@ public abstract class PropertyAccessorUtils {
 	/**
 	 * Determine whether the given registered path matches the given property path,
 	 * either indicating the property itself or an indexed element of the property.
-	 * @param propertyPath the property path (typically without index)
+	 *
+	 * @param propertyPath   the property path (typically without index)
 	 * @param registeredPath the registered path (potentially with index)
 	 * @return whether the paths match
 	 */
@@ -136,6 +125,7 @@ public abstract class PropertyAccessorUtils {
 	 * Removes surrounding quotes from map keys:<br>
 	 * {@code map['key']} -> {@code map[key]}<br>
 	 * {@code map["key"]} -> {@code map[key]}
+	 *
 	 * @param propertyName the bean property path
 	 * @return the canonical representation of the property path
 	 */
@@ -168,6 +158,7 @@ public abstract class PropertyAccessorUtils {
 
 	/**
 	 * Determine the canonical names for the given property paths.
+	 *
 	 * @param propertyNames the bean property paths (as array)
 	 * @return the canonical representation of the property paths
 	 * (as array of the same size)

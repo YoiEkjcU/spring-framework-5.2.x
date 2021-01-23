@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.factory.config;
 
 import java.util.LinkedHashMap;
@@ -41,8 +25,8 @@ import org.springframework.util.ClassUtils;
  *
  * @author Juergen Hoeller
  * @author Rick Evans
- * @since 2.0
  * @see ConfigurableBeanFactory#registerScope
+ * @since 2.0
  */
 public class CustomScopeConfigurer implements BeanFactoryPostProcessor, BeanClassLoaderAware, Ordered {
 
@@ -67,8 +51,9 @@ public class CustomScopeConfigurer implements BeanFactoryPostProcessor, BeanClas
 
 	/**
 	 * Add the given scope to this configurer's map of scopes.
+	 *
 	 * @param scopeName the name of the scope
-	 * @param scope the scope implementation
+	 * @param scope     the scope implementation
 	 * @since 4.1.1
 	 */
 	public void addScope(String scopeName, Scope scope) {
@@ -100,18 +85,15 @@ public class CustomScopeConfigurer implements BeanFactoryPostProcessor, BeanClas
 			this.scopes.forEach((scopeKey, value) -> {
 				if (value instanceof Scope) {
 					beanFactory.registerScope(scopeKey, (Scope) value);
-				}
-				else if (value instanceof Class) {
+				} else if (value instanceof Class) {
 					Class<?> scopeClass = (Class<?>) value;
 					Assert.isAssignable(Scope.class, scopeClass, "Invalid scope class");
 					beanFactory.registerScope(scopeKey, (Scope) BeanUtils.instantiateClass(scopeClass));
-				}
-				else if (value instanceof String) {
+				} else if (value instanceof String) {
 					Class<?> scopeClass = ClassUtils.resolveClassName((String) value, this.beanClassLoader);
 					Assert.isAssignable(Scope.class, scopeClass, "Invalid scope class");
 					beanFactory.registerScope(scopeKey, (Scope) BeanUtils.instantiateClass(scopeClass));
-				}
-				else {
+				} else {
 					throw new IllegalArgumentException("Mapped value [" + value + "] for scope key [" +
 							scopeKey + "] is not an instance of required type [" + Scope.class.getName() +
 							"] or a corresponding Class or String value indicating a Scope implementation");

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2016 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.propertyeditors;
 
 import java.beans.PropertyEditorSupport;
@@ -36,11 +20,11 @@ import org.springframework.util.Assert;
  * <p>Note that such readers usually do not get closed by Spring itself!
  *
  * @author Juergen Hoeller
- * @since 4.2
  * @see java.io.Reader
  * @see org.springframework.core.io.ResourceEditor
  * @see org.springframework.core.io.ResourceLoader
  * @see InputStreamEditor
+ * @since 4.2
  */
 public class ReaderEditor extends PropertyEditorSupport {
 
@@ -56,6 +40,7 @@ public class ReaderEditor extends PropertyEditorSupport {
 
 	/**
 	 * Create a new ReaderEditor, using the given ResourceEditor underneath.
+	 *
 	 * @param resourceEditor the ResourceEditor to use
 	 */
 	public ReaderEditor(ResourceEditor resourceEditor) {
@@ -70,8 +55,7 @@ public class ReaderEditor extends PropertyEditorSupport {
 		Resource resource = (Resource) this.resourceEditor.getValue();
 		try {
 			setValue(resource != null ? new EncodedResource(resource).getReader() : null);
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new IllegalArgumentException("Failed to retrieve Reader for " + resource, ex);
 		}
 	}

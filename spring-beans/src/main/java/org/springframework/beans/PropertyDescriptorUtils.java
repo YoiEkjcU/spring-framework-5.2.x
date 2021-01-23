@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans;
 
 import java.beans.IntrospectionException;
@@ -84,16 +68,13 @@ abstract class PropertyDescriptorUtils {
 				if (propertyType.isAssignableFrom(params[0])) {
 					// Write method's property type potentially more specific
 					propertyType = params[0];
-				}
-				else if (params[0].isAssignableFrom(propertyType)) {
+				} else if (params[0].isAssignableFrom(propertyType)) {
 					// Proceed with read method's property type
-				}
-				else {
+				} else {
 					throw new IntrospectionException(
 							"Type mismatch between read and write methods: " + readMethod + " - " + writeMethod);
 				}
-			}
-			else {
+			} else {
 				propertyType = params[0];
 			}
 		}
@@ -106,7 +87,7 @@ abstract class PropertyDescriptorUtils {
 	 */
 	@Nullable
 	public static Class<?> findIndexedPropertyType(String name, @Nullable Class<?> propertyType,
-			@Nullable Method indexedReadMethod, @Nullable Method indexedWriteMethod) throws IntrospectionException {
+												   @Nullable Method indexedReadMethod, @Nullable Method indexedWriteMethod) throws IntrospectionException {
 
 		Class<?> indexedPropertyType = null;
 
@@ -136,16 +117,13 @@ abstract class PropertyDescriptorUtils {
 				if (indexedPropertyType.isAssignableFrom(params[1])) {
 					// Write method's property type potentially more specific
 					indexedPropertyType = params[1];
-				}
-				else if (params[1].isAssignableFrom(indexedPropertyType)) {
+				} else if (params[1].isAssignableFrom(indexedPropertyType)) {
 					// Proceed with read method's property type
-				}
-				else {
+				} else {
 					throw new IntrospectionException("Type mismatch between indexed read and write methods: " +
 							indexedReadMethod + " - " + indexedWriteMethod);
 				}
-			}
-			else {
+			} else {
 				indexedPropertyType = params[1];
 			}
 		}
@@ -163,6 +141,7 @@ abstract class PropertyDescriptorUtils {
 	 * Compare the given {@code PropertyDescriptors} and return {@code true} if
 	 * they are equivalent, i.e. their read method, write method, property type,
 	 * property editor and flags are equivalent.
+	 *
 	 * @see java.beans.PropertyDescriptor#equals(Object)
 	 */
 	public static boolean equals(PropertyDescriptor pd, PropertyDescriptor otherPd) {

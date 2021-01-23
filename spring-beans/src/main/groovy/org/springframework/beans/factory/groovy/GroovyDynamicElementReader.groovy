@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2013 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.factory.groovy
 
 import groovy.xml.StreamingMarkupBuilder
@@ -46,7 +30,7 @@ class GroovyDynamicElementReader extends GroovyObjectSupport {
 
 
 	public GroovyDynamicElementReader(String namespace, Map<String, String> namespaceMap,
-			BeanDefinitionParserDelegate delegate, GroovyBeanDefinitionWrapper beanDefinition, boolean decorating) {
+									  BeanDefinitionParserDelegate delegate, GroovyBeanDefinitionWrapper beanDefinition, boolean decorating) {
 		super();
 		this.rootNamespace = namespace
 		this.xmlNamespaces = namespaceMap
@@ -69,16 +53,14 @@ class GroovyDynamicElementReader extends GroovyObjectSupport {
 				this.callAfterInvocation = false
 			}
 			return result
-		}
-
-		else {
+		} else {
 			StreamingMarkupBuilder builder = new StreamingMarkupBuilder();
 			def myNamespace = this.rootNamespace
 			def myNamespaces = this.xmlNamespaces
 
 			def callable = {
 				for (namespace in myNamespaces) {
-					mkp.declareNamespace([(namespace.key):namespace.value])
+					mkp.declareNamespace([(namespace.key): namespace.value])
 				}
 				if (args && (args[-1] instanceof Closure)) {
 					args[-1].resolveStrategy = Closure.DELEGATE_FIRST
@@ -99,8 +81,7 @@ class GroovyDynamicElementReader extends GroovyObjectSupport {
 				BeanDefinitionHolder holder = this.beanDefinition.beanDefinitionHolder;
 				holder = this.delegate.decorateIfRequired(element, holder, null)
 				this.beanDefinition.setBeanDefinitionHolder(holder)
-			}
-			else {
+			} else {
 				def beanDefinition = this.delegate.parseCustomElement(element)
 				if (beanDefinition) {
 					this.beanDefinition.setBeanDefinition(beanDefinition)
@@ -121,5 +102,4 @@ class GroovyDynamicElementReader extends GroovyObjectSupport {
 	protected void afterInvocation() {
 		// NOOP
 	}
-
 }

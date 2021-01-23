@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2016 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.propertyeditors;
 
 import java.beans.PropertyEditorSupport;
@@ -46,12 +30,12 @@ import org.springframework.util.StringUtils;
  *
  * @author Juergen Hoeller
  * @author Thomas Risberg
- * @since 09.12.2003
  * @see java.io.File
  * @see org.springframework.core.io.ResourceEditor
  * @see org.springframework.core.io.ResourceLoader
  * @see URLEditor
  * @see InputStreamEditor
+ * @since 09.12.2003
  */
 public class FileEditor extends PropertyEditorSupport {
 
@@ -67,6 +51,7 @@ public class FileEditor extends PropertyEditorSupport {
 
 	/**
 	 * Create a new FileEditor, using the given ResourceEditor underneath.
+	 *
 	 * @param resourceEditor the ResourceEditor to use
 	 */
 	public FileEditor(ResourceEditor resourceEditor) {
@@ -101,13 +86,11 @@ public class FileEditor extends PropertyEditorSupport {
 		if (file == null || resource.exists()) {
 			try {
 				setValue(resource.getFile());
-			}
-			catch (IOException ex) {
+			} catch (IOException ex) {
 				throw new IllegalArgumentException(
 						"Could not retrieve file for " + resource + ": " + ex.getMessage());
 			}
-		}
-		else {
+		} else {
 			// Set a relative File reference and hope for the best.
 			setValue(file);
 		}

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.support;
 
 import java.io.Serializable;
@@ -44,11 +28,11 @@ import org.springframework.util.Assert;
  * the respective JSTL EL expressions, like "myModelAttr.pageSize" and
  * "myModelAttr.sort.ascending".
  *
- * @author Juergen Hoeller
- * @since 19.05.2003
  * @param <E> the element type
+ * @author Juergen Hoeller
  * @see #getPageList()
  * @see org.springframework.beans.support.MutableSortDefinition
+ * @since 19.05.2003
  */
 @SuppressWarnings("serial")
 public class PagedListHolder<E> implements Serializable {
@@ -87,6 +71,7 @@ public class PagedListHolder<E> implements Serializable {
 	/**
 	 * Create a new holder instance.
 	 * You'll need to set a source list to be able to use the holder.
+	 *
 	 * @see #setSource
 	 */
 	public PagedListHolder() {
@@ -96,6 +81,7 @@ public class PagedListHolder<E> implements Serializable {
 	/**
 	 * Create a new holder instance with the given source list, starting with
 	 * a default sort definition (with "toggleAscendingOnProperty" activated).
+	 *
 	 * @param source the source List
 	 * @see MutableSortDefinition#setToggleAscendingOnProperty
 	 */
@@ -105,8 +91,9 @@ public class PagedListHolder<E> implements Serializable {
 
 	/**
 	 * Create a new holder instance with the given source list.
+	 *
 	 * @param source the source List
-	 * @param sort the SortDefinition to start with
+	 * @param sort   the SortDefinition to start with
 	 */
 	public PagedListHolder(List<E> source, SortDefinition sort) {
 		setSource(source);
@@ -142,6 +129,7 @@ public class PagedListHolder<E> implements Serializable {
 	/**
 	 * Set the sort definition for this holder.
 	 * Typically an instance of MutableSortDefinition.
+	 *
 	 * @see org.springframework.beans.support.MutableSortDefinition
 	 */
 	public void setSort(@Nullable SortDefinition sort) {
@@ -232,7 +220,7 @@ public class PagedListHolder<E> implements Serializable {
 	 * Return if the current page is the last one.
 	 */
 	public boolean isLastPage() {
-		return getPage() == getPageCount() -1;
+		return getPage() == getPageCount() - 1;
 	}
 
 	/**
@@ -306,6 +294,7 @@ public class PagedListHolder<E> implements Serializable {
 	 * Resort the list if necessary, i.e. if the current {@code sort} instance
 	 * isn't equal to the backed-up {@code sortUsed} instance.
 	 * <p>Calls {@code doSort} to trigger actual sorting.
+	 *
 	 * @see #doSort
 	 */
 	public void resort() {
@@ -325,6 +314,7 @@ public class PagedListHolder<E> implements Serializable {
 	 * extensions to the SortDefinition interface. Is allowed to return
 	 * null, which means that no sort state will be held, triggering
 	 * actual sorting for each {@code resort} call.
+	 *
 	 * @param sort the current SortDefinition object
 	 * @return a deep copy of the SortDefinition object
 	 * @see MutableSortDefinition#MutableSortDefinition(SortDefinition)
@@ -338,6 +328,7 @@ public class PagedListHolder<E> implements Serializable {
 	 * the given sort definition.
 	 * <p>The default implementation uses Spring's PropertyComparator.
 	 * Can be overridden in subclasses.
+	 *
 	 * @see PropertyComparator#sort(java.util.List, SortDefinition)
 	 */
 	protected void doSort(List<E> source, SortDefinition sort) {

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans.support;
 
 import java.beans.PropertyEditor;
@@ -36,8 +20,8 @@ import org.springframework.util.ReflectionUtils;
  * invoking a specific overloaded method.
  *
  * @author Juergen Hoeller
- * @since 1.1
  * @see org.springframework.beans.BeanWrapperImpl#convertIfNecessary
+ * @since 1.1
  */
 public class ArgumentConvertingMethodInvoker extends MethodInvoker {
 
@@ -52,6 +36,7 @@ public class ArgumentConvertingMethodInvoker extends MethodInvoker {
 	 * <p>Default is a {@link org.springframework.beans.SimpleTypeConverter}.
 	 * Can be overridden with any TypeConverter implementation, typically
 	 * a pre-configured SimpleTypeConverter or a BeanWrapperImpl instance.
+	 *
 	 * @see org.springframework.beans.SimpleTypeConverter
 	 * @see org.springframework.beans.BeanWrapperImpl
 	 */
@@ -91,7 +76,8 @@ public class ArgumentConvertingMethodInvoker extends MethodInvoker {
 	 * <p>Typically used in conjunction with the default
 	 * {@link org.springframework.beans.SimpleTypeConverter}; will work with any
 	 * TypeConverter that implements the PropertyEditorRegistry interface as well.
-	 * @param requiredType type of the property
+	 *
+	 * @param requiredType   type of the property
 	 * @param propertyEditor editor to register
 	 * @see #setTypeConverter
 	 * @see org.springframework.beans.PropertyEditorRegistry#registerCustomEditor
@@ -108,6 +94,7 @@ public class ArgumentConvertingMethodInvoker extends MethodInvoker {
 
 	/**
 	 * This implementation looks for a method with matching parameter types.
+	 *
 	 * @see #doFindMatchingMethod
 	 */
 	@Override
@@ -120,7 +107,7 @@ public class ArgumentConvertingMethodInvoker extends MethodInvoker {
 		}
 		if (matchingMethod == null) {
 			// Interpret argument array as single method argument of array type.
-			matchingMethod = doFindMatchingMethod(new Object[] {getArguments()});
+			matchingMethod = doFindMatchingMethod(new Object[]{getArguments()});
 		}
 		return matchingMethod;
 	}
@@ -128,6 +115,7 @@ public class ArgumentConvertingMethodInvoker extends MethodInvoker {
 	/**
 	 * Actually find a method with matching parameter type, i.e. where each
 	 * argument value is assignable to the corresponding parameter type.
+	 *
 	 * @param arguments the argument values to match against method parameters
 	 * @return a matching method, or {@code null} if none
 	 */
@@ -155,8 +143,7 @@ public class ArgumentConvertingMethodInvoker extends MethodInvoker {
 							// Verify that the supplied argument is assignable to the method parameter.
 							try {
 								convertedArguments[j] = converter.convertIfNecessary(arguments[j], paramTypes[j]);
-							}
-							catch (TypeMismatchException ex) {
+							} catch (TypeMismatchException ex) {
 								// Ignore -> simply doesn't match.
 								match = false;
 							}

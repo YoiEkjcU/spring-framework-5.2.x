@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.beans;
 
 import java.lang.reflect.Field;
@@ -39,11 +23,11 @@ import org.springframework.util.ReflectionUtils;
  *
  * @author Juergen Hoeller
  * @author Stephane Nicoll
- * @since 2.0
  * @see #setExtractOldValueForEditor
  * @see BeanWrapper
  * @see org.springframework.validation.DirectFieldBindingResult
  * @see org.springframework.validation.DataBinder#initDirectFieldAccess()
+ * @since 2.0
  */
 public class DirectFieldAccessor extends AbstractNestablePropertyAccessor {
 
@@ -52,6 +36,7 @@ public class DirectFieldAccessor extends AbstractNestablePropertyAccessor {
 
 	/**
 	 * Create a new DirectFieldAccessor for the given object.
+	 *
 	 * @param object the object wrapped by this DirectFieldAccessor
 	 */
 	public DirectFieldAccessor(Object object) {
@@ -61,9 +46,10 @@ public class DirectFieldAccessor extends AbstractNestablePropertyAccessor {
 	/**
 	 * Create a new DirectFieldAccessor for the given object,
 	 * registering a nested path that the object is in.
-	 * @param object the object wrapped by this DirectFieldAccessor
+	 *
+	 * @param object     the object wrapped by this DirectFieldAccessor
 	 * @param nestedPath the nested path of the object
-	 * @param parent the containing DirectFieldAccessor (must not be {@code null})
+	 * @param parent     the containing DirectFieldAccessor (must not be {@code null})
 	 */
 	protected DirectFieldAccessor(Object object, String nestedPath, DirectFieldAccessor parent) {
 		super(object, nestedPath, parent);
@@ -129,9 +115,7 @@ public class DirectFieldAccessor extends AbstractNestablePropertyAccessor {
 			try {
 				ReflectionUtils.makeAccessible(this.field);
 				return this.field.get(getWrappedInstance());
-			}
-
-			catch (IllegalAccessException ex) {
+			} catch (IllegalAccessException ex) {
 				throw new InvalidPropertyException(getWrappedClass(),
 						this.field.getName(), "Field is not accessible", ex);
 			}
@@ -142,8 +126,7 @@ public class DirectFieldAccessor extends AbstractNestablePropertyAccessor {
 			try {
 				ReflectionUtils.makeAccessible(this.field);
 				this.field.set(getWrappedInstance(), value);
-			}
-			catch (IllegalAccessException ex) {
+			} catch (IllegalAccessException ex) {
 				throw new InvalidPropertyException(getWrappedClass(), this.field.getName(),
 						"Field is not accessible", ex);
 			}
