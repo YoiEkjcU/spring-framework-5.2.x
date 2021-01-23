@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.r2dbc.core;
 
 import java.util.Objects;
@@ -45,6 +29,7 @@ public final class Parameter {
 
 	/**
 	 * Create a new {@link Parameter} from {@code value}.
+	 *
 	 * @param value must not be {@code null}
 	 * @return the {@link Parameter} value for {@code value}
 	 */
@@ -55,8 +40,9 @@ public final class Parameter {
 
 	/**
 	 * Create a new {@link Parameter} from {@code value} and {@code type}.
+	 *
 	 * @param value can be {@code null}
-	 * @param type must not be {@code null}
+	 * @param type  must not be {@code null}
 	 * @return the {@link Parameter} value for {@code value}
 	 */
 	public static Parameter fromOrEmpty(@Nullable Object value, Class<?> type) {
@@ -65,6 +51,7 @@ public final class Parameter {
 
 	/**
 	 * Create a new empty {@link Parameter} for {@code type}.
+	 *
 	 * @return the empty {@link Parameter} value for {@code type}
 	 */
 	public static Parameter empty(Class<?> type) {
@@ -75,6 +62,7 @@ public final class Parameter {
 
 	/**
 	 * Return the column value. Can be {@code null}.
+	 *
 	 * @see #hasValue()
 	 */
 	@Nullable
@@ -91,6 +79,7 @@ public final class Parameter {
 
 	/**
 	 * Returns whether this {@link Parameter} has a value.
+	 *
 	 * @return {@code false} if {@link #getValue()} is {@code null}
 	 */
 	public boolean hasValue() {
@@ -99,6 +88,7 @@ public final class Parameter {
 
 	/**
 	 * Returns whether this {@link Parameter} has a empty.
+	 *
 	 * @return {@code true} if {@link #getValue()} is {@code null}
 	 */
 	public boolean isEmpty() {

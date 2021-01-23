@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.r2dbc.connection;
 
 import java.lang.reflect.InvocationHandler;
@@ -58,25 +42,35 @@ import org.springframework.util.Assert;
  * {@code r2dbc-pool}.
  *
  * @author Mark Paluch
- * @since 5.3
  * @see #create()
  * @see Connection#close()
  * @see ConnectionFactoryUtils#releaseConnection(Connection, ConnectionFactory)
+ * @since 5.3
  */
 public class SingleConnectionFactory extends DelegatingConnectionFactory
 		implements DisposableBean {
 
-	/** Create a close-suppressing proxy?. */
+	/**
+	 * Create a close-suppressing proxy?.
+	 */
 	private boolean suppressClose;
 
-	/** Override auto-commit state?. */
-	private @Nullable Boolean autoCommit;
+	/**
+	 * Override auto-commit state?.
+	 */
+	private @Nullable
+	Boolean autoCommit;
 
-	/** Wrapped Connection. */
+	/**
+	 * Wrapped Connection.
+	 */
 	private final AtomicReference<Connection> target = new AtomicReference<>();
 
-	/** Proxy Connection. */
-	private @Nullable Connection connection;
+	/**
+	 * Proxy Connection.
+	 */
+	private @Nullable
+	Connection connection;
 
 	private final Mono<? extends Connection> connectionEmitter;
 
@@ -91,9 +85,10 @@ public class SingleConnectionFactory extends DelegatingConnectionFactory
 
 	/**
 	 * Create a new {@link SingleConnectionFactory} using a R2DBC connection URL.
-	 * @param url the R2DBC URL to use for accessing {@link ConnectionFactory} discovery.
+	 *
+	 * @param url           the R2DBC URL to use for accessing {@link ConnectionFactory} discovery.
 	 * @param suppressClose if the returned {@link Connection} should be a close-suppressing proxy
-	 * or the physical {@link Connection}.
+	 *                      or the physical {@link Connection}.
 	 * @see ConnectionFactories#get(String)
 	 */
 	public SingleConnectionFactory(String url, boolean suppressClose) {
@@ -105,8 +100,9 @@ public class SingleConnectionFactory extends DelegatingConnectionFactory
 	/**
 	 * Create a new {@link SingleConnectionFactory} with a given {@link Connection} and
 	 * {@link ConnectionFactoryMetadata}.
-	 * @param target underlying target {@link Connection}.
-	 * @param metadata {@link ConnectionFactory} metadata to be associated with this {@link ConnectionFactory}.
+	 *
+	 * @param target        underlying target {@link Connection}.
+	 * @param metadata      {@link ConnectionFactory} metadata to be associated with this {@link ConnectionFactory}.
 	 * @param suppressClose if the {@link Connection} should be wrapped with a {@link Connection} that suppresses
 	 * @code close()} calls (to allow for normal {@code close()} usage in applications that expect a pooled
 	 * @link Connection}).
@@ -117,6 +113,7 @@ public class SingleConnectionFactory extends DelegatingConnectionFactory
 			public Publisher<? extends Connection> create() {
 				return Mono.just(target);
 			}
+
 			@Override
 			public ConnectionFactoryMetadata getMetadata() {
 				return metadata;
@@ -156,6 +153,7 @@ public class SingleConnectionFactory extends DelegatingConnectionFactory
 
 	/**
 	 * Return whether the returned {@link Connection}'s "autoCommit" setting should be overridden.
+	 *
 	 * @return the "autoCommit" value, or {@code null} if none to be applied
 	 */
 	@Nullable
@@ -208,6 +206,7 @@ public class SingleConnectionFactory extends DelegatingConnectionFactory
 	/**
 	 * Prepare the {@link Connection} before using it.
 	 * Applies {@link #getAutoCommitValue() auto-commit} settings if configured.
+	 *
 	 * @param connection the requested {@link Connection}.
 	 * @return the prepared {@link Connection}.
 	 */
@@ -222,12 +221,13 @@ public class SingleConnectionFactory extends DelegatingConnectionFactory
 	/**
 	 * Wrap the given {@link Connection} with a proxy that delegates every method call to it
 	 * but suppresses close calls.
+	 *
 	 * @param target the original {@link Connection} to wrap.
 	 * @return the wrapped Connection.
 	 */
 	protected Connection getCloseSuppressingConnectionProxy(Connection target) {
 		return (Connection) Proxy.newProxyInstance(SingleConnectionFactory.class.getClassLoader(),
-				new Class<?>[] { Connection.class, Wrapped.class }, new CloseSuppressingInvocationHandler(target));
+				new Class<?>[]{Connection.class, Wrapped.class}, new CloseSuppressingInvocationHandler(target));
 	}
 
 
@@ -264,8 +264,7 @@ public class SingleConnectionFactory extends DelegatingConnectionFactory
 			// Invoke method on target Connection.
 			try {
 				return method.invoke(this.target, args);
-			}
-			catch (InvocationTargetException ex) {
+			} catch (InvocationTargetException ex) {
 				throw ex.getTargetException();
 			}
 		}

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.r2dbc.core;
 
 import java.util.LinkedHashMap;
@@ -69,7 +53,8 @@ class NamedParameterExpander {
 	/**
 	 * Create a new enabled instance of {@link NamedParameterExpander}.
 	 */
-	public NamedParameterExpander() {}
+	public NamedParameterExpander() {
+	}
 
 
 	/**
@@ -128,14 +113,15 @@ class NamedParameterExpander {
 	 * placeholders to be used for a select list. Select lists should be limited
 	 * to 100 or fewer elements. A larger number of elements is not guaranteed to be
 	 * supported by the database and is strictly vendor-dependent.
-	 * @param sql sql the original SQL statement
+	 *
+	 * @param sql                sql the original SQL statement
 	 * @param bindMarkersFactory the bind marker factory
-	 * @param paramSource the source for named parameters
+	 * @param paramSource        the source for named parameters
 	 * @return the expanded sql that accepts bind parameters and allows for execution
 	 * without further translation wrapped as {@link PreparedOperation}.
 	 */
 	public PreparedOperation<String> expand(String sql, BindMarkersFactory bindMarkersFactory,
-			BindParameterSource paramSource) {
+											BindParameterSource paramSource) {
 
 		ParsedSql parsedSql = getParsedSql(sql);
 

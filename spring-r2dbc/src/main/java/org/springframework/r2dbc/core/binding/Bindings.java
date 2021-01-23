@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.r2dbc.core.binding;
 
 import java.util.ArrayList;
@@ -56,6 +40,7 @@ public class Bindings implements Iterable<Bindings.Binding> {
 
 	/**
 	 * Create {@link Bindings} from a {@link Map}.
+	 *
 	 * @param bindings must not be {@code null}
 	 */
 	public Bindings(Collection<Binding> bindings) {
@@ -77,6 +62,7 @@ public class Bindings implements Iterable<Bindings.Binding> {
 	/**
 	 * Merge this bindings with an other {@link Bindings} object and create a new merged
 	 * {@link Bindings} object.
+	 *
 	 * @param other the object to merge with
 	 * @return a new, merged {@link Bindings} object
 	 */
@@ -86,6 +72,7 @@ public class Bindings implements Iterable<Bindings.Binding> {
 
 	/**
 	 * Apply the bindings to a {@link BindTarget}.
+	 *
 	 * @param bindTarget the target to apply bindings to
 	 */
 	public void apply(BindTarget bindTarget) {
@@ -98,6 +85,7 @@ public class Bindings implements Iterable<Bindings.Binding> {
 	 * bindings have been processed or the action throws an exception. Actions are
 	 * performed in the order of iteration (if an iteration order is specified).
 	 * Exceptions thrown by the action are relayed to the
+	 *
 	 * @param action the action to be performed for each {@link Binding}
 	 */
 	public void forEach(Consumer<? super Binding> action) {
@@ -117,6 +105,7 @@ public class Bindings implements Iterable<Bindings.Binding> {
 
 	/**
 	 * Create a new, empty {@link Bindings} object.
+	 *
 	 * @return a new, empty {@link Bindings} object.
 	 */
 	public static Bindings empty() {
@@ -126,7 +115,8 @@ public class Bindings implements Iterable<Bindings.Binding> {
 	/**
 	 * Merge this bindings with an other {@link Bindings} object and create a new merged
 	 * {@link Bindings} object.
-	 * @param left the left object to merge with
+	 *
+	 * @param left  the left object to merge with
 	 * @param right the right object to merge with
 	 * @return a new, merged {@link Bindings} object
 	 */
@@ -154,6 +144,7 @@ public class Bindings implements Iterable<Bindings.Binding> {
 
 		/**
 		 * Return the associated {@link BindMarker}.
+		 *
 		 * @return the associated {@link BindMarker}.
 		 */
 		public BindMarker getBindMarker() {
@@ -162,6 +153,7 @@ public class Bindings implements Iterable<Bindings.Binding> {
 
 		/**
 		 * Return whether the binding has a value associated with it.
+		 *
 		 * @return {@code true} if there is a value present, otherwise {@code false}
 		 * for a {@code NULL} binding.
 		 */
@@ -169,6 +161,7 @@ public class Bindings implements Iterable<Bindings.Binding> {
 
 		/**
 		 * Return whether the binding is empty.
+		 *
 		 * @return {@code true} if this is is a {@code NULL} binding
 		 */
 		public boolean isNull() {
@@ -177,6 +170,7 @@ public class Bindings implements Iterable<Bindings.Binding> {
 
 		/**
 		 * Return the binding value.
+		 *
 		 * @return value of this binding. Can be {@code null}
 		 * if this is a {@code NULL} binding.
 		 */
@@ -185,6 +179,7 @@ public class Bindings implements Iterable<Bindings.Binding> {
 
 		/**
 		 * Apply the binding to a {@link BindTarget}.
+		 *
 		 * @param bindTarget the target to apply bindings to
 		 */
 		public abstract void apply(BindTarget bindTarget);

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.r2dbc.core;
 
 import java.lang.reflect.InvocationHandler;
@@ -76,7 +60,7 @@ class DefaultDatabaseClient implements DatabaseClient {
 
 
 	DefaultDatabaseClient(BindMarkersFactory bindMarkersFactory, ConnectionFactory connectionFactory,
-			ExecuteFunction executeFunction, boolean namedParameters) {
+						  ExecuteFunction executeFunction, boolean namedParameters) {
 
 		this.bindMarkersFactory = bindMarkersFactory;
 		this.connectionFactory = connectionFactory;
@@ -111,13 +95,12 @@ class DefaultDatabaseClient implements DatabaseClient {
 
 		return Mono.usingWhen(connectionMono, connectionCloseHolder -> {
 
-			// Create close-suppressing Connection proxy
-			Connection connectionToUse = createConnectionProxy(connectionCloseHolder.connection);
+					// Create close-suppressing Connection proxy
+					Connection connectionToUse = createConnectionProxy(connectionCloseHolder.connection);
 
 					try {
 						return action.apply(connectionToUse);
-					}
-					catch (R2dbcException ex) {
+					} catch (R2dbcException ex) {
 						String sql = getSql(action);
 						return Mono.error(ConnectionFactoryUtils.convertR2dbcException("doInConnection", sql, ex));
 					}
@@ -136,14 +119,13 @@ class DefaultDatabaseClient implements DatabaseClient {
 
 		return Flux.usingWhen(connectionMono, connectionCloseHolder -> {
 
-			// Create close-suppressing Connection proxy, also preparing returned
-			// Statements.
-			Connection connectionToUse = createConnectionProxy(connectionCloseHolder.connection);
+					// Create close-suppressing Connection proxy, also preparing returned
+					// Statements.
+					Connection connectionToUse = createConnectionProxy(connectionCloseHolder.connection);
 
 					try {
 						return action.apply(connectionToUse);
-					}
-					catch (R2dbcException ex) {
+					} catch (R2dbcException ex) {
 						String sql = getSql(action);
 						return Flux.error(ConnectionFactoryUtils.convertR2dbcException("doInConnectionMany", sql, ex));
 					}
@@ -155,6 +137,7 @@ class DefaultDatabaseClient implements DatabaseClient {
 
 	/**
 	 * Obtain a {@link Connection}.
+	 *
 	 * @return a {@link Mono} able to emit a {@link Connection}
 	 */
 	private Mono<Connection> getConnection() {
@@ -163,6 +146,7 @@ class DefaultDatabaseClient implements DatabaseClient {
 
 	/**
 	 * Release the {@link Connection}.
+	 *
 	 * @param connection to close.
 	 * @return a {@link Publisher} that completes successfully when the connection is
 	 * closed
@@ -171,11 +155,12 @@ class DefaultDatabaseClient implements DatabaseClient {
 
 		return ConnectionFactoryUtils.currentConnectionFactory(
 				obtainConnectionFactory()).then().onErrorResume(Exception.class,
-						e -> Mono.from(connection.close()));
+				e -> Mono.from(connection.close()));
 	}
 
 	/**
 	 * Obtain the {@link ConnectionFactory} for actual use.
+	 *
 	 * @return the ConnectionFactory (never {@code null})
 	 */
 	private ConnectionFactory obtainConnectionFactory() {
@@ -185,12 +170,13 @@ class DefaultDatabaseClient implements DatabaseClient {
 	/**
 	 * Create a close-suppressing proxy for the given R2DBC
 	 * Connection. Called by the {@code execute} method.
+	 *
 	 * @param con the R2DBC Connection to create a proxy for
 	 * @return the Connection proxy
 	 */
 	private static Connection createConnectionProxy(Connection con) {
 		return (Connection) Proxy.newProxyInstance(DatabaseClient.class.getClassLoader(),
-				new Class<?>[] { Connection.class, Wrapped.class },
+				new Class<?>[]{Connection.class, Wrapped.class},
 				new CloseSuppressingInvocationHandler(con));
 	}
 
@@ -203,6 +189,7 @@ class DefaultDatabaseClient implements DatabaseClient {
 
 	/**
 	 * Determine SQL from potential provider object.
+	 *
 	 * @param sqlProvider object that's potentially a SqlProvider
 	 * @return the SQL string, or {@code null}
 	 * @see SqlProvider
@@ -212,8 +199,7 @@ class DefaultDatabaseClient implements DatabaseClient {
 
 		if (sqlProvider instanceof SqlProvider) {
 			return ((SqlProvider) sqlProvider).getSql();
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
@@ -240,7 +226,7 @@ class DefaultDatabaseClient implements DatabaseClient {
 		}
 
 		DefaultGenericExecuteSpec(Map<Integer, Parameter> byIndex, Map<String, Parameter> byName,
-				Supplier<String> sqlSupplier, StatementFilterFunction filterFunction) {
+								  Supplier<String> sqlSupplier, StatementFilterFunction filterFunction) {
 
 			this.byIndex = byIndex;
 			this.byName = byName;
@@ -258,8 +244,7 @@ class DefaultDatabaseClient implements DatabaseClient {
 
 			if (value instanceof Parameter) {
 				byIndex.put(index, (Parameter) value);
-			}
-			else {
+			} else {
 				byIndex.put(index, Parameter.fromOrEmpty(value, value.getClass()));
 			}
 
@@ -288,8 +273,7 @@ class DefaultDatabaseClient implements DatabaseClient {
 
 			if (value instanceof Parameter) {
 				byName.put(name, (Parameter) value);
-			}
-			else {
+			} else {
 				byName.put(name, Parameter.fromOrEmpty(value, value.getClass()));
 			}
 
@@ -380,7 +364,7 @@ class DefaultDatabaseClient implements DatabaseClient {
 			Function<Connection, Flux<Result>> resultFunction = connection -> {
 				Statement statement = statementFunction.apply(connection);
 				return Flux.from(this.filterFunction.filter(statement, DefaultDatabaseClient.this.executeFunction))
-				.cast(Result.class).checkpoint("SQL \"" + sql + "\" [DatabaseClient]");
+						.cast(Result.class).checkpoint("SQL \"" + sql + "\" [DatabaseClient]");
 			};
 
 			return new DefaultFetchSpec<>(
@@ -391,7 +375,7 @@ class DefaultDatabaseClient implements DatabaseClient {
 		}
 
 		private MapBindParameterSource retrieveParameters(String sql, List<String> parameterNames,
-				Map<String, Parameter> remainderByName, Map<Integer, Parameter> remainderByIndex) {
+														  Map<String, Parameter> remainderByName, Map<Integer, Parameter> remainderByIndex) {
 
 			Map<String, Parameter> namedBindings = new LinkedHashMap<>(parameterNames.size());
 			for (String parameterName : parameterNames) {
@@ -407,7 +391,7 @@ class DefaultDatabaseClient implements DatabaseClient {
 
 		@Nullable
 		private Parameter getParameter(Map<String, Parameter> remainderByName,
-				Map<Integer, Parameter> remainderByIndex, List<String> parameterNames, String parameterName) {
+									   Map<Integer, Parameter> remainderByIndex, List<String> parameterNames, String parameterName) {
 
 			if (this.byName.containsKey(parameterName)) {
 				remainderByName.remove(parameterName);
@@ -435,8 +419,7 @@ class DefaultDatabaseClient implements DatabaseClient {
 				Object value = parameter.getValue();
 				if (value != null) {
 					statement.bind(name, value);
-				}
-				else {
+				} else {
 					statement.bindNull(name, parameter.getType());
 				}
 			});
@@ -447,8 +430,7 @@ class DefaultDatabaseClient implements DatabaseClient {
 				Object value = parameter.getValue();
 				if (value != null) {
 					statement.bind(i, value);
-				}
-				else {
+				} else {
 					statement.bindNull(i, parameter.getType());
 				}
 			});
@@ -498,8 +480,7 @@ class DefaultDatabaseClient implements DatabaseClient {
 			// Invoke method on target Connection.
 			try {
 				return method.invoke(this.target, args);
-			}
-			catch (InvocationTargetException ex) {
+			} catch (InvocationTargetException ex) {
 				throw ex.getTargetException();
 			}
 		}
@@ -518,7 +499,7 @@ class DefaultDatabaseClient implements DatabaseClient {
 		final Function<Connection, Publisher<Void>> closeFunction;
 
 		ConnectionCloseHolder(Connection connection,
-				Function<Connection, Publisher<Void>> closeFunction) {
+							  Function<Connection, Publisher<Void>> closeFunction) {
 			this.connection = connection;
 			this.closeFunction = closeFunction;
 		}

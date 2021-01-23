@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.r2dbc.connection;
 
 import io.r2dbc.spi.Connection;
@@ -58,9 +42,9 @@ import org.springframework.util.Assert;
  *
  * @author Mark Paluch
  * @author Christoph Strobl
- * @since 5.3
  * @see R2dbcTransactionManager
  * @see org.springframework.transaction.reactive.TransactionSynchronizationManager
+ * @since 5.3
  */
 public abstract class ConnectionFactoryUtils {
 
@@ -72,7 +56,8 @@ public abstract class ConnectionFactoryUtils {
 	private static final Log logger = LogFactory.getLog(ConnectionFactoryUtils.class);
 
 
-	private ConnectionFactoryUtils() {}
+	private ConnectionFactoryUtils() {
+	}
 
 
 	/**
@@ -83,11 +68,12 @@ public abstract class ConnectionFactoryUtils {
 	 * <p>Is aware of a corresponding Connection bound to the current
 	 * {@link TransactionSynchronizationManager}. Will bind a Connection to the
 	 * {@link TransactionSynchronizationManager} if transaction synchronization is active.
+	 *
 	 * @param connectionFactory the {@link ConnectionFactory} to obtain
-	 * {@link Connection Connections} from
+	 *                          {@link Connection Connections} from
 	 * @return a R2DBC Connection from the given {@link ConnectionFactory}
 	 * @throws DataAccessResourceFailureException if the attempt to get a
-	 * {@link Connection} failed
+	 *                                            {@link Connection} failed
 	 * @see #releaseConnection
 	 */
 	public static Mono<Connection> getConnection(ConnectionFactory connectionFactory) {
@@ -101,6 +87,7 @@ public abstract class ConnectionFactoryUtils {
 	 * <p>Is aware of a corresponding Connection bound to the current
 	 * {@link TransactionSynchronizationManager}. Will bind a Connection to the
 	 * {@link TransactionSynchronizationManager} if transaction synchronization is active
+	 *
 	 * @param connectionFactory the {@link ConnectionFactory} to obtain Connections from
 	 * @return a R2DBC {@link Connection} from the given {@link ConnectionFactory}.
 	 */
@@ -138,8 +125,7 @@ public abstract class ConnectionFactoryUtils {
 						ConnectionHolder holderToUse = conHolder;
 						if (holderToUse == null) {
 							holderToUse = new ConnectionHolder(conn);
-						}
-						else {
+						} else {
 							holderToUse.setConnection(conn);
 						}
 						holderToUse.requested();
@@ -150,7 +136,7 @@ public abstract class ConnectionFactoryUtils {
 							synchronizationManager.bindResource(connectionFactory, holderToUse);
 						}
 					})      // Unexpected exception from external delegation call -> close Connection and rethrow.
-					.onErrorResume(e -> releaseConnection(connection, connectionFactory).then(Mono.error(e)));
+							.onErrorResume(e -> releaseConnection(connection, connectionFactory).then(Mono.error(e)));
 				});
 			}
 
@@ -160,8 +146,9 @@ public abstract class ConnectionFactoryUtils {
 
 	/**
 	 * Actually fetch a {@link Connection} from the given {@link ConnectionFactory}.
+	 *
 	 * @param connectionFactory the {@link ConnectionFactory} to obtain
-	 * {@link Connection}s from
+	 *                          {@link Connection}s from
 	 * @return a R2DBC {@link Connection} from the given {@link ConnectionFactory}
 	 * (never {@code null}).
 	 * @throws IllegalStateException if the {@link ConnectionFactory} returned a {@code null} value.
@@ -174,7 +161,8 @@ public abstract class ConnectionFactoryUtils {
 	/**
 	 * Close the given {@link Connection}, obtained from the given {@link ConnectionFactory}, if
 	 * it is not managed externally (that is, not bound to the subscription).
-	 * @param con the {@link Connection} to close if necessary
+	 *
+	 * @param con               the {@link Connection} to close if necessary
 	 * @param connectionFactory the {@link ConnectionFactory} that the Connection was obtained from
 	 * @see #getConnection
 	 */
@@ -187,24 +175,26 @@ public abstract class ConnectionFactoryUtils {
 	 * Actually close the given {@link Connection}, obtained from the given
 	 * {@link ConnectionFactory}. Same as {@link #releaseConnection},
 	 * but preserving the original exception.
-	 * @param connection the {@link Connection} to close if necessary
+	 *
+	 * @param connection        the {@link Connection} to close if necessary
 	 * @param connectionFactory the {@link ConnectionFactory} that the Connection was obtained from
 	 * @see #doGetConnection
 	 */
 	public static Mono<Void> doReleaseConnection(Connection connection, ConnectionFactory connectionFactory) {
 		return TransactionSynchronizationManager.forCurrentTransaction()
 				.flatMap(synchronizationManager -> {
-			ConnectionHolder conHolder = (ConnectionHolder) synchronizationManager.getResource(connectionFactory);
-			if (conHolder != null && connectionEquals(conHolder, connection)) {
-				// It's the transactional Connection: Don't close it.
-				conHolder.released();
-			}
-			return Mono.from(connection.close());
-		}).onErrorResume(NoTransactionException.class, e -> Mono.from(connection.close()));
+					ConnectionHolder conHolder = (ConnectionHolder) synchronizationManager.getResource(connectionFactory);
+					if (conHolder != null && connectionEquals(conHolder, connection)) {
+						// It's the transactional Connection: Don't close it.
+						conHolder.released();
+					}
+					return Mono.from(connection.close());
+				}).onErrorResume(NoTransactionException.class, e -> Mono.from(connection.close()));
 	}
 
 	/**
 	 * Obtain the {@link ConnectionFactory} from the current {@link TransactionSynchronizationManager}.
+	 *
 	 * @param connectionFactory the {@link ConnectionFactory} that the Connection was obtained from
 	 * @see TransactionSynchronizationManager
 	 */
@@ -225,9 +215,10 @@ public abstract class ConnectionFactoryUtils {
 	 * APIs as well. That said, a {@code getRootCause() instanceof R2dbcException}
 	 * check (and subsequent cast) is considered reliable when expecting R2DBC-based
 	 * access to have happened.
+	 *
 	 * @param task readable text describing the task being attempted
-	 * @param sql the SQL query or update that caused the problem (if known)
-	 * @param ex the offending {@link R2dbcException}
+	 * @param sql  the SQL query or update that caused the problem (if known)
+	 * @param ex   the offending {@link R2dbcException}
 	 * @return the corresponding DataAccessException instance
 	 */
 	public static DataAccessException convertR2dbcException(String task, @Nullable String sql, R2dbcException ex) {
@@ -263,9 +254,10 @@ public abstract class ConnectionFactoryUtils {
 	 * Build a message {@code String} for the given {@link R2dbcException}.
 	 * <p>To be called by translator subclasses when creating an instance of a generic
 	 * {@link org.springframework.dao.DataAccessException} class.
+	 *
 	 * @param task readable text describing the task being attempted
-	 * @param sql the SQL statement that caused the problem
-	 * @param ex the offending {@code R2dbcException}
+	 * @param sql  the SQL statement that caused the problem
+	 * @param ex   the offending {@code R2dbcException}
 	 * @return the message {@code String} to use
 	 */
 	private static String buildMessage(String task, @Nullable String sql, R2dbcException ex) {
@@ -276,9 +268,10 @@ public abstract class ConnectionFactoryUtils {
 	 * Determine whether the given two {@link Connection}s are equal, asking the target
 	 * {@link Connection} in case of a proxy. Used to detect equality even if the user
 	 * passed in a raw target Connection while the held one is a proxy.
-	 * @param conHolder the {@link ConnectionHolder} for the held {@link Connection} (potentially a proxy)
+	 *
+	 * @param conHolder   the {@link ConnectionHolder} for the held {@link Connection} (potentially a proxy)
 	 * @param passedInCon the {@link Connection} passed-in by the user (potentially
-	 * a target {@link Connection} without proxy).
+	 *                    a target {@link Connection} without proxy).
 	 * @return whether the given Connections are equal
 	 * @see #getTargetConnection
 	 */
@@ -297,6 +290,7 @@ public abstract class ConnectionFactoryUtils {
 	 * If the given {@link Connection} is wrapped, it will be unwrapped until a
 	 * plain {@link Connection} is found. Otherwise, the passed-in Connection
 	 * will be returned as-is.
+	 *
 	 * @param con the {@link Connection} wrapper to unwrap
 	 * @return the innermost target Connection, or the passed-in one if not wrapped
 	 * @see Wrapped#unwrap()
@@ -314,6 +308,7 @@ public abstract class ConnectionFactoryUtils {
 	 * Determine the connection synchronization order to use for the given {@link ConnectionFactory}.
 	 * Decreased for every level of nesting that a {@link ConnectionFactory} has,
 	 * checked through the level of {@link DelegatingConnectionFactory} nesting.
+	 *
 	 * @param connectionFactory the {@link ConnectionFactory} to check
 	 * @return the connection synchronization order to use
 	 * @see #CONNECTION_SYNCHRONIZATION_ORDER
@@ -359,17 +354,17 @@ public abstract class ConnectionFactoryUtils {
 				return TransactionSynchronizationManager.forCurrentTransaction()
 						.flatMap(synchronizationManager -> {
 
-					synchronizationManager.unbindResource(this.connectionFactory);
-					if (this.connectionHolder.hasConnection() && !this.connectionHolder.isOpen()) {
-						// Release Connection on suspend if the application doesn't keep
-						// a handle to it anymore. We will fetch a fresh Connection if the
-						// application accesses the ConnectionHolder again after resume,
-						// assuming that it will participate in the same transaction.
-						return releaseConnection(this.connectionHolder.getConnection(), this.connectionFactory)
-								.doOnTerminate(() -> this.connectionHolder.setConnection(null));
-					}
-					return Mono.empty();
-				});
+							synchronizationManager.unbindResource(this.connectionFactory);
+							if (this.connectionHolder.hasConnection() && !this.connectionHolder.isOpen()) {
+								// Release Connection on suspend if the application doesn't keep
+								// a handle to it anymore. We will fetch a fresh Connection if the
+								// application accesses the ConnectionHolder again after resume,
+								// assuming that it will participate in the same transaction.
+								return releaseConnection(this.connectionHolder.getConnection(), this.connectionFactory)
+										.doOnTerminate(() -> this.connectionHolder.setConnection(null));
+							}
+							return Mono.empty();
+						});
 			}
 
 			return Mono.empty();
@@ -416,15 +411,15 @@ public abstract class ConnectionFactoryUtils {
 				// since afterCompletion might get called from a different thread.
 				return TransactionSynchronizationManager.forCurrentTransaction()
 						.flatMap(synchronizationManager -> {
-					synchronizationManager.unbindResourceIfPossible(this.connectionFactory);
-					this.holderActive = false;
-					if (this.connectionHolder.hasConnection()) {
-						return releaseConnection(this.connectionHolder.getConnection(), this.connectionFactory)
-								// Reset the ConnectionHolder: It might remain bound to the context.
-								.doOnTerminate(() -> this.connectionHolder.setConnection(null));
-					}
-					return Mono.empty();
-				});
+							synchronizationManager.unbindResourceIfPossible(this.connectionFactory);
+							this.holderActive = false;
+							if (this.connectionHolder.hasConnection()) {
+								return releaseConnection(this.connectionHolder.getConnection(), this.connectionFactory)
+										// Reset the ConnectionHolder: It might remain bound to the context.
+										.doOnTerminate(() -> this.connectionHolder.setConnection(null));
+							}
+							return Mono.empty();
+						});
 			}
 
 			this.connectionHolder.reset();

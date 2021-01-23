@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.r2dbc.core;
 
 import java.util.Collection;
@@ -48,7 +32,9 @@ import org.springframework.util.LinkedCaseInsensitiveMap;
  */
 public class ColumnMapRowMapper implements BiFunction<Row, RowMetadata, Map<String, Object>> {
 
-	/** Default instance. */
+	/**
+	 * Default instance.
+	 */
 	public final static ColumnMapRowMapper INSTANCE = new ColumnMapRowMapper();
 
 
@@ -69,6 +55,7 @@ public class ColumnMapRowMapper implements BiFunction<Row, RowMetadata, Map<Stri
 	/**
 	 * Create a {@link Map} instance to be used as column map.
 	 * <p>By default, a linked case-insensitive Map will be created.
+	 *
 	 * @param columnCount the column count, to be used as initial capacity for the Map
 	 * @return the new {@link Map} instance
 	 * @see LinkedCaseInsensitiveMap
@@ -79,6 +66,7 @@ public class ColumnMapRowMapper implements BiFunction<Row, RowMetadata, Map<Stri
 
 	/**
 	 * Determine the key to use for the given column in the column {@link Map}.
+	 *
 	 * @param columnName the column name as returned by the {@link Row}
 	 * @return the column key to use
 	 * @see ColumnMetadata#getName()
@@ -90,7 +78,8 @@ public class ColumnMapRowMapper implements BiFunction<Row, RowMetadata, Map<Stri
 	/**
 	 * Retrieve a R2DBC object value for the specified column.
 	 * <p>The default implementation uses the {@link Row#get(int)} method.
-	 * @param row is the {@link Row} holding the data
+	 *
+	 * @param row   is the {@link Row} holding the data
 	 * @param index is the column index
 	 * @return the Object returned
 	 */

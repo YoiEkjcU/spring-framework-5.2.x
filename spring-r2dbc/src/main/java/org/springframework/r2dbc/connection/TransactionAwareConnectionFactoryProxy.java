@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.r2dbc.connection;
 
 import java.lang.reflect.InvocationHandler;
@@ -64,11 +48,11 @@ import org.springframework.util.ReflectionUtils;
  *
  * @author Mark Paluch
  * @author Christoph Strobl
- * @since 5.3
  * @see ConnectionFactory#create
  * @see Connection#close
  * @see ConnectionFactoryUtils#doGetConnection
  * @see ConnectionFactoryUtils#doReleaseConnection
+ * @since 5.3
  */
 public class TransactionAwareConnectionFactoryProxy extends DelegatingConnectionFactory {
 
@@ -115,7 +99,7 @@ public class TransactionAwareConnectionFactoryProxy extends DelegatingConnection
 	private static Connection proxyConnection(Connection connection, ConnectionFactory targetConnectionFactory) {
 
 		return (Connection) Proxy.newProxyInstance(TransactionAwareConnectionFactoryProxy.class.getClassLoader(),
-				new Class<?>[] { Connection.class, Wrapped.class },
+				new Class<?>[]{Connection.class, Wrapped.class},
 				new TransactionAwareInvocationHandler(connection, targetConnectionFactory));
 	}
 
@@ -170,8 +154,7 @@ public class TransactionAwareConnectionFactoryProxy extends DelegatingConnection
 			// Invoke method on target Connection.
 			try {
 				return method.invoke(this.connection, args);
-			}
-			catch (InvocationTargetException ex) {
+			} catch (InvocationTargetException ex) {
 				throw ex.getTargetException();
 			}
 		}

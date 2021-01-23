@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.r2dbc.core;
 
 import java.util.Map;
@@ -38,7 +22,7 @@ import org.springframework.util.Assert;
  *
  * <p>Use one of the static factory methods {@link #create(ConnectionFactory)}
  * or obtain a {@link DatabaseClient#builder()} to create an instance.
- *
+ * <p>
  * Usage example:
  * <pre class="code">
  * ConnectionFactory factory = …
@@ -57,6 +41,7 @@ public interface DatabaseClient extends ConnectionAccessor {
 
 	/**
 	 * Return the {@link ConnectionFactory} that this client uses.
+	 *
 	 * @return the connection factory
 	 */
 	ConnectionFactory getConnectionFactory();
@@ -66,6 +51,7 @@ public interface DatabaseClient extends ConnectionAccessor {
 	 * SQL call along with options leading to the execution. The SQL string can
 	 * contain either native parameter bind markers or named parameters (e.g.
 	 * {@literal :foo, :bar}) when {@link NamedParameterExpander} is enabled.
+	 *
 	 * @param sql must not be {@code null} or empty
 	 * @return a new {@link GenericExecuteSpec}
 	 * @see NamedParameterExpander
@@ -80,6 +66,7 @@ public interface DatabaseClient extends ConnectionAccessor {
 	 * bind markers or named parameters (e.g. {@literal :foo, :bar}) when
 	 * {@link NamedParameterExpander} is enabled.
 	 * <p>Accepts {@link PreparedOperation} as SQL and binding {@link Supplier}
+	 *
 	 * @param sqlSupplier must not be {@code null}
 	 * @return a new {@link GenericExecuteSpec}
 	 * @see NamedParameterExpander
@@ -93,6 +80,7 @@ public interface DatabaseClient extends ConnectionAccessor {
 
 	/**
 	 * Create a {@code DatabaseClient} that will use the provided {@link ConnectionFactory}.
+	 *
 	 * @param factory the {@code ConnectionFactory} to use for obtaining connections
 	 * @return a new {@code DatabaseClient}. Guaranteed to be not {@code null}.
 	 */
@@ -115,18 +103,21 @@ public interface DatabaseClient extends ConnectionAccessor {
 
 		/**
 		 * Configure the {@link BindMarkersFactory BindMarkers} to be used.
+		 *
 		 * @param bindMarkers must not be {@code null}
 		 */
 		Builder bindMarkers(BindMarkersFactory bindMarkers);
 
 		/**
 		 * Configure the {@link ConnectionFactory R2DBC connector}.
+		 *
 		 * @param factory must not be {@code null}
 		 */
 		Builder connectionFactory(ConnectionFactory factory);
 
 		/**
 		 * Configure a {@link ExecuteFunction} to execute {@link Statement} objects.
+		 *
 		 * @param executeFunction must not be {@code null}
 		 * @see Statement#execute()
 		 */
@@ -134,14 +125,16 @@ public interface DatabaseClient extends ConnectionAccessor {
 
 		/**
 		 * Configure whether to use named parameter expansion. Defaults to {@code true}.
+		 *
 		 * @param enabled {@code true} to use named parameter expansion.
-		 * {@code false} to disable named parameter expansion.
+		 *                {@code false} to disable named parameter expansion.
 		 * @see NamedParameterExpander
 		 */
 		Builder namedParameters(boolean enabled);
 
 		/**
 		 * Configures a {@link Consumer} to configure this builder.
+		 *
 		 * @param builderConsumer must not be {@code null}.
 		 */
 		Builder apply(Consumer<Builder> builderConsumer);
@@ -161,6 +154,7 @@ public interface DatabaseClient extends ConnectionAccessor {
 		/**
 		 * Bind a non-{@code null} value to a parameter identified by its
 		 * {@code index}. {@code value} can be either a scalar value or {@link Parameter}.
+		 *
 		 * @param index zero based index to bind the parameter to
 		 * @param value must not be {@code null}. Can be either a scalar value or {@link Parameter}
 		 */
@@ -168,20 +162,23 @@ public interface DatabaseClient extends ConnectionAccessor {
 
 		/**
 		 * Bind a {@code null} value to a parameter identified by its {@code index}.
+		 *
 		 * @param index zero based index to bind the parameter to
-		 * @param type must not be {@code null}
+		 * @param type  must not be {@code null}
 		 */
 		GenericExecuteSpec bindNull(int index, Class<?> type);
 
 		/**
 		 * Bind a non-{@code null} value to a parameter identified by its {@code name}.
-		 * @param name must not be {@code null} or empty
+		 *
+		 * @param name  must not be {@code null} or empty
 		 * @param value must not be {@code null}
 		 */
 		GenericExecuteSpec bind(String name, Object value);
 
 		/**
 		 * Bind a {@code null} value to a parameter identified by its {@code name}.
+		 *
 		 * @param name must not be {@code null} or empty
 		 * @param type must not be {@code null}
 		 */
@@ -195,6 +192,7 @@ public interface DatabaseClient extends ConnectionAccessor {
 		 * DatabaseClient client = …;
 		 * client.sql("SELECT book_id FROM book").filter(statement -> statement.fetchSize(100))
 		 * </pre>
+		 *
 		 * @param filter the filter to be added to the chain
 		 */
 		default GenericExecuteSpec filter(Function<? super Statement, ? extends Statement> filter) {
@@ -210,14 +208,16 @@ public interface DatabaseClient extends ConnectionAccessor {
 		 * DatabaseClient client = …;
 		 * client.sql("SELECT book_id FROM book").filter((statement, next) -> next.execute(statement.fetchSize(100)))
 		 * </pre>
+		 *
 		 * @param filter the filter to be added to the chain
 		 */
 		GenericExecuteSpec filter(StatementFilterFunction filter);
 
 		/**
 		 * Configure a result mapping {@link Function function} and enter the execution stage.
+		 *
 		 * @param mappingFunction must not be {@code null}
-		 * @param <R> result type.
+		 * @param <R>             result type.
 		 * @return a {@link FetchSpec} for configuration what to fetch. Guaranteed to be not {@code null}.
 		 */
 		default <R> RowsFetchSpec<R> map(Function<Row, R> mappingFunction) {
@@ -227,8 +227,9 @@ public interface DatabaseClient extends ConnectionAccessor {
 
 		/**
 		 * Configure a result mapping {@link BiFunction function}  and enter the execution stage.
+		 *
 		 * @param mappingFunction must not be {@code null}
-		 * @param <R> result type.
+		 * @param <R>             result type.
 		 * @return a {@link FetchSpec} for configuration what to fetch. Guaranteed to be not {@code null}.
 		 */
 		<R> RowsFetchSpec<R> map(BiFunction<Row, RowMetadata, R> mappingFunction);
@@ -240,6 +241,7 @@ public interface DatabaseClient extends ConnectionAccessor {
 
 		/**
 		 * Perform the SQL call and return a {@link Mono} that completes without result on statement completion.
+		 *
 		 * @return a {@link Mono} ignoring its payload (actively dropping).
 		 */
 		Mono<Void> then();

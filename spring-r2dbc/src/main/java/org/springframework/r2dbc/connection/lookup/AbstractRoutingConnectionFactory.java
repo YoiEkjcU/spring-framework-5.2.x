@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.r2dbc.connection.lookup;
 
 import java.util.HashMap;
@@ -44,10 +28,10 @@ import org.springframework.util.Assert;
  *
  * @author Mark Paluch
  * @author Jens Schauder
- * @since 5.3
  * @see #setTargetConnectionFactories
  * @see #setDefaultTargetConnectionFactory
  * @see #determineCurrentLookupKey()
+ * @since 5.3
  */
 public abstract class AbstractRoutingConnectionFactory implements ConnectionFactory, InitializingBean {
 
@@ -111,6 +95,7 @@ public abstract class AbstractRoutingConnectionFactory implements ConnectionFact
 	 * <p>Switch this flag to {@code false} if you would prefer the fallback to only
 	 * apply when no lookup key was emitted. Lookup keys without a {@link ConnectionFactory}
 	 * entry will then lead to an {@link IllegalStateException}.
+	 *
 	 * @see #setTargetConnectionFactories
 	 * @see #setDefaultTargetConnectionFactory
 	 * @see #determineCurrentLookupKey()
@@ -152,6 +137,7 @@ public abstract class AbstractRoutingConnectionFactory implements ConnectionFact
 	 * into the actual lookup key to be used for matching with the
 	 * {@link #determineCurrentLookupKey() current lookup key}.
 	 * <p>The default implementation simply returns the given key as-is.
+	 *
 	 * @param lookupKey the lookup key object as specified by the user
 	 * @return the lookup key as needed for matching.
 	 */
@@ -165,8 +151,9 @@ public abstract class AbstractRoutingConnectionFactory implements ConnectionFact
 	 * <p>The default implementation handles {@link ConnectionFactory} instances
 	 * and connection factory names (to be resolved via a
 	 * {@link #setConnectionFactoryLookup ConnectionFactoryLookup}).
+	 *
 	 * @param connectionFactory the connection factory value object as specified in the
-	 * {@link #setTargetConnectionFactories targetConnectionFactories} map
+	 *                          {@link #setTargetConnectionFactories targetConnectionFactories} map
 	 * @return the resolved {@link ConnectionFactory} (never {@code null})
 	 * @throws IllegalArgumentException in case of an unsupported value type
 	 */
@@ -174,11 +161,9 @@ public abstract class AbstractRoutingConnectionFactory implements ConnectionFact
 			throws IllegalArgumentException {
 		if (connectionFactory instanceof ConnectionFactory) {
 			return (ConnectionFactory) connectionFactory;
-		}
-		else if (connectionFactory instanceof String) {
+		} else if (connectionFactory instanceof String) {
 			return this.connectionFactoryLookup.getConnectionFactory((String) connectionFactory);
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException(
 					"Illegal connection factory value - only 'io.r2dbc.spi.ConnectionFactory' and 'String' supported: "
 							+ connectionFactory);
@@ -207,6 +192,7 @@ public abstract class AbstractRoutingConnectionFactory implements ConnectionFact
 	 * in the {@link #setTargetConnectionFactories targetConnectionFactories} map,
 	 * falls back to the specified {@link #setDefaultTargetConnectionFactory default
 	 * target ConnectionFactory} if necessary.
+	 *
 	 * @return {@link Mono} emitting the current {@link ConnectionFactory} as
 	 * per {@link #determineCurrentLookupKey()}
 	 * @see #determineCurrentLookupKey()
