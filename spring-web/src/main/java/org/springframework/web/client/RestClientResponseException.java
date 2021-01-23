@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.client;
 
 import java.io.UnsupportedEncodingException;
@@ -51,14 +35,15 @@ public class RestClientResponseException extends RestClientException {
 
 	/**
 	 * Construct a new instance of with the given response data.
-	 * @param statusCode the raw status code value
-	 * @param statusText the status text
+	 *
+	 * @param statusCode      the raw status code value
+	 * @param statusText      the status text
 	 * @param responseHeaders the response headers (may be {@code null})
-	 * @param responseBody the response body content (may be {@code null})
+	 * @param responseBody    the response body content (may be {@code null})
 	 * @param responseCharset the response body charset (may be {@code null})
 	 */
 	public RestClientResponseException(String message, int statusCode, String statusText,
-			@Nullable HttpHeaders responseHeaders, @Nullable byte[] responseBody, @Nullable Charset responseCharset) {
+									   @Nullable HttpHeaders responseHeaders, @Nullable byte[] responseBody, @Nullable Charset responseCharset) {
 
 		super(message);
 		this.rawStatusCode = statusCode;
@@ -109,6 +94,7 @@ public class RestClientResponseException extends RestClientException {
 	/**
 	 * Return the response body converted to String. The charset used is that
 	 * of the response "Content-Type" or otherwise the one given.
+	 *
 	 * @param fallbackCharset the charset to use on if the response doesn't specify.
 	 * @since 5.1.11
 	 */
@@ -118,8 +104,7 @@ public class RestClientResponseException extends RestClientException {
 		}
 		try {
 			return new String(this.responseBody, this.responseCharset);
-		}
-		catch (UnsupportedEncodingException ex) {
+		} catch (UnsupportedEncodingException ex) {
 			// should not occur
 			throw new IllegalStateException(ex);
 		}

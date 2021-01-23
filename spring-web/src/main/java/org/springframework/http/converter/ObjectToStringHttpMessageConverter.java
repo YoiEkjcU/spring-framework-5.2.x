@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.converter;
 
 import java.io.IOException;
@@ -60,6 +44,7 @@ public class ObjectToStringHttpMessageConverter extends AbstractHttpMessageConve
 	 * A constructor accepting a {@code ConversionService} to use to convert the
 	 * (String) message body to/from the target class type. This constructor uses
 	 * {@link StringHttpMessageConverter#DEFAULT_CHARSET} as the default charset.
+	 *
 	 * @param conversionService the conversion service
 	 */
 	public ObjectToStringHttpMessageConverter(ConversionService conversionService) {
@@ -68,8 +53,9 @@ public class ObjectToStringHttpMessageConverter extends AbstractHttpMessageConve
 
 	/**
 	 * A constructor accepting a {@code ConversionService} as well as a default charset.
+	 *
 	 * @param conversionService the conversion service
-	 * @param defaultCharset the default charset
+	 * @param defaultCharset    the default charset
 	 */
 	public ObjectToStringHttpMessageConverter(ConversionService conversionService, Charset defaultCharset) {
 		super(defaultCharset, MediaType.TEXT_PLAIN);

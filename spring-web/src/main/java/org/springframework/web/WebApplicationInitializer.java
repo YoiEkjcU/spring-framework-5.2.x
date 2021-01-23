@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web;
 
 import javax.servlet.ServletContext;
@@ -70,10 +54,10 @@ import javax.servlet.ServletException;
  *    }
  *
  * }</pre>
- *
+ * <p>
  * As an alternative to the above, you can also extend from {@link
  * org.springframework.web.servlet.support.AbstractDispatcherServletInitializer}.
- *
+ * <p>
  * As you can see, thanks to Servlet 3.0's new {@link ServletContext#addServlet} method
  * we're actually registering an <em>instance</em> of the {@code DispatcherServlet}, and
  * this means that the {@code DispatcherServlet} can now be treated like any other object
@@ -132,10 +116,10 @@ import javax.servlet.ServletException;
  *    }
  *
  * }</pre>
- *
+ * <p>
  * As an alternative to the above, you can also extend from {@link
  * org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer}.
- *
+ * <p>
  * Remember that {@code WebApplicationInitializer} implementations are <em>detected
  * automatically</em> -- so you are free to package them within your application as you
  * see fit.
@@ -168,11 +152,11 @@ import javax.servlet.ServletException;
  * successfully under GlassFish 3.1.<p>
  *
  * @author Chris Beams
- * @since 3.1
  * @see SpringServletContainerInitializer
  * @see org.springframework.web.context.AbstractContextLoaderInitializer
  * @see org.springframework.web.servlet.support.AbstractDispatcherServletInitializer
  * @see org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer
+ * @since 3.1
  */
 public interface WebApplicationInitializer {
 
@@ -180,9 +164,10 @@ public interface WebApplicationInitializer {
 	 * Configure the given {@link ServletContext} with any servlets, filters, listeners
 	 * context-params and attributes necessary for initializing this web application. See
 	 * examples {@linkplain WebApplicationInitializer above}.
+	 *
 	 * @param servletContext the {@code ServletContext} to initialize
 	 * @throws ServletException if any call against the given {@code ServletContext}
-	 * throws a {@code ServletException}
+	 *                          throws a {@code ServletException}
 	 */
 	void onStartup(ServletContext servletContext) throws ServletException;
 

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.bind;
 
 import javax.servlet.ServletRequest;
@@ -49,11 +33,12 @@ public abstract class ServletRequestUtils {
 	/**
 	 * Get an Integer parameter, or {@code null} if not present.
 	 * Throws an exception if it the parameter value isn't a number.
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter
+	 * @param name    the name of the parameter
 	 * @return the Integer value, or {@code null} if not present
 	 * @throws ServletRequestBindingException a subclass of ServletException,
-	 * so it doesn't need to be caught
+	 *                                        so it doesn't need to be caught
 	 */
 	@Nullable
 	public static Integer getIntParameter(ServletRequest request, String name)
@@ -68,8 +53,9 @@ public abstract class ServletRequestUtils {
 	/**
 	 * Get an int parameter, with a fallback value. Never throws an exception.
 	 * Can pass a distinguished value as default to enable checks of whether it was supplied.
-	 * @param request current HTTP request
-	 * @param name the name of the parameter
+	 *
+	 * @param request    current HTTP request
+	 * @param name       the name of the parameter
 	 * @param defaultVal the default value to use as fallback
 	 */
 	public static int getIntParameter(ServletRequest request, String name, int defaultVal) {
@@ -78,32 +64,32 @@ public abstract class ServletRequestUtils {
 		}
 		try {
 			return getRequiredIntParameter(request, name);
-		}
-		catch (ServletRequestBindingException ex) {
+		} catch (ServletRequestBindingException ex) {
 			return defaultVal;
 		}
 	}
 
 	/**
 	 * Get an array of int parameters, return an empty array if not found.
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter with multiple possible values
+	 * @param name    the name of the parameter with multiple possible values
 	 */
 	public static int[] getIntParameters(ServletRequest request, String name) {
 		try {
 			return getRequiredIntParameters(request, name);
-		}
-		catch (ServletRequestBindingException ex) {
+		} catch (ServletRequestBindingException ex) {
 			return new int[0];
 		}
 	}
 
 	/**
 	 * Get an int parameter, throwing an exception if it isn't found or isn't a number.
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter
+	 * @param name    the name of the parameter
 	 * @throws ServletRequestBindingException a subclass of ServletException,
-	 * so it doesn't need to be caught
+	 *                                        so it doesn't need to be caught
 	 */
 	public static int getRequiredIntParameter(ServletRequest request, String name)
 			throws ServletRequestBindingException {
@@ -113,10 +99,11 @@ public abstract class ServletRequestUtils {
 
 	/**
 	 * Get an array of int parameters, throwing an exception if not found or one is not a number..
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter with multiple possible values
+	 * @param name    the name of the parameter with multiple possible values
 	 * @throws ServletRequestBindingException a subclass of ServletException,
-	 * so it doesn't need to be caught
+	 *                                        so it doesn't need to be caught
 	 */
 	public static int[] getRequiredIntParameters(ServletRequest request, String name)
 			throws ServletRequestBindingException {
@@ -128,11 +115,12 @@ public abstract class ServletRequestUtils {
 	/**
 	 * Get a Long parameter, or {@code null} if not present.
 	 * Throws an exception if it the parameter value isn't a number.
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter
+	 * @param name    the name of the parameter
 	 * @return the Long value, or {@code null} if not present
 	 * @throws ServletRequestBindingException a subclass of ServletException,
-	 * so it doesn't need to be caught
+	 *                                        so it doesn't need to be caught
 	 */
 	@Nullable
 	public static Long getLongParameter(ServletRequest request, String name)
@@ -147,8 +135,9 @@ public abstract class ServletRequestUtils {
 	/**
 	 * Get a long parameter, with a fallback value. Never throws an exception.
 	 * Can pass a distinguished value as default to enable checks of whether it was supplied.
-	 * @param request current HTTP request
-	 * @param name the name of the parameter
+	 *
+	 * @param request    current HTTP request
+	 * @param name       the name of the parameter
 	 * @param defaultVal the default value to use as fallback
 	 */
 	public static long getLongParameter(ServletRequest request, String name, long defaultVal) {
@@ -157,32 +146,32 @@ public abstract class ServletRequestUtils {
 		}
 		try {
 			return getRequiredLongParameter(request, name);
-		}
-		catch (ServletRequestBindingException ex) {
+		} catch (ServletRequestBindingException ex) {
 			return defaultVal;
 		}
 	}
 
 	/**
 	 * Get an array of long parameters, return an empty array if not found.
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter with multiple possible values
+	 * @param name    the name of the parameter with multiple possible values
 	 */
 	public static long[] getLongParameters(ServletRequest request, String name) {
 		try {
 			return getRequiredLongParameters(request, name);
-		}
-		catch (ServletRequestBindingException ex) {
+		} catch (ServletRequestBindingException ex) {
 			return new long[0];
 		}
 	}
 
 	/**
 	 * Get a long parameter, throwing an exception if it isn't found or isn't a number.
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter
+	 * @param name    the name of the parameter
 	 * @throws ServletRequestBindingException a subclass of ServletException,
-	 * so it doesn't need to be caught
+	 *                                        so it doesn't need to be caught
 	 */
 	public static long getRequiredLongParameter(ServletRequest request, String name)
 			throws ServletRequestBindingException {
@@ -192,10 +181,11 @@ public abstract class ServletRequestUtils {
 
 	/**
 	 * Get an array of long parameters, throwing an exception if not found or one is not a number.
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter with multiple possible values
+	 * @param name    the name of the parameter with multiple possible values
 	 * @throws ServletRequestBindingException a subclass of ServletException,
-	 * so it doesn't need to be caught
+	 *                                        so it doesn't need to be caught
 	 */
 	public static long[] getRequiredLongParameters(ServletRequest request, String name)
 			throws ServletRequestBindingException {
@@ -207,11 +197,12 @@ public abstract class ServletRequestUtils {
 	/**
 	 * Get a Float parameter, or {@code null} if not present.
 	 * Throws an exception if it the parameter value isn't a number.
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter
+	 * @param name    the name of the parameter
 	 * @return the Float value, or {@code null} if not present
 	 * @throws ServletRequestBindingException a subclass of ServletException,
-	 * so it doesn't need to be caught
+	 *                                        so it doesn't need to be caught
 	 */
 	@Nullable
 	public static Float getFloatParameter(ServletRequest request, String name)
@@ -226,8 +217,9 @@ public abstract class ServletRequestUtils {
 	/**
 	 * Get a float parameter, with a fallback value. Never throws an exception.
 	 * Can pass a distinguished value as default to enable checks of whether it was supplied.
-	 * @param request current HTTP request
-	 * @param name the name of the parameter
+	 *
+	 * @param request    current HTTP request
+	 * @param name       the name of the parameter
 	 * @param defaultVal the default value to use as fallback
 	 */
 	public static float getFloatParameter(ServletRequest request, String name, float defaultVal) {
@@ -236,32 +228,32 @@ public abstract class ServletRequestUtils {
 		}
 		try {
 			return getRequiredFloatParameter(request, name);
-		}
-		catch (ServletRequestBindingException ex) {
+		} catch (ServletRequestBindingException ex) {
 			return defaultVal;
 		}
 	}
 
 	/**
 	 * Get an array of float parameters, return an empty array if not found.
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter with multiple possible values
+	 * @param name    the name of the parameter with multiple possible values
 	 */
 	public static float[] getFloatParameters(ServletRequest request, String name) {
 		try {
 			return getRequiredFloatParameters(request, name);
-		}
-		catch (ServletRequestBindingException ex) {
+		} catch (ServletRequestBindingException ex) {
 			return new float[0];
 		}
 	}
 
 	/**
 	 * Get a float parameter, throwing an exception if it isn't found or isn't a number.
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter
+	 * @param name    the name of the parameter
 	 * @throws ServletRequestBindingException a subclass of ServletException,
-	 * so it doesn't need to be caught
+	 *                                        so it doesn't need to be caught
 	 */
 	public static float getRequiredFloatParameter(ServletRequest request, String name)
 			throws ServletRequestBindingException {
@@ -271,10 +263,11 @@ public abstract class ServletRequestUtils {
 
 	/**
 	 * Get an array of float parameters, throwing an exception if not found or one is not a number.
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter with multiple possible values
+	 * @param name    the name of the parameter with multiple possible values
 	 * @throws ServletRequestBindingException a subclass of ServletException,
-	 * so it doesn't need to be caught
+	 *                                        so it doesn't need to be caught
 	 */
 	public static float[] getRequiredFloatParameters(ServletRequest request, String name)
 			throws ServletRequestBindingException {
@@ -286,11 +279,12 @@ public abstract class ServletRequestUtils {
 	/**
 	 * Get a Double parameter, or {@code null} if not present.
 	 * Throws an exception if it the parameter value isn't a number.
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter
+	 * @param name    the name of the parameter
 	 * @return the Double value, or {@code null} if not present
 	 * @throws ServletRequestBindingException a subclass of ServletException,
-	 * so it doesn't need to be caught
+	 *                                        so it doesn't need to be caught
 	 */
 	@Nullable
 	public static Double getDoubleParameter(ServletRequest request, String name)
@@ -305,8 +299,9 @@ public abstract class ServletRequestUtils {
 	/**
 	 * Get a double parameter, with a fallback value. Never throws an exception.
 	 * Can pass a distinguished value as default to enable checks of whether it was supplied.
-	 * @param request current HTTP request
-	 * @param name the name of the parameter
+	 *
+	 * @param request    current HTTP request
+	 * @param name       the name of the parameter
 	 * @param defaultVal the default value to use as fallback
 	 */
 	public static double getDoubleParameter(ServletRequest request, String name, double defaultVal) {
@@ -315,32 +310,32 @@ public abstract class ServletRequestUtils {
 		}
 		try {
 			return getRequiredDoubleParameter(request, name);
-		}
-		catch (ServletRequestBindingException ex) {
+		} catch (ServletRequestBindingException ex) {
 			return defaultVal;
 		}
 	}
 
 	/**
 	 * Get an array of double parameters, return an empty array if not found.
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter with multiple possible values
+	 * @param name    the name of the parameter with multiple possible values
 	 */
 	public static double[] getDoubleParameters(ServletRequest request, String name) {
 		try {
 			return getRequiredDoubleParameters(request, name);
-		}
-		catch (ServletRequestBindingException ex) {
+		} catch (ServletRequestBindingException ex) {
 			return new double[0];
 		}
 	}
 
 	/**
 	 * Get a double parameter, throwing an exception if it isn't found or isn't a number.
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter
+	 * @param name    the name of the parameter
 	 * @throws ServletRequestBindingException a subclass of ServletException,
-	 * so it doesn't need to be caught
+	 *                                        so it doesn't need to be caught
 	 */
 	public static double getRequiredDoubleParameter(ServletRequest request, String name)
 			throws ServletRequestBindingException {
@@ -350,10 +345,11 @@ public abstract class ServletRequestUtils {
 
 	/**
 	 * Get an array of double parameters, throwing an exception if not found or one is not a number.
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter with multiple possible values
+	 * @param name    the name of the parameter with multiple possible values
 	 * @throws ServletRequestBindingException a subclass of ServletException,
-	 * so it doesn't need to be caught
+	 *                                        so it doesn't need to be caught
 	 */
 	public static double[] getRequiredDoubleParameters(ServletRequest request, String name)
 			throws ServletRequestBindingException {
@@ -367,11 +363,12 @@ public abstract class ServletRequestUtils {
 	 * Throws an exception if it the parameter value isn't a boolean.
 	 * <p>Accepts "true", "on", "yes" (any case) and "1" as values for true;
 	 * treats every other non-empty value as false (i.e. parses leniently).
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter
+	 * @param name    the name of the parameter
 	 * @return the Boolean value, or {@code null} if not present
 	 * @throws ServletRequestBindingException a subclass of ServletException,
-	 * so it doesn't need to be caught
+	 *                                        so it doesn't need to be caught
 	 */
 	@Nullable
 	public static Boolean getBooleanParameter(ServletRequest request, String name)
@@ -388,8 +385,9 @@ public abstract class ServletRequestUtils {
 	 * Can pass a distinguished value as default to enable checks of whether it was supplied.
 	 * <p>Accepts "true", "on", "yes" (any case) and "1" as values for true;
 	 * treats every other non-empty value as false (i.e. parses leniently).
-	 * @param request current HTTP request
-	 * @param name the name of the parameter
+	 *
+	 * @param request    current HTTP request
+	 * @param name       the name of the parameter
 	 * @param defaultVal the default value to use as fallback
 	 */
 	public static boolean getBooleanParameter(ServletRequest request, String name, boolean defaultVal) {
@@ -398,8 +396,7 @@ public abstract class ServletRequestUtils {
 		}
 		try {
 			return getRequiredBooleanParameter(request, name);
-		}
-		catch (ServletRequestBindingException ex) {
+		} catch (ServletRequestBindingException ex) {
 			return defaultVal;
 		}
 	}
@@ -408,14 +405,14 @@ public abstract class ServletRequestUtils {
 	 * Get an array of boolean parameters, return an empty array if not found.
 	 * <p>Accepts "true", "on", "yes" (any case) and "1" as values for true;
 	 * treats every other non-empty value as false (i.e. parses leniently).
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter with multiple possible values
+	 * @param name    the name of the parameter with multiple possible values
 	 */
 	public static boolean[] getBooleanParameters(ServletRequest request, String name) {
 		try {
 			return getRequiredBooleanParameters(request, name);
-		}
-		catch (ServletRequestBindingException ex) {
+		} catch (ServletRequestBindingException ex) {
 			return new boolean[0];
 		}
 	}
@@ -425,10 +422,11 @@ public abstract class ServletRequestUtils {
 	 * or isn't a boolean.
 	 * <p>Accepts "true", "on", "yes" (any case) and "1" as values for true;
 	 * treats every other non-empty value as false (i.e. parses leniently).
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter
+	 * @param name    the name of the parameter
 	 * @throws ServletRequestBindingException a subclass of ServletException,
-	 * so it doesn't need to be caught
+	 *                                        so it doesn't need to be caught
 	 */
 	public static boolean getRequiredBooleanParameter(ServletRequest request, String name)
 			throws ServletRequestBindingException {
@@ -441,10 +439,11 @@ public abstract class ServletRequestUtils {
 	 * or one isn't a boolean.
 	 * <p>Accepts "true", "on", "yes" (any case) and "1" as values for true;
 	 * treats every other non-empty value as false (i.e. parses leniently).
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter
+	 * @param name    the name of the parameter
 	 * @throws ServletRequestBindingException a subclass of ServletException,
-	 * so it doesn't need to be caught
+	 *                                        so it doesn't need to be caught
 	 */
 	public static boolean[] getRequiredBooleanParameters(ServletRequest request, String name)
 			throws ServletRequestBindingException {
@@ -455,11 +454,12 @@ public abstract class ServletRequestUtils {
 
 	/**
 	 * Get a String parameter, or {@code null} if not present.
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter
+	 * @param name    the name of the parameter
 	 * @return the String value, or {@code null} if not present
 	 * @throws ServletRequestBindingException a subclass of ServletException,
-	 * so it doesn't need to be caught
+	 *                                        so it doesn't need to be caught
 	 */
 	@Nullable
 	public static String getStringParameter(ServletRequest request, String name)
@@ -474,8 +474,9 @@ public abstract class ServletRequestUtils {
 	/**
 	 * Get a String parameter, with a fallback value. Never throws an exception.
 	 * Can pass a distinguished value to default to enable checks of whether it was supplied.
-	 * @param request current HTTP request
-	 * @param name the name of the parameter
+	 *
+	 * @param request    current HTTP request
+	 * @param name       the name of the parameter
 	 * @param defaultVal the default value to use as fallback
 	 */
 	public static String getStringParameter(ServletRequest request, String name, String defaultVal) {
@@ -485,24 +486,25 @@ public abstract class ServletRequestUtils {
 
 	/**
 	 * Get an array of String parameters, return an empty array if not found.
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter with multiple possible values
+	 * @param name    the name of the parameter with multiple possible values
 	 */
 	public static String[] getStringParameters(ServletRequest request, String name) {
 		try {
 			return getRequiredStringParameters(request, name);
-		}
-		catch (ServletRequestBindingException ex) {
+		} catch (ServletRequestBindingException ex) {
 			return new String[0];
 		}
 	}
 
 	/**
 	 * Get a String parameter, throwing an exception if it isn't found.
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter
+	 * @param name    the name of the parameter
 	 * @throws ServletRequestBindingException a subclass of ServletException,
-	 * so it doesn't need to be caught
+	 *                                        so it doesn't need to be caught
 	 */
 	public static String getRequiredStringParameter(ServletRequest request, String name)
 			throws ServletRequestBindingException {
@@ -512,10 +514,11 @@ public abstract class ServletRequestUtils {
 
 	/**
 	 * Get an array of String parameters, throwing an exception if not found.
+	 *
 	 * @param request current HTTP request
-	 * @param name the name of the parameter
+	 * @param name    the name of the parameter
 	 * @throws ServletRequestBindingException a subclass of ServletException,
-	 * so it doesn't need to be caught
+	 *                                        so it doesn't need to be caught
 	 */
 	public static String[] getRequiredStringParameters(ServletRequest request, String name)
 			throws ServletRequestBindingException {
@@ -530,11 +533,10 @@ public abstract class ServletRequestUtils {
 			validateRequiredParameter(name, parameter);
 			try {
 				return doParse(parameter);
-			}
-			catch (NumberFormatException ex) {
+			} catch (NumberFormatException ex) {
 				throw new ServletRequestBindingException(
 						"Required " + getType() + " parameter '" + name + "' with value of '" +
-						parameter + "' is not a valid number", ex);
+								parameter + "' is not a valid number", ex);
 			}
 		}
 

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.client;
 
 import java.io.IOException;
@@ -67,6 +51,7 @@ public class Netty4ClientHttpRequestFactory implements ClientHttpRequestFactory,
 
 	/**
 	 * The default maximum response size.
+	 *
 	 * @see #setMaxResponseSize(int)
 	 */
 	public static final int DEFAULT_MAX_RESPONSE_SIZE = 1024 * 1024 * 10;
@@ -116,8 +101,9 @@ public class Netty4ClientHttpRequestFactory implements ClientHttpRequestFactory,
 	/**
 	 * Set the default maximum response size.
 	 * <p>By default this is set to {@link #DEFAULT_MAX_RESPONSE_SIZE}.
-	 * @since 4.1.5
+	 *
 	 * @see HttpObjectAggregator#HttpObjectAggregator(int)
+	 * @since 4.1.5
 	 */
 	public void setMaxResponseSize(int maxResponseSize) {
 		this.maxResponseSize = maxResponseSize;
@@ -135,6 +121,7 @@ public class Netty4ClientHttpRequestFactory implements ClientHttpRequestFactory,
 	/**
 	 * Set the underlying connect timeout (in milliseconds).
 	 * A timeout value of 0 specifies an infinite timeout.
+	 *
 	 * @see ChannelConfig#setConnectTimeoutMillis(int)
 	 */
 	public void setConnectTimeout(int connectTimeout) {
@@ -144,6 +131,7 @@ public class Netty4ClientHttpRequestFactory implements ClientHttpRequestFactory,
 	/**
 	 * Set the underlying URLConnection's read timeout (in milliseconds).
 	 * A timeout value of 0 specifies an infinite timeout.
+	 *
 	 * @see ReadTimeoutHandler
 	 */
 	public void setReadTimeout(int readTimeout) {
@@ -161,8 +149,7 @@ public class Netty4ClientHttpRequestFactory implements ClientHttpRequestFactory,
 	private SslContext getDefaultClientSslContext() {
 		try {
 			return SslContextBuilder.forClient().build();
-		}
-		catch (SSLException ex) {
+		} catch (SSLException ex) {
 			throw new IllegalStateException("Could not create default client SslContext", ex);
 		}
 	}
@@ -186,8 +173,7 @@ public class Netty4ClientHttpRequestFactory implements ClientHttpRequestFactory,
 		boolean isSecure = (uri.getPort() == 443 || "https".equalsIgnoreCase(uri.getScheme()));
 		if (isSecure) {
 			return buildBootstrap(uri, true);
-		}
-		else {
+		} else {
 			Bootstrap bootstrap = this.bootstrap;
 			if (bootstrap == null) {
 				bootstrap = buildBootstrap(uri, false);
@@ -223,6 +209,7 @@ public class Netty4ClientHttpRequestFactory implements ClientHttpRequestFactory,
 	/**
 	 * Template method for changing properties on the given {@link SocketChannelConfig}.
 	 * <p>The default implementation sets the connect timeout based on the set property.
+	 *
 	 * @param config the channel configuration
 	 */
 	protected void configureChannel(SocketChannelConfig config) {

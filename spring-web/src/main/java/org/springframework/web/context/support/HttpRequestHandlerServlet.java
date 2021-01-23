@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.context.support;
 
 import java.io.IOException;
@@ -44,9 +28,9 @@ import org.springframework.web.context.WebApplicationContext;
  * (with advanced mapping and interception facilities being available there).
  *
  * @author Juergen Hoeller
- * @since 2.0
  * @see org.springframework.web.HttpRequestHandler
  * @see org.springframework.web.servlet.DispatcherServlet
+ * @since 2.0
  */
 @SuppressWarnings("serial")
 public class HttpRequestHandlerServlet extends HttpServlet {
@@ -71,15 +55,13 @@ public class HttpRequestHandlerServlet extends HttpServlet {
 		LocaleContextHolder.setLocale(request.getLocale());
 		try {
 			this.target.handleRequest(request, response);
-		}
-		catch (HttpRequestMethodNotSupportedException ex) {
+		} catch (HttpRequestMethodNotSupportedException ex) {
 			String[] supportedMethods = ex.getSupportedMethods();
 			if (supportedMethods != null) {
 				response.setHeader("Allow", StringUtils.arrayToDelimitedString(supportedMethods, ", "));
 			}
 			response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getMessage());
-		}
-		finally {
+		} finally {
 			LocaleContextHolder.resetLocaleContext();
 		}
 	}

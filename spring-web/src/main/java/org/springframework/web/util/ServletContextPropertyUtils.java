@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.util;
 
 import javax.servlet.ServletContext;
@@ -31,9 +15,9 @@ import org.springframework.util.SystemPropertyUtils;
  *
  * @author Juergen Hoeller
  * @author Marten Deinum
- * @since 3.2.2
  * @see SystemPropertyUtils
  * @see ServletContext#getInitParameter(String)
+ * @since 3.2.2
  */
 public abstract class ServletContextPropertyUtils {
 
@@ -49,7 +33,8 @@ public abstract class ServletContextPropertyUtils {
 	/**
 	 * Resolve ${...} placeholders in the given text, replacing them with corresponding
 	 * servlet context init parameter or system property values.
-	 * @param text the String to resolve
+	 *
+	 * @param text           the String to resolve
 	 * @param servletContext the servletContext to use for lookups.
 	 * @return the resolved String
 	 * @throws IllegalArgumentException if there is an unresolvable placeholder
@@ -65,8 +50,9 @@ public abstract class ServletContextPropertyUtils {
 	 * Resolve ${...} placeholders in the given text, replacing them with corresponding
 	 * servlet context init parameter or system property values. Unresolvable placeholders
 	 * with no default value are ignored and passed through unchanged if the flag is set to true.
-	 * @param text the String to resolve
-	 * @param servletContext the servletContext to use for lookups.
+	 *
+	 * @param text                           the String to resolve
+	 * @param servletContext                 the servletContext to use for lookups.
 	 * @param ignoreUnresolvablePlaceholders flag to determine is unresolved placeholders are ignored
 	 * @return the resolved String
 	 * @throws IllegalArgumentException if there is an unresolvable placeholder and the flag is false
@@ -110,8 +96,7 @@ public abstract class ServletContextPropertyUtils {
 					}
 				}
 				return propVal;
-			}
-			catch (Throwable ex) {
+			} catch (Throwable ex) {
 				System.err.println("Could not resolve placeholder '" + placeholderName + "' in [" +
 						this.text + "] as ServletContext init-parameter or system property: " + ex);
 				return null;

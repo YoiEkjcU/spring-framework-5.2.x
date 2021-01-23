@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.codec.protobuf;
 
 import java.lang.reflect.Method;
@@ -46,8 +30,8 @@ import org.springframework.util.ConcurrentReferenceHashMap;
  * {@code new DecoderHttpMessageReader(new ProtobufDecoder())}.
  *
  * @author Sébastien Deleuze
- * @since 5.1
  * @see ProtobufEncoder
+ * @since 5.1
  */
 public class ProtobufHttpMessageWriter extends EncoderHttpMessageWriter<Message> {
 
@@ -67,6 +51,7 @@ public class ProtobufHttpMessageWriter extends EncoderHttpMessageWriter<Message>
 
 	/**
 	 * Create a new {@code ProtobufHttpMessageWriter} with the given encoder.
+	 *
 	 * @param encoder the Protobuf message encoder to use
 	 */
 	public ProtobufHttpMessageWriter(Encoder<Message> encoder) {
@@ -77,7 +62,7 @@ public class ProtobufHttpMessageWriter extends EncoderHttpMessageWriter<Message>
 	@SuppressWarnings("unchecked")
 	@Override
 	public Mono<Void> write(Publisher<? extends Message> inputStream, ResolvableType elementType,
-			@Nullable MediaType mediaType, ReactiveHttpOutputMessage message, Map<String, Object> hints) {
+							@Nullable MediaType mediaType, ReactiveHttpOutputMessage message, Map<String, Object> hints) {
 
 		try {
 			Message.Builder builder = getMessageBuilder(elementType.toClass());
@@ -86,17 +71,15 @@ public class ProtobufHttpMessageWriter extends EncoderHttpMessageWriter<Message>
 			message.getHeaders().add(X_PROTOBUF_MESSAGE_HEADER, descriptor.getFullName());
 			if (inputStream instanceof Flux) {
 				if (mediaType == null) {
-					message.getHeaders().setContentType(((HttpMessageEncoder<?>)getEncoder()).getStreamingMediaTypes().get(0));
-				}
-				else if (!ProtobufEncoder.DELIMITED_VALUE.equals(mediaType.getParameters().get(ProtobufEncoder.DELIMITED_KEY))) {
+					message.getHeaders().setContentType(((HttpMessageEncoder<?>) getEncoder()).getStreamingMediaTypes().get(0));
+				} else if (!ProtobufEncoder.DELIMITED_VALUE.equals(mediaType.getParameters().get(ProtobufEncoder.DELIMITED_KEY))) {
 					Map<String, String> parameters = new HashMap<>(mediaType.getParameters());
 					parameters.put(ProtobufEncoder.DELIMITED_KEY, ProtobufEncoder.DELIMITED_VALUE);
 					message.getHeaders().setContentType(new MediaType(mediaType.getType(), mediaType.getSubtype(), parameters));
 				}
 			}
 			return super.write(inputStream, elementType, mediaType, message, hints);
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			return Mono.error(new DecodingException("Could not read Protobuf message: " + ex.getMessage(), ex));
 		}
 	}

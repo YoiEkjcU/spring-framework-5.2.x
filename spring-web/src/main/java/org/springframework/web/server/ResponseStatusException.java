@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.server;
 
 import java.util.Collections;
@@ -44,6 +28,7 @@ public class ResponseStatusException extends NestedRuntimeException {
 
 	/**
 	 * Constructor with a response status.
+	 *
 	 * @param status the HTTP status (required)
 	 */
 	public ResponseStatusException(HttpStatus status) {
@@ -53,6 +38,7 @@ public class ResponseStatusException extends NestedRuntimeException {
 	/**
 	 * Constructor with a response status and a reason to add to the exception
 	 * message as explanation.
+	 *
 	 * @param status the HTTP status (required)
 	 * @param reason the associated reason (optional)
 	 */
@@ -63,9 +49,10 @@ public class ResponseStatusException extends NestedRuntimeException {
 	/**
 	 * Constructor with a response status and a reason to add to the exception
 	 * message as explanation, as well as a nested exception.
+	 *
 	 * @param status the HTTP status (required)
 	 * @param reason the associated reason (optional)
-	 * @param cause a nested exception (optional)
+	 * @param cause  a nested exception (optional)
 	 */
 	public ResponseStatusException(HttpStatus status, @Nullable String reason, @Nullable Throwable cause) {
 		super(null, cause);
@@ -77,9 +64,10 @@ public class ResponseStatusException extends NestedRuntimeException {
 	/**
 	 * Constructor with a response status and a reason to add to the exception
 	 * message as explanation, as well as a nested exception.
+	 *
 	 * @param rawStatusCode the HTTP status code value
-	 * @param reason the associated reason (optional)
-	 * @param cause a nested exception (optional)
+	 * @param reason        the associated reason (optional)
+	 * @param cause         a nested exception (optional)
 	 * @since 5.3
 	 */
 	public ResponseStatusException(int rawStatusCode, @Nullable String reason, @Nullable Throwable cause) {
@@ -91,9 +79,10 @@ public class ResponseStatusException extends NestedRuntimeException {
 
 	/**
 	 * Return the HTTP status associated with this exception.
+	 *
 	 * @throws IllegalArgumentException in case of an unknown HTTP status code
-	 * @since #getRawStatusCode()
 	 * @see HttpStatus#valueOf(int)
+	 * @since #getRawStatusCode()
 	 */
 	public HttpStatus getStatus() {
 		return HttpStatus.valueOf(this.status);
@@ -102,10 +91,11 @@ public class ResponseStatusException extends NestedRuntimeException {
 	/**
 	 * Return the HTTP status code (potentially non-standard and not resolvable
 	 * through the {@link HttpStatus} enum) as an integer.
+	 *
 	 * @return the HTTP status as an integer value
-	 * @since 5.3
 	 * @see #getStatus()
 	 * @see HttpStatus#resolve(int)
+	 * @since 5.3
 	 */
 	public int getRawStatusCode() {
 		return this.status;
@@ -115,6 +105,7 @@ public class ResponseStatusException extends NestedRuntimeException {
 	 * Return headers associated with the exception that should be added to the
 	 * error response, e.g. "Allow", "Accept", etc.
 	 * <p>The default implementation in this class returns an empty map.
+	 *
 	 * @since 5.1.11
 	 * @deprecated as of 5.1.13 in favor of {@link #getResponseHeaders()}
 	 */
@@ -127,6 +118,7 @@ public class ResponseStatusException extends NestedRuntimeException {
 	 * Return headers associated with the exception that should be added to the
 	 * error response, e.g. "Allow", "Accept", etc.
 	 * <p>The default implementation in this class returns empty headers.
+	 *
 	 * @since 5.1.13
 	 */
 	public HttpHeaders getResponseHeaders() {

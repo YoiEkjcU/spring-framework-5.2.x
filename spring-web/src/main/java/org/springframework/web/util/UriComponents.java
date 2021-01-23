@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.util;
 
 import java.io.Serializable;
@@ -41,13 +25,15 @@ import org.springframework.util.MultiValueMap;
  * @author Arjen Poutsma
  * @author Juergen Hoeller
  * @author Rossen Stoyanchev
- * @since 3.1
  * @see UriComponentsBuilder
+ * @since 3.1
  */
 @SuppressWarnings("serial")
 public abstract class UriComponents implements Serializable {
 
-	/** Captures URI template variable names. */
+	/**
+	 * Captures URI template variable names.
+	 */
 	private static final Pattern NAMES_PATTERN = Pattern.compile("\\{([^/]+?)}");
 
 
@@ -136,6 +122,7 @@ public abstract class UriComponents implements Serializable {
 	 * component type) characters, but not characters with reserved meaning.
 	 * For most cases, {@link UriComponentsBuilder#encode()} is more likely
 	 * to give the expected result.
+	 *
 	 * @see UriComponentsBuilder#encode()
 	 */
 	public final UriComponents encode() {
@@ -144,6 +131,7 @@ public abstract class UriComponents implements Serializable {
 
 	/**
 	 * A variant of {@link #encode()} with a charset other than "UTF-8".
+	 *
 	 * @param charset the charset to use for encoding
 	 * @see UriComponentsBuilder#encode(Charset)
 	 */
@@ -153,6 +141,7 @@ public abstract class UriComponents implements Serializable {
 	 * Replace all URI template variables with the values from a given map.
 	 * <p>The given map keys represent variable names; the corresponding values
 	 * represent variable values. The order of variables is not significant.
+	 *
 	 * @param uriVariables the map of URI variables
 	 * @return the expanded URI components
 	 */
@@ -164,6 +153,7 @@ public abstract class UriComponents implements Serializable {
 	/**
 	 * Replace all URI template variables with the values from a given array.
 	 * <p>The given array represents variable values. The order of variables is significant.
+	 *
 	 * @param uriVariableValues the URI variable values
 	 * @return the expanded URI components
 	 */
@@ -175,6 +165,7 @@ public abstract class UriComponents implements Serializable {
 	/**
 	 * Replace all URI template variables with the values from the given
 	 * {@link UriTemplateVariables}.
+	 *
 	 * @param uriVariables the URI template values
 	 * @return the expanded URI components
 	 */
@@ -186,6 +177,7 @@ public abstract class UriComponents implements Serializable {
 	/**
 	 * Replace all URI template variables with the values from the given {@link
 	 * UriTemplateVariables}.
+	 *
 	 * @param uriVariables the URI template values
 	 * @return the expanded URI components
 	 */
@@ -195,6 +187,7 @@ public abstract class UriComponents implements Serializable {
 	 * Normalize the path removing sequences like "path/..". Note that
 	 * normalization is applied to the full path, and not to individual path
 	 * segments.
+	 *
 	 * @see org.springframework.util.StringUtils#cleanPath(String)
 	 */
 	public abstract UriComponents normalize();
@@ -229,6 +222,7 @@ public abstract class UriComponents implements Serializable {
 
 	/**
 	 * Set all components of the given UriComponentsBuilder.
+	 *
 	 * @since 4.2
 	 */
 	protected abstract void copyToUriComponentsBuilder(UriComponentsBuilder builder);
@@ -243,7 +237,7 @@ public abstract class UriComponents implements Serializable {
 
 	@Nullable
 	static String expandUriComponent(@Nullable String source, UriTemplateVariables uriVariables,
-			@Nullable UnaryOperator<String> encoder) {
+									 @Nullable UnaryOperator<String> encoder) {
 
 		if (source == null) {
 			return null;
@@ -305,6 +299,7 @@ public abstract class UriComponents implements Serializable {
 
 	/**
 	 * Defines the contract for URI Template variables.
+	 *
 	 * @see HierarchicalUriComponents#expand
 	 */
 	public interface UriTemplateVariables {
@@ -320,6 +315,7 @@ public abstract class UriComponents implements Serializable {
 		 * Get the value for the given URI variable name.
 		 * If the value is {@code null}, an empty String is expanded.
 		 * If the value is {@link #SKIP_VALUE}, the URI variable is not expanded.
+		 *
 		 * @param name the variable name
 		 * @return the variable value, possibly {@code null} or {@link #SKIP_VALUE}
 		 */

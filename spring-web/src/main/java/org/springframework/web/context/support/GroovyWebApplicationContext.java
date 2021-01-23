@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.context.support;
 
 import java.io.IOException;
@@ -60,22 +44,28 @@ import org.springframework.lang.Nullable;
  * for ContextLoader or "contextClass" init-param for FrameworkServlet.
  *
  * @author Juergen Hoeller
- * @since 4.1
  * @see #setNamespace
  * @see #setConfigLocations
  * @see org.springframework.beans.factory.groovy.GroovyBeanDefinitionReader
  * @see org.springframework.web.context.ContextLoader#initWebApplicationContext
  * @see org.springframework.web.servlet.FrameworkServlet#initWebApplicationContext
+ * @since 4.1
  */
 public class GroovyWebApplicationContext extends AbstractRefreshableWebApplicationContext implements GroovyObject {
 
-	/** Default config location for the root context. */
+	/**
+	 * Default config location for the root context.
+	 */
 	public static final String DEFAULT_CONFIG_LOCATION = "/WEB-INF/applicationContext.groovy";
 
-	/** Default prefix for building a config location for a namespace. */
+	/**
+	 * Default prefix for building a config location for a namespace.
+	 */
 	public static final String DEFAULT_CONFIG_LOCATION_PREFIX = "/WEB-INF/";
 
-	/** Default suffix for building a config location for a namespace. */
+	/**
+	 * Default suffix for building a config location for a namespace.
+	 */
 	public static final String DEFAULT_CONFIG_LOCATION_SUFFIX = ".groovy";
 
 
@@ -86,6 +76,7 @@ public class GroovyWebApplicationContext extends AbstractRefreshableWebApplicati
 
 	/**
 	 * Loads the bean definitions via an GroovyBeanDefinitionReader.
+	 *
 	 * @see org.springframework.beans.factory.groovy.GroovyBeanDefinitionReader
 	 * @see #initBeanDefinitionReader
 	 * @see #loadBeanDefinitions
@@ -110,6 +101,7 @@ public class GroovyWebApplicationContext extends AbstractRefreshableWebApplicati
 	 * Initialize the bean definition reader used for loading the bean
 	 * definitions of this context. Default implementation is empty.
 	 * <p>Can be overridden in subclasses.
+	 *
 	 * @param beanDefinitionReader the bean definition reader used by this context
 	 */
 	protected void initBeanDefinitionReader(GroovyBeanDefinitionReader beanDefinitionReader) {
@@ -121,6 +113,7 @@ public class GroovyWebApplicationContext extends AbstractRefreshableWebApplicati
 	 * therefore this method is just supposed to load and/or register bean definitions.
 	 * <p>Delegates to a ResourcePatternResolver for resolving location patterns
 	 * into Resource instances.
+	 *
 	 * @throws IOException if the required Groovy script or XML file isn't found
 	 * @see #refreshBeanFactory
 	 * @see #getConfigLocations
@@ -144,10 +137,9 @@ public class GroovyWebApplicationContext extends AbstractRefreshableWebApplicati
 	@Override
 	protected String[] getDefaultConfigLocations() {
 		if (getNamespace() != null) {
-			return new String[] {DEFAULT_CONFIG_LOCATION_PREFIX + getNamespace() + DEFAULT_CONFIG_LOCATION_SUFFIX};
-		}
-		else {
-			return new String[] {DEFAULT_CONFIG_LOCATION};
+			return new String[]{DEFAULT_CONFIG_LOCATION_PREFIX + getNamespace() + DEFAULT_CONFIG_LOCATION_SUFFIX};
+		} else {
+			return new String[]{DEFAULT_CONFIG_LOCATION};
 		}
 	}
 
@@ -179,8 +171,7 @@ public class GroovyWebApplicationContext extends AbstractRefreshableWebApplicati
 	public Object getProperty(String property) {
 		if (containsBean(property)) {
 			return getBean(property);
-		}
-		else if (this.contextWrapper.isReadableProperty(property)) {
+		} else if (this.contextWrapper.isReadableProperty(property)) {
 			return this.contextWrapper.getPropertyValue(property);
 		}
 		throw new NoSuchBeanDefinitionException(property);

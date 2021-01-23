@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.server.adapter;
 
 import java.net.InetSocketAddress;
@@ -46,8 +30,8 @@ import org.springframework.web.util.UriComponentsBuilder;
  * {@link WebHttpHandlerBuilder#forwardedHeaderTransformer(ForwardedHeaderTransformer)}.
  *
  * @author Rossen Stoyanchev
- * @since 5.1
  * @see <a href="https://tools.ietf.org/html/rfc7239">https://tools.ietf.org/html/rfc7239</a>
+ * @since 5.1
  */
 public class ForwardedHeaderTransformer implements Function<ServerHttpRequest, ServerHttpRequest> {
 
@@ -71,6 +55,7 @@ public class ForwardedHeaderTransformer implements Function<ServerHttpRequest, S
 	/**
 	 * Enable mode in which any "Forwarded" or "X-Forwarded-*" headers are
 	 * removed only and the information in them ignored.
+	 *
 	 * @param removeOnly whether to discard and ignore forwarded headers
 	 */
 	public void setRemoveOnly(boolean removeOnly) {
@@ -79,6 +64,7 @@ public class ForwardedHeaderTransformer implements Function<ServerHttpRequest, S
 
 	/**
 	 * Whether the "remove only" mode is on.
+	 *
 	 * @see #setRemoveOnly
 	 */
 	public boolean isRemoveOnly() {
@@ -88,6 +74,7 @@ public class ForwardedHeaderTransformer implements Function<ServerHttpRequest, S
 
 	/**
 	 * Apply and remove, or remove Forwarded type headers.
+	 *
 	 * @param request the request
 	 */
 	@Override
@@ -116,6 +103,7 @@ public class ForwardedHeaderTransformer implements Function<ServerHttpRequest, S
 
 	/**
 	 * Whether the request has any Forwarded headers.
+	 *
 	 * @param request the request
 	 */
 	protected boolean hasForwardedHeaders(ServerHttpRequest request) {

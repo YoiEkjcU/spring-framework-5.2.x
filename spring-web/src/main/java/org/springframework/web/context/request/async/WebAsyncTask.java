@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.context.request.async;
 
 import java.util.concurrent.Callable;
@@ -28,10 +12,10 @@ import org.springframework.web.context.request.NativeWebRequest;
 /**
  * Holder for a {@link Callable}, a timeout value, and a task executor.
  *
+ * @param <V> the value type
  * @author Rossen Stoyanchev
  * @author Juergen Hoeller
  * @since 3.2
- * @param <V> the value type
  */
 public class WebAsyncTask<V> implements BeanFactoryAware {
 
@@ -54,6 +38,7 @@ public class WebAsyncTask<V> implements BeanFactoryAware {
 
 	/**
 	 * Create a {@code WebAsyncTask} wrapping the given {@link Callable}.
+	 *
 	 * @param callable the callable for concurrent handling
 	 */
 	public WebAsyncTask(Callable<V> callable) {
@@ -63,7 +48,8 @@ public class WebAsyncTask<V> implements BeanFactoryAware {
 
 	/**
 	 * Create a {@code WebAsyncTask} with a timeout value and a {@link Callable}.
-	 * @param timeout a timeout value in milliseconds
+	 *
+	 * @param timeout  a timeout value in milliseconds
 	 * @param callable the callable for concurrent handling
 	 */
 	public WebAsyncTask(long timeout, Callable<V> callable) {
@@ -73,9 +59,10 @@ public class WebAsyncTask<V> implements BeanFactoryAware {
 
 	/**
 	 * Create a {@code WebAsyncTask} with a timeout value, an executor name, and a {@link Callable}.
-	 * @param timeout the timeout value in milliseconds; ignored if {@code null}
+	 *
+	 * @param timeout      the timeout value in milliseconds; ignored if {@code null}
 	 * @param executorName the name of an executor bean to use
-	 * @param callable the callable for concurrent handling
+	 * @param callable     the callable for concurrent handling
 	 */
 	public WebAsyncTask(@Nullable Long timeout, String executorName, Callable<V> callable) {
 		this(callable);
@@ -86,7 +73,8 @@ public class WebAsyncTask<V> implements BeanFactoryAware {
 
 	/**
 	 * Create a {@code WebAsyncTask} with a timeout value, an executor instance, and a Callable.
-	 * @param timeout the timeout value in milliseconds; ignored if {@code null}
+	 *
+	 * @param timeout  the timeout value in milliseconds; ignored if {@code null}
 	 * @param executor the executor to use
 	 * @param callable the callable for concurrent handling
 	 */
@@ -131,12 +119,10 @@ public class WebAsyncTask<V> implements BeanFactoryAware {
 	public AsyncTaskExecutor getExecutor() {
 		if (this.executor != null) {
 			return this.executor;
-		}
-		else if (this.executorName != null) {
+		} else if (this.executorName != null) {
 			Assert.state(this.beanFactory != null, "BeanFactory is required to look up an executor bean by name");
 			return this.beanFactory.getBean(this.executorName, AsyncTaskExecutor.class);
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
@@ -162,6 +148,7 @@ public class WebAsyncTask<V> implements BeanFactoryAware {
 	 * should return without blocking. It may return an alternative value to
 	 * use, including an {@link Exception} or return
 	 * {@link CallableProcessingInterceptor#RESULT_NONE RESULT_NONE}.
+	 *
 	 * @since 5.0
 	 */
 	public void onError(Callable<V> callback) {
@@ -183,10 +170,12 @@ public class WebAsyncTask<V> implements BeanFactoryAware {
 			public <T> Object handleTimeout(NativeWebRequest request, Callable<T> task) throws Exception {
 				return (timeoutCallback != null ? timeoutCallback.call() : CallableProcessingInterceptor.RESULT_NONE);
 			}
+
 			@Override
 			public <T> Object handleError(NativeWebRequest request, Callable<T> task, Throwable t) throws Exception {
 				return (errorCallback != null ? errorCallback.call() : CallableProcessingInterceptor.RESULT_NONE);
 			}
+
 			@Override
 			public <T> void afterCompletion(NativeWebRequest request, Callable<T> task) throws Exception {
 				if (completionCallback != null) {

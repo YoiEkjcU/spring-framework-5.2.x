@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.util;
 
 /**
@@ -97,8 +81,7 @@ class HtmlCharacterEntityDecoder {
 			if (skipUntilIndex - this.currentPosition > 3) {
 				this.decodedMessage.append(this.originalMessage, this.currentPosition, skipUntilIndex);
 				this.currentPosition = skipUntilIndex;
-			}
-			else {
+			} else {
 				while (this.currentPosition < skipUntilIndex) {
 					this.decodedMessage.append(this.originalMessage.charAt(this.currentPosition++));
 				}
@@ -112,8 +95,7 @@ class HtmlCharacterEntityDecoder {
 			boolean wasProcessable = isNumberedReference ? processNumberedReference() : processNamedReference();
 			if (wasProcessable) {
 				this.currentPosition = this.nextSemicolonPosition + 1;
-			}
-			else {
+			} else {
 				char currentChar = this.originalMessage.charAt(this.currentPosition);
 				this.decodedMessage.append(currentChar);
 				this.currentPosition++;
@@ -130,8 +112,7 @@ class HtmlCharacterEntityDecoder {
 					Integer.parseInt(getReferenceSubstring(3), 16));
 			this.decodedMessage.append((char) value);
 			return true;
-		}
-		catch (NumberFormatException ex) {
+		} catch (NumberFormatException ex) {
 			return false;
 		}
 	}

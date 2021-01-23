@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.server.reactive;
 
 import java.io.IOException;
@@ -69,8 +53,7 @@ public class UndertowHttpHandlerAdapter implements io.undertow.server.HttpHandle
 		UndertowServerHttpRequest request = null;
 		try {
 			request = new UndertowServerHttpRequest(exchange, getDataBufferFactory());
-		}
-		catch (URISyntaxException ex) {
+		} catch (URISyntaxException ex) {
 			if (logger.isWarnEnabled()) {
 				logger.debug("Failed to get request URI: " + ex.getMessage());
 			}
@@ -117,12 +100,10 @@ public class UndertowHttpHandlerAdapter implements io.undertow.server.HttpHandle
 				try {
 					logger.debug(this.logPrefix + "Closing connection");
 					this.exchange.getConnection().close();
-				}
-				catch (IOException ex2) {
+				} catch (IOException ex2) {
 					// ignore
 				}
-			}
-			else {
+			} else {
 				logger.debug(this.logPrefix + "Setting HttpServerExchange status to 500 Server Error");
 				this.exchange.setStatusCode(500);
 				this.exchange.endExchange();

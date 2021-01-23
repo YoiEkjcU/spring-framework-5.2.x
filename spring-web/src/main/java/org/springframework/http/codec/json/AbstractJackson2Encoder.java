@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.codec.json;
 
 import java.io.IOException;
@@ -117,7 +101,7 @@ public abstract class AbstractJackson2Encoder extends Jackson2CodecSupport imple
 
 	@Override
 	public Flux<DataBuffer> encode(Publisher<?> inputStream, DataBufferFactory bufferFactory,
-			ResolvableType elementType, @Nullable MimeType mimeType, @Nullable Map<String, Object> hints) {
+								   ResolvableType elementType, @Nullable MimeType mimeType, @Nullable Map<String, Object> hints) {
 
 		Assert.notNull(inputStream, "'inputStream' must not be null");
 		Assert.notNull(bufferFactory, "'bufferFactory' must not be null");
@@ -127,8 +111,7 @@ public abstract class AbstractJackson2Encoder extends Jackson2CodecSupport imple
 			return Mono.from(inputStream)
 					.map(value -> encodeValue(value, bufferFactory, elementType, mimeType, hints))
 					.flux();
-		}
-		else {
+		} else {
 			byte[] separator = getStreamingMediaTypeSeparator(mimeType);
 			if (separator != null) { // streaming
 				try {
@@ -141,12 +124,10 @@ public abstract class AbstractJackson2Encoder extends Jackson2CodecSupport imple
 					return Flux.from(inputStream)
 							.map(value -> encodeStreamingValue(value, bufferFactory, hints, sequenceWriter, byteBuilder,
 									separator));
-				}
-				catch (IOException ex) {
+				} catch (IOException ex) {
 					return Flux.error(ex);
 				}
-			}
-			else { // non-streaming
+			} else { // non-streaming
 				ResolvableType listType = ResolvableType.forClassWithGenerics(List.class, elementType);
 				return Flux.from(inputStream)
 						.collectList()
@@ -159,7 +140,7 @@ public abstract class AbstractJackson2Encoder extends Jackson2CodecSupport imple
 
 	@Override
 	public DataBuffer encodeValue(Object value, DataBufferFactory bufferFactory,
-			ResolvableType valueType, @Nullable MimeType mimeType, @Nullable Map<String, Object> hints) {
+								  ResolvableType valueType, @Nullable MimeType mimeType, @Nullable Map<String, Object> hints) {
 
 		ObjectWriter writer = createObjectWriter(valueType, mimeType, hints);
 		ByteArrayBuilder byteBuilder = new ByteArrayBuilder(writer.getFactory()._getBufferRecycler());
@@ -171,14 +152,11 @@ public abstract class AbstractJackson2Encoder extends Jackson2CodecSupport imple
 			JsonGenerator generator = getObjectMapper().getFactory().createGenerator(byteBuilder, encoding);
 			writer.writeValue(generator, value);
 			generator.flush();
-		}
-		catch (InvalidDefinitionException ex) {
+		} catch (InvalidDefinitionException ex) {
 			throw new CodecException("Type definition error: " + ex.getType(), ex);
-		}
-		catch (JsonProcessingException ex) {
+		} catch (JsonProcessingException ex) {
 			throw new EncodingException("JSON encoding error: " + ex.getOriginalMessage(), ex);
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new IllegalStateException("Unexpected I/O error while writing to byte array builder", ex);
 		}
 
@@ -190,21 +168,18 @@ public abstract class AbstractJackson2Encoder extends Jackson2CodecSupport imple
 	}
 
 	private DataBuffer encodeStreamingValue(Object value, DataBufferFactory bufferFactory, @Nullable Map<String, Object> hints,
-			SequenceWriter sequenceWriter, ByteArrayBuilder byteArrayBuilder, byte[] separator) {
+											SequenceWriter sequenceWriter, ByteArrayBuilder byteArrayBuilder, byte[] separator) {
 
 		logValue(hints, value);
 
 		try {
 			sequenceWriter.write(value);
 			sequenceWriter.flush();
-		}
-		catch (InvalidDefinitionException ex) {
+		} catch (InvalidDefinitionException ex) {
 			throw new CodecException("Type definition error: " + ex.getType(), ex);
-		}
-		catch (JsonProcessingException ex) {
+		} catch (JsonProcessingException ex) {
 			throw new EncodingException("JSON encoding error: " + ex.getOriginalMessage(), ex);
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new IllegalStateException("Unexpected I/O error while writing to byte array builder", ex);
 		}
 
@@ -217,8 +192,7 @@ public abstract class AbstractJackson2Encoder extends Jackson2CodecSupport imple
 			// SequenceWriter writes an unnecessary space in between values
 			offset = 1;
 			length = bytes.length - 1;
-		}
-		else {
+		} else {
 			offset = 0;
 			length = bytes.length;
 		}
@@ -239,7 +213,7 @@ public abstract class AbstractJackson2Encoder extends Jackson2CodecSupport imple
 	}
 
 	private ObjectWriter createObjectWriter(ResolvableType valueType, @Nullable MimeType mimeType,
-			@Nullable Map<String, Object> hints) {
+											@Nullable Map<String, Object> hints) {
 
 		JavaType javaType = getJavaType(valueType.getType(), null);
 		Class<?> jsonView = (hints != null ? (Class<?>) hints.get(Jackson2CodecSupport.JSON_VIEW_HINT) : null);
@@ -254,7 +228,7 @@ public abstract class AbstractJackson2Encoder extends Jackson2CodecSupport imple
 	}
 
 	protected ObjectWriter customizeWriter(ObjectWriter writer, @Nullable MimeType mimeType,
-			ResolvableType elementType, @Nullable Map<String, Object> hints) {
+										   ResolvableType elementType, @Nullable Map<String, Object> hints) {
 
 		return writer;
 	}
@@ -264,6 +238,7 @@ public abstract class AbstractJackson2Encoder extends Jackson2CodecSupport imple
 	 * <p>By default, this method returns new line {@code "\n"} if the given
 	 * mime type is one of the configured {@link #setStreamingMediaTypes(List)
 	 * streaming} mime types.
+	 *
 	 * @since 5.3
 	 */
 	@Nullable
@@ -278,6 +253,7 @@ public abstract class AbstractJackson2Encoder extends Jackson2CodecSupport imple
 
 	/**
 	 * Determine the JSON encoding to use for the given mime type.
+	 *
 	 * @param mimeType the mime type as requested by the caller
 	 * @return the JSON encoding to use (never {@code null})
 	 * @since 5.0.5
@@ -308,7 +284,7 @@ public abstract class AbstractJackson2Encoder extends Jackson2CodecSupport imple
 
 	@Override
 	public Map<String, Object> getEncodeHints(@Nullable ResolvableType actualType, ResolvableType elementType,
-			@Nullable MediaType mediaType, ServerHttpRequest request, ServerHttpResponse response) {
+											  @Nullable MediaType mediaType, ServerHttpRequest request, ServerHttpResponse response) {
 
 		return (actualType != null ? getHints(actualType) : Hints.none());
 	}

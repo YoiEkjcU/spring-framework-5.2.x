@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.codec.multipart;
 
 import java.nio.charset.StandardCharsets;
@@ -79,8 +63,9 @@ final class MultipartParser extends BaseSubscriber<DataBuffer> {
 
 	/**
 	 * Parses the given stream of {@link DataBuffer} objects into a stream of {@link Token} objects.
-	 * @param buffers the input buffers
-	 * @param boundary the multipart boundary, as found in the {@code Content-Type} header
+	 *
+	 * @param buffers        the input buffers
+	 * @param boundary       the multipart boundary, as found in the {@code Content-Type} header
 	 * @param maxHeadersSize the maximum buffered header size
 	 * @return a stream of parsed tokens
 	 */
@@ -131,15 +116,13 @@ final class MultipartParser extends BaseSubscriber<DataBuffer> {
 			if (remainder != null) {
 				if (remainder.readableByteCount() > 0) {
 					newState.onNext(remainder);
-				}
-				else {
+				} else {
 					DataBufferUtils.release(remainder);
 					requestBuffer();
 				}
 			}
 			return true;
-		}
-		else {
+		} else {
 			DataBufferUtils.release(remainder);
 			return false;
 		}
@@ -293,8 +276,7 @@ final class MultipartParser extends BaseSubscriber<DataBuffer> {
 				DataBufferUtils.release(buf);
 
 				changeState(this, new HeadersState(), headersBuf);
-			}
-			else {
+			} else {
 				DataBufferUtils.release(buf);
 				requestBuffer();
 			}
@@ -353,8 +335,7 @@ final class MultipartParser extends BaseSubscriber<DataBuffer> {
 					}
 					return;
 				}
-			}
-			else if (count > MultipartParser.this.maxHeadersSize) {
+			} else if (count > MultipartParser.this.maxHeadersSize) {
 				if (changeState(this, DisposedState.INSTANCE, buf)) {
 					emitError(new DataBufferLimitException("Part headers exceeded the memory usage limit of " +
 							MultipartParser.this.maxHeadersSize + " bytes"));
@@ -374,8 +355,7 @@ final class MultipartParser extends BaseSubscriber<DataBuffer> {
 				emitHeaders(parseHeaders());
 				// TODO: no need to check result of changeState, no further statements
 				changeState(this, new BodyState(), bodyBuf);
-			}
-			else {
+			} else {
 				this.buffers.add(buf);
 				requestBuffer();
 			}
@@ -484,8 +464,7 @@ final class MultipartParser extends BaseSubscriber<DataBuffer> {
 					DataBuffer body = buffer.retainedSlice(buffer.readPosition(), len);
 					enqueue(body);
 					enqueue(null);
-				}
-				else if (len < 0) {
+				} else if (len < 0) {
 					// buffer starts with the end of the delimiter, let's slice the previous buffer and flush it
 					DataBuffer previous = this.previous.get();
 					int prevLen = previous.readableByteCount() + len;
@@ -494,13 +473,11 @@ final class MultipartParser extends BaseSubscriber<DataBuffer> {
 						DataBufferUtils.release(previous);
 						this.previous.set(body);
 						enqueue(null);
-					}
-					else {
+					} else {
 						DataBufferUtils.release(previous);
 						this.previous.set(null);
 					}
-				}
-				else /* if (sliceLength == 0) */ {
+				} else /* if (sliceLength == 0) */ {
 					// buffer starts with complete delimiter, flush out the previous buffer
 					enqueue(null);
 				}
@@ -509,8 +486,7 @@ final class MultipartParser extends BaseSubscriber<DataBuffer> {
 				DataBufferUtils.release(buffer);
 
 				changeState(this, new HeadersState(), remainder);
-			}
-			else {
+			} else {
 				enqueue(buffer);
 				requestBuffer();
 			}

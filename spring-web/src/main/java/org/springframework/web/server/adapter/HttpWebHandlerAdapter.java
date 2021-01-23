@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.server.adapter;
 
 import java.util.Arrays;
@@ -69,7 +53,7 @@ public class HttpWebHandlerAdapter extends WebHandlerDecorator implements HttpHa
 	private static final String DISCONNECTED_CLIENT_LOG_CATEGORY =
 			"org.springframework.web.server.DisconnectedClient";
 
-	 // Similar declaration exists in AbstractSockJsSession..
+	// Similar declaration exists in AbstractSockJsSession..
 	private static final Set<String> DISCONNECTED_CLIENT_EXCEPTIONS = new HashSet<>(
 			Arrays.asList("AbortedException", "ClientAbortException", "EOFException", "EofException"));
 
@@ -91,7 +75,9 @@ public class HttpWebHandlerAdapter extends WebHandlerDecorator implements HttpHa
 	@Nullable
 	private ApplicationContext applicationContext;
 
-	/** Whether to log potentially sensitive info (form data at DEBUG, headers at TRACE). */
+	/**
+	 * Whether to log potentially sensitive info (form data at DEBUG, headers at TRACE).
+	 */
 	private boolean enableLoggingRequestDetails = false;
 
 
@@ -105,6 +91,7 @@ public class HttpWebHandlerAdapter extends WebHandlerDecorator implements HttpHa
 	 * sessions. The provided instance is set on each created
 	 * {@link DefaultServerWebExchange}.
 	 * <p>By default this is set to {@link DefaultWebSessionManager}.
+	 *
 	 * @param sessionManager the session manager to use
 	 */
 	public void setSessionManager(WebSessionManager sessionManager) {
@@ -123,6 +110,7 @@ public class HttpWebHandlerAdapter extends WebHandlerDecorator implements HttpHa
 	 * Configure a custom {@link ServerCodecConfigurer}. The provided instance is set on
 	 * each created {@link DefaultServerWebExchange}.
 	 * <p>By default this is set to {@link ServerCodecConfigurer#create()}.
+	 *
 	 * @param codecConfigurer the codec configurer to use
 	 */
 	public void setCodecConfigurer(ServerCodecConfigurer codecConfigurer) {
@@ -151,6 +139,7 @@ public class HttpWebHandlerAdapter extends WebHandlerDecorator implements HttpHa
 	 * each created {@link DefaultServerWebExchange}.
 	 * <p>By default this is set to
 	 * {@link org.springframework.web.server.i18n.AcceptHeaderLocaleContextResolver}.
+	 *
 	 * @param resolver the locale context resolver to use
 	 */
 	public void setLocaleContextResolver(LocaleContextResolver resolver) {
@@ -169,6 +158,7 @@ public class HttpWebHandlerAdapter extends WebHandlerDecorator implements HttpHa
 	 * Enable processing of forwarded headers, either extracting and removing,
 	 * or remove only.
 	 * <p>By default this is not set.
+	 *
 	 * @param transformer the transformer to use
 	 * @since 5.1
 	 */
@@ -179,6 +169,7 @@ public class HttpWebHandlerAdapter extends WebHandlerDecorator implements HttpHa
 
 	/**
 	 * Return the configured {@link ForwardedHeaderTransformer}.
+	 *
 	 * @since 5.1
 	 */
 	@Nullable
@@ -190,6 +181,7 @@ public class HttpWebHandlerAdapter extends WebHandlerDecorator implements HttpHa
 	 * Configure the {@code ApplicationContext} associated with the web application,
 	 * if it was initialized with one via
 	 * {@link org.springframework.web.server.adapter.WebHttpHandlerBuilder#applicationContext(ApplicationContext)}.
+	 *
 	 * @param applicationContext the context
 	 * @since 5.0.3
 	 */
@@ -199,6 +191,7 @@ public class HttpWebHandlerAdapter extends WebHandlerDecorator implements HttpHa
 
 	/**
 	 * Return the configured {@code ApplicationContext}, if any.
+	 *
 	 * @since 5.0.3
 	 */
 	@Nullable
@@ -246,6 +239,7 @@ public class HttpWebHandlerAdapter extends WebHandlerDecorator implements HttpHa
 	/**
 	 * Format the request for logging purposes including HTTP method and URL.
 	 * <p>By default this prints the HTTP method, the URL path, and the query.
+	 *
 	 * @param request the request to format
 	 * @return the String to display, never empty or {@code null}
 	 */
@@ -279,18 +273,15 @@ public class HttpWebHandlerAdapter extends WebHandlerDecorator implements HttpHa
 		if (response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR)) {
 			logger.error(logPrefix + "500 Server Error for " + formatRequest(request), ex);
 			return Mono.empty();
-		}
-		else if (isDisconnectedClientError(ex)) {
+		} else if (isDisconnectedClientError(ex)) {
 			if (lostClientLogger.isTraceEnabled()) {
 				lostClientLogger.trace(logPrefix + "Client went away", ex);
-			}
-			else if (lostClientLogger.isDebugEnabled()) {
+			} else if (lostClientLogger.isDebugEnabled()) {
 				lostClientLogger.debug(logPrefix + "Client went away: " + ex +
 						" (stacktrace at TRACE level for '" + DISCONNECTED_CLIENT_LOG_CATEGORY + "')");
 			}
 			return Mono.empty();
-		}
-		else {
+		} else {
 			// After the response is committed, propagate errors to the server...
 			logger.error(logPrefix + "Error [" + ex + "] for " + formatRequest(request) +
 					", but ServerHttpResponse already committed (" + response.getStatusCode() + ")");

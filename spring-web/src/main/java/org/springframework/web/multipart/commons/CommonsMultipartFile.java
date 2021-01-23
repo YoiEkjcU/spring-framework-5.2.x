@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.multipart.commons;
 
 import java.io.File;
@@ -39,8 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author Trevor D. Cook
  * @author Juergen Hoeller
- * @since 29.09.2003
  * @see CommonsMultipartResolver
+ * @since 29.09.2003
  */
 @SuppressWarnings("serial")
 public class CommonsMultipartFile implements MultipartFile, Serializable {
@@ -56,6 +40,7 @@ public class CommonsMultipartFile implements MultipartFile, Serializable {
 
 	/**
 	 * Create an instance wrapping the given FileItem.
+	 *
 	 * @param fileItem the FileItem to wrap
 	 */
 	public CommonsMultipartFile(FileItem fileItem) {
@@ -78,9 +63,10 @@ public class CommonsMultipartFile implements MultipartFile, Serializable {
 	 * <p>Default is "false", stripping off path information that may prefix the
 	 * actual filename e.g. from Opera. Switch this to "true" for preserving the
 	 * client-specified filename as-is, including potential path separators.
-	 * @since 4.3.5
+	 *
 	 * @see #getOriginalFilename()
 	 * @see CommonsMultipartResolver#setPreserveFilename(boolean)
+	 * @since 4.3.5
 	 */
 	public void setPreserveFilename(boolean preserveFilename) {
 		this.preserveFilename = preserveFilename;
@@ -110,11 +96,10 @@ public class CommonsMultipartFile implements MultipartFile, Serializable {
 		int winSep = filename.lastIndexOf('\\');
 		// Cut off at latest possible point
 		int pos = Math.max(winSep, unixSep);
-		if (pos != -1)  {
+		if (pos != -1) {
 			// Any sort of path separator found...
 			return filename.substring(pos + 1);
-		}
-		else {
+		} else {
 			// A plain name
 			return filename;
 		}
@@ -175,16 +160,13 @@ public class CommonsMultipartFile implements MultipartFile, Serializable {
 						(traceOn ? ", stored " + getStorageDescription() : "") +
 						": " + action + " to [" + dest.getAbsolutePath() + "]";
 			});
-		}
-		catch (FileUploadException ex) {
+		} catch (FileUploadException ex) {
 			throw new IllegalStateException(ex.getMessage(), ex);
-		}
-		catch (IllegalStateException | IOException ex) {
+		} catch (IllegalStateException | IOException ex) {
 			// Pass through IllegalStateException when coming from FileItem directly,
 			// or propagate an exception from I/O operations within FileItem.write
 			throw ex;
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			throw new IOException("File transfer failed", ex);
 		}
 	}
@@ -223,11 +205,9 @@ public class CommonsMultipartFile implements MultipartFile, Serializable {
 	public String getStorageDescription() {
 		if (this.fileItem.isInMemory()) {
 			return "in memory";
-		}
-		else if (this.fileItem instanceof DiskFileItem) {
+		} else if (this.fileItem instanceof DiskFileItem) {
 			return "at [" + ((DiskFileItem) this.fileItem).getStoreLocation().getAbsolutePath() + "]";
-		}
-		else {
+		} else {
 			return "on disk";
 		}
 	}
@@ -235,7 +215,7 @@ public class CommonsMultipartFile implements MultipartFile, Serializable {
 	@Override
 	public String toString() {
 		return "MultipartFile[field=\"" + this.fileItem.getFieldName() + "\"" +
-				(this.fileItem.getName() != null ? ", filename=" + this.fileItem.getName() : "" ) +
+				(this.fileItem.getName() != null ? ", filename=" + this.fileItem.getName() : "") +
 				(this.fileItem.getContentType() != null ? ", contentType=" + this.fileItem.getContentType() : "") +
 				", size=" + this.fileItem.getSize() + "]";
 	}

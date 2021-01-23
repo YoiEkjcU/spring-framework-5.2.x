@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.server.i18n;
 
 import java.util.ArrayList;
@@ -38,8 +22,8 @@ import org.springframework.web.server.ServerWebExchange;
  *
  * @author Sebastien Deleuze
  * @author Juergen Hoeller
- * @since 5.0
  * @see HttpHeaders#getAcceptLanguageAsLocales()
+ * @since 5.0
  */
 public class AcceptHeaderLocaleContextResolver implements LocaleContextResolver {
 
@@ -52,6 +36,7 @@ public class AcceptHeaderLocaleContextResolver implements LocaleContextResolver 
 	/**
 	 * Configure supported locales to check against the requested locales
 	 * determined via {@link HttpHeaders#getAcceptLanguageAsLocales()}.
+	 *
 	 * @param locales the supported locales
 	 */
 	public void setSupportedLocales(List<Locale> locales) {
@@ -69,6 +54,7 @@ public class AcceptHeaderLocaleContextResolver implements LocaleContextResolver 
 	/**
 	 * Configure a fixed default locale to fall back on if the request does not
 	 * have an "Accept-Language" header (not set by default).
+	 *
 	 * @param defaultLocale the default locale to use
 	 */
 	public void setDefaultLocale(@Nullable Locale defaultLocale) {
@@ -90,8 +76,7 @@ public class AcceptHeaderLocaleContextResolver implements LocaleContextResolver 
 		List<Locale> requestLocales = null;
 		try {
 			requestLocales = exchange.getRequest().getHeaders().getAcceptLanguageAsLocales();
-		}
-		catch (IllegalArgumentException ex) {
+		} catch (IllegalArgumentException ex) {
 			// Invalid Accept-Language header: treat as empty for matching purposes
 		}
 		return new SimpleLocaleContext(resolveSupportedLocale(requestLocales));
@@ -114,8 +99,7 @@ public class AcceptHeaderLocaleContextResolver implements LocaleContextResolver 
 					// Full match: language + country, possibly narrowed from earlier language-only match
 					return locale;
 				}
-			}
-			else if (languageMatch == null) {
+			} else if (languageMatch == null) {
 				// Let's try to find a language-only match as a fallback
 				for (Locale candidate : supportedLocales) {
 					if (!StringUtils.hasLength(candidate.getCountry()) &&

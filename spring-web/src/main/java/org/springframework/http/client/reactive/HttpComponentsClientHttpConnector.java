@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.client.reactive;
 
 import java.net.URI;
@@ -45,8 +29,8 @@ import org.springframework.util.Assert;
  *
  * @author Martin Tarjányi
  * @author Arjen Poutsma
- * @since 5.3
  * @see <a href="https://hc.apache.org/index.html">Apache HttpComponents</a>
+ * @since 5.3
  */
 public class HttpComponentsClientHttpConnector implements ClientHttpConnector {
 
@@ -66,6 +50,7 @@ public class HttpComponentsClientHttpConnector implements ClientHttpConnector {
 
 	/**
 	 * Constructor with a pre-configured {@link CloseableHttpAsyncClient} instance.
+	 *
 	 * @param client the client to use
 	 */
 	public HttpComponentsClientHttpConnector(CloseableHttpAsyncClient client) {
@@ -76,11 +61,12 @@ public class HttpComponentsClientHttpConnector implements ClientHttpConnector {
 	 * Constructor with a pre-configured {@link CloseableHttpAsyncClient} instance
 	 * and a {@link HttpClientContext} supplier lambda which is called before each request
 	 * and passed to the client.
-	 * @param client the client to use
+	 *
+	 * @param client          the client to use
 	 * @param contextProvider a {@link HttpClientContext} supplier
 	 */
 	public HttpComponentsClientHttpConnector(CloseableHttpAsyncClient client,
-			BiFunction<HttpMethod, URI, ? extends HttpClientContext> contextProvider) {
+											 BiFunction<HttpMethod, URI, ? extends HttpClientContext> contextProvider) {
 
 		Assert.notNull(client, "Client must not be null");
 		Assert.notNull(contextProvider, "ContextProvider must not be null");
@@ -99,7 +85,7 @@ public class HttpComponentsClientHttpConnector implements ClientHttpConnector {
 
 	@Override
 	public Mono<ClientHttpResponse> connect(HttpMethod method, URI uri,
-			Function<? super ClientHttpRequest, Mono<Void>> requestCallback) {
+											Function<? super ClientHttpRequest, Mono<Void>> requestCallback) {
 
 		HttpClientContext context = this.contextProvider.apply(method, uri);
 
@@ -135,7 +121,7 @@ public class HttpComponentsClientHttpConnector implements ClientHttpConnector {
 		private final HttpClientContext context;
 
 		public MonoFutureCallbackAdapter(MonoSink<ClientHttpResponse> sink,
-				DataBufferFactory dataBufferFactory, HttpClientContext context) {
+										 DataBufferFactory dataBufferFactory, HttpClientContext context) {
 			this.sink = sink;
 			this.dataBufferFactory = dataBufferFactory;
 			this.context = context;

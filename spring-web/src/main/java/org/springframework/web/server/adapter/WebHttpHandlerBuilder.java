@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.server.adapter;
 
 import java.util.ArrayList;
@@ -56,24 +40,34 @@ import org.springframework.web.server.session.WebSessionManager;
  *
  * @author Rossen Stoyanchev
  * @author Sebastien Deleuze
- * @since 5.0
  * @see HttpWebHandlerAdapter
+ * @since 5.0
  */
 public final class WebHttpHandlerBuilder {
 
-	/** Well-known name for the target WebHandler in the bean factory. */
+	/**
+	 * Well-known name for the target WebHandler in the bean factory.
+	 */
 	public static final String WEB_HANDLER_BEAN_NAME = "webHandler";
 
-	/** Well-known name for the WebSessionManager in the bean factory. */
+	/**
+	 * Well-known name for the WebSessionManager in the bean factory.
+	 */
 	public static final String WEB_SESSION_MANAGER_BEAN_NAME = "webSessionManager";
 
-	/** Well-known name for the ServerCodecConfigurer in the bean factory. */
+	/**
+	 * Well-known name for the ServerCodecConfigurer in the bean factory.
+	 */
 	public static final String SERVER_CODEC_CONFIGURER_BEAN_NAME = "serverCodecConfigurer";
 
-	/** Well-known name for the LocaleContextResolver in the bean factory. */
+	/**
+	 * Well-known name for the LocaleContextResolver in the bean factory.
+	 */
 	public static final String LOCALE_CONTEXT_RESOLVER_BEAN_NAME = "localeContextResolver";
 
-	/** Well-known name for the ForwardedHeaderTransformer in the bean factory. */
+	/**
+	 * Well-known name for the ForwardedHeaderTransformer in the bean factory.
+	 */
 	public static final String FORWARDED_HEADER_TRANSFORMER_BEAN_NAME = "forwardedHeaderTransformer";
 
 
@@ -125,6 +119,7 @@ public final class WebHttpHandlerBuilder {
 
 	/**
 	 * Static factory method to create a new builder instance.
+	 *
 	 * @param webHandler the target handler for the request
 	 * @return the prepared builder
 	 */
@@ -149,6 +144,7 @@ public final class WebHttpHandlerBuilder {
 	 * <li>{@link LocaleContextResolver} [0..1] -- looked up by the name
 	 * {@link #LOCALE_CONTEXT_RESOLVER_BEAN_NAME}.
 	 * </ul>
+	 *
 	 * @param context the application context to use for the lookup
 	 * @return the prepared builder
 	 */
@@ -170,32 +166,28 @@ public final class WebHttpHandlerBuilder {
 		try {
 			builder.sessionManager(
 					context.getBean(WEB_SESSION_MANAGER_BEAN_NAME, WebSessionManager.class));
-		}
-		catch (NoSuchBeanDefinitionException ex) {
+		} catch (NoSuchBeanDefinitionException ex) {
 			// Fall back on default
 		}
 
 		try {
 			builder.codecConfigurer(
 					context.getBean(SERVER_CODEC_CONFIGURER_BEAN_NAME, ServerCodecConfigurer.class));
-		}
-		catch (NoSuchBeanDefinitionException ex) {
+		} catch (NoSuchBeanDefinitionException ex) {
 			// Fall back on default
 		}
 
 		try {
 			builder.localeContextResolver(
 					context.getBean(LOCALE_CONTEXT_RESOLVER_BEAN_NAME, LocaleContextResolver.class));
-		}
-		catch (NoSuchBeanDefinitionException ex) {
+		} catch (NoSuchBeanDefinitionException ex) {
 			// Fall back on default
 		}
 
 		try {
 			builder.forwardedHeaderTransformer(
 					context.getBean(FORWARDED_HEADER_TRANSFORMER_BEAN_NAME, ForwardedHeaderTransformer.class));
-		}
-		catch (NoSuchBeanDefinitionException ex) {
+		} catch (NoSuchBeanDefinitionException ex) {
 			// Fall back on default
 		}
 
@@ -205,6 +197,7 @@ public final class WebHttpHandlerBuilder {
 
 	/**
 	 * Add the given filter(s).
+	 *
 	 * @param filters the filter(s) to add that's
 	 */
 	public WebHttpHandlerBuilder filter(WebFilter... filters) {
@@ -217,6 +210,7 @@ public final class WebHttpHandlerBuilder {
 
 	/**
 	 * Manipulate the "live" list of currently configured filters.
+	 *
 	 * @param consumer the consumer to use
 	 */
 	public WebHttpHandlerBuilder filters(Consumer<List<WebFilter>> consumer) {
@@ -246,6 +240,7 @@ public final class WebHttpHandlerBuilder {
 
 	/**
 	 * Add the given exception handler(s).
+	 *
 	 * @param handlers the exception handler(s)
 	 */
 	public WebHttpHandlerBuilder exceptionHandler(WebExceptionHandler... handlers) {
@@ -257,6 +252,7 @@ public final class WebHttpHandlerBuilder {
 
 	/**
 	 * Manipulate the "live" list of currently configured exception handlers.
+	 *
 	 * @param consumer the consumer to use
 	 */
 	public WebHttpHandlerBuilder exceptionHandlers(Consumer<List<WebExceptionHandler>> consumer) {
@@ -268,6 +264,7 @@ public final class WebHttpHandlerBuilder {
 	 * Configure the {@link WebSessionManager} to set on the
 	 * {@link ServerWebExchange WebServerExchange}.
 	 * <p>By default {@link DefaultWebSessionManager} is used.
+	 *
 	 * @param manager the session manager
 	 * @see HttpWebHandlerAdapter#setSessionManager(WebSessionManager)
 	 */
@@ -279,6 +276,7 @@ public final class WebHttpHandlerBuilder {
 	/**
 	 * Whether a {@code WebSessionManager} is configured or not, either detected from an
 	 * {@code ApplicationContext} or explicitly configured via {@link #sessionManager}.
+	 *
 	 * @since 5.0.9
 	 */
 	public boolean hasSessionManager() {
@@ -287,6 +285,7 @@ public final class WebHttpHandlerBuilder {
 
 	/**
 	 * Configure the {@link ServerCodecConfigurer} to set on the {@code WebServerExchange}.
+	 *
 	 * @param codecConfigurer the codec configurer
 	 */
 	public WebHttpHandlerBuilder codecConfigurer(ServerCodecConfigurer codecConfigurer) {
@@ -298,6 +297,7 @@ public final class WebHttpHandlerBuilder {
 	/**
 	 * Whether a {@code ServerCodecConfigurer} is configured or not, either detected from an
 	 * {@code ApplicationContext} or explicitly configured via {@link #codecConfigurer}.
+	 *
 	 * @since 5.0.9
 	 */
 	public boolean hasCodecConfigurer() {
@@ -307,6 +307,7 @@ public final class WebHttpHandlerBuilder {
 	/**
 	 * Configure the {@link LocaleContextResolver} to set on the
 	 * {@link ServerWebExchange WebServerExchange}.
+	 *
 	 * @param localeContextResolver the locale context resolver
 	 */
 	public WebHttpHandlerBuilder localeContextResolver(LocaleContextResolver localeContextResolver) {
@@ -317,6 +318,7 @@ public final class WebHttpHandlerBuilder {
 	/**
 	 * Whether a {@code LocaleContextResolver} is configured or not, either detected from an
 	 * {@code ApplicationContext} or explicitly configured via {@link #localeContextResolver}.
+	 *
 	 * @since 5.0.9
 	 */
 	public boolean hasLocaleContextResolver() {
@@ -326,6 +328,7 @@ public final class WebHttpHandlerBuilder {
 	/**
 	 * Configure the {@link ForwardedHeaderTransformer} for extracting and/or
 	 * removing forwarded headers.
+	 *
 	 * @param transformer the transformer
 	 * @since 5.1
 	 */
@@ -338,6 +341,7 @@ public final class WebHttpHandlerBuilder {
 	 * Whether a {@code ForwardedHeaderTransformer} is configured or not, either
 	 * detected from an {@code ApplicationContext} or explicitly configured via
 	 * {@link #forwardedHeaderTransformer(ForwardedHeaderTransformer)}.
+	 *
 	 * @since 5.1
 	 */
 	public boolean hasForwardedHeaderTransformer() {
@@ -351,7 +355,7 @@ public final class WebHttpHandlerBuilder {
 	public HttpHandler build() {
 
 		WebHandler decorated = new FilteringWebHandler(this.webHandler, this.filters);
-		decorated = new ExceptionHandlingWebHandler(decorated,  this.exceptionHandlers);
+		decorated = new ExceptionHandlingWebHandler(decorated, this.exceptionHandlers);
 
 		HttpWebHandlerAdapter adapted = new HttpWebHandlerAdapter(decorated);
 		if (this.sessionManager != null) {
@@ -376,6 +380,7 @@ public final class WebHttpHandlerBuilder {
 
 	/**
 	 * Clone this {@link WebHttpHandlerBuilder}.
+	 *
 	 * @return the cloned builder instance
 	 */
 	@Override

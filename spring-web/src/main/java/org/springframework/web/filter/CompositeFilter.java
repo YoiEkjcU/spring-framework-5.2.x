@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2016 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.filter;
 
 import java.io.IOException;
@@ -52,6 +36,7 @@ public class CompositeFilter implements Filter {
 
 	/**
 	 * Initialize all the filters, calling each one's init method in turn in the order supplied.
+	 *
 	 * @see Filter#init(FilterConfig)
 	 */
 	@Override
@@ -65,6 +50,7 @@ public class CompositeFilter implements Filter {
 	 * Forms a temporary chain from the list of delegate filters supplied ({@link #setFilters})
 	 * and executes them in order. Each filter delegates to the next one in the list, achieving
 	 * the normal behavior of a {@link FilterChain}, despite the fact that this is a {@link Filter}.
+	 *
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	@Override
@@ -76,11 +62,12 @@ public class CompositeFilter implements Filter {
 
 	/**
 	 * Clean up all the filters supplied, calling each one's destroy method in turn, but in reverse order.
+	 *
 	 * @see Filter#init(FilterConfig)
 	 */
 	@Override
 	public void destroy() {
-		for (int i = this.filters.size(); i-- > 0;) {
+		for (int i = this.filters.size(); i-- > 0; ) {
 			Filter filter = this.filters.get(i);
 			filter.destroy();
 		}
@@ -106,8 +93,7 @@ public class CompositeFilter implements Filter {
 
 			if (this.currentPosition == this.additionalFilters.size()) {
 				this.originalChain.doFilter(request, response);
-			}
-			else {
+			} else {
 				this.currentPosition++;
 				Filter nextFilter = this.additionalFilters.get(this.currentPosition - 1);
 				nextFilter.doFilter(request, response, this);

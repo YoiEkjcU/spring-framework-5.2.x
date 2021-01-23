@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.converter;
 
 import java.io.IOException;
@@ -57,8 +41,7 @@ public class ResourceRegionHttpMessageConverter extends AbstractGenericHttpMessa
 		Resource resource = null;
 		if (object instanceof ResourceRegion) {
 			resource = ((ResourceRegion) object).getResource();
-		}
-		else {
+		} else {
 			Collection<ResourceRegion> regions = (Collection<ResourceRegion>) object;
 			if (!regions.isEmpty()) {
 				resource = regions.iterator().next().getResource();
@@ -129,13 +112,11 @@ public class ResourceRegionHttpMessageConverter extends AbstractGenericHttpMessa
 
 		if (object instanceof ResourceRegion) {
 			writeResourceRegion((ResourceRegion) object, outputMessage);
-		}
-		else {
+		} else {
 			Collection<ResourceRegion> regions = (Collection<ResourceRegion>) object;
 			if (regions.size() == 1) {
 				writeResourceRegion(regions.iterator().next(), outputMessage);
-			}
-			else {
+			} else {
 				writeResourceRegionCollection((Collection<ResourceRegion>) object, outputMessage);
 			}
 		}
@@ -157,19 +138,17 @@ public class ResourceRegionHttpMessageConverter extends AbstractGenericHttpMessa
 		InputStream in = region.getResource().getInputStream();
 		try {
 			StreamUtils.copyRange(in, outputMessage.getBody(), start, end);
-		}
-		finally {
+		} finally {
 			try {
 				in.close();
-			}
-			catch (IOException ex) {
+			} catch (IOException ex) {
 				// ignore
 			}
 		}
 	}
 
 	private void writeResourceRegionCollection(Collection<ResourceRegion> resourceRegions,
-			HttpOutputMessage outputMessage) throws IOException {
+											   HttpOutputMessage outputMessage) throws IOException {
 
 		Assert.notNull(resourceRegions, "Collection of ResourceRegion should not be null");
 		HttpHeaders responseHeaders = outputMessage.getHeaders();
@@ -215,14 +194,12 @@ public class ResourceRegionHttpMessageConverter extends AbstractGenericHttpMessa
 				StreamUtils.copyRange(in, out, start, end);
 				inputStreamPosition += (end + 1);
 			}
-		}
-		finally {
+		} finally {
 			try {
 				if (in != null) {
 					in.close();
 				}
-			}
-			catch (IOException ex) {
+			} catch (IOException ex) {
 				// ignore
 			}
 		}

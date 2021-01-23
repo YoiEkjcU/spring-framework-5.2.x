@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.util.pattern;
 
 import org.springframework.http.server.PathContainer;
@@ -50,7 +34,7 @@ class WildcardPathElement extends PathElement {
 				// Should not match a separator
 				return false;
 			}
-			segmentData = ((PathContainer.PathSegment)element).valueToMatch();
+			segmentData = ((PathContainer.PathSegment) element).valueToMatch();
 			pathIndex++;
 		}
 
@@ -58,21 +42,18 @@ class WildcardPathElement extends PathElement {
 			if (matchingContext.determineRemainingPath) {
 				matchingContext.remainingPathIndex = pathIndex;
 				return true;
-			}
-			else {
+			} else {
 				if (pathIndex == matchingContext.pathLength) {
 					// and the path data has run out too
 					return true;
-				}
-				else {
+				} else {
 					return (matchingContext.isMatchOptionalTrailingSeparator() &&  // if optional slash is on...
 							segmentData != null && segmentData.length() > 0 &&  // and there is at least one character to match the *...
 							(pathIndex + 1) == matchingContext.pathLength &&   // and the next path element is the end of the candidate...
 							matchingContext.isSeparator(pathIndex));  // and the final element is a separator
 				}
 			}
-		}
-		else {
+		} else {
 			// Within a path (e.g. /aa/*/bb) there must be at least one character to match the wildcard
 			if (segmentData == null || segmentData.length() == 0) {
 				return false;
@@ -104,6 +85,6 @@ class WildcardPathElement extends PathElement {
 
 	@Override
 	public char[] getChars() {
-		return new char[] {'*'};
+		return new char[]{'*'};
 	}
 }

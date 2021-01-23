@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.bind.annotation;
 
 import java.lang.annotation.Annotation;
@@ -68,9 +52,9 @@ import org.springframework.stereotype.Component;
  * @author Rossen Stoyanchev
  * @author Brian Clozel
  * @author Sam Brannen
- * @since 3.2
  * @see org.springframework.stereotype.Controller
  * @see RestControllerAdvice
+ * @since 3.2
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
@@ -83,8 +67,9 @@ public @interface ControllerAdvice {
 	 * <p>Allows for more concise annotation declarations &mdash; for example,
 	 * {@code @ControllerAdvice("org.my.pkg")} is equivalent to
 	 * {@code @ControllerAdvice(basePackages = "org.my.pkg")}.
-	 * @since 4.0
+	 *
 	 * @see #basePackages
+	 * @since 4.0
 	 */
 	@AliasFor("basePackages")
 	String[] value() default {};
@@ -99,6 +84,7 @@ public @interface ControllerAdvice {
 	 * more concise use of the annotation.
 	 * <p>Also consider using {@link #basePackageClasses} as a type-safe
 	 * alternative to String-based package names.
+	 *
 	 * @since 4.0
 	 */
 	@AliasFor("value")
@@ -110,6 +96,7 @@ public @interface ControllerAdvice {
 	 * annotated class.
 	 * <p>Consider creating a special no-op marker class or interface in each package
 	 * that serves no purpose other than being referenced by this attribute.
+	 *
 	 * @since 4.0
 	 */
 	Class<?>[] basePackageClasses() default {};
@@ -118,6 +105,7 @@ public @interface ControllerAdvice {
 	 * Array of classes.
 	 * <p>Controllers that are assignable to at least one of the given types
 	 * will be advised by the {@code @ControllerAdvice} annotated class.
+	 *
 	 * @since 4.0
 	 */
 	Class<?>[] assignableTypes() default {};
@@ -128,6 +116,7 @@ public @interface ControllerAdvice {
 	 * types will be advised by the {@code @ControllerAdvice} annotated class.
 	 * <p>Consider creating a custom composed annotation or use a predefined one,
 	 * like {@link RestController @RestController}.
+	 *
 	 * @since 4.0
 	 */
 	Class<? extends Annotation>[] annotations() default {};

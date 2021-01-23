@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.remoting.jaxws;
 
 import javax.jws.WebService;
@@ -33,9 +17,9 @@ import javax.xml.ws.WebServiceProvider;
  * ships an internal HTTP server.
  *
  * @author Juergen Hoeller
- * @since 2.5
  * @see javax.jws.WebService
  * @see javax.xml.ws.Endpoint#publish(String)
+ * @since 2.5
  */
 public class SimpleJaxWsServiceExporter extends AbstractJaxWsServiceExporter {
 
@@ -53,6 +37,7 @@ public class SimpleJaxWsServiceExporter extends AbstractJaxWsServiceExporter {
 	 * <p>For each actual publication address, the service name will be
 	 * appended to this base address. E.g. service name "OrderService"
 	 * -> "http://localhost:8080/OrderService".
+	 *
 	 * @see javax.xml.ws.Endpoint#publish(String)
 	 * @see javax.jws.WebService#serviceName()
 	 */
@@ -73,7 +58,8 @@ public class SimpleJaxWsServiceExporter extends AbstractJaxWsServiceExporter {
 
 	/**
 	 * Calculate the full endpoint address for the given endpoint.
-	 * @param endpoint the JAX-WS Provider Endpoint object
+	 *
+	 * @param endpoint    the JAX-WS Provider Endpoint object
 	 * @param serviceName the given service name
 	 * @return the full endpoint address
 	 */

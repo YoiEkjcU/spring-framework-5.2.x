@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.bind.support;
 
 import org.springframework.beans.PropertyEditorRegistrar;
@@ -30,13 +14,13 @@ import org.springframework.web.bind.WebDataBinder;
  * initializers with multiple controller/handlers.
  *
  * @author Juergen Hoeller
- * @since 2.5
  * @see #setDirectFieldAccess
  * @see #setMessageCodesResolver
  * @see #setBindingErrorProcessor
  * @see #setValidator(Validator)
  * @see #setConversionService(ConversionService)
  * @see #setPropertyEditorRegistrar
+ * @since 2.5
  */
 public class ConfigurableWebBindingInitializer implements WebBindingInitializer {
 
@@ -67,6 +51,7 @@ public class ConfigurableWebBindingInitializer implements WebBindingInitializer 
 	 * when accessing an out-of-bounds index.
 	 * <p>Default is "true" on a standard DataBinder. Note that this feature is only supported
 	 * for bean property access (DataBinder's default mode), not for field access.
+	 *
 	 * @see org.springframework.validation.DataBinder#initBeanPropertyAccess()
 	 * @see org.springframework.validation.DataBinder#setAutoGrowNestedPaths
 	 */
@@ -85,6 +70,7 @@ public class ConfigurableWebBindingInitializer implements WebBindingInitializer 
 	 * Set whether to use direct field access instead of bean property access.
 	 * <p>Default is {@code false}, using bean property access.
 	 * Switch this to {@code true} in order to enforce direct field access.
+	 *
 	 * @see org.springframework.validation.DataBinder#initDirectFieldAccess()
 	 * @see org.springframework.validation.DataBinder#initBeanPropertyAccess()
 	 */
@@ -104,6 +90,7 @@ public class ConfigurableWebBindingInitializer implements WebBindingInitializer 
 	 * Applies the given strategy to all data binders used by this controller.
 	 * <p>Default is {@code null}, i.e. using the default strategy of
 	 * the data binder.
+	 *
 	 * @see org.springframework.validation.DataBinder#setMessageCodesResolver
 	 */
 	public final void setMessageCodesResolver(@Nullable MessageCodesResolver messageCodesResolver) {
@@ -123,6 +110,7 @@ public class ConfigurableWebBindingInitializer implements WebBindingInitializer 
 	 * required field errors and {@code PropertyAccessException}s.
 	 * <p>Default is {@code null}, that is, using the default strategy
 	 * of the data binder.
+	 *
 	 * @see org.springframework.validation.DataBinder#setBindingErrorProcessor
 	 */
 	public final void setBindingErrorProcessor(@Nullable BindingErrorProcessor bindingErrorProcessor) {
@@ -154,6 +142,7 @@ public class ConfigurableWebBindingInitializer implements WebBindingInitializer 
 
 	/**
 	 * Specify a ConversionService which will apply to every DataBinder.
+	 *
 	 * @since 3.0
 	 */
 	public final void setConversionService(@Nullable ConversionService conversionService) {
@@ -172,7 +161,7 @@ public class ConfigurableWebBindingInitializer implements WebBindingInitializer 
 	 * Specify a single PropertyEditorRegistrar to be applied to every DataBinder.
 	 */
 	public final void setPropertyEditorRegistrar(PropertyEditorRegistrar propertyEditorRegistrar) {
-		this.propertyEditorRegistrars = new PropertyEditorRegistrar[] {propertyEditorRegistrar};
+		this.propertyEditorRegistrars = new PropertyEditorRegistrar[]{propertyEditorRegistrar};
 	}
 
 	/**

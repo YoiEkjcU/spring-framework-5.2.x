@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.codec.multipart;
 
 import java.nio.file.Path;
@@ -38,8 +22,9 @@ abstract class DefaultParts {
 
 	/**
 	 * Create a new {@link FormFieldPart} with the given parameters.
+	 *
 	 * @param headers the part headers
-	 * @param value the form field value
+	 * @param value   the form field value
 	 * @return the created part
 	 */
 	public static FormFieldPart formFieldPart(HttpHeaders headers, String value) {
@@ -53,6 +38,7 @@ abstract class DefaultParts {
 	 * Create a new {@link Part} or {@link FilePart} with the given parameters.
 	 * Returns {@link FilePart} if the {@code Content-Disposition} of the given
 	 * headers contains a filename, or a "normal" {@link Part} otherwise
+	 *
 	 * @param headers the part headers
 	 * @param content the content of the part
 	 * @return {@link Part} or {@link FilePart}, depending on {@link HttpHeaders#getContentDisposition()}
@@ -64,8 +50,7 @@ abstract class DefaultParts {
 		String filename = headers.getContentDisposition().getFilename();
 		if (filename != null) {
 			return new DefaultFilePart(headers, content);
-		}
-		else {
+		} else {
 			return new DefaultPart(headers, content);
 		}
 	}
@@ -129,8 +114,7 @@ abstract class DefaultParts {
 			String name = headers().getContentDisposition().getName();
 			if (name != null) {
 				return "DefaultFormFieldPart{" + name() + "}";
-			}
-			else {
+			} else {
 				return "DefaultFormFieldPart";
 			}
 		}
@@ -159,8 +143,7 @@ abstract class DefaultParts {
 			String name = headers().getContentDisposition().getName();
 			if (name != null) {
 				return "DefaultPart{" + name + "}";
-			}
-			else {
+			} else {
 				return "DefaultPart";
 			}
 		}
@@ -196,8 +179,7 @@ abstract class DefaultParts {
 			String filename = contentDisposition.getFilename();
 			if (name != null) {
 				return "DefaultFilePart{" + name() + " (" + filename + ")}";
-			}
-			else {
+			} else {
 				return "DefaultFilePart{(" + filename + ")}";
 			}
 		}

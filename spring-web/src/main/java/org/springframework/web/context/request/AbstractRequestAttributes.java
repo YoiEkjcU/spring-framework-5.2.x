@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.context.request;
 
 import java.util.LinkedHashMap;
@@ -27,12 +11,14 @@ import org.springframework.util.Assert;
  * callbacks and for updating accessed session attributes.
  *
  * @author Juergen Hoeller
- * @since 2.0
  * @see #requestCompleted()
+ * @since 2.0
  */
 public abstract class AbstractRequestAttributes implements RequestAttributes {
 
-	/** Map from attribute name String to destruction callback Runnable. */
+	/**
+	 * Map from attribute name String to destruction callback Runnable.
+	 */
 	protected final Map<String, Runnable> requestDestructionCallbacks = new LinkedHashMap<>(8);
 
 	private volatile boolean requestActive = true;
@@ -51,6 +37,7 @@ public abstract class AbstractRequestAttributes implements RequestAttributes {
 
 	/**
 	 * Determine whether the original request is still active.
+	 *
 	 * @see #requestCompleted()
 	 */
 	protected final boolean isRequestActive() {
@@ -59,7 +46,8 @@ public abstract class AbstractRequestAttributes implements RequestAttributes {
 
 	/**
 	 * Register the given callback as to be executed after request completion.
-	 * @param name the name of the attribute to register the callback for
+	 *
+	 * @param name     the name of the attribute to register the callback for
 	 * @param callback the callback to be executed for destruction
 	 */
 	protected final void registerRequestDestructionCallback(String name, Runnable callback) {
@@ -72,6 +60,7 @@ public abstract class AbstractRequestAttributes implements RequestAttributes {
 
 	/**
 	 * Remove the request destruction callback for the specified attribute, if any.
+	 *
 	 * @param name the name of the attribute to remove the callback for
 	 */
 	protected final void removeRequestDestructionCallback(String name) {

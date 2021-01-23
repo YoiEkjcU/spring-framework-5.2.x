@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.method;
 
 import java.lang.annotation.Annotation;
@@ -60,7 +44,7 @@ public final class HandlerTypePredicate implements Predicate<Class<?>> {
 	 * Private constructor. See static factory methods.
 	 */
 	private HandlerTypePredicate(Set<String> basePackages, List<Class<?>> assignableTypes,
-			List<Class<? extends Annotation>> annotations) {
+								 List<Class<? extends Annotation>> annotations) {
 
 		this.basePackages = Collections.unmodifiableSet(basePackages);
 		this.assignableTypes = Collections.unmodifiableList(assignableTypes);
@@ -72,8 +56,7 @@ public final class HandlerTypePredicate implements Predicate<Class<?>> {
 	public boolean test(Class<?> controllerType) {
 		if (!hasSelectors()) {
 			return true;
-		}
-		else if (controllerType != null) {
+		} else if (controllerType != null) {
 			for (String basePackage : this.basePackages) {
 				if (controllerType.getName().startsWith(basePackage)) {
 					return true;
@@ -110,6 +93,7 @@ public final class HandlerTypePredicate implements Predicate<Class<?>> {
 
 	/**
 	 * Match handlers declared under a base package, e.g. "org.example".
+	 *
 	 * @param packages one or more base package names
 	 */
 	public static HandlerTypePredicate forBasePackage(String... packages) {
@@ -119,6 +103,7 @@ public final class HandlerTypePredicate implements Predicate<Class<?>> {
 	/**
 	 * Type-safe alternative to {@link #forBasePackage(String...)} to specify a
 	 * base package through a class.
+	 *
 	 * @param packageClasses one or more base package classes
 	 */
 	public static HandlerTypePredicate forBasePackageClass(Class<?>... packageClasses) {
@@ -127,6 +112,7 @@ public final class HandlerTypePredicate implements Predicate<Class<?>> {
 
 	/**
 	 * Match handlers that are assignable to a given type.
+	 *
 	 * @param types one or more handler super types
 	 */
 	public static HandlerTypePredicate forAssignableType(Class<?>... types) {
@@ -135,6 +121,7 @@ public final class HandlerTypePredicate implements Predicate<Class<?>> {
 
 	/**
 	 * Match handlers annotated with a specific annotation.
+	 *
 	 * @param annotations one or more annotations to check for
 	 */
 	@SafeVarargs
@@ -163,6 +150,7 @@ public final class HandlerTypePredicate implements Predicate<Class<?>> {
 
 		/**
 		 * Match handlers declared under a base package, e.g. "org.example".
+		 *
 		 * @param packages one or more base package classes
 		 */
 		public Builder basePackage(String... packages) {
@@ -173,6 +161,7 @@ public final class HandlerTypePredicate implements Predicate<Class<?>> {
 		/**
 		 * Type-safe alternative to {@link #forBasePackage(String...)} to specify a
 		 * base package through a class.
+		 *
 		 * @param packageClasses one or more base package names
 		 */
 		public Builder basePackageClass(Class<?>... packageClasses) {
@@ -186,6 +175,7 @@ public final class HandlerTypePredicate implements Predicate<Class<?>> {
 
 		/**
 		 * Match handlers that are assignable to a given type.
+		 *
 		 * @param types one or more handler super types
 		 */
 		public Builder assignableType(Class<?>... types) {
@@ -195,6 +185,7 @@ public final class HandlerTypePredicate implements Predicate<Class<?>> {
 
 		/**
 		 * Match types that are annotated with one of the given annotations.
+		 *
 		 * @param annotations one or more annotations to check for
 		 */
 		@SuppressWarnings("unchecked")

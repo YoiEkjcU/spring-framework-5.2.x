@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.util.pattern;
 
 import java.util.ArrayList;
@@ -37,6 +21,7 @@ import org.springframework.util.AntPathMatcher;
  * Benchmarks for matching requests paths against path patterns in a web context.
  * We're considering here the {@link org.springframework.util.AntPathMatcher} and
  * {@link PathPatternParser} implementations with typical sets of patterns.
+ *
  * @author Brian Clozel
  */
 @BenchmarkMode(Mode.Throughput)
@@ -190,8 +175,7 @@ public class PathMatchingBenchmark {
 			this.pattern = pattern;
 			if (matchingPaths.length > 0) {
 				this.matchingPaths = Arrays.asList(matchingPaths);
-			}
-			else {
+			} else {
 				this.matchingPaths = Collections.singletonList(pattern);
 			}
 		}

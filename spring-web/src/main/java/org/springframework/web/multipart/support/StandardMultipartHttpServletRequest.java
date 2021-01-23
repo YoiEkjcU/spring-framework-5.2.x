@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.multipart.support;
 
 import java.io.File;
@@ -53,8 +37,8 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author Juergen Hoeller
  * @author Rossen Stoyanchev
- * @since 3.1
  * @see StandardServletMultipartResolver
+ * @since 3.1
  */
 public class StandardMultipartHttpServletRequest extends AbstractMultipartHttpServletRequest {
 
@@ -65,6 +49,7 @@ public class StandardMultipartHttpServletRequest extends AbstractMultipartHttpSe
 	/**
 	 * Create a new StandardMultipartHttpServletRequest wrapper for the given request,
 	 * immediately parsing the multipart content.
+	 *
 	 * @param request the servlet request to wrap
 	 * @throws MultipartException if parsing failed
 	 */
@@ -74,9 +59,10 @@ public class StandardMultipartHttpServletRequest extends AbstractMultipartHttpSe
 
 	/**
 	 * Create a new StandardMultipartHttpServletRequest wrapper for the given request.
-	 * @param request the servlet request to wrap
+	 *
+	 * @param request     the servlet request to wrap
 	 * @param lazyParsing whether multipart parsing should be triggered lazily on
-	 * first access of multipart files or parameters
+	 *                    first access of multipart files or parameters
 	 * @throws MultipartException if an immediate parsing attempt failed
 	 * @since 3.2.9
 	 */
@@ -104,14 +90,12 @@ public class StandardMultipartHttpServletRequest extends AbstractMultipartHttpSe
 						filename = MimeDelegate.decode(filename);
 					}
 					files.add(part.getName(), new StandardMultipartFile(part, filename));
-				}
-				else {
+				} else {
 					this.multipartParameterNames.add(part.getName());
 				}
 			}
 			setMultipartFiles(files);
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			handleParseFailure(ex);
 		}
 	}
@@ -174,8 +158,7 @@ public class StandardMultipartHttpServletRequest extends AbstractMultipartHttpSe
 		try {
 			Part part = getPart(paramOrFileName);
 			return (part != null ? part.getContentType() : null);
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			throw new MultipartException("Could not access multipart servlet request", ex);
 		}
 	}
@@ -190,12 +173,10 @@ public class StandardMultipartHttpServletRequest extends AbstractMultipartHttpSe
 					headers.put(headerName, new ArrayList<>(part.getHeaders(headerName)));
 				}
 				return headers;
-			}
-			else {
+			} else {
 				return null;
 			}
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			throw new MultipartException("Could not access multipart servlet request", ex);
 		}
 	}
@@ -280,8 +261,7 @@ public class StandardMultipartHttpServletRequest extends AbstractMultipartHttpSe
 		public static String decode(String value) {
 			try {
 				return MimeUtility.decodeText(value);
-			}
-			catch (UnsupportedEncodingException ex) {
+			} catch (UnsupportedEncodingException ex) {
 				throw new IllegalStateException(ex);
 			}
 		}

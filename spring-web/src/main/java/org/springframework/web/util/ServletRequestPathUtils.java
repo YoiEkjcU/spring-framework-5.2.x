@@ -1,18 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.springframework.web.util;
 
 import javax.servlet.ServletRequest;
@@ -38,7 +23,9 @@ import org.springframework.util.Assert;
  */
 public abstract class ServletRequestPathUtils {
 
-	/** Name of Servlet request attribute that holds the parsed {@link RequestPath}. */
+	/**
+	 * Name of Servlet request attribute that holds the parsed {@link RequestPath}.
+	 */
 	public static final String PATH_ATTRIBUTE = ServletRequestPathUtils.class.getName() + ".path";
 
 
@@ -63,6 +50,7 @@ public abstract class ServletRequestPathUtils {
 
 	/**
 	 * Return a {@link #parseAndCache  previously} parsed and cached {@code RequestPath}.
+	 *
 	 * @throws IllegalArgumentException if not found
 	 */
 	public static RequestPath getParsedRequestPath(ServletRequest request) {
@@ -100,6 +88,7 @@ public abstract class ServletRequestPathUtils {
 	 * ServletRequestPathFilter}. In other cases where {@code HandlerMapping}s
 	 * use String pattern matching with {@code PathMatcher}, the String
 	 * lookupPath is resolved separately by each {@code HandlerMapping}.
+	 *
 	 * @param request the current request
 	 * @return a String lookupPath or a {@code RequestPath}
 	 * @throws IllegalArgumentException if neither is available
@@ -131,6 +120,7 @@ public abstract class ServletRequestPathUtils {
 	 * <p>If the cached path is a {@link UrlPathHelper#resolveAndCacheLookupPath
 	 * pre-resolved} String lookupPath, then the returned String path value
 	 * depends on how {@link UrlPathHelper} that resolved is configured.
+	 *
 	 * @param request the current request
 	 * @return the full request mapping path as a String
 	 */
@@ -147,6 +137,7 @@ public abstract class ServletRequestPathUtils {
 	 * Check for a previously {@link UrlPathHelper#resolveAndCacheLookupPath
 	 * resolved} String lookupPath or a previously {@link #parseAndCache parsed}
 	 * {@code RequestPath}.
+	 *
 	 * @param request the current request
 	 * @return whether a pre-resolved or pre-parsed path is available
 	 */

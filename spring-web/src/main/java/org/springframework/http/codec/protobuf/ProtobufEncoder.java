@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.codec.protobuf;
 
 import java.io.IOException;
@@ -52,8 +36,8 @@ import org.springframework.util.MimeType;
  * {@code "com.google.protobuf:protobuf-java"} library.
  *
  * @author Sébastien Deleuze
- * @since 5.1
  * @see ProtobufDecoder
+ * @since 5.1
  */
 public class ProtobufEncoder extends ProtobufCodecSupport implements HttpMessageEncoder<Message> {
 
@@ -71,7 +55,7 @@ public class ProtobufEncoder extends ProtobufCodecSupport implements HttpMessage
 
 	@Override
 	public Flux<DataBuffer> encode(Publisher<? extends Message> inputStream, DataBufferFactory bufferFactory,
-			ResolvableType elementType, @Nullable MimeType mimeType, @Nullable Map<String, Object> hints) {
+								   ResolvableType elementType, @Nullable MimeType mimeType, @Nullable Map<String, Object> hints) {
 
 		return Flux.from(inputStream).map(message ->
 				encodeValue(message, bufferFactory, !(inputStream instanceof Mono)));
@@ -79,7 +63,7 @@ public class ProtobufEncoder extends ProtobufCodecSupport implements HttpMessage
 
 	@Override
 	public DataBuffer encodeValue(Message message, DataBufferFactory bufferFactory,
-			ResolvableType valueType, @Nullable MimeType mimeType, @Nullable Map<String, Object> hints) {
+								  ResolvableType valueType, @Nullable MimeType mimeType, @Nullable Map<String, Object> hints) {
 
 		return encodeValue(message, bufferFactory, false);
 	}
@@ -91,17 +75,14 @@ public class ProtobufEncoder extends ProtobufCodecSupport implements HttpMessage
 		try {
 			if (delimited) {
 				message.writeDelimitedTo(buffer.asOutputStream());
-			}
-			else {
+			} else {
 				message.writeTo(buffer.asOutputStream());
 			}
 			release = false;
 			return buffer;
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new IllegalStateException("Unexpected I/O error while writing to data buffer", ex);
-		}
-		finally {
+		} finally {
 			if (release) {
 				DataBufferUtils.release(buffer);
 			}

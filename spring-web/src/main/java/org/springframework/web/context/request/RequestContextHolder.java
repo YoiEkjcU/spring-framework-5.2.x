@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2016 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.context.request;
 
 import javax.faces.context.FacesContext;
@@ -37,12 +21,12 @@ import org.springframework.util.ClassUtils;
  *
  * @author Juergen Hoeller
  * @author Rod Johnson
- * @since 2.0
  * @see RequestContextListener
  * @see org.springframework.web.filter.RequestContextFilter
  * @see org.springframework.web.servlet.DispatcherServlet
+ * @since 2.0
  */
-public abstract class RequestContextHolder  {
+public abstract class RequestContextHolder {
 
 	private static final boolean jsfPresent =
 			ClassUtils.isPresent("javax.faces.context.FacesContext", RequestContextHolder.class.getClassLoader());
@@ -65,6 +49,7 @@ public abstract class RequestContextHolder  {
 	/**
 	 * Bind the given RequestAttributes to the current thread,
 	 * <i>not</i> exposing it as inheritable for child threads.
+	 *
 	 * @param attributes the RequestAttributes to expose
 	 * @see #setRequestAttributes(RequestAttributes, boolean)
 	 */
@@ -74,21 +59,20 @@ public abstract class RequestContextHolder  {
 
 	/**
 	 * Bind the given RequestAttributes to the current thread.
-	 * @param attributes the RequestAttributes to expose,
-	 * or {@code null} to reset the thread-bound context
+	 *
+	 * @param attributes  the RequestAttributes to expose,
+	 *                    or {@code null} to reset the thread-bound context
 	 * @param inheritable whether to expose the RequestAttributes as inheritable
-	 * for child threads (using an {@link InheritableThreadLocal})
+	 *                    for child threads (using an {@link InheritableThreadLocal})
 	 */
 	public static void setRequestAttributes(@Nullable RequestAttributes attributes, boolean inheritable) {
 		if (attributes == null) {
 			resetRequestAttributes();
-		}
-		else {
+		} else {
 			if (inheritable) {
 				inheritableRequestAttributesHolder.set(attributes);
 				requestAttributesHolder.remove();
-			}
-			else {
+			} else {
 				requestAttributesHolder.set(attributes);
 				inheritableRequestAttributesHolder.remove();
 			}
@@ -97,6 +81,7 @@ public abstract class RequestContextHolder  {
 
 	/**
 	 * Return the RequestAttributes currently bound to the thread.
+	 *
 	 * @return the RequestAttributes currently bound to the thread,
 	 * or {@code null} if none bound
 	 */
@@ -113,9 +98,10 @@ public abstract class RequestContextHolder  {
 	 * Return the RequestAttributes currently bound to the thread.
 	 * <p>Exposes the previously bound RequestAttributes instance, if any.
 	 * Falls back to the current JSF FacesContext, if any.
+	 *
 	 * @return the RequestAttributes currently bound to the thread
 	 * @throws IllegalStateException if no RequestAttributes object
-	 * is bound to the current thread
+	 *                               is bound to the current thread
 	 * @see #setRequestAttributes
 	 * @see ServletRequestAttributes
 	 * @see FacesRequestAttributes
@@ -142,7 +128,7 @@ public abstract class RequestContextHolder  {
 
 	/**
 	 * Inner class to avoid hard-coded JSF dependency.
- 	 */
+	 */
 	private static class FacesRequestAttributesFactory {
 
 		@Nullable

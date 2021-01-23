@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.converter.json;
 
 import java.io.Reader;
@@ -38,10 +22,10 @@ import org.springframework.util.Assert;
  * {@code UTF-8} character set.
  *
  * @author Juergen Hoeller
- * @since 5.0
  * @see javax.json.bind.Jsonb
  * @see javax.json.bind.JsonbBuilder
  * @see #setJsonb
+ * @since 5.0
  */
 public class JsonbHttpMessageConverter extends AbstractJsonHttpMessageConverter {
 
@@ -57,6 +41,7 @@ public class JsonbHttpMessageConverter extends AbstractJsonHttpMessageConverter 
 
 	/**
 	 * Construct a new {@code JsonbHttpMessageConverter} with the given configuration.
+	 *
 	 * @param config the {@code JsonbConfig} for the underlying delegate
 	 */
 	public JsonbHttpMessageConverter(JsonbConfig config) {
@@ -65,6 +50,7 @@ public class JsonbHttpMessageConverter extends AbstractJsonHttpMessageConverter 
 
 	/**
 	 * Construct a new {@code JsonbHttpMessageConverter} with the given delegate.
+	 *
 	 * @param jsonb the Jsonb instance to use
 	 */
 	public JsonbHttpMessageConverter(Jsonb jsonb) {
@@ -78,6 +64,7 @@ public class JsonbHttpMessageConverter extends AbstractJsonHttpMessageConverter 
 	 * If not set, a default {@code Jsonb} instance will be created.
 	 * <p>Setting a custom-configured {@code Jsonb} is one way to take further
 	 * control of the JSON serialization process.
+	 *
 	 * @see #JsonbHttpMessageConverter(Jsonb)
 	 * @see #JsonbHttpMessageConverter(JsonbConfig)
 	 * @see JsonbBuilder
@@ -104,8 +91,7 @@ public class JsonbHttpMessageConverter extends AbstractJsonHttpMessageConverter 
 	protected void writeInternal(Object o, @Nullable Type type, Writer writer) throws Exception {
 		if (type instanceof ParameterizedType) {
 			getJsonb().toJson(o, type, writer);
-		}
-		else {
+		} else {
 			getJsonb().toJson(o, writer);
 		}
 	}

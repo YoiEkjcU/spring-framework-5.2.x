@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.codec.multipart;
 
 import java.io.IOException;
@@ -84,7 +68,7 @@ final class PartGenerator extends BaseSubscriber<MultipartParser.Token> {
 
 
 	private PartGenerator(FluxSink<Part> sink, int maxParts, int maxInMemorySize, long maxDiskUsagePerPart,
-			boolean streaming, Mono<Path> fileStorageDirectory, Scheduler blockingOperationScheduler) {
+						  boolean streaming, Mono<Path> fileStorageDirectory, Scheduler blockingOperationScheduler) {
 
 		this.sink = sink;
 		this.maxParts = maxParts;
@@ -99,8 +83,8 @@ final class PartGenerator extends BaseSubscriber<MultipartParser.Token> {
 	 * Creates parts from a given stream of tokens.
 	 */
 	public static Flux<Part> createParts(Flux<MultipartParser.Token> tokens, int maxParts, int maxInMemorySize,
-			long maxDiskUsagePerPart, boolean streaming, Mono<Path> fileStorageDirectory,
-			Scheduler blockingOperationScheduler) {
+										 long maxDiskUsagePerPart, boolean streaming, Mono<Path> fileStorageDirectory,
+										 Scheduler blockingOperationScheduler) {
 
 		return Flux.create(sink -> {
 			PartGenerator generator = new PartGenerator(sink, maxParts, maxInMemorySize, maxDiskUsagePerPart, streaming,
@@ -130,8 +114,7 @@ final class PartGenerator extends BaseSubscriber<MultipartParser.Token> {
 			}
 
 			newPart(state, token.headers());
-		}
-		else {
+		} else {
 			state.body(token.buffer());
 		}
 	}
@@ -140,12 +123,10 @@ final class PartGenerator extends BaseSubscriber<MultipartParser.Token> {
 		if (isFormField(headers)) {
 			changeStateInternal(new FormFieldState(headers));
 			requestToken();
-		}
-		else if (!this.streaming) {
+		} else if (!this.streaming) {
 			changeStateInternal(new InMemoryState(headers));
 			requestToken();
-		}
-		else {
+		} else {
 			Flux<DataBuffer> streamingContent = Flux.create(contentSink -> {
 				State newState = new StreamingState(contentSink);
 				if (changeState(currentState, newState)) {
@@ -181,11 +162,10 @@ final class PartGenerator extends BaseSubscriber<MultipartParser.Token> {
 			}
 			oldState.dispose();
 			return true;
-		}
-		else {
+		} else {
 			logger.warn("Could not switch from " + oldState +
 					" to " + newState + "; current state:"
-				+ this.state.get());
+					+ this.state.get());
 			return false;
 		}
 	}
@@ -232,8 +212,7 @@ final class PartGenerator extends BaseSubscriber<MultipartParser.Token> {
 		if (this.maxParts > 0 && count > this.maxParts) {
 			emitError(new DecodingException("Too many parts (" + count + "/" + this.maxParts + " allowed)"));
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
@@ -273,8 +252,9 @@ final class PartGenerator extends BaseSubscriber<MultipartParser.Token> {
 
 		/**
 		 * Invoked when all tokens for the part have been received.
+		 *
 		 * @param finalPart {@code true} if this was the last part (and
-		 * {@link #emitComplete()} should be called; {@code false} otherwise
+		 *                  {@link #emitComplete()} should be called; {@code false} otherwise
 		 */
 		void partComplete(boolean finalPart);
 
@@ -341,8 +321,7 @@ final class PartGenerator extends BaseSubscriber<MultipartParser.Token> {
 					size < PartGenerator.this.maxInMemorySize) {
 				store(dataBuffer);
 				requestToken();
-			}
-			else {
+			} else {
 				DataBufferUtils.release(dataBuffer);
 				emitError(new DataBufferLimitException("Form field value exceeded the memory usage limit of " +
 						PartGenerator.this.maxInMemorySize + " bytes"));
@@ -354,11 +333,9 @@ final class PartGenerator extends BaseSubscriber<MultipartParser.Token> {
 				byte[] bytes = new byte[dataBuffer.readableByteCount()];
 				dataBuffer.read(bytes);
 				this.value.write(bytes);
-			}
-			catch (IOException ex) {
+			} catch (IOException ex) {
 				emitError(ex);
-			}
-			finally {
+			} finally {
 				DataBufferUtils.release(dataBuffer);
 			}
 		}
@@ -400,8 +377,7 @@ final class PartGenerator extends BaseSubscriber<MultipartParser.Token> {
 				if (this.bodySink.requestedFromDownstream() > 0) {
 					requestToken();
 				}
-			}
-			else {
+			} else {
 				DataBufferUtils.release(dataBuffer);
 				// even though the body sink is canceled, the (outer) part sink
 				// might not be, so request another token
@@ -463,11 +439,9 @@ final class PartGenerator extends BaseSubscriber<MultipartParser.Token> {
 			if (PartGenerator.this.maxInMemorySize == -1 ||
 					count <= PartGenerator.this.maxInMemorySize) {
 				storeBuffer(dataBuffer);
-			}
-			else if (prevCount <= PartGenerator.this.maxInMemorySize) {
+			} else if (prevCount <= PartGenerator.this.maxInMemorySize) {
 				switchToFile(dataBuffer, count);
-			}
-			else {
+			} else {
 				DataBufferUtils.release(dataBuffer);
 				emitError(new IllegalStateException("Body token not expected"));
 			}
@@ -486,8 +460,7 @@ final class PartGenerator extends BaseSubscriber<MultipartParser.Token> {
 			CreateFileState newState = new CreateFileState(this.headers, content, byteCount);
 			if (changeState(this, newState)) {
 				newState.createFile();
-			}
-			else {
+			} else {
 				content.forEach(DataBufferUtils::release);
 			}
 		}
@@ -583,8 +556,7 @@ final class PartGenerator extends BaseSubscriber<MultipartParser.Token> {
 				}
 				WritableByteChannel channel = Files.newByteChannel(tempFile, StandardOpenOption.WRITE);
 				return new WritingFileState(this, tempFile, channel);
-			}
-			catch (IOException ex) {
+			} catch (IOException ex) {
 				throw new UncheckedIOException("Could not create temp file in " + directory, ex);
 			}
 		}
@@ -599,8 +571,7 @@ final class PartGenerator extends BaseSubscriber<MultipartParser.Token> {
 				if (this.completed) {
 					newState.partComplete(this.finalPart);
 				}
-			}
-			else {
+			} else {
 				MultipartUtils.closeChannel(newState.channel);
 				this.content.forEach(DataBufferUtils::release);
 			}
@@ -650,13 +621,11 @@ final class PartGenerator extends BaseSubscriber<MultipartParser.Token> {
 				WritingFileState newState = new WritingFileState(this);
 				if (changeState(this, newState)) {
 					newState.writeBuffer(dataBuffer);
-				}
-				else {
+				} else {
 					MultipartUtils.closeChannel(this.channel);
 					DataBufferUtils.release(dataBuffer);
 				}
-			}
-			else {
+			} else {
 				DataBufferUtils.release(dataBuffer);
 				emitError(new DataBufferLimitException(
 						"Part exceeded the disk usage limit of " + PartGenerator.this.maxDiskUsagePerPart +
@@ -744,8 +713,8 @@ final class PartGenerator extends BaseSubscriber<MultipartParser.Token> {
 					.flatMap(this::writeInternal)
 					.subscribeOn(PartGenerator.this.blockingOperationScheduler)
 					.subscribe(null,
-					PartGenerator.this::emitError,
-					this::writeComplete);
+							PartGenerator.this::emitError,
+							this::writeComplete);
 		}
 
 		public void writeBuffers(Iterable<DataBuffer> dataBuffers) {
@@ -762,11 +731,9 @@ final class PartGenerator extends BaseSubscriber<MultipartParser.Token> {
 			IdleFileState newState = new IdleFileState(this);
 			if (this.completed) {
 				newState.partComplete(this.finalPart);
-			}
-			else if (changeState(this, newState)) {
+			} else if (changeState(this, newState)) {
 				requestToken();
-			}
-			else {
+			} else {
 				MultipartUtils.closeChannel(this.channel);
 			}
 		}
@@ -779,11 +746,9 @@ final class PartGenerator extends BaseSubscriber<MultipartParser.Token> {
 					this.channel.write(byteBuffer);
 				}
 				return Mono.empty();
-			}
-			catch (IOException ex) {
+			} catch (IOException ex) {
 				return Mono.error(ex);
-			}
-			finally {
+			} finally {
 				DataBufferUtils.release(dataBuffer);
 			}
 		}

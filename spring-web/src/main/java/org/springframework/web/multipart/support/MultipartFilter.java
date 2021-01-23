@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.multipart.support;
 
 import java.io.IOException;
@@ -58,11 +42,11 @@ import org.springframework.web.multipart.MultipartResolver;
  * In any case, this filter should not be combined with servlet-specific multipart resolution.
  *
  * @author Juergen Hoeller
- * @since 08.10.2003
  * @see #setMultipartResolverBeanName
  * @see #lookupMultipartResolver
  * @see org.springframework.web.multipart.MultipartResolver
  * @see org.springframework.web.servlet.DispatcherServlet
+ * @since 08.10.2003
  */
 public class MultipartFilter extends OncePerRequestFilter {
 
@@ -113,8 +97,7 @@ public class MultipartFilter extends OncePerRequestFilter {
 				logger.trace("Resolving multipart request");
 			}
 			processedRequest = multipartResolver.resolveMultipart(processedRequest);
-		}
-		else {
+		} else {
 			// A regular request...
 			if (logger.isTraceEnabled()) {
 				logger.trace("Not a multipart request");
@@ -123,8 +106,7 @@ public class MultipartFilter extends OncePerRequestFilter {
 
 		try {
 			filterChain.doFilter(processedRequest, response);
-		}
-		finally {
+		} finally {
 			if (processedRequest instanceof MultipartHttpServletRequest) {
 				multipartResolver.cleanupMultipart((MultipartHttpServletRequest) processedRequest);
 			}
@@ -136,6 +118,7 @@ public class MultipartFilter extends OncePerRequestFilter {
 	 * taking the current HTTP request as argument.
 	 * <p>The default implementation delegates to the {@code lookupMultipartResolver}
 	 * without arguments.
+	 *
 	 * @return the MultipartResolver to use
 	 * @see #lookupMultipartResolver()
 	 */
@@ -149,6 +132,7 @@ public class MultipartFilter extends OncePerRequestFilter {
 	 * bean name is "filterMultipartResolver".
 	 * <p>This can be overridden to use a custom MultipartResolver instance,
 	 * for example if not using a Spring web application context.
+	 *
 	 * @return the MultipartResolver instance
 	 */
 	protected MultipartResolver lookupMultipartResolver() {
@@ -159,8 +143,7 @@ public class MultipartFilter extends OncePerRequestFilter {
 				logger.debug("Using MultipartResolver '" + beanName + "' for MultipartFilter");
 			}
 			return wac.getBean(beanName, MultipartResolver.class);
-		}
-		else {
+		} else {
 			return this.defaultMultipartResolver;
 		}
 	}

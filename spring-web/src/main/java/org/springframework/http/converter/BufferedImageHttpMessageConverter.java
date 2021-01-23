@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.converter;
 
 import java.awt.image.BufferedImage;
@@ -98,6 +82,7 @@ public class BufferedImageHttpMessageConverter implements HttpMessageConverter<B
 
 	/**
 	 * Sets the default {@code Content-Type} to be used for writing.
+	 *
 	 * @throws IllegalArgumentException if the given content type is not supported by the Java Image I/O API
 	 */
 	public void setDefaultContentType(@Nullable MediaType defaultContentType) {
@@ -182,22 +167,19 @@ public class BufferedImageHttpMessageConverter implements HttpMessageConverter<B
 				process(irp);
 				imageReader.setInput(imageInputStream, true);
 				return imageReader.read(0, irp);
-			}
-			else {
+			} else {
 				throw new HttpMessageNotReadableException(
 						"Could not find javax.imageio.ImageReader for Content-Type [" + contentType + "]",
 						inputMessage);
 			}
-		}
-		finally {
+		} finally {
 			if (imageReader != null) {
 				imageReader.dispose();
 			}
 			if (imageInputStream != null) {
 				try {
 					imageInputStream.close();
-				}
-				catch (IOException ex) {
+				} catch (IOException ex) {
 					// ignore
 				}
 			}
@@ -207,15 +189,14 @@ public class BufferedImageHttpMessageConverter implements HttpMessageConverter<B
 	private ImageInputStream createImageInputStream(InputStream is) throws IOException {
 		if (this.cacheDir != null) {
 			return new FileCacheImageInputStream(is, this.cacheDir);
-		}
-		else {
+		} else {
 			return new MemoryCacheImageInputStream(is);
 		}
 	}
 
 	@Override
 	public void write(final BufferedImage image, @Nullable final MediaType contentType,
-			final HttpOutputMessage outputMessage)
+					  final HttpOutputMessage outputMessage)
 			throws IOException, HttpMessageNotWritableException {
 
 		final MediaType selectedContentType = getContentType(contentType);
@@ -224,8 +205,7 @@ public class BufferedImageHttpMessageConverter implements HttpMessageConverter<B
 		if (outputMessage instanceof StreamingHttpOutputMessage) {
 			StreamingHttpOutputMessage streamingOutputMessage = (StreamingHttpOutputMessage) outputMessage;
 			streamingOutputMessage.setBody(outputStream -> writeInternal(image, selectedContentType, outputStream));
-		}
-		else {
+		} else {
 			writeInternal(image, selectedContentType, outputMessage.getBody());
 		}
 	}
@@ -253,21 +233,18 @@ public class BufferedImageHttpMessageConverter implements HttpMessageConverter<B
 				imageOutputStream = createImageOutputStream(body);
 				imageWriter.setOutput(imageOutputStream);
 				imageWriter.write(null, new IIOImage(image, null, null), iwp);
-			}
-			else {
+			} else {
 				throw new HttpMessageNotWritableException(
 						"Could not find javax.imageio.ImageWriter for Content-Type [" + contentType + "]");
 			}
-		}
-		finally {
+		} finally {
 			if (imageWriter != null) {
 				imageWriter.dispose();
 			}
 			if (imageOutputStream != null) {
 				try {
 					imageOutputStream.close();
-				}
-				catch (IOException ex) {
+				} catch (IOException ex) {
 					// ignore
 				}
 			}
@@ -277,8 +254,7 @@ public class BufferedImageHttpMessageConverter implements HttpMessageConverter<B
 	private ImageOutputStream createImageOutputStream(OutputStream os) throws IOException {
 		if (this.cacheDir != null) {
 			return new FileCacheImageOutputStream(os, this.cacheDir);
-		}
-		else {
+		} else {
 			return new MemoryCacheImageOutputStream(os);
 		}
 	}

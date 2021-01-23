@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.converter.json;
 
 import java.io.Reader;
@@ -39,10 +23,10 @@ import org.springframework.util.Assert;
  *
  * @author Roy Clarkson
  * @author Juergen Hoeller
- * @since 4.1
  * @see com.google.gson.Gson
  * @see com.google.gson.GsonBuilder
  * @see #setGson
+ * @since 4.1
  */
 public class GsonHttpMessageConverter extends AbstractJsonHttpMessageConverter {
 
@@ -58,6 +42,7 @@ public class GsonHttpMessageConverter extends AbstractJsonHttpMessageConverter {
 
 	/**
 	 * Construct a new {@code GsonHttpMessageConverter} with the given delegate.
+	 *
 	 * @param gson the Gson instance to use
 	 * @since 5.0
 	 */
@@ -72,6 +57,7 @@ public class GsonHttpMessageConverter extends AbstractJsonHttpMessageConverter {
 	 * If not set, a default {@link Gson#Gson() Gson} instance will be used.
 	 * <p>Setting a custom-configured {@code Gson} is one way to take further
 	 * control of the JSON serialization process.
+	 *
 	 * @see #GsonHttpMessageConverter(Gson)
 	 */
 	public void setGson(Gson gson) {
@@ -101,8 +87,7 @@ public class GsonHttpMessageConverter extends AbstractJsonHttpMessageConverter {
 		// which might contain extra generics that the object instance doesn't retain.
 		if (type instanceof ParameterizedType) {
 			getGson().toJson(o, type, writer);
-		}
-		else {
+		} else {
 			getGson().toJson(o, writer);
 		}
 	}

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.server;
 
 import java.util.Collections;
@@ -61,10 +45,11 @@ public class UnsupportedMediaTypeStatusException extends ResponseStatusException
 
 	/**
 	 * Constructor for when trying to encode from or decode to a specific Java type.
+	 *
 	 * @since 5.1
 	 */
 	public UnsupportedMediaTypeStatusException(@Nullable MediaType contentType, List<MediaType> supportedTypes,
-			@Nullable ResolvableType bodyType) {
+											   @Nullable ResolvableType bodyType) {
 
 		super(HttpStatus.UNSUPPORTED_MEDIA_TYPE, initReason(contentType, bodyType));
 		this.contentType = contentType;
@@ -99,6 +84,7 @@ public class UnsupportedMediaTypeStatusException extends ResponseStatusException
 	 * Return the body type in the context of which this exception was generated.
 	 * <p>This is applicable when the exception was raised as a result trying to
 	 * encode from or decode to a specific Java type.
+	 *
 	 * @return the body type, or {@code null} if not available
 	 * @since 5.1
 	 */

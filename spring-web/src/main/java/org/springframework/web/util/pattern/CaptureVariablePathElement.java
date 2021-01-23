@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.util.pattern;
 
 import java.util.regex.Matcher;
@@ -40,7 +24,8 @@ class CaptureVariablePathElement extends PathElement {
 
 	/**
 	 * Create a new {@link CaptureVariablePathElement} instance.
-	 * @param pos the position in the pattern of this capture element
+	 *
+	 * @param pos               the position in the pattern of this capture element
 	 * @param captureDescriptor is of the form {AAAAA[:pattern]}
 	 */
 	CaptureVariablePathElement(int pos, char[] captureDescriptor, boolean caseSensitive, char separator) {
@@ -55,14 +40,12 @@ class CaptureVariablePathElement extends PathElement {
 		if (colon == -1) {
 			// no constraint
 			this.variableName = new String(captureDescriptor, 1, captureDescriptor.length - 2);
-		}
-		else {
+		} else {
 			this.variableName = new String(captureDescriptor, 1, colon - 1);
 			if (caseSensitive) {
 				this.constraintPattern = Pattern.compile(
 						new String(captureDescriptor, colon + 1, captureDescriptor.length - colon - 2));
-			}
-			else {
+			} else {
 				this.constraintPattern = Pattern.compile(
 						new String(captureDescriptor, colon + 1, captureDescriptor.length - colon - 2),
 						Pattern.CASE_INSENSITIVE);
@@ -101,18 +84,16 @@ class CaptureVariablePathElement extends PathElement {
 			if (matchingContext.determineRemainingPath) {
 				matchingContext.remainingPathIndex = pathIndex;
 				match = true;
-			}
-			else {
+			} else {
 				// Needs to be at least one character #SPR15264
 				match = (pathIndex == matchingContext.pathLength);
 				if (!match && matchingContext.isMatchOptionalTrailingSeparator()) {
 					match = //(nextPos > candidateIndex) &&
 							(pathIndex + 1) == matchingContext.pathLength &&
-							matchingContext.isSeparator(pathIndex);
+									matchingContext.isSeparator(pathIndex);
 				}
 			}
-		}
-		else {
+		} else {
 			if (this.next != null) {
 				match = this.next.matches(pathIndex, matchingContext);
 			}
@@ -120,7 +101,7 @@ class CaptureVariablePathElement extends PathElement {
 
 		if (match && matchingContext.extractingVariables) {
 			matchingContext.set(this.variableName, candidateCapture,
-					((PathSegment)matchingContext.pathElements.get(pathIndex-1)).parameters());
+					((PathSegment) matchingContext.pathElements.get(pathIndex - 1)).parameters());
 		}
 		return match;
 	}

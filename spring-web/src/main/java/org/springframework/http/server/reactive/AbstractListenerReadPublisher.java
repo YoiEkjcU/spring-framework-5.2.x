@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.server.reactive;
 
 import java.io.IOException;
@@ -39,16 +23,17 @@ import org.springframework.util.Assert;
  * WebSocket messages with standard Java WebSocket (JSR-356), Jetty, and
  * Undertow.
  *
+ * @param <T> the type of element signaled
  * @author Arjen Poutsma
  * @author Violeta Georgieva
  * @author Rossen Stoyanchev
  * @since 5.0
- * @param <T> the type of element signaled
  */
 public abstract class AbstractListenerReadPublisher<T> implements Publisher<T> {
 
 	/**
 	 * Special logger for debugging Reactive Streams signals.
+	 *
 	 * @see LogDelegateFactory#getHiddenLog(Class)
 	 * @see AbstractListenerWriteProcessor#rsWriteLogger
 	 * @see AbstractListenerWriteFlushProcessor#rsWriteFlushLogger
@@ -82,6 +67,7 @@ public abstract class AbstractListenerReadPublisher<T> implements Publisher<T> {
 
 	/**
 	 * Create an instance with the given log prefix.
+	 *
 	 * @since 5.1
 	 */
 	public AbstractListenerReadPublisher(String logPrefix) {
@@ -91,6 +77,7 @@ public abstract class AbstractListenerReadPublisher<T> implements Publisher<T> {
 
 	/**
 	 * Return the configured log message prefix.
+	 *
 	 * @since 5.1
 	 */
 	public String getLogPrefix() {
@@ -148,6 +135,7 @@ public abstract class AbstractListenerReadPublisher<T> implements Publisher<T> {
 
 	/**
 	 * Read once from the input, if possible.
+	 *
 	 * @return the item that was read; or {@code null}
 	 */
 	@Nullable
@@ -159,6 +147,7 @@ public abstract class AbstractListenerReadPublisher<T> implements Publisher<T> {
 	 * {@link #checkOnDataAvailable()} so it can be used to safely suspend
 	 * reading, if the underlying API supports it, i.e. without competing with
 	 * an implicit call to resume via {@code checkOnDataAvailable()}.
+	 *
 	 * @since 5.0.2
 	 */
 	protected abstract void readingPaused();
@@ -167,6 +156,7 @@ public abstract class AbstractListenerReadPublisher<T> implements Publisher<T> {
 	 * Invoked after an I/O read error from the underlying server or after a
 	 * cancellation signal from the downstream consumer to allow sub-classes
 	 * to discard any current cached data they might have.
+	 *
 	 * @since 5.0.11
 	 */
 	protected abstract void discardData();
@@ -177,6 +167,7 @@ public abstract class AbstractListenerReadPublisher<T> implements Publisher<T> {
 	/**
 	 * Read and publish data one at a time until there is no more data, no more
 	 * demand, or perhaps we completed in the mean time.
+	 *
 	 * @return {@code true} if there is more demand; {@code false} if there is
 	 * no more demand or we have completed.
 	 */
@@ -194,8 +185,7 @@ public abstract class AbstractListenerReadPublisher<T> implements Publisher<T> {
 					rsReadLogger.trace(getLogPrefix() + "Publishing data read");
 				}
 				subscriber.onNext(data);
-			}
-			else {
+			} else {
 				if (rsReadLogger.isTraceEnabled()) {
 					rsReadLogger.trace(getLogPrefix() + "No more data to read");
 				}
@@ -301,8 +291,7 @@ public abstract class AbstractListenerReadPublisher<T> implements Publisher<T> {
 					subscriber.onSubscribe(subscription);
 					publisher.changeState(SUBSCRIBING, NO_DEMAND);
 					publisher.handleCompletionOrErrorBeforeDemand();
-				}
-				else {
+				} else {
 					throw new IllegalStateException("Failed to transition to SUBSCRIBING, " +
 							"subscriber: " + subscriber);
 				}
@@ -374,8 +363,7 @@ public abstract class AbstractListenerReadPublisher<T> implements Publisher<T> {
 						boolean demandAvailable = publisher.readAndPublish();
 						if (demandAvailable) {
 							publisher.changeToDemandState(READING);
-						}
-						else {
+						} else {
 							publisher.readingPaused();
 							if (publisher.changeState(READING, NO_DEMAND)) {
 								// Demand may have arrived since readAndPublish returned
@@ -385,8 +373,7 @@ public abstract class AbstractListenerReadPublisher<T> implements Publisher<T> {
 								}
 							}
 						}
-					}
-					catch (IOException ex) {
+					} catch (IOException ex) {
 						publisher.onError(ex);
 					}
 				}
@@ -410,14 +397,17 @@ public abstract class AbstractListenerReadPublisher<T> implements Publisher<T> {
 			<T> void request(AbstractListenerReadPublisher<T> publisher, long n) {
 				// ignore
 			}
+
 			@Override
 			<T> void cancel(AbstractListenerReadPublisher<T> publisher) {
 				// ignore
 			}
+
 			@Override
 			<T> void onAllDataRead(AbstractListenerReadPublisher<T> publisher) {
 				// ignore
 			}
+
 			@Override
 			<T> void onError(AbstractListenerReadPublisher<T> publisher, Throwable t) {
 				// ignore
@@ -435,8 +425,7 @@ public abstract class AbstractListenerReadPublisher<T> implements Publisher<T> {
 		<T> void cancel(AbstractListenerReadPublisher<T> publisher) {
 			if (publisher.changeState(this, COMPLETED)) {
 				publisher.discardData();
-			}
-			else {
+			} else {
 				publisher.state.get().cancel(publisher);
 			}
 		}
@@ -451,8 +440,7 @@ public abstract class AbstractListenerReadPublisher<T> implements Publisher<T> {
 				if (s != null) {
 					s.onComplete();
 				}
-			}
-			else {
+			} else {
 				publisher.state.get().onAllDataRead(publisher);
 			}
 		}
@@ -464,8 +452,7 @@ public abstract class AbstractListenerReadPublisher<T> implements Publisher<T> {
 				if (s != null) {
 					s.onError(t);
 				}
-			}
-			else {
+			} else {
 				publisher.state.get().onError(publisher, t);
 			}
 		}

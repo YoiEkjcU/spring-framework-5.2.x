@@ -1,18 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.springframework.http.codec.multipart;
 
 import java.nio.charset.Charset;
@@ -41,7 +26,9 @@ import org.springframework.util.MultiValueMap;
  */
 public class MultipartWriterSupport extends LoggingCodecSupport {
 
-	/** THe default charset used by the writer. */
+	/**
+	 * THe default charset used by the writer.
+	 */
 	public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 
 	protected final List<MediaType> supportedMediaTypes;
@@ -112,11 +99,11 @@ public class MultipartWriterSupport extends LoggingCodecSupport {
 	protected Mono<DataBuffer> generateBoundaryLine(byte[] boundary, DataBufferFactory bufferFactory) {
 		return Mono.fromCallable(() -> {
 			DataBuffer buffer = bufferFactory.allocateBuffer(boundary.length + 4);
-			buffer.write((byte)'-');
-			buffer.write((byte)'-');
+			buffer.write((byte) '-');
+			buffer.write((byte) '-');
 			buffer.write(boundary);
-			buffer.write((byte)'\r');
-			buffer.write((byte)'\n');
+			buffer.write((byte) '\r');
+			buffer.write((byte) '\n');
 			return buffer;
 		});
 	}
@@ -124,8 +111,8 @@ public class MultipartWriterSupport extends LoggingCodecSupport {
 	protected Mono<DataBuffer> generateNewLine(DataBufferFactory bufferFactory) {
 		return Mono.fromCallable(() -> {
 			DataBuffer buffer = bufferFactory.allocateBuffer(2);
-			buffer.write((byte)'\r');
-			buffer.write((byte)'\n');
+			buffer.write((byte) '\r');
+			buffer.write((byte) '\n');
 			return buffer;
 		});
 	}
@@ -133,13 +120,13 @@ public class MultipartWriterSupport extends LoggingCodecSupport {
 	protected Mono<DataBuffer> generateLastLine(byte[] boundary, DataBufferFactory bufferFactory) {
 		return Mono.fromCallable(() -> {
 			DataBuffer buffer = bufferFactory.allocateBuffer(boundary.length + 6);
-			buffer.write((byte)'-');
-			buffer.write((byte)'-');
+			buffer.write((byte) '-');
+			buffer.write((byte) '-');
 			buffer.write(boundary);
-			buffer.write((byte)'-');
-			buffer.write((byte)'-');
-			buffer.write((byte)'\r');
-			buffer.write((byte)'\n');
+			buffer.write((byte) '-');
+			buffer.write((byte) '-');
+			buffer.write((byte) '\r');
+			buffer.write((byte) '\n');
 			return buffer;
 		});
 	}
@@ -152,15 +139,15 @@ public class MultipartWriterSupport extends LoggingCodecSupport {
 				for (String headerValueString : entry.getValue()) {
 					byte[] headerValue = headerValueString.getBytes(getCharset());
 					buffer.write(headerName);
-					buffer.write((byte)':');
-					buffer.write((byte)' ');
+					buffer.write((byte) ':');
+					buffer.write((byte) ' ');
 					buffer.write(headerValue);
-					buffer.write((byte)'\r');
-					buffer.write((byte)'\n');
+					buffer.write((byte) '\r');
+					buffer.write((byte) '\n');
 				}
 			}
-			buffer.write((byte)'\r');
-			buffer.write((byte)'\n');
+			buffer.write((byte) '\r');
+			buffer.write((byte) '\n');
 			return buffer;
 		});
 	}

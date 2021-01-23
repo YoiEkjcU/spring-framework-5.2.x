@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.server.reactive;
 
 import java.io.IOException;
@@ -53,8 +37,8 @@ import org.springframework.util.ReflectionUtils;
  *
  * @author Violeta Georgieva
  * @author Brian Clozel
- * @since 5.0
  * @see org.springframework.web.server.adapter.AbstractReactiveWebInitializer
+ * @since 5.0
  */
 public class TomcatHttpHandlerAdapter extends ServletHttpHandlerAdapter {
 
@@ -75,7 +59,7 @@ public class TomcatHttpHandlerAdapter extends ServletHttpHandlerAdapter {
 
 	@Override
 	protected ServletServerHttpResponse createResponse(HttpServletResponse response,
-			AsyncContext asyncContext, ServletServerHttpRequest request) throws IOException {
+													   AsyncContext asyncContext, ServletServerHttpRequest request) throws IOException {
 
 		return new TomcatServerHttpResponse(
 				response, asyncContext, getDataBufferFactory(), getBufferSize(), request);
@@ -98,7 +82,7 @@ public class TomcatHttpHandlerAdapter extends ServletHttpHandlerAdapter {
 		}
 
 		TomcatServerHttpRequest(HttpServletRequest request, AsyncContext context,
-				String servletPath, DataBufferFactory factory, int bufferSize)
+								String servletPath, DataBufferFactory factory, int bufferSize)
 				throws IOException, URISyntaxException {
 
 			super(createTomcatHttpHeaders(request), request, context, servletPath, factory, bufferSize);
@@ -118,13 +102,11 @@ public class TomcatHttpHandlerAdapter extends ServletHttpHandlerAdapter {
 		private static RequestFacade getRequestFacade(HttpServletRequest request) {
 			if (request instanceof RequestFacade) {
 				return (RequestFacade) request;
-			}
-			else if (request instanceof HttpServletRequestWrapper) {
+			} else if (request instanceof HttpServletRequestWrapper) {
 				HttpServletRequestWrapper wrapper = (HttpServletRequestWrapper) request;
 				HttpServletRequest wrappedRequest = (HttpServletRequest) wrapper.getRequest();
 				return getRequestFacade(wrappedRequest);
-			}
-			else {
+			} else {
 				throw new IllegalArgumentException("Cannot convert [" + request.getClass() +
 						"] to org.apache.catalina.connector.RequestFacade");
 			}
@@ -148,15 +130,12 @@ public class TomcatHttpHandlerAdapter extends ServletHttpHandlerAdapter {
 					dataBuffer.writePosition(read);
 					release = false;
 					return dataBuffer;
-				}
-				else if (read == -1) {
+				} else if (read == -1) {
 					return EOF_BUFFER;
-				}
-				else {
+				} else {
 					return null;
 				}
-			}
-			finally {
+			} finally {
 				if (release) {
 					DataBufferUtils.release(dataBuffer);
 				}
@@ -177,7 +156,7 @@ public class TomcatHttpHandlerAdapter extends ServletHttpHandlerAdapter {
 		}
 
 		TomcatServerHttpResponse(HttpServletResponse response, AsyncContext context,
-				DataBufferFactory factory, int bufferSize, ServletServerHttpRequest request) throws IOException {
+								 DataBufferFactory factory, int bufferSize, ServletServerHttpRequest request) throws IOException {
 
 			super(createTomcatHttpHeaders(response), response, context, factory, bufferSize, request);
 		}
@@ -195,13 +174,11 @@ public class TomcatHttpHandlerAdapter extends ServletHttpHandlerAdapter {
 		private static ResponseFacade getResponseFacade(HttpServletResponse response) {
 			if (response instanceof ResponseFacade) {
 				return (ResponseFacade) response;
-			}
-			else if (response instanceof HttpServletResponseWrapper) {
+			} else if (response instanceof HttpServletResponseWrapper) {
 				HttpServletResponseWrapper wrapper = (HttpServletResponseWrapper) response;
 				HttpServletResponse wrappedResponse = (HttpServletResponse) wrapper.getResponse();
 				return getResponseFacade(wrappedResponse);
-			}
-			else {
+			} else {
 				throw new IllegalArgumentException("Cannot convert [" + response.getClass() +
 						"] to org.apache.catalina.connector.ResponseFacade");
 			}
@@ -213,8 +190,7 @@ public class TomcatHttpHandlerAdapter extends ServletHttpHandlerAdapter {
 			MediaType contentType = null;
 			try {
 				contentType = getHeaders().getContentType();
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				String rawContentType = getHeaders().getFirst(HttpHeaders.CONTENT_TYPE);
 				response.setContentType(rawContentType);
 			}

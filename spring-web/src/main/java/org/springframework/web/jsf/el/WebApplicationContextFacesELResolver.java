@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.jsf.el;
 
 import java.beans.FeatureDescriptor;
@@ -51,9 +35,9 @@ import org.springframework.web.jsf.FacesContextUtils;
  * &lt;/application></pre>
  *
  * @author Juergen Hoeller
- * @since 2.5
  * @see SpringBeanFacesELResolver
  * @see org.springframework.web.jsf.FacesContextUtils#getWebApplicationContext
+ * @since 2.5
  */
 public class WebApplicationContextFacesELResolver extends ELResolver {
 
@@ -63,7 +47,9 @@ public class WebApplicationContextFacesELResolver extends ELResolver {
 	public static final String WEB_APPLICATION_CONTEXT_VARIABLE_NAME = "webApplicationContext";
 
 
-	/** Logger available to subclasses. */
+	/**
+	 * Logger available to subclasses.
+	 */
 	protected final Log logger = LogFactory.getLog(getClass());
 
 
@@ -84,18 +70,15 @@ public class WebApplicationContextFacesELResolver extends ELResolver {
 					elContext.setPropertyResolved(true);
 					try {
 						return wac.getBean(beanName);
-					}
-					catch (BeansException ex) {
+					} catch (BeansException ex) {
 						throw new ELException(ex);
 					}
-				}
-				else {
+				} else {
 					// Mimic standard JSF/JSP behavior when base is a Map by returning null.
 					return null;
 				}
 			}
-		}
-		else {
+		} else {
 			if (WEB_APPLICATION_CONTEXT_VARIABLE_NAME.equals(property)) {
 				elContext.setPropertyResolved(true);
 				return getWebApplicationContext(elContext);
@@ -122,18 +105,15 @@ public class WebApplicationContextFacesELResolver extends ELResolver {
 					elContext.setPropertyResolved(true);
 					try {
 						return wac.getType(beanName);
-					}
-					catch (BeansException ex) {
+					} catch (BeansException ex) {
 						throw new ELException(ex);
 					}
-				}
-				else {
+				} else {
 					// Mimic standard JSF/JSP behavior when base is a Map by returning null.
 					return null;
 				}
 			}
-		}
-		else {
+		} else {
 			if (WEB_APPLICATION_CONTEXT_VARIABLE_NAME.equals(property)) {
 				elContext.setPropertyResolved(true);
 				return WebApplicationContext.class;
@@ -172,6 +152,7 @@ public class WebApplicationContextFacesELResolver extends ELResolver {
 	 * Retrieve the {@link WebApplicationContext} reference to expose.
 	 * <p>The default implementation delegates to {@link FacesContextUtils},
 	 * returning {@code null} if no {@code WebApplicationContext} found.
+	 *
 	 * @param elContext the current JSF ELContext
 	 * @return the Spring web application context
 	 * @see org.springframework.web.jsf.FacesContextUtils#getWebApplicationContext

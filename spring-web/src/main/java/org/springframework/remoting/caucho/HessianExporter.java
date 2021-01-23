@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.remoting.caucho;
 
 import java.io.BufferedInputStream;
@@ -50,9 +34,9 @@ import org.springframework.util.CommonsLogWriter;
  * <b>Note: As of Spring 4.0, this exporter requires Hessian 4.0 or above.</b>
  *
  * @author Juergen Hoeller
- * @since 2.5.1
  * @see #invoke(java.io.InputStream, java.io.OutputStream)
  * @see HessianServiceExporter
+ * @since 2.5.1
  * @deprecated as of 5.3 (phasing out serialization-based remoting)
  */
 @Deprecated
@@ -113,6 +97,7 @@ public class HessianExporter extends RemoteExporter implements InitializingBean 
 	/**
 	 * Set whether Hessian's debug mode should be enabled, logging to
 	 * this exporter's Commons Logging log. Default is "false".
+	 *
 	 * @see com.caucho.hessian.client.HessianProxyFactory#setDebug
 	 */
 	public void setDebug(boolean debug) {
@@ -137,7 +122,8 @@ public class HessianExporter extends RemoteExporter implements InitializingBean 
 
 	/**
 	 * Perform an invocation on the exported object.
-	 * @param inputStream the request stream
+	 *
+	 * @param inputStream  the request stream
 	 * @param outputStream the response stream
 	 * @throws Throwable if invocation failed
 	 */
@@ -148,8 +134,9 @@ public class HessianExporter extends RemoteExporter implements InitializingBean 
 
 	/**
 	 * Actually invoke the skeleton with the given streams.
-	 * @param skeleton the skeleton to invoke
-	 * @param inputStream the request stream
+	 *
+	 * @param skeleton     the skeleton to invoke
+	 * @param inputStream  the request stream
 	 * @param outputStream the response stream
 	 * @throws Throwable if invocation failed
 	 */
@@ -162,7 +149,7 @@ public class HessianExporter extends RemoteExporter implements InitializingBean 
 			OutputStream osToUse = outputStream;
 
 			if (this.debugLogger != null && this.debugLogger.isDebugEnabled()) {
-				try (PrintWriter debugWriter = new PrintWriter(new CommonsLogWriter(this.debugLogger))){
+				try (PrintWriter debugWriter = new PrintWriter(new CommonsLogWriter(this.debugLogger))) {
 					@SuppressWarnings("resource")
 					HessianDebugInputStream dis = new HessianDebugInputStream(inputStream, debugWriter);
 					@SuppressWarnings("resource")
@@ -196,27 +183,23 @@ public class HessianExporter extends RemoteExporter implements InitializingBean 
 				in = new Hessian2Input(isToUse);
 				out = new Hessian2Output(osToUse);
 				in.readCall();
-			}
-			else if (code == 'C') {
+			} else if (code == 'C') {
 				// Hessian 2.0 call... for some reason not handled in HessianServlet!
 				isToUse.reset();
 				in = new Hessian2Input(isToUse);
 				out = new Hessian2Output(osToUse);
 				in.readCall();
-			}
-			else if (code == 'c') {
+			} else if (code == 'c') {
 				// Hessian 1.0 call
 				major = isToUse.read();
 				minor = isToUse.read();
 				in = new HessianInput(isToUse);
 				if (major >= 2) {
 					out = new Hessian2Output(osToUse);
-				}
-				else {
+				} else {
 					out = new HessianOutput(osToUse);
 				}
-			}
-			else {
+			} else {
 				throw new IOException("Expected 'H'/'C' (Hessian 2.0) or 'c' (Hessian 1.0) in hessian input at " + code);
 			}
 
@@ -228,25 +211,21 @@ public class HessianExporter extends RemoteExporter implements InitializingBean 
 
 			try {
 				skeleton.invoke(in, out);
-			}
-			finally {
+			} finally {
 				try {
 					in.close();
 					isToUse.close();
-				}
-				catch (IOException ex) {
+				} catch (IOException ex) {
 					// ignore
 				}
 				try {
 					out.close();
 					osToUse.close();
-				}
-				catch (IOException ex) {
+				} catch (IOException ex) {
 					// ignore
 				}
 			}
-		}
-		finally {
+		} finally {
 			resetThreadContextClassLoader(originalClassLoader);
 		}
 	}

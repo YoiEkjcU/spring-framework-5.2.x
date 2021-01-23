@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.server.handler;
 
 import org.apache.commons.logging.Log;
@@ -52,9 +36,10 @@ public class ResponseStatusExceptionHandler implements WebExceptionHandler {
 	 * Set the log category for warn logging.
 	 * <p>Default is no warn logging. Specify this setting to activate warn
 	 * logging into a specific category.
-	 * @since 5.1
+	 *
 	 * @see org.apache.commons.logging.LogFactory#getLog(String)
 	 * @see java.util.logging.Logger#getLogger(String)
+	 * @since 5.1
 	 */
 	public void setWarnLogCategory(String loggerName) {
 		this.warnLogger = LogFactory.getLog(loggerName);
@@ -71,8 +56,7 @@ public class ResponseStatusExceptionHandler implements WebExceptionHandler {
 		String logPrefix = exchange.getLogPrefix();
 		if (this.warnLogger != null && this.warnLogger.isWarnEnabled()) {
 			this.warnLogger.warn(logPrefix + formatError(ex, exchange.getRequest()), ex);
-		}
-		else if (logger.isDebugEnabled()) {
+		} else if (logger.isDebugEnabled()) {
 			logger.debug(logPrefix + formatError(ex, exchange.getRequest()));
 		}
 
@@ -99,8 +83,7 @@ public class ResponseStatusExceptionHandler implements WebExceptionHandler {
 				}
 				result = true;
 			}
-		}
-		else {
+		} else {
 			Throwable cause = ex.getCause();
 			if (cause != null) {
 				result = updateResponse(response, cause);
@@ -113,6 +96,7 @@ public class ResponseStatusExceptionHandler implements WebExceptionHandler {
 	 * Determine the HTTP status for the given exception.
 	 * <p>As of 5.3 this method always returns {@code null} in which case
 	 * {@link #determineRawStatusCode(Throwable)} is used instead.
+	 *
 	 * @param ex the exception to check
 	 * @return the associated HTTP status, if any
 	 * @deprecated as of 5.3 in favor of {@link #determineRawStatusCode(Throwable)}.
@@ -125,6 +109,7 @@ public class ResponseStatusExceptionHandler implements WebExceptionHandler {
 
 	/**
 	 * Determine the raw status code for the given exception.
+	 *
 	 * @param ex the exception to check
 	 * @return the associated HTTP status code, or -1 if it can't be derived.
 	 * @since 5.3

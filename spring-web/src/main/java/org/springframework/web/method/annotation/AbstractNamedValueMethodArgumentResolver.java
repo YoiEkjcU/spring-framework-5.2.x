@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.method.annotation;
 
 import java.util.Map;
@@ -80,9 +64,10 @@ public abstract class AbstractNamedValueMethodArgumentResolver implements Handle
 
 	/**
 	 * Create a new {@link AbstractNamedValueMethodArgumentResolver} instance.
+	 *
 	 * @param beanFactory a bean factory to use for resolving ${...} placeholder
-	 * and #{...} SpEL expressions in default values, or {@code null} if default
-	 * values are not expected to contain expressions
+	 *                    and #{...} SpEL expressions in default values, or {@code null} if default
+	 *                    values are not expected to contain expressions
 	 */
 	public AbstractNamedValueMethodArgumentResolver(@Nullable ConfigurableBeanFactory beanFactory) {
 		this.configurableBeanFactory = beanFactory;
@@ -94,7 +79,7 @@ public abstract class AbstractNamedValueMethodArgumentResolver implements Handle
 	@Override
 	@Nullable
 	public final Object resolveArgument(MethodParameter parameter, @Nullable ModelAndViewContainer mavContainer,
-			NativeWebRequest webRequest, @Nullable WebDataBinderFactory binderFactory) throws Exception {
+										NativeWebRequest webRequest, @Nullable WebDataBinderFactory binderFactory) throws Exception {
 
 		NamedValueInfo namedValueInfo = getNamedValueInfo(parameter);
 		MethodParameter nestedParameter = parameter.nestedIfOptional();
@@ -109,13 +94,11 @@ public abstract class AbstractNamedValueMethodArgumentResolver implements Handle
 		if (arg == null) {
 			if (namedValueInfo.defaultValue != null) {
 				arg = resolveStringValue(namedValueInfo.defaultValue);
-			}
-			else if (namedValueInfo.required && !nestedParameter.isOptional()) {
+			} else if (namedValueInfo.required && !nestedParameter.isOptional()) {
 				handleMissingValue(namedValueInfo.name, nestedParameter, webRequest);
 			}
 			arg = handleNullValue(namedValueInfo.name, arg, nestedParameter.getNestedParameterType());
-		}
-		else if ("".equals(arg) && namedValueInfo.defaultValue != null) {
+		} else if ("".equals(arg) && namedValueInfo.defaultValue != null) {
 			arg = resolveStringValue(namedValueInfo.defaultValue);
 		}
 
@@ -123,12 +106,10 @@ public abstract class AbstractNamedValueMethodArgumentResolver implements Handle
 			WebDataBinder binder = binderFactory.createBinder(webRequest, null, namedValueInfo.name);
 			try {
 				arg = binder.convertIfNecessary(arg, parameter.getParameterType(), parameter);
-			}
-			catch (ConversionNotSupportedException ex) {
+			} catch (ConversionNotSupportedException ex) {
 				throw new MethodArgumentConversionNotSupportedException(arg, ex.getRequiredType(),
 						namedValueInfo.name, parameter, ex.getCause());
-			}
-			catch (TypeMismatchException ex) {
+			} catch (TypeMismatchException ex) {
 				throw new MethodArgumentTypeMismatchException(arg, ex.getRequiredType(),
 						namedValueInfo.name, parameter, ex.getCause());
 			}
@@ -155,6 +136,7 @@ public abstract class AbstractNamedValueMethodArgumentResolver implements Handle
 	/**
 	 * Create the {@link NamedValueInfo} object for the given method parameter. Implementations typically
 	 * retrieve the method annotation by means of {@link MethodParameter#getParameterAnnotation(Class)}.
+	 *
 	 * @param parameter the method parameter
 	 * @return the named value information
 	 */
@@ -170,7 +152,7 @@ public abstract class AbstractNamedValueMethodArgumentResolver implements Handle
 			if (name == null) {
 				throw new IllegalArgumentException(
 						"Name for argument type [" + parameter.getNestedParameterType().getName() +
-						"] not available, and parameter name information not found in class file either.");
+								"] not available, and parameter name information not found in class file either.");
 			}
 		}
 		String defaultValue = (ValueConstants.DEFAULT_NONE.equals(info.defaultValue) ? null : info.defaultValue);
@@ -196,10 +178,11 @@ public abstract class AbstractNamedValueMethodArgumentResolver implements Handle
 
 	/**
 	 * Resolve the given parameter type and value name into an argument value.
-	 * @param name the name of the value being resolved
+	 *
+	 * @param name      the name of the value being resolved
 	 * @param parameter the method parameter to resolve to an argument value
-	 * (pre-nested in case of a {@link java.util.Optional} declaration)
-	 * @param request the current request
+	 *                  (pre-nested in case of a {@link java.util.Optional} declaration)
+	 * @param request   the current request
 	 * @return the resolved argument (may be {@code null})
 	 * @throws Exception in case of errors
 	 */
@@ -210,9 +193,10 @@ public abstract class AbstractNamedValueMethodArgumentResolver implements Handle
 	/**
 	 * Invoked when a named value is required, but {@link #resolveName(String, MethodParameter, NativeWebRequest)}
 	 * returned {@code null} and there is no default value. Subclasses typically throw an exception in this case.
-	 * @param name the name for the value
+	 *
+	 * @param name      the name for the value
 	 * @param parameter the method parameter
-	 * @param request the current request
+	 * @param request   the current request
 	 * @since 4.3
 	 */
 	protected void handleMissingValue(String name, MethodParameter parameter, NativeWebRequest request)
@@ -224,7 +208,8 @@ public abstract class AbstractNamedValueMethodArgumentResolver implements Handle
 	/**
 	 * Invoked when a named value is required, but {@link #resolveName(String, MethodParameter, NativeWebRequest)}
 	 * returned {@code null} and there is no default value. Subclasses typically throw an exception in this case.
-	 * @param name the name for the value
+	 *
+	 * @param name      the name for the value
 	 * @param parameter the method parameter
 	 */
 	protected void handleMissingValue(String name, MethodParameter parameter) throws ServletException {
@@ -240,8 +225,7 @@ public abstract class AbstractNamedValueMethodArgumentResolver implements Handle
 		if (value == null) {
 			if (Boolean.TYPE.equals(paramType)) {
 				return Boolean.FALSE;
-			}
-			else if (paramType.isPrimitive()) {
+			} else if (paramType.isPrimitive()) {
 				throw new IllegalStateException("Optional " + paramType.getSimpleName() + " parameter '" + name +
 						"' is present but cannot be translated into a null value due to being declared as a " +
 						"primitive type. Consider declaring it as object wrapper for the corresponding primitive type.");
@@ -252,14 +236,15 @@ public abstract class AbstractNamedValueMethodArgumentResolver implements Handle
 
 	/**
 	 * Invoked after a value is resolved.
-	 * @param arg the resolved argument value
-	 * @param name the argument name
-	 * @param parameter the argument parameter type
+	 *
+	 * @param arg          the resolved argument value
+	 * @param name         the argument name
+	 * @param parameter    the argument parameter type
 	 * @param mavContainer the {@link ModelAndViewContainer} (may be {@code null})
-	 * @param webRequest the current request
+	 * @param webRequest   the current request
 	 */
 	protected void handleResolvedValue(@Nullable Object arg, String name, MethodParameter parameter,
-			@Nullable ModelAndViewContainer mavContainer, NativeWebRequest webRequest) {
+									   @Nullable ModelAndViewContainer mavContainer, NativeWebRequest webRequest) {
 	}
 
 

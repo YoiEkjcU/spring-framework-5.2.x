@@ -1,18 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.springframework.http.server;
 
 import java.net.URI;
@@ -52,6 +37,7 @@ public interface RequestPath extends PathContainer {
 	/**
 	 * Return a new {@code RequestPath} instance with a modified context path.
 	 * The new context path must match 0 or more path segments at the start.
+	 *
 	 * @param contextPath the new context path
 	 * @return a new {@code RequestPath} instance
 	 */
@@ -60,7 +46,8 @@ public interface RequestPath extends PathContainer {
 
 	/**
 	 * Parse the URI for a request into a {@code RequestPath}.
-	 * @param uri the URI of the request
+	 *
+	 * @param uri         the URI of the request
 	 * @param contextPath the contextPath portion of the URI path
 	 */
 	static RequestPath parse(URI uri, @Nullable String contextPath) {
@@ -70,7 +57,8 @@ public interface RequestPath extends PathContainer {
 	/**
 	 * Variant of {@link #parse(URI, String)} with the encoded
 	 * {@link URI#getRawPath() raw path}.
-	 * @param rawPath the path
+	 *
+	 * @param rawPath     the path
 	 * @param contextPath the contextPath portion of the URI path
 	 * @since 5.3
 	 */

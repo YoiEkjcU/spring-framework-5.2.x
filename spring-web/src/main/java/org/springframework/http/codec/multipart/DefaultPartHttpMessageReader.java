@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.codec.multipart;
 
 import java.io.IOException;
@@ -83,6 +67,7 @@ public class DefaultPartHttpMessageReader extends LoggingCodecSupport implements
 	/**
 	 * Configure the maximum amount of memory that is allowed per headers section of each part.
 	 * When the limit
+	 *
 	 * @param byteCount the maximum amount of memory for headers
 	 */
 	public void setMaxHeadersSize(int byteCount) {
@@ -106,8 +91,9 @@ public class DefaultPartHttpMessageReader extends LoggingCodecSupport implements
 	 * <p>By default this is set to 256K.
 	 * <p>Note that this property is ignored when
 	 * {@linkplain #setStreaming(boolean) streaming} is enabled.
+	 *
 	 * @param maxInMemorySize the in-memory limit in bytes; if set to -1 the entire
-	 * contents will be stored in memory
+	 *                        contents will be stored in memory
 	 */
 	public void setMaxInMemorySize(int maxInMemorySize) {
 		this.maxInMemorySize = maxInMemorySize;
@@ -140,8 +126,9 @@ public class DefaultPartHttpMessageReader extends LoggingCodecSupport implements
 	 * <p>Note that this property is ignored when
 	 * {@linkplain #setStreaming(boolean) streaming} is enabled, or when
 	 * {@link #setMaxInMemorySize(int) maxInMemorySize} is set to -1.
+	 *
 	 * @throws IOException if an I/O error occurs, or the parent directory
-	 * does not exist
+	 *                     does not exist
 	 */
 	public void setFileStorageDirectory(Path fileStorageDirectory) throws IOException {
 		Assert.notNull(fileStorageDirectory, "FileStorageDirectory must not be null");
@@ -158,6 +145,7 @@ public class DefaultPartHttpMessageReader extends LoggingCodecSupport implements
 	 * <p>Note that this property is ignored when
 	 * {@linkplain #setStreaming(boolean) streaming} is enabled, or when
 	 * {@link #setMaxInMemorySize(int) maxInMemorySize} is set to -1.
+	 *
 	 * @see Schedulers#newBoundedElastic
 	 */
 	public void setBlockingOperationScheduler(Scheduler blockingOperationScheduler) {
@@ -201,7 +189,7 @@ public class DefaultPartHttpMessageReader extends LoggingCodecSupport implements
 
 	@Override
 	public Mono<Part> readMono(ResolvableType elementType, ReactiveHttpInputMessage message,
-			Map<String, Object> hints) {
+							   Map<String, Object> hints) {
 		return Mono.error(new UnsupportedOperationException("Cannot read multipart request body into single Part"));
 	}
 

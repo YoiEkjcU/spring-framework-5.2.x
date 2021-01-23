@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.context.request.async;
 
 import java.io.IOException;
@@ -59,7 +43,8 @@ public class StandardServletAsyncWebRequest extends ServletWebRequest implements
 
 	/**
 	 * Create a new instance for the given request/response pair.
-	 * @param request current HTTP request
+	 *
+	 * @param request  current HTTP request
 	 * @param response current HTTP response
 	 */
 	public StandardServletAsyncWebRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -111,9 +96,9 @@ public class StandardServletAsyncWebRequest extends ServletWebRequest implements
 	public void startAsync() {
 		Assert.state(getRequest().isAsyncSupported(),
 				"Async support must be enabled on a servlet and for all filters involved " +
-				"in async request processing. This is done in Java code using the Servlet API " +
-				"or by adding \"<async-supported>true</async-supported>\" to servlet and " +
-				"filter declarations in web.xml.");
+						"in async request processing. This is done in Java code using the Servlet API " +
+						"or by adding \"<async-supported>true</async-supported>\" to servlet and " +
+						"filter declarations in web.xml.");
 		Assert.state(!isAsyncComplete(), "Async processing has already completed");
 
 		if (isAsyncStarted()) {

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.cors;
 
 import java.util.Collections;
@@ -47,9 +31,9 @@ import org.springframework.web.util.pattern.PathPatternParser;
  *
  * @author Sebastien Deleuze
  * @author Rossen Stoyanchev
- * @since 4.2
  * @see PathPattern
  * @see AntPathMatcher
+ * @since 4.2
  */
 public class UrlBasedCorsConfigurationSource implements CorsConfigurationSource {
 
@@ -79,6 +63,7 @@ public class UrlBasedCorsConfigurationSource implements CorsConfigurationSource 
 
 	/**
 	 * Constructor with a {@link PathPatternParser} to parse patterns with.
+	 *
 	 * @param parser the parser to use
 	 * @since 5.3
 	 */
@@ -92,6 +77,7 @@ public class UrlBasedCorsConfigurationSource implements CorsConfigurationSource 
 	 * Shortcut to the
 	 * {@link org.springframework.web.util.UrlPathHelper#setAlwaysUseFullPath
 	 * same property} on the configured {@code UrlPathHelper}.
+	 *
 	 * @deprecated as of 5.3 in favor of using
 	 * {@link #setUrlPathHelper(UrlPathHelper)}, if at all. For further details,
 	 * please see {@link #setAllowInitLookupPath(boolean)}.
@@ -106,6 +92,7 @@ public class UrlBasedCorsConfigurationSource implements CorsConfigurationSource 
 	 * Shortcut to the
 	 * {@link org.springframework.web.util.UrlPathHelper#setUrlDecode same property}
 	 * on the configured {@code UrlPathHelper}.
+	 *
 	 * @deprecated as of 5.3 in favor of using
 	 * {@link #setUrlPathHelper(UrlPathHelper)}, if at all. For further details,
 	 * please see {@link #setAllowInitLookupPath(boolean)}.
@@ -120,6 +107,7 @@ public class UrlBasedCorsConfigurationSource implements CorsConfigurationSource 
 	 * Shortcut to the
 	 * {@link org.springframework.web.util.UrlPathHelper#setRemoveSemicolonContent
 	 * same property} on the configured {@code UrlPathHelper}.
+	 *
 	 * @deprecated as of 5.3 in favor of using
 	 * {@link #setUrlPathHelper(UrlPathHelper)}, if at all. For further details,
 	 * please see {@link #setAllowInitLookupPath(boolean)}.
@@ -165,8 +153,9 @@ public class UrlBasedCorsConfigurationSource implements CorsConfigurationSource 
 	 * {@code RequestPath} can be parsed earlier via
 	 * {@link org.springframework.web.filter.ServletRequestPathFilter
 	 * ServletRequestPathFilter}.
+	 *
 	 * @param allowInitLookupPath whether to disable lazy initialization
-	 * and fail if not already resolved
+	 *                            and fail if not already resolved
 	 * @since 5.3
 	 */
 	public void setAllowInitLookupPath(boolean allowInitLookupPath) {
@@ -177,6 +166,7 @@ public class UrlBasedCorsConfigurationSource implements CorsConfigurationSource 
 	 * Configure the name of the attribute that holds the lookupPath extracted
 	 * via {@link UrlPathHelper#getLookupPathForRequest(HttpServletRequest)}.
 	 * <p>By default this is {@link UrlPathHelper#PATH_ATTRIBUTE}.
+	 *
 	 * @param name the request attribute to check
 	 * @since 5.2
 	 * @deprecated as of 5.3 in favor of {@link UrlPathHelper#PATH_ATTRIBUTE}.
@@ -206,6 +196,7 @@ public class UrlBasedCorsConfigurationSource implements CorsConfigurationSource 
 	 * as well as class-level Javadoc for details on which one may in use.
 	 * Generally the syntax is largely the same with {@link PathPattern} more
 	 * tailored for web usage.
+	 *
 	 * @param corsConfigurations the mappings to use
 	 * @see PathPattern
 	 * @see AntPathMatcher
@@ -219,8 +210,9 @@ public class UrlBasedCorsConfigurationSource implements CorsConfigurationSource 
 
 	/**
 	 * Variant of {@link #setCorsConfigurations(Map)} to register one mapping at a time.
+	 *
 	 * @param pattern the mapping pattern
-	 * @param config the CORS configuration to use for the pattern
+	 * @param config  the CORS configuration to use for the pattern
 	 * @see PathPattern
 	 * @see AntPathMatcher
 	 */

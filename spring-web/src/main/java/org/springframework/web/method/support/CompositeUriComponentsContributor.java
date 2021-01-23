@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.method.support;
 
 import java.util.Collection;
@@ -49,8 +33,9 @@ public class CompositeUriComponentsContributor implements UriComponentsContribut
 	 * by the same class, the most convenient option is to obtain the configured
 	 * {@code HandlerMethodArgumentResolvers} in {@code RequestMappingHandlerAdapter}
 	 * and provide that to this constructor.
+	 *
 	 * @param contributors a collection of {@link UriComponentsContributor}
-	 * or {@link HandlerMethodArgumentResolver HandlerMethodArgumentResolvers}.
+	 *                     or {@link HandlerMethodArgumentResolver HandlerMethodArgumentResolvers}.
 	 */
 	public CompositeUriComponentsContributor(UriComponentsContributor... contributors) {
 		Collections.addAll(this.contributors, contributors);
@@ -63,8 +48,9 @@ public class CompositeUriComponentsContributor implements UriComponentsContribut
 	 * by the same class, the most convenient option is to obtain the configured
 	 * {@code HandlerMethodArgumentResolvers} in {@code RequestMappingHandlerAdapter}
 	 * and provide that to this constructor.
+	 *
 	 * @param contributors a collection of {@link UriComponentsContributor}
-	 * or {@link HandlerMethodArgumentResolver HandlerMethodArgumentResolvers}.
+	 *                     or {@link HandlerMethodArgumentResolver HandlerMethodArgumentResolvers}.
 	 */
 	public CompositeUriComponentsContributor(Collection<?> contributors) {
 		this(contributors, null);
@@ -79,10 +65,11 @@ public class CompositeUriComponentsContributor implements UriComponentsContribut
 	 * <p>If the {@link ConversionService} argument is {@code null},
 	 * {@link org.springframework.format.support.DefaultFormattingConversionService}
 	 * will be used by default.
+	 *
 	 * @param contributors a collection of {@link UriComponentsContributor}
-	 * or {@link HandlerMethodArgumentResolver HandlerMethodArgumentResolvers}.
-	 * @param cs a ConversionService to use when method argument values
-	 * need to be formatted as Strings before being added to the URI
+	 *                     or {@link HandlerMethodArgumentResolver HandlerMethodArgumentResolvers}.
+	 * @param cs           a ConversionService to use when method argument values
+	 *                     need to be formatted as Strings before being added to the URI
 	 */
 	public CompositeUriComponentsContributor(@Nullable Collection<?> contributors, @Nullable ConversionService cs) {
 		if (contributors != null) {
@@ -103,8 +90,7 @@ public class CompositeUriComponentsContributor implements UriComponentsContribut
 				if (((UriComponentsContributor) contributor).supportsParameter(parameter)) {
 					return true;
 				}
-			}
-			else if (contributor instanceof HandlerMethodArgumentResolver) {
+			} else if (contributor instanceof HandlerMethodArgumentResolver) {
 				if (((HandlerMethodArgumentResolver) contributor).supportsParameter(parameter)) {
 					return false;
 				}
@@ -115,7 +101,7 @@ public class CompositeUriComponentsContributor implements UriComponentsContribut
 
 	@Override
 	public void contributeMethodArgument(MethodParameter parameter, Object value,
-			UriComponentsBuilder builder, Map<String, Object> uriVariables, ConversionService conversionService) {
+										 UriComponentsBuilder builder, Map<String, Object> uriVariables, ConversionService conversionService) {
 
 		for (Object contributor : this.contributors) {
 			if (contributor instanceof UriComponentsContributor) {
@@ -124,8 +110,7 @@ public class CompositeUriComponentsContributor implements UriComponentsContribut
 					ucc.contributeMethodArgument(parameter, value, builder, uriVariables, conversionService);
 					break;
 				}
-			}
-			else if (contributor instanceof HandlerMethodArgumentResolver) {
+			} else if (contributor instanceof HandlerMethodArgumentResolver) {
 				if (((HandlerMethodArgumentResolver) contributor).supportsParameter(parameter)) {
 					break;
 				}
@@ -137,7 +122,7 @@ public class CompositeUriComponentsContributor implements UriComponentsContribut
 	 * An overloaded method that uses the ConversionService created at construction.
 	 */
 	public void contributeMethodArgument(MethodParameter parameter, Object value, UriComponentsBuilder builder,
-			Map<String, Object> uriVariables) {
+										 Map<String, Object> uriVariables) {
 
 		this.contributeMethodArgument(parameter, value, builder, uriVariables, this.conversionService);
 	}

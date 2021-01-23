@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.bind;
 
 import java.util.ArrayList;
@@ -36,9 +20,9 @@ import org.springframework.web.util.HtmlUtils;
  * that get copied into the respective BindStatus instance.
  *
  * @author Juergen Hoeller
- * @since 01.03.2003
  * @see org.springframework.web.servlet.support.RequestContext#getErrors
  * @see org.springframework.web.servlet.tags.BindTag
+ * @since 01.03.2003
  */
 public class EscapedErrors implements Errors {
 
@@ -111,7 +95,7 @@ public class EscapedErrors implements Errors {
 
 	@Override
 	public void rejectValue(@Nullable String field, String errorCode, @Nullable Object[] errorArgs,
-			@Nullable String defaultMessage) {
+							@Nullable String defaultMessage) {
 
 		this.source.rejectValue(field, errorCode, errorArgs, defaultMessage);
 	}
@@ -232,8 +216,7 @@ public class EscapedErrors implements Errors {
 			return (T) new FieldError(
 					fieldError.getObjectName(), fieldError.getField(), value, fieldError.isBindingFailure(),
 					fieldError.getCodes(), fieldError.getArguments(), defaultMessage);
-		}
-		else {
+		} else {
 			return (T) new ObjectError(
 					source.getObjectName(), source.getCodes(), source.getArguments(), defaultMessage);
 		}

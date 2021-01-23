@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.converter.xml;
 
 import java.io.ByteArrayInputStream;
@@ -60,10 +44,10 @@ import org.springframework.util.StreamUtils;
  * Implementation of {@link org.springframework.http.converter.HttpMessageConverter}
  * that can read and write {@link Source} objects.
  *
+ * @param <T> the converted object type
  * @author Arjen Poutsma
  * @author Rossen Stoyanchev
  * @since 3.0
- * @param <T> the converted object type
  */
 public class SourceHttpMessageConverter<T extends Source> extends AbstractHttpMessageConverter<T> {
 
@@ -149,17 +133,13 @@ public class SourceHttpMessageConverter<T extends Source> extends AbstractHttpMe
 		InputStream body = inputMessage.getBody();
 		if (DOMSource.class == clazz) {
 			return (T) readDOMSource(body, inputMessage);
-		}
-		else if (SAXSource.class == clazz) {
+		} else if (SAXSource.class == clazz) {
 			return (T) readSAXSource(body, inputMessage);
-		}
-		else if (StAXSource.class == clazz) {
+		} else if (StAXSource.class == clazz) {
 			return (T) readStAXSource(body, inputMessage);
-		}
-		else if (StreamSource.class == clazz || Source.class == clazz) {
+		} else if (StreamSource.class == clazz || Source.class == clazz) {
 			return (T) readStreamSource(body);
-		}
-		else {
+		} else {
 			throw new HttpMessageNotReadableException("Could not read class [" + clazz +
 					"]. Only DOMSource, SAXSource, StAXSource, and StreamSource are supported.", inputMessage);
 		}
@@ -179,19 +159,16 @@ public class SourceHttpMessageConverter<T extends Source> extends AbstractHttpMe
 			}
 			Document document = documentBuilder.parse(body);
 			return new DOMSource(document);
-		}
-		catch (NullPointerException ex) {
+		} catch (NullPointerException ex) {
 			if (!isSupportDtd()) {
 				throw new HttpMessageNotReadableException("NPE while unmarshalling: This can happen " +
 						"due to the presence of DTD declarations which are disabled.", ex, inputMessage);
 			}
 			throw ex;
-		}
-		catch (ParserConfigurationException ex) {
+		} catch (ParserConfigurationException ex) {
 			throw new HttpMessageNotReadableException(
 					"Could not set feature: " + ex.getMessage(), ex, inputMessage);
-		}
-		catch (SAXException ex) {
+		} catch (SAXException ex) {
 			throw new HttpMessageNotReadableException(
 					"Could not parse document: " + ex.getMessage(), ex, inputMessage);
 		}
@@ -208,8 +185,7 @@ public class SourceHttpMessageConverter<T extends Source> extends AbstractHttpMe
 			}
 			byte[] bytes = StreamUtils.copyToByteArray(body);
 			return new SAXSource(xmlReader, new InputSource(new ByteArrayInputStream(bytes)));
-		}
-		catch (SAXException ex) {
+		} catch (SAXException ex) {
 			throw new HttpMessageNotReadableException(
 					"Could not parse document: " + ex.getMessage(), ex, inputMessage);
 		}
@@ -225,8 +201,7 @@ public class SourceHttpMessageConverter<T extends Source> extends AbstractHttpMe
 			}
 			XMLStreamReader streamReader = inputFactory.createXMLStreamReader(body);
 			return new StAXSource(streamReader);
-		}
-		catch (XMLStreamException ex) {
+		} catch (XMLStreamException ex) {
 			throw new HttpMessageNotReadableException(
 					"Could not parse document: " + ex.getMessage(), ex, inputMessage);
 		}
@@ -245,8 +220,7 @@ public class SourceHttpMessageConverter<T extends Source> extends AbstractHttpMe
 				CountingOutputStream os = new CountingOutputStream();
 				transform(t, new StreamResult(os));
 				return os.count;
-			}
-			catch (TransformerException ex) {
+			} catch (TransformerException ex) {
 				// ignore
 			}
 		}
@@ -259,8 +233,7 @@ public class SourceHttpMessageConverter<T extends Source> extends AbstractHttpMe
 		try {
 			Result result = new StreamResult(outputMessage.getBody());
 			transform(t, result);
-		}
-		catch (TransformerException ex) {
+		} catch (TransformerException ex) {
 			throw new HttpMessageNotWritableException("Could not transform [" + t + "] to output message", ex);
 		}
 	}

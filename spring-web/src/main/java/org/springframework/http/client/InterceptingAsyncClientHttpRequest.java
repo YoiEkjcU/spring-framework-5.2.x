@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.client;
 
 import java.io.IOException;
@@ -51,13 +35,14 @@ class InterceptingAsyncClientHttpRequest extends AbstractBufferingAsyncClientHtt
 
 	/**
 	 * Create new instance of {@link InterceptingAsyncClientHttpRequest}.
+	 *
 	 * @param requestFactory the async request factory
-	 * @param interceptors the list of interceptors
-	 * @param uri the request URI
-	 * @param httpMethod the HTTP method
+	 * @param interceptors   the list of interceptors
+	 * @param uri            the request URI
+	 * @param httpMethod     the HTTP method
 	 */
 	public InterceptingAsyncClientHttpRequest(AsyncClientHttpRequestFactory requestFactory,
-			List<AsyncClientHttpRequestInterceptor> interceptors, URI uri, HttpMethod httpMethod) {
+											  List<AsyncClientHttpRequestInterceptor> interceptors, URI uri, HttpMethod httpMethod) {
 
 		this.requestFactory = requestFactory;
 		this.interceptors = interceptors;
@@ -104,8 +89,7 @@ class InterceptingAsyncClientHttpRequest extends AbstractBufferingAsyncClientHtt
 			if (this.iterator.hasNext()) {
 				AsyncClientHttpRequestInterceptor interceptor = this.iterator.next();
 				return interceptor.intercept(request, body, this);
-			}
-			else {
+			} else {
 				URI uri = request.getURI();
 				HttpMethod method = request.getMethod();
 				HttpHeaders headers = request.getHeaders();

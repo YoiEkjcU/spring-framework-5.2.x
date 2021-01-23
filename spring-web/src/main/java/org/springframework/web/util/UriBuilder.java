@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.util;
 
 import java.net.URI;
@@ -35,15 +19,16 @@ import org.springframework.util.MultiValueMap;
  * component configured once and used to create many URLs.
  *
  * @author Rossen Stoyanchev
- * @since 5.0
  * @see UriBuilderFactory
  * @see UriComponentsBuilder
+ * @since 5.0
  */
 public interface UriBuilder {
 
 	/**
 	 * Set the URI scheme which may contain URI template variables,
 	 * and may also be {@code null} to clear the scheme of this builder.
+	 *
 	 * @param scheme the URI scheme
 	 */
 	UriBuilder scheme(@Nullable String scheme);
@@ -51,6 +36,7 @@ public interface UriBuilder {
 	/**
 	 * Set the URI user info which may contain URI template variables, and
 	 * may also be {@code null} to clear the user info of this builder.
+	 *
 	 * @param userInfo the URI user info
 	 */
 	UriBuilder userInfo(@Nullable String userInfo);
@@ -58,12 +44,14 @@ public interface UriBuilder {
 	/**
 	 * Set the URI host which may contain URI template variables, and may also
 	 * be {@code null} to clear the host of this builder.
+	 *
 	 * @param host the URI host
 	 */
 	UriBuilder host(@Nullable String host);
 
 	/**
 	 * Set the URI port. Passing {@code -1} will clear the port of this builder.
+	 *
 	 * @param port the URI port
 	 */
 	UriBuilder port(int port);
@@ -72,6 +60,7 @@ public interface UriBuilder {
 	 * Set the URI port . Use this method only when the port needs to be
 	 * parameterized with a URI variable. Otherwise use {@link #port(int)}.
 	 * Passing {@code null} will clear the port of this builder.
+	 *
 	 * @param port the URI port
 	 */
 	UriBuilder port(@Nullable String port);
@@ -105,12 +94,14 @@ public interface UriBuilder {
 	 * {@link DefaultUriBuilderFactory#setEncodingMode encodingMode} property.
 	 * Also see the <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#web-uri-encoding">
 	 * URI Encoding</a> section of the reference docs.
+	 *
 	 * @param path the URI path
 	 */
 	UriBuilder path(String path);
 
 	/**
 	 * Override the existing path.
+	 *
 	 * @param path the URI path, or {@code null} for an empty path
 	 */
 	UriBuilder replacePath(@Nullable String path);
@@ -140,6 +131,7 @@ public interface UriBuilder {
 	 * // Results is "/first-value/second-value/"
 	 *
 	 * </pre>
+	 *
 	 * @param pathSegments the URI path segments
 	 */
 	UriBuilder pathSegment(String... pathSegments) throws IllegalArgumentException;
@@ -151,6 +143,7 @@ public interface UriBuilder {
 	 * <p><strong>Note: </strong> please, review the Javadoc of
 	 * {@link #queryParam(String, Object...)} for further notes on the treatment
 	 * and encoding of individual query parameters.
+	 *
 	 * @param query the query string
 	 */
 	UriBuilder query(String query);
@@ -160,6 +153,7 @@ public interface UriBuilder {
 	 * <p><strong>Note: </strong> please, review the Javadoc of
 	 * {@link #queryParam(String, Object...)} for further notes on the treatment
 	 * and encoding of individual query parameters.
+	 *
 	 * @param query the query string; a {@code null} value removes all query parameters.
 	 */
 	UriBuilder replaceQuery(@Nullable String query);
@@ -179,7 +173,8 @@ public interface UriBuilder {
 	 * on variable values. For more details please read the
 	 * <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#web-uri-encoding">"URI Encoding"</a>
 	 * section of the Spring Framework reference.
-	 * @param name the query parameter name
+	 *
+	 * @param name   the query parameter name
 	 * @param values the query parameter values
 	 * @see #queryParam(String, Collection)
 	 */
@@ -190,10 +185,11 @@ public interface UriBuilder {
 	 * <p><strong>Note: </strong> please, review the Javadoc of
 	 * {@link #queryParam(String, Object...)} for further notes on the treatment
 	 * and encoding of individual query parameters.
-	 * @param name the query parameter name
+	 *
+	 * @param name   the query parameter name
 	 * @param values the query parameter values
-	 * @since 5.2
 	 * @see #queryParam(String, Object...)
+	 * @since 5.2
 	 */
 	UriBuilder queryParam(String name, @Nullable Collection<?> values);
 
@@ -202,6 +198,7 @@ public interface UriBuilder {
 	 * <p><strong>Note: </strong> please, review the Javadoc of
 	 * {@link #queryParam(String, Object...)} for further notes on the treatment
 	 * and encoding of individual query parameters.
+	 *
 	 * @param params the params
 	 */
 	UriBuilder queryParams(MultiValueMap<String, String> params);
@@ -212,7 +209,8 @@ public interface UriBuilder {
 	 * <p><strong>Note: </strong> please, review the Javadoc of
 	 * {@link #queryParam(String, Object...)} for further notes on the treatment
 	 * and encoding of individual query parameters.
-	 * @param name the query parameter name
+	 *
+	 * @param name   the query parameter name
 	 * @param values the query parameter values
 	 * @see #replaceQueryParam(String, Collection)
 	 */
@@ -223,10 +221,11 @@ public interface UriBuilder {
 	 * <p><strong>Note: </strong> please, review the Javadoc of
 	 * {@link #queryParam(String, Object...)} for further notes on the treatment
 	 * and encoding of individual query parameters.
-	 * @param name the query parameter name
+	 *
+	 * @param name   the query parameter name
 	 * @param values the query parameter values
-	 * @since 5.2
 	 * @see #replaceQueryParam(String, Object...)
+	 * @since 5.2
 	 */
 	UriBuilder replaceQueryParam(String name, @Nullable Collection<?> values);
 
@@ -235,6 +234,7 @@ public interface UriBuilder {
 	 * <p><strong>Note: </strong> please, review the Javadoc of
 	 * {@link #queryParam(String, Object...)} for further notes on the treatment
 	 * and encoding of individual query parameters.
+	 *
 	 * @param params the query parameter name
 	 */
 	UriBuilder replaceQueryParams(MultiValueMap<String, String> params);
@@ -242,6 +242,7 @@ public interface UriBuilder {
 	/**
 	 * Set the URI fragment. The given fragment may contain URI template variables,
 	 * and may also be {@code null} to clear the fragment of this builder.
+	 *
 	 * @param fragment the URI fragment
 	 */
 	UriBuilder fragment(@Nullable String fragment);
@@ -249,6 +250,7 @@ public interface UriBuilder {
 	/**
 	 * Build a {@link URI} instance and replaces URI template variables
 	 * with the values from an array.
+	 *
 	 * @param uriVariables the map of URI variables
 	 * @return the URI
 	 */
@@ -257,6 +259,7 @@ public interface UriBuilder {
 	/**
 	 * Build a {@link URI} instance and replaces URI template variables
 	 * with the values from a map.
+	 *
 	 * @param uriVariables the map of URI variables
 	 * @return the URI
 	 */

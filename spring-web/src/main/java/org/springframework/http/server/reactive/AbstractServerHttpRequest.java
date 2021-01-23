@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.server.reactive;
 
 import java.io.UnsupportedEncodingException;
@@ -72,9 +56,10 @@ public abstract class AbstractServerHttpRequest implements ServerHttpRequest {
 
 	/**
 	 * Constructor with the URI and headers for the request.
-	 * @param uri the URI for the request
+	 *
+	 * @param uri         the URI for the request
 	 * @param contextPath the context path for the request
-	 * @param headers the headers for the request
+	 * @param headers     the headers for the request
 	 */
 	public AbstractServerHttpRequest(URI uri, @Nullable String contextPath, MultiValueMap<String, String> headers) {
 		this.uri = uri;
@@ -97,6 +82,7 @@ public abstract class AbstractServerHttpRequest implements ServerHttpRequest {
 	/**
 	 * Obtain the request id to use, or {@code null} in which case the Object
 	 * identity of this request instance is used.
+	 *
 	 * @since 5.1
 	 */
 	@Nullable
@@ -154,8 +140,7 @@ public abstract class AbstractServerHttpRequest implements ServerHttpRequest {
 	private String decodeQueryParam(String value) {
 		try {
 			return URLDecoder.decode(value, "UTF-8");
-		}
-		catch (UnsupportedEncodingException ex) {
+		} catch (UnsupportedEncodingException ex) {
 			if (logger.isWarnEnabled()) {
 				logger.warn(getLogPrefix() + "Could not decode query value [" + value + "] as 'UTF-8'. " +
 						"Falling back on default encoding: " + ex.getMessage());
@@ -194,6 +179,7 @@ public abstract class AbstractServerHttpRequest implements ServerHttpRequest {
 
 	/**
 	 * Obtain SSL session information from the underlying "native" request.
+	 *
 	 * @return the session information, or {@code null} if none available
 	 * @since 5.0.2
 	 */
@@ -209,6 +195,7 @@ public abstract class AbstractServerHttpRequest implements ServerHttpRequest {
 
 	/**
 	 * For internal use in logging at the HTTP adapter layer.
+	 *
 	 * @since 5.1
 	 */
 	String getLogPrefix() {

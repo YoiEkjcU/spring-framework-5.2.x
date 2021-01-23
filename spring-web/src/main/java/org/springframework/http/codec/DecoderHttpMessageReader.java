@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.codec;
 
 import java.util.List;
@@ -43,11 +27,11 @@ import org.springframework.util.Assert;
  * from the extra information available on the server side such as the request
  * or controller method parameter annotations.
  *
+ * @param <T> the type of objects in the decoded output stream
  * @author Arjen Poutsma
  * @author Sebastien Deleuze
  * @author Rossen Stoyanchev
  * @since 5.0
- * @param <T> the type of objects in the decoded output stream
  */
 public class DecoderHttpMessageReader<T> implements HttpMessageReader<T> {
 
@@ -111,6 +95,7 @@ public class DecoderHttpMessageReader<T> implements HttpMessageReader<T> {
 	 * Determine the Content-Type of the HTTP message based on the
 	 * "Content-Type" header or otherwise default to
 	 * {@link MediaType#APPLICATION_OCTET_STREAM}.
+	 *
 	 * @param inputMessage the HTTP message
 	 * @return the MediaType, possibly {@code null}.
 	 */
@@ -122,6 +107,7 @@ public class DecoderHttpMessageReader<T> implements HttpMessageReader<T> {
 
 	/**
 	 * Get additional hints for decoding based on the input HTTP message.
+	 *
 	 * @since 5.3
 	 */
 	protected Map<String, Object> getReadHints(ResolvableType elementType, ReactiveHttpInputMessage message) {
@@ -133,7 +119,7 @@ public class DecoderHttpMessageReader<T> implements HttpMessageReader<T> {
 
 	@Override
 	public Flux<T> read(ResolvableType actualType, ResolvableType elementType,
-			ServerHttpRequest request, ServerHttpResponse response, Map<String, Object> hints) {
+						ServerHttpRequest request, ServerHttpResponse response, Map<String, Object> hints) {
 
 		Map<String, Object> allHints = Hints.merge(hints,
 				getReadHints(actualType, elementType, request, response));
@@ -143,7 +129,7 @@ public class DecoderHttpMessageReader<T> implements HttpMessageReader<T> {
 
 	@Override
 	public Mono<T> readMono(ResolvableType actualType, ResolvableType elementType,
-			ServerHttpRequest request, ServerHttpResponse response, Map<String, Object> hints) {
+							ServerHttpRequest request, ServerHttpResponse response, Map<String, Object> hints) {
 
 		Map<String, Object> allHints = Hints.merge(hints,
 				getReadHints(actualType, elementType, request, response));
@@ -157,7 +143,7 @@ public class DecoderHttpMessageReader<T> implements HttpMessageReader<T> {
 	 * the decoder if it is an instance of {@link HttpMessageDecoder}.
 	 */
 	protected Map<String, Object> getReadHints(ResolvableType actualType,
-			ResolvableType elementType, ServerHttpRequest request, ServerHttpResponse response) {
+											   ResolvableType elementType, ServerHttpRequest request, ServerHttpResponse response) {
 
 		if (this.decoder instanceof HttpMessageDecoder) {
 			HttpMessageDecoder<?> decoder = (HttpMessageDecoder<?>) this.decoder;

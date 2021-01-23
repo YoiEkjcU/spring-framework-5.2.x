@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2010 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.context.support;
 
 import javax.servlet.ServletContext;
@@ -30,12 +14,12 @@ import org.springframework.core.io.Resource;
  * resolved as ServletContext resources by the context implementation.
  *
  * @author Juergen Hoeller
- * @since 1.0.2
  * @see #getResourceByPath
  * @see ServletContextResource
  * @see org.springframework.web.context.WebApplicationContext
  * @see org.springframework.web.servlet.HttpServletBean
  * @see org.springframework.web.filter.GenericFilterBean
+ * @since 1.0.2
  */
 public class ServletContextResourceLoader extends DefaultResourceLoader {
 
@@ -44,6 +28,7 @@ public class ServletContextResourceLoader extends DefaultResourceLoader {
 
 	/**
 	 * Create a new ServletContextResourceLoader.
+	 *
 	 * @param servletContext the ServletContext to load resources with
 	 */
 	public ServletContextResourceLoader(ServletContext servletContext) {
@@ -52,6 +37,7 @@ public class ServletContextResourceLoader extends DefaultResourceLoader {
 
 	/**
 	 * This implementation supports file paths beneath the root of the web application.
+	 *
 	 * @see ServletContextResource
 	 */
 	@Override

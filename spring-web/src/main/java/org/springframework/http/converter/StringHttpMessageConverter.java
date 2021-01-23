@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.converter;
 
 import java.io.IOException;
@@ -59,6 +43,7 @@ public class StringHttpMessageConverter extends AbstractHttpMessageConverter<Str
 
 	/**
 	 * A default constructor that uses {@code "ISO-8859-1"} as the default charset.
+	 *
 	 * @see #StringHttpMessageConverter(Charset)
 	 */
 	public StringHttpMessageConverter() {
@@ -105,10 +90,10 @@ public class StringHttpMessageConverter extends AbstractHttpMessageConverter<Str
 
 	@Override
 	protected void addDefaultHeaders(HttpHeaders headers, String s, @Nullable MediaType type) throws IOException {
-		if (headers.getContentType() == null ) {
+		if (headers.getContentType() == null) {
 			if (type != null && type.isConcrete() &&
 					(type.isCompatibleWith(MediaType.APPLICATION_JSON) ||
-					type.isCompatibleWith(APPLICATION_PLUS_JSON))) {
+							type.isCompatibleWith(APPLICATION_PLUS_JSON))) {
 				// Prevent charset parameter for JSON..
 				headers.setContentType(type);
 			}
@@ -131,6 +116,7 @@ public class StringHttpMessageConverter extends AbstractHttpMessageConverter<Str
 	 * Return the list of supported {@link Charset Charsets}.
 	 * <p>By default, returns {@link Charset#availableCharsets()}.
 	 * Can be overridden in subclasses.
+	 *
 	 * @return the list of accepted charsets
 	 */
 	protected List<Charset> getAcceptedCharsets() {
@@ -147,8 +133,7 @@ public class StringHttpMessageConverter extends AbstractHttpMessageConverter<Str
 			Charset charset = contentType.getCharset();
 			if (charset != null) {
 				return charset;
-			}
-			else if (contentType.isCompatibleWith(MediaType.APPLICATION_JSON) ||
+			} else if (contentType.isCompatibleWith(MediaType.APPLICATION_JSON) ||
 					contentType.isCompatibleWith(APPLICATION_PLUS_JSON)) {
 				// Matching to AbstractJackson2HttpMessageConverter#DEFAULT_CHARSET
 				return StandardCharsets.UTF_8;

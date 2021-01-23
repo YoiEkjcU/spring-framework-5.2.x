@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.codec.xml;
 
 import java.io.InputStream;
@@ -60,7 +44,7 @@ import org.springframework.util.xml.StaxUtils;
  *     &lt;child&gt;bar&lt;/child&gt;
  * &lt;/root&gt;
  * </pre>
- *
+ * <p>
  * this decoder will produce a {@link Flux} with the following events:
  *
  * <ol>
@@ -105,6 +89,7 @@ public class XmlEventDecoder extends AbstractDecoder<XMLEvent> {
 	 * using async parsing via Aalto XML, it is size one top-level XML tree.
 	 * When the limit is exceeded, {@link DataBufferLimitException} is raised.
 	 * <p>By default this is set to 256K.
+	 *
 	 * @param byteCount the max number of bytes to buffer, or -1 for unlimited
 	 * @since 5.1.11
 	 */
@@ -114,6 +99,7 @@ public class XmlEventDecoder extends AbstractDecoder<XMLEvent> {
 
 	/**
 	 * Return the {@link #setMaxInMemorySize configured} byte count limit.
+	 *
 	 * @since 5.1.11
 	 */
 	public int getMaxInMemorySize() {
@@ -124,15 +110,14 @@ public class XmlEventDecoder extends AbstractDecoder<XMLEvent> {
 	@Override
 	@SuppressWarnings({"rawtypes", "unchecked", "cast"})  // XMLEventReader is Iterator<Object> on JDK 9
 	public Flux<XMLEvent> decode(Publisher<DataBuffer> input, ResolvableType elementType,
-			@Nullable MimeType mimeType, @Nullable Map<String, Object> hints) {
+								 @Nullable MimeType mimeType, @Nullable Map<String, Object> hints) {
 
 		if (this.useAalto) {
 			AaltoDataBufferToXmlEvent mapper = new AaltoDataBufferToXmlEvent(this.maxInMemorySize);
 			return Flux.from(input)
 					.flatMapIterable(mapper)
 					.doFinally(signalType -> mapper.endOfInput());
-		}
-		else {
+		} else {
 			return DataBufferUtils.join(input, this.maxInMemorySize)
 					.flatMapIterable(buffer -> {
 						try {
@@ -141,11 +126,9 @@ public class XmlEventDecoder extends AbstractDecoder<XMLEvent> {
 							List<XMLEvent> result = new ArrayList<>();
 							eventReader.forEachRemaining(event -> result.add((XMLEvent) event));
 							return result;
-						}
-						catch (XMLStreamException ex) {
+						} catch (XMLStreamException ex) {
 							throw new DecodingException(ex.getMessage(), ex);
-						}
-						finally {
+						} finally {
 							DataBufferUtils.release(buffer);
 						}
 					});
@@ -188,8 +171,7 @@ public class XmlEventDecoder extends AbstractDecoder<XMLEvent> {
 					if (this.streamReader.next() == AsyncXMLStreamReader.EVENT_INCOMPLETE) {
 						// no more events with what currently has been fed to the reader
 						break;
-					}
-					else {
+					} else {
 						XMLEvent event = this.eventAllocator.allocate(this.streamReader);
 						events.add(event);
 						if (event.isEndDocument()) {
@@ -202,11 +184,9 @@ public class XmlEventDecoder extends AbstractDecoder<XMLEvent> {
 					raiseLimitException();
 				}
 				return events;
-			}
-			catch (XMLStreamException ex) {
+			} catch (XMLStreamException ex) {
 				throw new DecodingException(ex.getMessage(), ex);
-			}
-			finally {
+			} finally {
 				DataBufferUtils.release(dataBuffer);
 			}
 		}
@@ -215,8 +195,7 @@ public class XmlEventDecoder extends AbstractDecoder<XMLEvent> {
 			if (this.maxInMemorySize > 0) {
 				if (dataBuffer.readableByteCount() > Integer.MAX_VALUE - this.byteCount) {
 					raiseLimitException();
-				}
-				else {
+				} else {
 					this.byteCount += dataBuffer.readableByteCount();
 				}
 			}
@@ -227,8 +206,7 @@ public class XmlEventDecoder extends AbstractDecoder<XMLEvent> {
 				if (event.isStartElement()) {
 					this.byteCount = this.elementDepth == 1 ? 0 : this.byteCount;
 					this.elementDepth++;
-				}
-				else if (event.isEndElement()) {
+				} else if (event.isEndElement()) {
 					this.elementDepth--;
 					this.byteCount = this.elementDepth == 1 ? 0 : this.byteCount;
 				}
@@ -244,7 +222,6 @@ public class XmlEventDecoder extends AbstractDecoder<XMLEvent> {
 			this.streamReader.getInputFeeder().endOfInput();
 		}
 	}
-
 
 
 }

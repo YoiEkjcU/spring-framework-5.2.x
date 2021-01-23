@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.server.adapter;
 
 import java.security.Principal;
@@ -105,15 +89,15 @@ public class DefaultServerWebExchange implements ServerWebExchange {
 
 
 	public DefaultServerWebExchange(ServerHttpRequest request, ServerHttpResponse response,
-			WebSessionManager sessionManager, ServerCodecConfigurer codecConfigurer,
-			LocaleContextResolver localeContextResolver) {
+									WebSessionManager sessionManager, ServerCodecConfigurer codecConfigurer,
+									LocaleContextResolver localeContextResolver) {
 
 		this(request, response, sessionManager, codecConfigurer, localeContextResolver, null);
 	}
 
 	DefaultServerWebExchange(ServerHttpRequest request, ServerHttpResponse response,
-			WebSessionManager sessionManager, ServerCodecConfigurer codecConfigurer,
-			LocaleContextResolver localeContextResolver, @Nullable ApplicationContext applicationContext) {
+							 WebSessionManager sessionManager, ServerCodecConfigurer codecConfigurer,
+							 LocaleContextResolver localeContextResolver, @Nullable ApplicationContext applicationContext) {
 
 		Assert.notNull(request, "'request' is required");
 		Assert.notNull(response, "'response' is required");
@@ -135,7 +119,7 @@ public class DefaultServerWebExchange implements ServerWebExchange {
 
 	@SuppressWarnings("unchecked")
 	private static Mono<MultiValueMap<String, String>> initFormData(ServerHttpRequest request,
-			ServerCodecConfigurer configurer, String logPrefix) {
+																	ServerCodecConfigurer configurer, String logPrefix) {
 
 		try {
 			MediaType contentType = request.getHeaders().getContentType();
@@ -148,8 +132,7 @@ public class DefaultServerWebExchange implements ServerWebExchange {
 						.switchIfEmpty(EMPTY_FORM_DATA)
 						.cache();
 			}
-		}
-		catch (InvalidMediaTypeException ex) {
+		} catch (InvalidMediaTypeException ex) {
 			// Ignore
 		}
 		return EMPTY_FORM_DATA;
@@ -157,7 +140,7 @@ public class DefaultServerWebExchange implements ServerWebExchange {
 
 	@SuppressWarnings("unchecked")
 	private static Mono<MultiValueMap<String, Part>> initMultipartData(ServerHttpRequest request,
-			ServerCodecConfigurer configurer, String logPrefix) {
+																	   ServerCodecConfigurer configurer, String logPrefix) {
 
 		try {
 			MediaType contentType = request.getHeaders().getContentType();
@@ -170,8 +153,7 @@ public class DefaultServerWebExchange implements ServerWebExchange {
 						.switchIfEmpty(EMPTY_MULTIPART_DATA)
 						.cache();
 			}
-		}
-		catch (InvalidMediaTypeException ex) {
+		} catch (InvalidMediaTypeException ex) {
 			// Ignore
 		}
 		return EMPTY_MULTIPART_DATA;
@@ -309,8 +291,7 @@ public class DefaultServerWebExchange implements ServerWebExchange {
 		List<String> ifNoneMatch;
 		try {
 			ifNoneMatch = getRequestHeaders().getIfNoneMatch();
-		}
-		catch (IllegalArgumentException ex) {
+		} catch (IllegalArgumentException ex) {
 			return false;
 		}
 		if (ifNoneMatch.isEmpty()) {

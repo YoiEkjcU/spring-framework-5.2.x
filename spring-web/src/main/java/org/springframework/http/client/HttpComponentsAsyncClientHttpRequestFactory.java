@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.client;
 
 import java.io.Closeable;
@@ -42,8 +26,8 @@ import org.springframework.util.Assert;
  *
  * @author Arjen Poutsma
  * @author Stephane Nicoll
- * @since 4.0
  * @see HttpAsyncClient
+ * @since 4.0
  * @deprecated as of Spring 5.0, in favor of
  * {@link org.springframework.http.client.reactive.HttpComponentsClientHttpConnector}
  */
@@ -66,6 +50,7 @@ public class HttpComponentsAsyncClientHttpRequestFactory extends HttpComponentsC
 	/**
 	 * Create a new instance of the {@code HttpComponentsAsyncClientHttpRequestFactory}
 	 * with the given {@link HttpAsyncClient} instance and a default {@link HttpClient}.
+	 *
 	 * @param asyncClient the HttpAsyncClient instance to use for this request factory
 	 * @since 4.3.10
 	 */
@@ -77,6 +62,7 @@ public class HttpComponentsAsyncClientHttpRequestFactory extends HttpComponentsC
 	/**
 	 * Create a new instance of the {@code HttpComponentsAsyncClientHttpRequestFactory}
 	 * with the given {@link CloseableHttpAsyncClient} instance and a default {@link HttpClient}.
+	 *
 	 * @param asyncClient the CloseableHttpAsyncClient instance to use for this request factory
 	 */
 	public HttpComponentsAsyncClientHttpRequestFactory(CloseableHttpAsyncClient asyncClient) {
@@ -87,7 +73,8 @@ public class HttpComponentsAsyncClientHttpRequestFactory extends HttpComponentsC
 	/**
 	 * Create a new instance of the {@code HttpComponentsAsyncClientHttpRequestFactory}
 	 * with the given {@link HttpClient} and {@link HttpAsyncClient} instances.
-	 * @param httpClient the HttpClient instance to use for this request factory
+	 *
+	 * @param httpClient  the HttpClient instance to use for this request factory
 	 * @param asyncClient the HttpAsyncClient instance to use for this request factory
 	 * @since 4.3.10
 	 */
@@ -99,7 +86,8 @@ public class HttpComponentsAsyncClientHttpRequestFactory extends HttpComponentsC
 	/**
 	 * Create a new instance of the {@code HttpComponentsAsyncClientHttpRequestFactory}
 	 * with the given {@link CloseableHttpClient} and {@link CloseableHttpAsyncClient} instances.
-	 * @param httpClient the CloseableHttpClient instance to use for this request factory
+	 *
+	 * @param httpClient  the CloseableHttpClient instance to use for this request factory
 	 * @param asyncClient the CloseableHttpAsyncClient instance to use for this request factory
 	 */
 	public HttpComponentsAsyncClientHttpRequestFactory(
@@ -113,8 +101,9 @@ public class HttpComponentsAsyncClientHttpRequestFactory extends HttpComponentsC
 	/**
 	 * Set the {@code HttpAsyncClient} used for
 	 * {@linkplain #createAsyncRequest(URI, HttpMethod) synchronous execution}.
-	 * @since 4.3.10
+	 *
 	 * @see #setHttpClient(HttpClient)
+	 * @since 4.3.10
 	 */
 	public void setAsyncClient(HttpAsyncClient asyncClient) {
 		Assert.notNull(asyncClient, "HttpAsyncClient must not be null");
@@ -124,8 +113,9 @@ public class HttpComponentsAsyncClientHttpRequestFactory extends HttpComponentsC
 	/**
 	 * Return the {@code HttpAsyncClient} used for
 	 * {@linkplain #createAsyncRequest(URI, HttpMethod) synchronous execution}.
-	 * @since 4.3.10
+	 *
 	 * @see #getHttpClient()
+	 * @since 4.3.10
 	 */
 	public HttpAsyncClient getAsyncClient() {
 		return this.asyncClient;
@@ -134,6 +124,7 @@ public class HttpComponentsAsyncClientHttpRequestFactory extends HttpComponentsC
 	/**
 	 * Set the {@code CloseableHttpAsyncClient} used for
 	 * {@linkplain #createAsyncRequest(URI, HttpMethod) asynchronous execution}.
+	 *
 	 * @deprecated as of 4.3.10, in favor of {@link #setAsyncClient(HttpAsyncClient)}
 	 */
 	@Deprecated
@@ -144,6 +135,7 @@ public class HttpComponentsAsyncClientHttpRequestFactory extends HttpComponentsC
 	/**
 	 * Return the {@code CloseableHttpAsyncClient} used for
 	 * {@linkplain #createAsyncRequest(URI, HttpMethod) asynchronous execution}.
+	 *
 	 * @deprecated as of 4.3.10, in favor of {@link #getAsyncClient()}
 	 */
 	@Deprecated
@@ -204,8 +196,7 @@ public class HttpComponentsAsyncClientHttpRequestFactory extends HttpComponentsC
 	public void destroy() throws Exception {
 		try {
 			super.destroy();
-		}
-		finally {
+		} finally {
 			HttpAsyncClient asyncClient = getAsyncClient();
 			if (asyncClient instanceof Closeable) {
 				((Closeable) asyncClient).close();

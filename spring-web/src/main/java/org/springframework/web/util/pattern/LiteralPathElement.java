@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.util.pattern;
 
 import org.springframework.http.server.PathContainer;
@@ -42,8 +26,7 @@ class LiteralPathElement extends PathElement {
 		this.caseSensitive = caseSensitive;
 		if (caseSensitive) {
 			this.text = literalText;
-		}
-		else {
+		} else {
 			// Force all the text lower case to make matching faster
 			this.text = new char[literalText.length];
 			for (int i = 0; i < this.len; i++) {
@@ -63,21 +46,20 @@ class LiteralPathElement extends PathElement {
 		if (!(element instanceof PathContainer.PathSegment)) {
 			return false;
 		}
-		String value = ((PathSegment)element).valueToMatch();
+		String value = ((PathSegment) element).valueToMatch();
 		if (value.length() != this.len) {
 			// Not enough data to match this path element
 			return false;
 		}
 
-		char[] data = ((PathContainer.PathSegment)element).valueToMatchAsChars();
+		char[] data = ((PathContainer.PathSegment) element).valueToMatchAsChars();
 		if (this.caseSensitive) {
 			for (int i = 0; i < this.len; i++) {
 				if (data[i] != this.text[i]) {
 					return false;
 				}
 			}
-		}
-		else {
+		} else {
 			for (int i = 0; i < this.len; i++) {
 				// TODO revisit performance if doing a lot of case insensitive matching
 				if (Character.toLowerCase(data[i]) != this.text[i]) {
@@ -91,19 +73,16 @@ class LiteralPathElement extends PathElement {
 			if (matchingContext.determineRemainingPath) {
 				matchingContext.remainingPathIndex = pathIndex;
 				return true;
-			}
-			else {
+			} else {
 				if (pathIndex == matchingContext.pathLength) {
 					return true;
-				}
-				else {
+				} else {
 					return (matchingContext.isMatchOptionalTrailingSeparator() &&
 							(pathIndex + 1) == matchingContext.pathLength &&
 							matchingContext.isSeparator(pathIndex));
 				}
 			}
-		}
-		else {
+		} else {
 			return (this.next != null && this.next.matches(pathIndex, matchingContext));
 		}
 	}

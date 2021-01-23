@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.multipart.support;
 
 import java.io.ByteArrayInputStream;
@@ -53,10 +37,11 @@ public class RequestPartServletServerHttpRequest extends ServletServerHttpReques
 
 	/**
 	 * Create a new {@code RequestPartServletServerHttpRequest} instance.
-	 * @param request the current servlet request
+	 *
+	 * @param request  the current servlet request
 	 * @param partName the name of the part to adapt to the {@link ServerHttpRequest} contract
 	 * @throws MissingServletRequestPartException if the request part cannot be found
-	 * @throws MultipartException if MultipartHttpServletRequest cannot be initialized
+	 * @throws MultipartException                 if MultipartHttpServletRequest cannot be initialized
 	 */
 	public RequestPartServletServerHttpRequest(HttpServletRequest request, String partName)
 			throws MissingServletRequestPartException {
@@ -84,17 +69,14 @@ public class RequestPartServletServerHttpRequest extends ServletServerHttpReques
 		if (this.multipartRequest instanceof StandardMultipartHttpServletRequest) {
 			try {
 				return this.multipartRequest.getPart(this.partName).getInputStream();
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				throw new MultipartException("Could not parse multipart servlet request", ex);
 			}
-		}
-		else {
+		} else {
 			MultipartFile file = this.multipartRequest.getFile(this.partName);
 			if (file != null) {
 				return file.getInputStream();
-			}
-			else {
+			} else {
 				String paramValue = this.multipartRequest.getParameter(this.partName);
 				return new ByteArrayInputStream(paramValue.getBytes(determineCharset()));
 			}

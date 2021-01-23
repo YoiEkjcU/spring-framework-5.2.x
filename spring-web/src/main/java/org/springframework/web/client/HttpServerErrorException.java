@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.client;
 
 import java.nio.charset.Charset;
@@ -26,8 +10,8 @@ import org.springframework.lang.Nullable;
  * Exception thrown when an HTTP 5xx is received.
  *
  * @author Arjen Poutsma
- * @since 3.0
  * @see DefaultResponseErrorHandler
+ * @since 3.0
  */
 public class HttpServerErrorException extends HttpStatusCodeException {
 
@@ -61,7 +45,7 @@ public class HttpServerErrorException extends HttpStatusCodeException {
 	 * Constructor with a status code and status text, headers, and content.
 	 */
 	public HttpServerErrorException(HttpStatus statusCode, String statusText,
-			@Nullable HttpHeaders headers, @Nullable byte[] body, @Nullable Charset charset) {
+									@Nullable HttpHeaders headers, @Nullable byte[] body, @Nullable Charset charset) {
 
 		super(statusCode, statusText, headers, body, charset);
 	}
@@ -69,20 +53,22 @@ public class HttpServerErrorException extends HttpStatusCodeException {
 	/**
 	 * Constructor with a status code and status text, headers, content, and an
 	 * prepared message.
+	 *
 	 * @since 5.2.2
 	 */
 	public HttpServerErrorException(String message, HttpStatus statusCode, String statusText,
-			@Nullable HttpHeaders headers, @Nullable byte[] body, @Nullable Charset charset) {
+									@Nullable HttpHeaders headers, @Nullable byte[] body, @Nullable Charset charset) {
 
 		super(message, statusCode, statusText, headers, body, charset);
 	}
 
 	/**
 	 * Create an {@code HttpServerErrorException} or an HTTP status specific sub-class.
+	 *
 	 * @since 5.1
 	 */
 	public static HttpServerErrorException create(HttpStatus statusCode,
-			String statusText, HttpHeaders headers, byte[] body, @Nullable Charset charset) {
+												  String statusText, HttpHeaders headers, byte[] body, @Nullable Charset charset) {
 
 		return create(null, statusCode, statusText, headers, body, charset);
 	}
@@ -90,10 +76,11 @@ public class HttpServerErrorException extends HttpStatusCodeException {
 	/**
 	 * Variant of {@link #create(String, HttpStatus, String, HttpHeaders, byte[], Charset)}
 	 * with an optional prepared message.
+	 *
 	 * @since 5.2.2.
 	 */
 	public static HttpServerErrorException create(@Nullable String message, HttpStatus statusCode,
-			String statusText, HttpHeaders headers, byte[] body, @Nullable Charset charset) {
+												  String statusText, HttpHeaders headers, byte[] body, @Nullable Charset charset) {
 
 		switch (statusCode) {
 			case INTERNAL_SERVER_ERROR:
@@ -128,6 +115,7 @@ public class HttpServerErrorException extends HttpStatusCodeException {
 
 	/**
 	 * {@link HttpServerErrorException} for status HTTP 500 Internal Server Error.
+	 *
 	 * @since 5.1
 	 */
 	@SuppressWarnings("serial")
@@ -138,7 +126,7 @@ public class HttpServerErrorException extends HttpStatusCodeException {
 		}
 
 		private InternalServerError(String message, String statusText,
-				HttpHeaders headers, byte[] body, @Nullable Charset charset) {
+									HttpHeaders headers, byte[] body, @Nullable Charset charset) {
 
 			super(message, HttpStatus.INTERNAL_SERVER_ERROR, statusText, headers, body, charset);
 		}
@@ -146,6 +134,7 @@ public class HttpServerErrorException extends HttpStatusCodeException {
 
 	/**
 	 * {@link HttpServerErrorException} for status HTTP 501 Not Implemented.
+	 *
 	 * @since 5.1
 	 */
 	@SuppressWarnings("serial")
@@ -156,7 +145,7 @@ public class HttpServerErrorException extends HttpStatusCodeException {
 		}
 
 		private NotImplemented(String message, String statusText,
-				HttpHeaders headers, byte[] body, @Nullable Charset charset) {
+							   HttpHeaders headers, byte[] body, @Nullable Charset charset) {
 
 			super(message, HttpStatus.NOT_IMPLEMENTED, statusText, headers, body, charset);
 		}
@@ -164,6 +153,7 @@ public class HttpServerErrorException extends HttpStatusCodeException {
 
 	/**
 	 * {@link HttpServerErrorException} for status HTTP HTTP 502 Bad Gateway.
+	 *
 	 * @since 5.1
 	 */
 	@SuppressWarnings("serial")
@@ -174,7 +164,7 @@ public class HttpServerErrorException extends HttpStatusCodeException {
 		}
 
 		private BadGateway(String message, String statusText,
-				HttpHeaders headers, byte[] body, @Nullable Charset charset) {
+						   HttpHeaders headers, byte[] body, @Nullable Charset charset) {
 
 			super(message, HttpStatus.BAD_GATEWAY, statusText, headers, body, charset);
 		}
@@ -182,6 +172,7 @@ public class HttpServerErrorException extends HttpStatusCodeException {
 
 	/**
 	 * {@link HttpServerErrorException} for status HTTP 503 Service Unavailable.
+	 *
 	 * @since 5.1
 	 */
 	@SuppressWarnings("serial")
@@ -192,7 +183,7 @@ public class HttpServerErrorException extends HttpStatusCodeException {
 		}
 
 		private ServiceUnavailable(String message, String statusText,
-				HttpHeaders headers, byte[] body, @Nullable Charset charset) {
+								   HttpHeaders headers, byte[] body, @Nullable Charset charset) {
 
 			super(message, HttpStatus.SERVICE_UNAVAILABLE, statusText, headers, body, charset);
 		}
@@ -200,6 +191,7 @@ public class HttpServerErrorException extends HttpStatusCodeException {
 
 	/**
 	 * {@link HttpServerErrorException} for status HTTP 504 Gateway Timeout.
+	 *
 	 * @since 5.1
 	 */
 	@SuppressWarnings("serial")
@@ -210,7 +202,7 @@ public class HttpServerErrorException extends HttpStatusCodeException {
 		}
 
 		private GatewayTimeout(String message, String statusText,
-				HttpHeaders headers, byte[] body, @Nullable Charset charset) {
+							   HttpHeaders headers, byte[] body, @Nullable Charset charset) {
 
 			super(message, HttpStatus.GATEWAY_TIMEOUT, statusText, headers, body, charset);
 		}

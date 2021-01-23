@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.converter.xml;
 
 import javax.xml.transform.Result;
@@ -64,6 +48,7 @@ public class MarshallingHttpMessageConverter extends AbstractXmlHttpMessageConve
 	 * it is used for both marshalling and unmarshalling. Otherwise, an exception is thrown.
 	 * <p>Note that all {@code Marshaller} implementations in Spring also implement the
 	 * {@code Unmarshaller} interface, so that you can safely use this constructor.
+	 *
 	 * @param marshaller object used as marshaller and unmarshaller
 	 */
 	public MarshallingHttpMessageConverter(Marshaller marshaller) {
@@ -77,7 +62,8 @@ public class MarshallingHttpMessageConverter extends AbstractXmlHttpMessageConve
 	/**
 	 * Construct a new {@code MarshallingMessageConverter} with the given
 	 * {@code Marshaller} and {@code Unmarshaller}.
-	 * @param marshaller the Marshaller to use
+	 *
+	 * @param marshaller   the Marshaller to use
 	 * @param unmarshaller the Unmarshaller to use
 	 */
 	public MarshallingHttpMessageConverter(Marshaller marshaller, Unmarshaller unmarshaller) {

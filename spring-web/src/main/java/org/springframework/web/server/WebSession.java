@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.server;
 
 import java.time.Duration;
@@ -51,8 +35,9 @@ public interface WebSession {
 
 	/**
 	 * Return the session attribute value if present.
+	 *
 	 * @param name the attribute name
-	 * @param <T> the attribute type
+	 * @param <T>  the attribute type
 	 * @return the attribute value
 	 */
 	@SuppressWarnings("unchecked")
@@ -64,8 +49,9 @@ public interface WebSession {
 	/**
 	 * Return the session attribute value or if not present raise an
 	 * {@link IllegalArgumentException}.
+	 *
 	 * @param name the attribute name
-	 * @param <T> the attribute type
+	 * @param <T>  the attribute type
 	 * @return the attribute value
 	 */
 	@SuppressWarnings("unchecked")
@@ -77,9 +63,10 @@ public interface WebSession {
 
 	/**
 	 * Return the session attribute value, or a default, fallback value.
-	 * @param name the attribute name
+	 *
+	 * @param name         the attribute name
 	 * @param defaultValue a default value to return instead
-	 * @param <T> the attribute type
+	 * @param <T>          the attribute type
 	 * @return the attribute value
 	 */
 	@SuppressWarnings("unchecked")
@@ -105,12 +92,14 @@ public interface WebSession {
 	 * Generate a new id for the session and update the underlying session
 	 * storage to reflect the new id. After a successful call {@link #getId()}
 	 * reflects the new session id.
+	 *
 	 * @return completion notification (success or error)
 	 */
 	Mono<Void> changeSessionId();
 
 	/**
 	 * Invalidate the current session and clear session storage.
+	 *
 	 * @return completion notification (success or error)
 	 */
 	Mono<Void> invalidate();
@@ -128,6 +117,7 @@ public interface WebSession {
 	 * <p>Note that this method is not intended for direct use by applications.
 	 * Instead it is automatically invoked just before the response is
 	 * committed.
+	 *
 	 * @return {@code Mono} to indicate completion with success or error
 	 */
 	Mono<Void> save();

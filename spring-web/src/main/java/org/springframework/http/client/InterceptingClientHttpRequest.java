@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.http.client;
 
 import java.io.IOException;
@@ -47,7 +31,7 @@ class InterceptingClientHttpRequest extends AbstractBufferingClientHttpRequest {
 
 
 	protected InterceptingClientHttpRequest(ClientHttpRequestFactory requestFactory,
-			List<ClientHttpRequestInterceptor> interceptors, URI uri, HttpMethod method) {
+											List<ClientHttpRequestInterceptor> interceptors, URI uri, HttpMethod method) {
 
 		this.requestFactory = requestFactory;
 		this.interceptors = interceptors;
@@ -91,8 +75,7 @@ class InterceptingClientHttpRequest extends AbstractBufferingClientHttpRequest {
 			if (this.iterator.hasNext()) {
 				ClientHttpRequestInterceptor nextInterceptor = this.iterator.next();
 				return nextInterceptor.intercept(request, body, this);
-			}
-			else {
+			} else {
 				HttpMethod method = request.getMethod();
 				Assert.state(method != null, "No standard HTTP method");
 				ClientHttpRequest delegate = requestFactory.createRequest(request.getURI(), method);
@@ -101,8 +84,7 @@ class InterceptingClientHttpRequest extends AbstractBufferingClientHttpRequest {
 					if (delegate instanceof StreamingHttpOutputMessage) {
 						StreamingHttpOutputMessage streamingOutputMessage = (StreamingHttpOutputMessage) delegate;
 						streamingOutputMessage.setBody(outputStream -> StreamUtils.copy(body, outputStream));
-					}
-					else {
+					} else {
 						StreamUtils.copy(body, delegate.getBody());
 					}
 				}
