@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.messaging.rsocket.annotation.support;
 
 import java.lang.reflect.AnnotatedElement;
@@ -195,6 +179,7 @@ public class RSocketMessageHandler extends MessageMappingMessageHandler {
 	 * <p>By default this is set to the
 	 * {@link org.springframework.messaging.rsocket.RSocketStrategies.Builder#metadataExtractor(MetadataExtractor)} defaults}
 	 * from {@code RSocketStrategies}.
+	 *
 	 * @param extractor the extractor to use
 	 */
 	public void setMetadataExtractor(MetadataExtractor extractor) {
@@ -242,6 +227,7 @@ public class RSocketMessageHandler extends MessageMappingMessageHandler {
 	 * Configure the default content type to use for data payloads if the
 	 * {@code SETUP} frame did not specify one.
 	 * <p>By default this is not set.
+	 *
 	 * @param mimeType the MimeType to use
 	 */
 	public void setDefaultDataMimeType(@Nullable MimeType mimeType) {
@@ -261,6 +247,7 @@ public class RSocketMessageHandler extends MessageMappingMessageHandler {
 	 * Configure the default {@code MimeType} for payload data if the
 	 * {@code SETUP} frame did not specify one.
 	 * <p>By default this is set to {@code "message/x.rsocket.composite-metadata.v0"}
+	 *
 	 * @param mimeType the MimeType to use
 	 */
 	public void setDefaultMetadataMimeType(MimeType mimeType) {
@@ -356,11 +343,9 @@ public class RSocketMessageHandler extends MessageMappingMessageHandler {
 		ReactiveAdapter adapter = getReactiveAdapterRegistry().getAdapter(clazz);
 		if (adapter == null) {
 			return clazz.equals(void.class) ? 0 : 1;
-		}
-		else if (parameter.nested().getNestedParameterType().equals(Void.class)) {
+		} else if (parameter.nested().getNestedParameterType().equals(Void.class)) {
 			return 0;
-		}
-		else {
+		} else {
 			return adapter.isMultiValue() ? 2 : 1;
 		}
 	}
@@ -409,8 +394,7 @@ public class RSocketMessageHandler extends MessageMappingMessageHandler {
 			MessagingRSocket responder;
 			try {
 				responder = createResponder(setupPayload, sendingRSocket);
-			}
-			catch (Throwable ex) {
+			} catch (Throwable ex) {
 				return Mono.error(ex);
 			}
 			return responder.handleConnectionSetupPayload(setupPayload).then(Mono.just(responder));
@@ -472,11 +456,11 @@ public class RSocketMessageHandler extends MessageMappingMessageHandler {
 	 * stereotype annotation, consider declaring {@code RSocketMessageHandler}
 	 * as a bean, and then obtain the responder from it.
 	 *
-	 * @param strategies the strategies to set on the created
-	 * {@code RSocketMessageHandler}
+	 * @param strategies        the strategies to set on the created
+	 *                          {@code RSocketMessageHandler}
 	 * @param candidateHandlers a list of Objects and/or Classes with annotated
-	 * handler methods; used to call {@link #setHandlers(List)} with
-	 * on the created {@code RSocketMessageHandler}
+	 *                          handler methods; used to call {@link #setHandlers(List)} with
+	 *                          on the created {@code RSocketMessageHandler}
 	 * @return a configurer that may be passed into
 	 * {@link org.springframework.messaging.rsocket.RSocketRequester.Builder#rsocketConnector}
 	 * @since 5.2.6

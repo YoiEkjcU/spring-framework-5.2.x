@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.messaging.support;
 
 import java.util.Map;
@@ -38,8 +22,8 @@ import org.springframework.messaging.MessageHeaders;
  * @author Mark Fisher
  * @author Oleg Zhurakousky
  * @author Gary Russell
- * @since 4.0
  * @see MessageBuilder
+ * @since 4.0
  */
 public class ErrorMessage extends GenericMessage<Throwable> {
 
@@ -51,6 +35,7 @@ public class ErrorMessage extends GenericMessage<Throwable> {
 
 	/**
 	 * Create a new message with the given payload.
+	 *
 	 * @param payload the message payload (never {@code null})
 	 */
 	public ErrorMessage(Throwable payload) {
@@ -61,6 +46,7 @@ public class ErrorMessage extends GenericMessage<Throwable> {
 	/**
 	 * Create a new message with the given payload and headers.
 	 * The content of the given header map is copied.
+	 *
 	 * @param payload the message payload (never {@code null})
 	 * @param headers message headers to use for initialization
 	 */
@@ -73,6 +59,7 @@ public class ErrorMessage extends GenericMessage<Throwable> {
 	 * A constructor with the {@link MessageHeaders} instance to use.
 	 * <p><strong>Note:</strong> the given {@code MessageHeaders} instance
 	 * is used directly in the new message, i.e. it is not copied.
+	 *
 	 * @param payload the message payload (never {@code null})
 	 * @param headers message headers
 	 */
@@ -83,9 +70,10 @@ public class ErrorMessage extends GenericMessage<Throwable> {
 
 	/**
 	 * Create a new message with the given payload and original message.
-	 * @param payload the message payload (never {@code null})
+	 *
+	 * @param payload         the message payload (never {@code null})
 	 * @param originalMessage the original message (if present) at the point
-	 * in the stack where the ErrorMessage was created
+	 *                        in the stack where the ErrorMessage was created
 	 * @since 5.0
 	 */
 	public ErrorMessage(Throwable payload, Message<?> originalMessage) {
@@ -96,10 +84,11 @@ public class ErrorMessage extends GenericMessage<Throwable> {
 	/**
 	 * Create a new message with the given payload, headers and original message.
 	 * The content of the given header map is copied.
-	 * @param payload the message payload (never {@code null})
-	 * @param headers message headers to use for initialization
+	 *
+	 * @param payload         the message payload (never {@code null})
+	 * @param headers         message headers to use for initialization
 	 * @param originalMessage the original message (if present) at the point
-	 * in the stack where the ErrorMessage was created
+	 *                        in the stack where the ErrorMessage was created
 	 * @since 5.0
 	 */
 	public ErrorMessage(Throwable payload, Map<String, Object> headers, Message<?> originalMessage) {
@@ -111,10 +100,11 @@ public class ErrorMessage extends GenericMessage<Throwable> {
 	 * Create a new message with the payload, {@link MessageHeaders} and original message.
 	 * <p><strong>Note:</strong> the given {@code MessageHeaders} instance
 	 * is used directly in the new message, i.e. it is not copied.
-	 * @param payload the message payload (never {@code null})
-	 * @param headers message headers
+	 *
+	 * @param payload         the message payload (never {@code null})
+	 * @param headers         message headers
 	 * @param originalMessage the original message (if present) at the point
-	 * in the stack where the ErrorMessage was created
+	 *                        in the stack where the ErrorMessage was created
 	 * @since 5.0
 	 */
 	public ErrorMessage(Throwable payload, MessageHeaders headers, Message<?> originalMessage) {
@@ -126,6 +116,7 @@ public class ErrorMessage extends GenericMessage<Throwable> {
 	/**
 	 * Return the original message (if available) at the point in the stack
 	 * where the ErrorMessage was created.
+	 *
 	 * @since 5.0
 	 */
 	@Nullable

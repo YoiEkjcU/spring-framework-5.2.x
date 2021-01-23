@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.messaging.simp.stomp;
 
 import java.lang.reflect.Type;
@@ -116,6 +100,7 @@ public class DefaultStompSession implements ConnectionHandlingStompSession {
 
 	/**
 	 * Create a new session.
+	 *
 	 * @param sessionHandler the application handler for the session
 	 * @param connectHeaders headers for the STOMP CONNECT frame
 	 */
@@ -150,6 +135,7 @@ public class DefaultStompSession implements ConnectionHandlingStompSession {
 	 * and outgoing messages to and from {@code byte[]} based on object type, or
 	 * expected object type, and the "content-type" header.
 	 * <p>By default, {@link SimpleMessageConverter} is configured.
+	 *
 	 * @param messageConverter the message converter to use
 	 */
 	public void setMessageConverter(MessageConverter messageConverter) {
@@ -258,8 +244,7 @@ public class DefaultStompSession implements ConnectionHandlingStompSession {
 		Message<byte[]> message;
 		if (isEmpty(payload)) {
 			message = MessageBuilder.createMessage(EMPTY_PAYLOAD, accessor.getMessageHeaders());
-		}
-		else {
+		} else {
 			message = (Message<byte[]>) getMessageConverter().toMessage(payload, accessor.getMessageHeaders());
 			accessor.updateStompHeadersFromSimpMessageHeaders();
 			if (message == null) {
@@ -287,11 +272,9 @@ public class DefaultStompSession implements ConnectionHandlingStompSession {
 		Assert.state(conn != null, "Connection closed");
 		try {
 			conn.send(message).get();
-		}
-		catch (ExecutionException ex) {
+		} catch (ExecutionException ex) {
 			throw new MessageDeliveryException(message, ex.getCause());
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			throw new MessageDeliveryException(message, ex);
 		}
 	}
@@ -329,8 +312,7 @@ public class DefaultStompSession implements ConnectionHandlingStompSession {
 		StompHeaders headers = new StompHeaders();
 		if ("1.1".equals(this.version)) {
 			headers.setMessageId(messageId);
-		}
-		else {
+		} else {
 			headers.setId(messageId);
 		}
 		return acknowledge(headers, consumed);
@@ -375,8 +357,7 @@ public class DefaultStompSession implements ConnectionHandlingStompSession {
 			}
 			Message<byte[]> message = createMessage(accessor, EMPTY_PAYLOAD);
 			execute(message);
-		}
-		finally {
+		} finally {
 			resetConnection();
 		}
 	}
@@ -427,38 +408,31 @@ public class DefaultStompSession implements ConnectionHandlingStompSession {
 				DefaultSubscription subscription = this.subscriptions.get(headers.getSubscription());
 				if (subscription != null) {
 					invokeHandler(subscription.getHandler(), message, headers);
-				}
-				else if (logger.isDebugEnabled()) {
+				} else if (logger.isDebugEnabled()) {
 					logger.debug("No handler for: " + accessor.getDetailedLogMessage(message.getPayload()) +
 							". Perhaps just unsubscribed?");
 				}
-			}
-			else {
+			} else {
 				if (StompCommand.RECEIPT.equals(command)) {
 					String receiptId = headers.getReceiptId();
 					ReceiptHandler handler = this.receiptHandlers.get(receiptId);
 					if (handler != null) {
 						handler.handleReceiptReceived();
-					}
-					else if (logger.isDebugEnabled()) {
+					} else if (logger.isDebugEnabled()) {
 						logger.debug("No matching receipt: " + accessor.getDetailedLogMessage(message.getPayload()));
 					}
-				}
-				else if (StompCommand.CONNECTED.equals(command)) {
+				} else if (StompCommand.CONNECTED.equals(command)) {
 					initHeartbeatTasks(headers);
 					this.version = headers.getFirst("version");
 					this.sessionFuture.set(this);
 					this.sessionHandler.afterConnected(this, headers);
-				}
-				else if (StompCommand.ERROR.equals(command)) {
+				} else if (StompCommand.ERROR.equals(command)) {
 					invokeHandler(this.sessionHandler, message, headers);
-				}
-				else if (!isHeartbeat && logger.isTraceEnabled()) {
+				} else if (!isHeartbeat && logger.isTraceEnabled()) {
 					logger.trace("Message not handled.");
 				}
 			}
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			this.sessionHandler.handleException(this, command, headers, message.getPayload(), ex);
 		}
 	}
@@ -491,7 +465,7 @@ public class DefaultStompSession implements ConnectionHandlingStompSession {
 		TcpConnection<byte[]> con = this.connection;
 		Assert.state(con != null, "No TcpConnection available");
 		if (connect[0] > 0 && connected[1] > 0) {
-			long interval = Math.max(connect[0],  connected[1]);
+			long interval = Math.max(connect[0], connected[1]);
 			con.onWriteInactivity(new WriteInactivityTask(), interval);
 		}
 		if (connect[1] > 0 && connected[0] > 0) {
@@ -505,8 +479,7 @@ public class DefaultStompSession implements ConnectionHandlingStompSession {
 		try {
 			this.sessionFuture.setException(ex);  // no-op if already set
 			this.sessionHandler.handleTransportError(this, ex);
-		}
-		catch (Throwable ex2) {
+		} catch (Throwable ex2) {
 			if (logger.isDebugEnabled()) {
 				logger.debug("Uncaught failure while handling transport failure", ex2);
 			}
@@ -530,8 +503,7 @@ public class DefaultStompSession implements ConnectionHandlingStompSession {
 		if (conn != null) {
 			try {
 				conn.close();
-			}
-			catch (Throwable ex) {
+			} catch (Throwable ex) {
 				// ignore
 			}
 		}
@@ -589,12 +561,10 @@ public class DefaultStompSession implements ConnectionHandlingStompSession {
 			synchronized (this) {
 				if (this.result != null && this.result == successTask) {
 					invoke(Collections.singletonList(task));
-				}
-				else {
+				} else {
 					if (successTask) {
 						this.receiptCallbacks.add(task);
-					}
-					else {
+					} else {
 						this.receiptLostCallbacks.add(task);
 					}
 				}
@@ -605,8 +575,7 @@ public class DefaultStompSession implements ConnectionHandlingStompSession {
 			for (Runnable runnable : callbacks) {
 				try {
 					runnable.run();
-				}
-				catch (Throwable ex) {
+				} catch (Throwable ex) {
 					// ignore
 				}
 			}
@@ -700,6 +669,7 @@ public class DefaultStompSession implements ConnectionHandlingStompSession {
 							@Override
 							public void onSuccess(@Nullable Void result) {
 							}
+
 							@Override
 							public void onFailure(Throwable ex) {
 								handleFailure(ex);

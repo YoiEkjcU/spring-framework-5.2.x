@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.messaging.simp.stomp;
 
 import java.nio.charset.Charset;
@@ -64,7 +48,7 @@ public class StompHeaderAccessor extends SimpMessageHeaderAccessor {
 
 	private static final AtomicLong messageIdCounter = new AtomicLong();
 
-	private static final long[] DEFAULT_HEARTBEAT = new long[] {0, 0};
+	private static final long[] DEFAULT_HEARTBEAT = new long[]{0, 0};
 
 
 	// STOMP header names
@@ -153,14 +137,12 @@ public class StompHeaderAccessor extends SimpMessageHeaderAccessor {
 			if (value != null) {
 				super.setSubscriptionId(value);
 			}
-		}
-		else if (StompCommand.SUBSCRIBE.equals(command) || StompCommand.UNSUBSCRIBE.equals(command)) {
+		} else if (StompCommand.SUBSCRIBE.equals(command) || StompCommand.UNSUBSCRIBE.equals(command)) {
 			value = getFirstNativeHeader(STOMP_ID_HEADER);
 			if (value != null) {
 				super.setSubscriptionId(value);
 			}
-		}
-		else if (StompCommand.CONNECT.equals(command) || StompCommand.STOMP.equals(command)) {
+		} else if (StompCommand.CONNECT.equals(command) || StompCommand.STOMP.equals(command)) {
 			protectPasscode();
 		}
 	}
@@ -199,8 +181,7 @@ public class StompHeaderAccessor extends SimpMessageHeaderAccessor {
 		if (command == null) {
 			command = StompCommand.SEND;
 			setHeader(COMMAND_HEADER, command);
-		}
-		else if (!command.equals(StompCommand.SEND)) {
+		} else if (!command.equals(StompCommand.SEND)) {
 			throw new IllegalStateException("Unexpected STOMP command " + command);
 		}
 		return command;
@@ -214,8 +195,7 @@ public class StompHeaderAccessor extends SimpMessageHeaderAccessor {
 		StompCommand command = getCommand();
 		if ((command == null) || StompCommand.SEND.equals(command)) {
 			setHeader(COMMAND_HEADER, StompCommand.MESSAGE);
-		}
-		else if (!StompCommand.MESSAGE.equals(command)) {
+		} else if (!StompCommand.MESSAGE.equals(command)) {
 			throw new IllegalStateException("Unexpected STOMP command " + command);
 		}
 		trySetStompHeaderForSubscriptionId();
@@ -243,7 +223,7 @@ public class StompHeaderAccessor extends SimpMessageHeaderAccessor {
 		if (rawValues == null) {
 			return Arrays.copyOf(DEFAULT_HEARTBEAT, 2);
 		}
-		return new long[] {Long.parseLong(rawValues[0]), Long.parseLong(rawValues[1])};
+		return new long[]{Long.parseLong(rawValues[0]), Long.parseLong(rawValues[1])};
 	}
 
 	public void setAcceptVersion(String acceptVersion) {
@@ -288,8 +268,7 @@ public class StompHeaderAccessor extends SimpMessageHeaderAccessor {
 			StompCommand command = getCommand();
 			if (command != null && StompCommand.MESSAGE.equals(command)) {
 				setNativeHeader(STOMP_SUBSCRIPTION_HEADER, subscriptionId);
-			}
-			else {
+			} else {
 				SimpMessageType messageType = getMessageType();
 				if (SimpMessageType.SUBSCRIBE.equals(messageType) || SimpMessageType.UNSUBSCRIBE.equals(messageType)) {
 					setNativeHeader(STOMP_ID_HEADER, subscriptionId);
@@ -414,29 +393,22 @@ public class StompHeaderAccessor extends SimpMessageHeaderAccessor {
 		StompCommand command = getCommand();
 		if (StompCommand.SUBSCRIBE.equals(command)) {
 			return "SUBSCRIBE " + getDestination() + " id=" + getSubscriptionId() + appendSession();
-		}
-		else if (StompCommand.UNSUBSCRIBE.equals(command)) {
+		} else if (StompCommand.UNSUBSCRIBE.equals(command)) {
 			return "UNSUBSCRIBE id=" + getSubscriptionId() + appendSession();
-		}
-		else if (StompCommand.SEND.equals(command)) {
+		} else if (StompCommand.SEND.equals(command)) {
 			return "SEND " + getDestination() + appendSession() + appendPayload(payload);
-		}
-		else if (StompCommand.CONNECT.equals(command)) {
+		} else if (StompCommand.CONNECT.equals(command)) {
 			Principal user = getUser();
 			return "CONNECT" + (user != null ? " user=" + user.getName() : "") + appendSession();
-		}
-		else if (StompCommand.STOMP.equals(command)) {
+		} else if (StompCommand.STOMP.equals(command)) {
 			Principal user = getUser();
 			return "STOMP" + (user != null ? " user=" + user.getName() : "") + appendSession();
-		}
-		else if (StompCommand.CONNECTED.equals(command)) {
+		} else if (StompCommand.CONNECTED.equals(command)) {
 			return "CONNECTED heart-beat=" + Arrays.toString(getHeartbeat()) + appendSession();
-		}
-		else if (StompCommand.DISCONNECT.equals(command)) {
+		} else if (StompCommand.DISCONNECT.equals(command)) {
 			String receipt = getReceipt();
 			return "DISCONNECT" + (receipt != null ? " receipt=" + receipt : "") + appendSession();
-		}
-		else {
+		} else {
 			return getDetailedLogMessage(payload);
 		}
 	}

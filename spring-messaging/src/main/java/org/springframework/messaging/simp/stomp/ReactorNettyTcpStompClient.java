@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.messaging.simp.stomp;
 
 import org.springframework.lang.Nullable;
@@ -43,6 +27,7 @@ public class ReactorNettyTcpStompClient extends StompClientSupport {
 
 	/**
 	 * Create an instance with the given host and port.
+	 *
 	 * @param host the host
 	 * @param port the port
 	 */
@@ -52,6 +37,7 @@ public class ReactorNettyTcpStompClient extends StompClientSupport {
 
 	/**
 	 * Create an instance with a pre-configured TCP client.
+	 *
 	 * @param tcpClient the client to use
 	 */
 	public ReactorNettyTcpStompClient(TcpOperations<byte[]> tcpClient) {
@@ -69,6 +55,7 @@ public class ReactorNettyTcpStompClient extends StompClientSupport {
 	/**
 	 * Connect and notify the given {@link StompSessionHandler} when connected
 	 * on the STOMP level.
+	 *
 	 * @param handler the handler for the STOMP session
 	 * @return a ListenableFuture for access to the session when ready for use
 	 */
@@ -79,8 +66,9 @@ public class ReactorNettyTcpStompClient extends StompClientSupport {
 	/**
 	 * An overloaded version of {@link #connect(StompSessionHandler)} that
 	 * accepts headers to use for the STOMP CONNECT frame.
+	 *
 	 * @param connectHeaders headers to add to the CONNECT frame
-	 * @param handler the handler for the STOMP session
+	 * @param handler        the handler for the STOMP session
 	 * @return a ListenableFuture for access to the session when ready for use
 	 */
 	public ListenableFuture<StompSession> connect(@Nullable StompHeaders connectHeaders, StompSessionHandler handler) {

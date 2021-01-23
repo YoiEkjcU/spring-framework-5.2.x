@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.messaging.simp.config;
 
 import java.util.ArrayList;
@@ -49,6 +33,7 @@ public class ChannelRegistration {
 	/**
 	 * Configure the thread pool backing this message channel using a custom
 	 * ThreadPoolTaskExecutor.
+	 *
 	 * @param taskExecutor the executor to use (or {@code null} for a default executor)
 	 */
 	public TaskExecutorRegistration taskExecutor(@Nullable ThreadPoolTaskExecutor taskExecutor) {
@@ -62,6 +47,7 @@ public class ChannelRegistration {
 	/**
 	 * Configure the given interceptors for this message channel,
 	 * adding them to the channel's current list of interceptors.
+	 *
 	 * @since 4.3.12
 	 */
 	public ChannelRegistration interceptors(ChannelInterceptor... interceptors) {
@@ -71,6 +57,7 @@ public class ChannelRegistration {
 
 	/**
 	 * Configure interceptors for the message channel.
+	 *
 	 * @deprecated as of 4.3.12, in favor of {@link #interceptors(ChannelInterceptor...)}
 	 */
 	@Deprecated

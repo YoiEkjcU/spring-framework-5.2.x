@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.messaging.handler.annotation.support;
 
 import java.lang.reflect.Method;
@@ -52,10 +36,10 @@ import org.springframework.validation.Validator;
  *
  * @author Stephane Nicoll
  * @author Juergen Hoeller
- * @since 4.1
  * @see #setConversionService
  * @see #setValidator
  * @see #setCustomArgumentResolvers
+ * @since 4.1
  */
 public class DefaultMessageHandlerMethodFactory
 		implements MessageHandlerMethodFactory, BeanFactoryAware, InitializingBean {
@@ -81,6 +65,7 @@ public class DefaultMessageHandlerMethodFactory
 	/**
 	 * Set the {@link ConversionService} to use to convert the original
 	 * message payload or headers.
+	 *
 	 * @see HeaderMethodArgumentResolver
 	 * @see GenericMessageConverter
 	 */
@@ -91,6 +76,7 @@ public class DefaultMessageHandlerMethodFactory
 	/**
 	 * Set the {@link MessageConverter} to use. By default a {@link GenericMessageConverter}
 	 * is used.
+	 *
 	 * @see GenericMessageConverter
 	 */
 	public void setMessageConverter(MessageConverter messageConverter) {
@@ -99,6 +85,7 @@ public class DefaultMessageHandlerMethodFactory
 
 	/**
 	 * Set the Validator instance used for validating {@code @Payload} arguments.
+	 *
 	 * @see org.springframework.validation.annotation.Validated
 	 * @see PayloadMethodArgumentResolver
 	 */
@@ -109,6 +96,7 @@ public class DefaultMessageHandlerMethodFactory
 	/**
 	 * Set the list of custom {@code HandlerMethodArgumentResolver}s that will be used
 	 * after resolvers for supported argument type.
+	 *
 	 * @param customArgumentResolvers the list of resolvers (never {@code null})
 	 */
 	public void setCustomArgumentResolvers(List<HandlerMethodArgumentResolver> customArgumentResolvers) {

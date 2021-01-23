@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.messaging.simp.stomp;
 
 import org.springframework.lang.Nullable;
@@ -52,8 +36,9 @@ public interface StompSession {
 	 * Send a message to the specified destination, converting the payload to a
 	 * {@code byte[]} with the help of a
 	 * {@link org.springframework.messaging.converter.MessageConverter MessageConverter}.
+	 *
 	 * @param destination the destination to send a message to
-	 * @param payload the message payload
+	 * @param payload     the message payload
 	 * @return a Receiptable for tracking receipts
 	 */
 	Receiptable send(String destination, Object payload);
@@ -64,6 +49,7 @@ public interface StompSession {
 	 * contain a destination and may also have other headers such as
 	 * "content-type" or custom headers for the broker to propagate to
 	 * subscribers, or broker-specific, non-standard headers.
+	 *
 	 * @param headers the message headers
 	 * @param payload the message payload
 	 * @return a Receiptable for tracking receipts
@@ -73,8 +59,9 @@ public interface StompSession {
 	/**
 	 * Subscribe to the given destination by sending a SUBSCRIBE frame and handle
 	 * received messages with the specified {@link StompFrameHandler}.
+	 *
 	 * @param destination the destination to subscribe to
-	 * @param handler the handler for received messages
+	 * @param handler     the handler for received messages
 	 * @return a handle to use to unsubscribe and/or track receipts
 	 */
 	Subscription subscribe(String destination, StompFrameHandler handler);
@@ -82,6 +69,7 @@ public interface StompSession {
 	/**
 	 * An overloaded version of {@link #subscribe(String, StompFrameHandler)}
 	 * with full {@link StompHeaders} instead of just a destination.
+	 *
 	 * @param headers the headers for the subscribe message frame
 	 * @param handler the handler for received messages
 	 * @return a handle to use to unsubscribe and/or track receipts
@@ -94,8 +82,9 @@ public interface StompSession {
 	 * <p><strong>Note:</strong> to use this when subscribing you must set the
 	 * {@link StompHeaders#setAck(String) ack} header to "client" or
 	 * "client-individual" in order ot use this.
+	 *
 	 * @param messageId the id of the message
-	 * @param consumed whether the message was consumed or not
+	 * @param consumed  whether the message was consumed or not
 	 * @return a Receiptable for tracking receipts
 	 * @since 4.3
 	 */
@@ -104,7 +93,8 @@ public interface StompSession {
 	/**
 	 * An overloaded version of {@link #acknowledge(String, boolean)} with
 	 * full {@link StompHeaders} instead of just a {@code messageId}.
-	 * @param headers the headers for the ACK or NACK message frame
+	 *
+	 * @param headers  the headers for the ACK or NACK message frame
 	 * @param consumed whether the message was consumed or not
 	 * @return a Receiptable for tracking receipts
 	 * @since 5.0.5
@@ -118,6 +108,7 @@ public interface StompSession {
 
 	/**
 	 * Variant of {@link #disconnect()} with headers.
+	 *
 	 * @param headers the headers for the disconnect message frame
 	 * @since 5.2.2
 	 */
@@ -126,6 +117,7 @@ public interface StompSession {
 
 	/**
 	 * A handle to use to track receipts.
+	 *
 	 * @see #setAutoReceipt(boolean)
 	 */
 	interface Receiptable {
@@ -139,12 +131,14 @@ public interface StompSession {
 
 		/**
 		 * Task to invoke when a receipt is received.
+		 *
 		 * @throws java.lang.IllegalArgumentException if the receiptId is {@code null}
 		 */
 		void addReceiptTask(Runnable runnable);
 
 		/**
 		 * Task to invoke when a receipt is not received in the configured time.
+		 *
 		 * @throws java.lang.IllegalArgumentException if the receiptId is {@code null}
 		 * @see org.springframework.messaging.simp.stomp.StompClientSupport#setReceiptTimeLimit(long)
 		 */
@@ -165,6 +159,7 @@ public interface StompSession {
 
 		/**
 		 * Return the headers used on the SUBSCRIBE frame.
+		 *
 		 * @since 5.0
 		 */
 		StompHeaders getSubscriptionHeaders();
@@ -178,6 +173,7 @@ public interface StompSession {
 		 * Alternative to {@link #unsubscribe()} with additional custom headers
 		 * to send to the server.
 		 * <p><strong>Note:</strong> There is no need to set the subscription id.
+		 *
 		 * @param headers the custom headers, if any
 		 * @since 5.0
 		 */

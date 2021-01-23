@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.messaging.handler.annotation.reactive;
 
 import java.lang.reflect.Method;
@@ -54,17 +38,14 @@ public class HeadersMethodArgumentResolver implements SyncHandlerMethodArgumentR
 		Class<?> paramType = parameter.getParameterType();
 		if (Map.class.isAssignableFrom(paramType)) {
 			return message.getHeaders();
-		}
-		else if (MessageHeaderAccessor.class == paramType) {
+		} else if (MessageHeaderAccessor.class == paramType) {
 			MessageHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, MessageHeaderAccessor.class);
 			return accessor != null ? accessor : new MessageHeaderAccessor(message);
-		}
-		else if (MessageHeaderAccessor.class.isAssignableFrom(paramType)) {
+		} else if (MessageHeaderAccessor.class.isAssignableFrom(paramType)) {
 			MessageHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, MessageHeaderAccessor.class);
 			if (accessor != null && paramType.isAssignableFrom(accessor.getClass())) {
 				return accessor;
-			}
-			else {
+			} else {
 				Method method = ReflectionUtils.findMethod(paramType, "wrap", Message.class);
 				if (method == null) {
 					throw new IllegalStateException(
@@ -72,8 +53,7 @@ public class HeadersMethodArgumentResolver implements SyncHandlerMethodArgumentR
 				}
 				return ReflectionUtils.invokeMethod(method, null, message);
 			}
-		}
-		else {
+		} else {
 			throw new IllegalStateException("Unexpected parameter of type " + paramType +
 					" in method " + parameter.getMethod() + ". ");
 		}

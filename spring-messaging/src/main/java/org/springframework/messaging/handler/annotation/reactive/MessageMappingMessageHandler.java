@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.messaging.handler.annotation.reactive;
 
 import java.lang.reflect.AnnotatedElement;
@@ -77,8 +61,8 @@ import org.springframework.validation.Validator;
  * {@link #initReturnValueHandlers()} to set up default return value handlers.
  *
  * @author Rossen Stoyanchev
- * @since 5.2
  * @see AbstractEncoderMethodReturnValueHandler
+ * @since 5.2
  */
 public class MessageMappingMessageHandler extends AbstractMethodMessageHandler<CompositeMessageCondition>
 		implements EmbeddedValueResolverAware {
@@ -119,6 +103,7 @@ public class MessageMappingMessageHandler extends AbstractMethodMessageHandler<C
 
 	/**
 	 * Set the Validator instance used for validating {@code @Payload} arguments.
+	 *
 	 * @see org.springframework.validation.annotation.Validated
 	 * @see PayloadMethodArgumentResolver
 	 */
@@ -157,6 +142,7 @@ public class MessageMappingMessageHandler extends AbstractMethodMessageHandler<C
 
 	/**
 	 * Obtain the {@code RouteMatcher} for actual use.
+	 *
 	 * @return the RouteMatcher (never {@code null})
 	 * @throws IllegalStateException in case of no RouteMatcher set
 	 * @since 5.0
@@ -171,6 +157,7 @@ public class MessageMappingMessageHandler extends AbstractMethodMessageHandler<C
 	 * Configure a {@link ConversionService} to use for type conversion of
 	 * String based values, e.g. in destination variables or headers.
 	 * <p>By default {@link DefaultFormattingConversionService} is used.
+	 *
 	 * @param conversionService the conversion service to use
 	 */
 	public void setConversionService(ConversionService conversionService) {
@@ -251,6 +238,7 @@ public class MessageMappingMessageHandler extends AbstractMethodMessageHandler<C
 
 	/**
 	 * Determine the mapping condition for the given annotated element.
+	 *
 	 * @param element the element to check
 	 * @return the condition, or {@code null}
 	 */
@@ -267,6 +255,7 @@ public class MessageMappingMessageHandler extends AbstractMethodMessageHandler<C
 
 	/**
 	 * Resolve placeholders in the given destinations.
+	 *
 	 * @param destinations the destinations
 	 * @return new array with the processed destinations or the same array
 	 */

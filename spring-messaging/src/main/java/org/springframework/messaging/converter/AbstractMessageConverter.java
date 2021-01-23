@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.messaging.converter;
 
 import java.util.ArrayList;
@@ -60,6 +44,7 @@ public abstract class AbstractMessageConverter implements SmartMessageConverter 
 
 	/**
 	 * Constructor with a single MIME type.
+	 *
 	 * @param supportedMimeType the supported MIME type
 	 */
 	protected AbstractMessageConverter(MimeType supportedMimeType) {
@@ -68,6 +53,7 @@ public abstract class AbstractMessageConverter implements SmartMessageConverter 
 
 	/**
 	 * Constructor with one or more MIME types via vararg.
+	 *
 	 * @param supportedMimeTypes the supported MIME types
 	 * @since 5.2.2
 	 */
@@ -77,6 +63,7 @@ public abstract class AbstractMessageConverter implements SmartMessageConverter 
 
 	/**
 	 * Constructor with a Collection of MIME types.
+	 *
 	 * @param supportedMimeTypes the supported MIME types
 	 */
 	protected AbstractMessageConverter(Collection<MimeType> supportedMimeTypes) {
@@ -93,6 +80,7 @@ public abstract class AbstractMessageConverter implements SmartMessageConverter 
 
 	/**
 	 * Allows sub-classes to add more supported mime types.
+	 *
 	 * @since 5.2.2
 	 */
 	protected void addSupportedMimeTypes(MimeType... supportedMimeTypes) {
@@ -151,6 +139,7 @@ public abstract class AbstractMessageConverter implements SmartMessageConverter 
 	 * Configure the preferred serialization class to use (byte[] or String) when
 	 * converting an Object payload to a {@link Message}.
 	 * <p>The default value is byte[].
+	 *
 	 * @param payloadClass either byte[] or String
 	 */
 	public void setSerializedPayloadClass(Class<?> payloadClass) {
@@ -173,6 +162,7 @@ public abstract class AbstractMessageConverter implements SmartMessageConverter 
 	 * without a content type header.
 	 * <p>By default, this returns the first element of the {@link #getSupportedMimeTypes()
 	 * supportedMimeTypes}, if any. Can be overridden in sub-classes.
+	 *
 	 * @param payload the payload being converted to message
 	 * @return the content type, or {@code null} if not known
 	 */
@@ -268,6 +258,7 @@ public abstract class AbstractMessageConverter implements SmartMessageConverter 
 
 	/**
 	 * Whether the given class is supported by this converter.
+	 *
 	 * @param clazz the class to test for support
 	 * @return {@code true} if supported; {@code false} otherwise
 	 */
@@ -275,10 +266,11 @@ public abstract class AbstractMessageConverter implements SmartMessageConverter 
 
 	/**
 	 * Convert the message payload from serialized form to an Object.
-	 * @param message the input message
-	 * @param targetClass the target class for the conversion
+	 *
+	 * @param message        the input message
+	 * @param targetClass    the target class for the conversion
 	 * @param conversionHint an extra object passed to the {@link MessageConverter},
-	 * e.g. the associated {@code MethodParameter} (may be {@code null}}
+	 *                       e.g. the associated {@code MethodParameter} (may be {@code null}}
 	 * @return the result of the conversion, or {@code null} if the converter cannot
 	 * perform the conversion
 	 * @since 4.2
@@ -292,10 +284,11 @@ public abstract class AbstractMessageConverter implements SmartMessageConverter 
 
 	/**
 	 * Convert the payload object to serialized form.
-	 * @param payload the Object to convert
-	 * @param headers optional headers for the message (may be {@code null})
+	 *
+	 * @param payload        the Object to convert
+	 * @param headers        optional headers for the message (may be {@code null})
 	 * @param conversionHint an extra object passed to the {@link MessageConverter},
-	 * e.g. the associated {@code MethodParameter} (may be {@code null}}
+	 *                       e.g. the associated {@code MethodParameter} (may be {@code null}}
 	 * @return the resulting payload for the message, or {@code null} if the converter
 	 * cannot perform the conversion
 	 * @since 4.2

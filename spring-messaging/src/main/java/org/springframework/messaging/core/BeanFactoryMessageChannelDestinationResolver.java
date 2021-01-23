@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.messaging.core;
 
 import org.springframework.beans.BeansException;
@@ -49,6 +33,7 @@ public class BeanFactoryMessageChannelDestinationResolver
 	/**
 	 * A constructor that accepts a {@link BeanFactory} useful if instantiating this
 	 * resolver manually rather than having it defined as a Spring-managed bean.
+	 *
 	 * @param beanFactory the bean factory to perform lookups against
 	 */
 	public BeanFactoryMessageChannelDestinationResolver(BeanFactory beanFactory) {
@@ -68,8 +53,7 @@ public class BeanFactoryMessageChannelDestinationResolver
 		Assert.state(this.beanFactory != null, "No BeanFactory configured");
 		try {
 			return this.beanFactory.getBean(name, MessageChannel.class);
-		}
-		catch (BeansException ex) {
+		} catch (BeansException ex) {
 			throw new DestinationResolutionException(
 					"Failed to find MessageChannel bean with name '" + name + "'", ex);
 		}

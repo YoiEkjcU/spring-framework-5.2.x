@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.messaging.converter;
 
 import java.io.ByteArrayOutputStream;
@@ -91,17 +75,15 @@ public class ProtobufMessageConverter extends AbstractMessageConverter {
 	}
 
 	ProtobufMessageConverter(@Nullable ProtobufFormatSupport formatSupport,
-			@Nullable ExtensionRegistry extensionRegistry) {
+							 @Nullable ExtensionRegistry extensionRegistry) {
 
 		super(PROTOBUF, TEXT_PLAIN);
 
 		if (formatSupport != null) {
 			this.protobufFormatSupport = formatSupport;
-		}
-		else if (ClassUtils.isPresent("com.google.protobuf.util.JsonFormat", getClass().getClassLoader())) {
+		} else if (ClassUtils.isPresent("com.google.protobuf.util.JsonFormat", getClass().getClassLoader())) {
 			this.protobufFormatSupport = new ProtobufJavaUtilSupport(null, null);
-		}
-		else {
+		} else {
 			this.protobufFormatSupport = null;
 		}
 
@@ -127,7 +109,7 @@ public class ProtobufMessageConverter extends AbstractMessageConverter {
 
 	@Override
 	protected Object convertFromInternal(org.springframework.messaging.Message<?> message,
-			Class<?> targetClass, @Nullable Object conversionHint) {
+										 Class<?> targetClass, @Nullable Object conversionHint) {
 
 		MimeType contentType = getMimeType(message.getHeaders());
 		final Object payload = message.getPayload();
@@ -145,12 +127,10 @@ public class ProtobufMessageConverter extends AbstractMessageConverter {
 		try {
 			if (PROTOBUF.isCompatibleWith(contentType)) {
 				builder.mergeFrom((byte[]) payload, this.extensionRegistry);
-			}
-			else if (this.protobufFormatSupport != null) {
+			} else if (this.protobufFormatSupport != null) {
 				this.protobufFormatSupport.merge(message, charset, contentType, this.extensionRegistry, builder);
 			}
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new MessageConversionException(message, "Could not read proto message" + ex.getMessage(), ex);
 		}
 
@@ -179,14 +159,12 @@ public class ProtobufMessageConverter extends AbstractMessageConverter {
 				ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 				message.writeTo(byteArrayOutputStream);
 				payload = byteArrayOutputStream.toByteArray();
-			}
-			else if (this.protobufFormatSupport != null) {
+			} else if (this.protobufFormatSupport != null) {
 				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 				this.protobufFormatSupport.print(message, outputStream, contentType, charset);
 				payload = outputStream.toString(charset.name());
 			}
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new MessageConversionException("Failed to print Protobuf message: " + ex.getMessage(), ex);
 
 		}
@@ -205,8 +183,7 @@ public class ProtobufMessageConverter extends AbstractMessageConverter {
 				methodCache.put(clazz, method);
 			}
 			return (Message.Builder) method.invoke(clazz);
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			throw new MessageConversionException(
 					"Invalid Protobuf Message type: no invocable newBuilder() method on " + clazz, ex);
 		}
@@ -223,8 +200,8 @@ public class ProtobufMessageConverter extends AbstractMessageConverter {
 		boolean supportsWriteOnly(@Nullable MimeType mediaType);
 
 		void merge(org.springframework.messaging.Message<?> message,
-				Charset charset, MimeType contentType, ExtensionRegistry extensionRegistry,
-				Message.Builder builder) throws IOException, MessageConversionException;
+				   Charset charset, MimeType contentType, ExtensionRegistry extensionRegistry,
+				   Message.Builder builder) throws IOException, MessageConversionException;
 
 		void print(Message message, OutputStream output, MimeType contentType, Charset charset)
 				throws IOException, MessageConversionException;
@@ -258,13 +235,12 @@ public class ProtobufMessageConverter extends AbstractMessageConverter {
 
 		@Override
 		public void merge(org.springframework.messaging.Message<?> message, Charset charset,
-				MimeType contentType, ExtensionRegistry extensionRegistry, Message.Builder builder)
+						  MimeType contentType, ExtensionRegistry extensionRegistry, Message.Builder builder)
 				throws IOException, MessageConversionException {
 
 			if (contentType.isCompatibleWith(APPLICATION_JSON)) {
 				this.parser.merge(message.getPayload().toString(), builder);
-			}
-			else {
+			} else {
 				throw new MessageConversionException(
 						"protobuf-java-util does not support parsing " + contentType);
 			}
@@ -278,8 +254,7 @@ public class ProtobufMessageConverter extends AbstractMessageConverter {
 				OutputStreamWriter writer = new OutputStreamWriter(output, charset);
 				this.printer.appendTo(message, writer);
 				writer.flush();
-			}
-			else {
+			} else {
 				throw new MessageConversionException(
 						"protobuf-java-util does not support printing " + contentType);
 			}

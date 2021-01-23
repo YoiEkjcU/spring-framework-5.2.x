@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.messaging.support;
 
 import java.io.Serializable;
@@ -29,10 +13,10 @@ import org.springframework.util.ObjectUtils;
  * An implementation of {@link Message} with a generic payload.
  * Once created, a GenericMessage is immutable.
  *
- * @author Mark Fisher
- * @since 4.0
  * @param <T> the payload type
+ * @author Mark Fisher
  * @see MessageBuilder
+ * @since 4.0
  */
 public class GenericMessage<T> implements Message<T>, Serializable {
 
@@ -46,6 +30,7 @@ public class GenericMessage<T> implements Message<T>, Serializable {
 
 	/**
 	 * Create a new message with the given payload.
+	 *
 	 * @param payload the message payload (never {@code null})
 	 */
 	public GenericMessage(T payload) {
@@ -55,6 +40,7 @@ public class GenericMessage<T> implements Message<T>, Serializable {
 	/**
 	 * Create a new message with the given payload and headers.
 	 * The content of the given header map is copied.
+	 *
 	 * @param payload the message payload (never {@code null})
 	 * @param headers message headers to use for initialization
 	 */
@@ -66,6 +52,7 @@ public class GenericMessage<T> implements Message<T>, Serializable {
 	 * A constructor with the {@link MessageHeaders} instance to use.
 	 * <p><strong>Note:</strong> the given {@code MessageHeaders} instance is used
 	 * directly in the new message, i.e. it is not copied.
+	 *
 	 * @param payload the message payload (never {@code null})
 	 * @param headers message headers
 	 */
@@ -113,8 +100,7 @@ public class GenericMessage<T> implements Message<T>, Serializable {
 		sb.append(" [payload=");
 		if (this.payload instanceof byte[]) {
 			sb.append("byte[").append(((byte[]) this.payload).length).append("]");
-		}
-		else {
+		} else {
 			sb.append(this.payload);
 		}
 		sb.append(", headers=").append(this.headers).append("]");

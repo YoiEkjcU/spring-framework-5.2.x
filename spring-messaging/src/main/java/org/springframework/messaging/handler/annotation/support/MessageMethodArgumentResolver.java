@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.messaging.handler.annotation.support;
 
 import java.lang.reflect.Type;
@@ -56,6 +40,7 @@ public class MessageMethodArgumentResolver implements HandlerMethodArgumentResol
 
 	/**
 	 * Create a resolver instance with the given {@link MessageConverter}.
+	 *
 	 * @param converter the MessageConverter to use (may be {@code null})
 	 * @since 4.3
 	 */
@@ -102,8 +87,9 @@ public class MessageMethodArgumentResolver implements HandlerMethodArgumentResol
 	 * target type after also taking into account the "Content-Type", e.g.
 	 * return {@code String} if target type is {@code Object} and
 	 * {@code "Content-Type:text/**"}.
+	 *
 	 * @param parameter the target method parameter
-	 * @param message the message being processed
+	 * @param message   the message being processed
 	 * @return the target type to use
 	 * @since 5.2
 	 */
@@ -115,19 +101,17 @@ public class MessageMethodArgumentResolver implements HandlerMethodArgumentResol
 
 	/**
 	 * Check if the given {@code payload} is empty.
+	 *
 	 * @param payload the payload to check (can be {@code null})
 	 */
 	protected boolean isEmptyPayload(@Nullable Object payload) {
 		if (payload == null) {
 			return true;
-		}
-		else if (payload instanceof byte[]) {
+		} else if (payload instanceof byte[]) {
 			return ((byte[]) payload).length == 0;
-		}
-		else if (payload instanceof String) {
+		} else if (payload instanceof String) {
 			return !StringUtils.hasText((String) payload);
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
@@ -137,8 +121,7 @@ public class MessageMethodArgumentResolver implements HandlerMethodArgumentResol
 		if (this.converter instanceof SmartMessageConverter) {
 			SmartMessageConverter smartConverter = (SmartMessageConverter) this.converter;
 			result = smartConverter.fromMessage(message, targetPayloadType, parameter);
-		}
-		else if (this.converter != null) {
+		} else if (this.converter != null) {
 			result = this.converter.fromMessage(message, targetPayloadType);
 		}
 

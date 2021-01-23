@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.messaging.simp.broker;
 
 import java.util.Queue;
@@ -83,7 +67,7 @@ class OrderedMessageSender implements MessageChannel {
 	}
 
 	private void sendNextMessage() {
-		for (;;) {
+		for (; ; ) {
 			Message<?> message = this.messages.poll();
 			if (message != null) {
 				try {
@@ -91,14 +75,12 @@ class OrderedMessageSender implements MessageChannel {
 					if (this.channel.send(message)) {
 						return;
 					}
-				}
-				catch (Throwable ex) {
+				} catch (Throwable ex) {
 					if (logger.isErrorEnabled()) {
 						logger.error("Failed to send " + message, ex);
 					}
 				}
-			}
-			else {
+			} else {
 				// We ran out of messages..
 				this.sendInProgress.set(false);
 				trySend();
@@ -117,9 +99,10 @@ class OrderedMessageSender implements MessageChannel {
 	/**
 	 * Install or remove an {@link ExecutorChannelInterceptor} that invokes a
 	 * completion task once the message is handled.
-	 * @param channel the channel to configure
+	 *
+	 * @param channel              the channel to configure
 	 * @param preservePublishOrder whether preserve order is on or off based on
-	 * which an interceptor is either added or removed.
+	 *                             which an interceptor is either added or removed.
 	 */
 	static void configureOutboundChannel(MessageChannel channel, boolean preservePublishOrder) {
 		if (preservePublishOrder) {
@@ -129,8 +112,7 @@ class OrderedMessageSender implements MessageChannel {
 			if (execChannel.getInterceptors().stream().noneMatch(i -> i instanceof CallbackInterceptor)) {
 				execChannel.addInterceptor(0, new CallbackInterceptor());
 			}
-		}
-		else if (channel instanceof ExecutorSubscribableChannel) {
+		} else if (channel instanceof ExecutorSubscribableChannel) {
 			ExecutorSubscribableChannel execChannel = (ExecutorSubscribableChannel) channel;
 			execChannel.getInterceptors().stream().filter(i -> i instanceof CallbackInterceptor)
 					.findFirst()

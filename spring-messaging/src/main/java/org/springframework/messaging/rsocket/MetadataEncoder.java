@@ -1,18 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.springframework.messaging.rsocket;
 
 import java.util.ArrayList;
@@ -48,7 +33,9 @@ import org.springframework.util.ObjectUtils;
  */
 final class MetadataEncoder {
 
-	/** For route variable replacement. */
+	/**
+	 * For route variable replacement.
+	 */
 	private static final Pattern VARS_PATTERN = Pattern.compile("\\{(.+?)}");
 
 	private static final Object NO_VALUE = new Object();
@@ -129,11 +116,9 @@ final class MetadataEncoder {
 	public MetadataEncoder metadata(Object metadata, @Nullable MimeType mimeType) {
 		if (this.isComposite) {
 			Assert.notNull(mimeType, "MimeType is required for composite metadata entries.");
-		}
-		else if (mimeType == null) {
+		} else if (mimeType == null) {
 			mimeType = this.metadataMimeType;
-		}
-		else if (!this.metadataMimeType.equals(mimeType)) {
+		} else if (!this.metadataMimeType.equals(mimeType)) {
 			throw new IllegalArgumentException(
 					"Mime type is optional when not using composite metadata, but it was provided " +
 							"and does not match the connection metadata mime type '" + this.metadataMimeType + "'.");
@@ -153,7 +138,7 @@ final class MetadataEncoder {
 	 * Add route and/or metadata, both optional.
 	 */
 	public MetadataEncoder metadataAndOrRoute(@Nullable Map<Object, MimeType> metadata,
-			@Nullable String route, @Nullable Object[] vars) {
+											  @Nullable String route, @Nullable Object[] vars) {
 
 		if (route != null) {
 			this.route = expand(route, vars != null ? vars : new Object[0]);
@@ -170,6 +155,7 @@ final class MetadataEncoder {
 
 	/**
 	 * Encode the collected metadata entries to a {@code DataBuffer}.
+	 *
 	 * @see PayloadUtils#createPayload(DataBuffer, DataBuffer)
 	 */
 	public Mono<DataBuffer> encode() {
@@ -194,20 +180,17 @@ final class MetadataEncoder {
 							value instanceof ByteBuf ? (ByteBuf) value : PayloadUtils.asByteBuf(encodeEntry(entry)));
 				});
 				return asDataBuffer(composite);
-				}
-			catch (Throwable ex) {
+			} catch (Throwable ex) {
 				composite.release();
 				throw ex;
 			}
-		}
-		else if (this.route != null) {
+		} else if (this.route != null) {
 			Assert.isTrue(entries.isEmpty(), "Composite metadata required for route and other entries");
 			String routingMimeType = WellKnownMimeType.MESSAGE_RSOCKET_ROUTING.getString();
 			return this.metadataMimeType.toString().equals(routingMimeType) ?
 					asDataBuffer(encodeRoute()) :
 					encodeEntry(this.route, this.metadataMimeType);
-		}
-		else {
+		} else {
 			Assert.isTrue(entries.size() == 1, "Composite metadata required for multiple entries");
 			MetadataEntry entry = entries.get(0);
 			if (!this.metadataMimeType.equals(entry.mimeType())) {
@@ -242,8 +225,7 @@ final class MetadataEncoder {
 	private DataBuffer asDataBuffer(ByteBuf byteBuf) {
 		if (bufferFactory() instanceof NettyDataBufferFactory) {
 			return ((NettyDataBufferFactory) bufferFactory()).wrap(byteBuf);
-		}
-		else {
+		} else {
 			DataBuffer buffer = bufferFactory().wrap(byteBuf.nioBuffer());
 			byteBuf.release();
 			return buffer;
@@ -271,6 +253,7 @@ final class MetadataEncoder {
 
 	/**
 	 * Holder for the metadata value and mime type.
+	 *
 	 * @since 5.2.2
 	 */
 	private static class MetadataEntry {

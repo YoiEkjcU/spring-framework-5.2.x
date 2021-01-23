@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.messaging.simp.broker;
 
 import java.util.ArrayList;
@@ -64,10 +48,14 @@ import org.springframework.util.StringUtils;
  */
 public class DefaultSubscriptionRegistry extends AbstractSubscriptionRegistry {
 
-	/** Default maximum number of entries for the destination cache: 1024. */
+	/**
+	 * Default maximum number of entries for the destination cache: 1024.
+	 */
 	public static final int DEFAULT_CACHE_LIMIT = 1024;
 
-	/** Static evaluation context to reuse. */
+	/**
+	 * Static evaluation context to reuse.
+	 */
 	private static final EvaluationContext messageEvalContext =
 			SimpleEvaluationContext.forPropertyAccessors(new SimpMessageHeaderPropertyAccessor()).build();
 
@@ -129,6 +117,7 @@ public class DefaultSubscriptionRegistry extends AbstractSubscriptionRegistry {
 	 * </pre>
 	 * <p>By default this is set to "selector". You can set it to a different
 	 * name, or to {@code null} to turn off support for a selector header.
+	 *
 	 * @param selectorHeaderName the name to use for a selector header
 	 * @since 4.2
 	 */
@@ -138,6 +127,7 @@ public class DefaultSubscriptionRegistry extends AbstractSubscriptionRegistry {
 
 	/**
 	 * Return the name for the selector header name.
+	 *
 	 * @since 4.2
 	 */
 	@Nullable
@@ -173,8 +163,7 @@ public class DefaultSubscriptionRegistry extends AbstractSubscriptionRegistry {
 			if (logger.isTraceEnabled()) {
 				logger.trace("Subscription selector: [" + selector + "]");
 			}
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			if (logger.isDebugEnabled()) {
 				logger.debug("Failed to parse selector: " + selector, ex);
 			}
@@ -231,13 +220,11 @@ public class DefaultSubscriptionRegistry extends AbstractSubscriptionRegistry {
 			if (Boolean.TRUE.equals(result)) {
 				return true;
 			}
-		}
-		catch (SpelEvaluationException ex) {
+		} catch (SpelEvaluationException ex) {
 			if (logger.isDebugEnabled()) {
 				logger.debug("Failed to evaluate selector: " + ex.getMessage());
 			}
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			logger.debug("Failed to evaluate selector", ex);
 		}
 		return false;
@@ -280,8 +267,7 @@ public class DefaultSubscriptionRegistry extends AbstractSubscriptionRegistry {
 					if (pathMatcher.match(subscription.getDestination(), destination)) {
 						addMatchedSubscriptionId(sessionIdToSubscriptionIds, sessionId, subscription.getId());
 					}
-				}
-				else if (destination.equals(subscription.getDestination())) {
+				} else if (destination.equals(subscription.getDestination())) {
 					addMatchedSubscriptionId(sessionIdToSubscriptionIds, sessionId, subscription.getId());
 				}
 			});
@@ -295,8 +281,7 @@ public class DefaultSubscriptionRegistry extends AbstractSubscriptionRegistry {
 			sessionIdToSubscriptionIds.compute(sessionId, (_sessionId, subscriptionIds) -> {
 				if (subscriptionIds == null) {
 					return Collections.singletonList(subscriptionId);
-				}
-				else {
+				} else {
 					List<String> result = new ArrayList<>(subscriptionIds.size() + 1);
 					result.addAll(subscriptionIds);
 					result.add(subscriptionId);
@@ -325,8 +310,7 @@ public class DefaultSubscriptionRegistry extends AbstractSubscriptionRegistry {
 						addToDestination(cachedDestination, sessionId, subscription.getId());
 					}
 				}
-			}
-			else {
+			} else {
 				addToDestination(subscription.getDestination(), sessionId, subscription.getId());
 			}
 		}
@@ -348,8 +332,7 @@ public class DefaultSubscriptionRegistry extends AbstractSubscriptionRegistry {
 						removeInternal(destination, sessionId, subscriptionId);
 					}
 				});
-			}
-			else {
+			} else {
 				removeInternal(subscription.getDestination(), sessionId, subscription.getId());
 			}
 		}
@@ -391,7 +374,7 @@ public class DefaultSubscriptionRegistry extends AbstractSubscriptionRegistry {
 
 		public void forEachSubscription(BiConsumer<String, Subscription> consumer) {
 			this.sessions.forEach((sessionId, info) ->
-				info.getSubscriptions().forEach(subscription -> consumer.accept(sessionId, subscription)));
+					info.getSubscriptions().forEach(subscription -> consumer.accept(sessionId, subscription)));
 		}
 
 		public void addSubscription(String sessionId, Subscription subscription) {
@@ -494,7 +477,7 @@ public class DefaultSubscriptionRegistry extends AbstractSubscriptionRegistry {
 
 		@Override
 		public Class<?>[] getSpecificTargetClasses() {
-			return new Class<?>[] {Message.class, MessageHeaders.class};
+			return new Class<?>[]{Message.class, MessageHeaders.class};
 		}
 
 		@Override
@@ -508,23 +491,20 @@ public class DefaultSubscriptionRegistry extends AbstractSubscriptionRegistry {
 			Object value;
 			if (target instanceof Message) {
 				value = name.equals("headers") ? ((Message) target).getHeaders() : null;
-			}
-			else if (target instanceof MessageHeaders) {
+			} else if (target instanceof MessageHeaders) {
 				MessageHeaders headers = (MessageHeaders) target;
 				SimpMessageHeaderAccessor accessor =
 						MessageHeaderAccessor.getAccessor(headers, SimpMessageHeaderAccessor.class);
 				Assert.state(accessor != null, "No SimpMessageHeaderAccessor");
 				if ("destination".equalsIgnoreCase(name)) {
 					value = accessor.getDestination();
-				}
-				else {
+				} else {
 					value = accessor.getFirstNativeHeader(name);
 					if (value == null) {
 						value = headers.get(name);
 					}
 				}
-			}
-			else {
+			} else {
 				// Should never happen...
 				throw new IllegalStateException("Expected Message or MessageHeaders.");
 			}

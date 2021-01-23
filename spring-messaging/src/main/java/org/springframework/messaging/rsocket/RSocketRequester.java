@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.messaging.rsocket;
 
 import java.net.URI;
@@ -50,6 +34,7 @@ public interface RSocketRequester {
 
 	/**
 	 * Return the underlying {@link RSocketClient} used to make requests with.
+	 *
 	 * @since 5.3
 	 */
 	RSocketClient rsocketClient();
@@ -89,7 +74,8 @@ public interface RSocketRequester {
 	 * <p>If the connection is set to use composite metadata, the route is
 	 * encoded as {@code "message/x.rsocket.routing.v0"}. Otherwise the route
 	 * is encoded according to the mime type for the connection.
-	 * @param route the route expressing a remote handler mapping
+	 *
+	 * @param route     the route expressing a remote handler mapping
 	 * @param routeVars variables to be expanded into the route template
 	 * @return a spec for further defining and executing the request
 	 */
@@ -99,11 +85,12 @@ public interface RSocketRequester {
 	 * Begin to specify a new request with the given metadata value, which can
 	 * be a concrete value or any producer of a single value that can be adapted
 	 * to a {@link Publisher} via {@link ReactiveAdapterRegistry}.
+	 *
 	 * @param metadata the metadata value to encode
 	 * @param mimeType the mime type that describes the metadata;
-	 * This is required for connection using composite metadata. Otherwise the
-	 * value is encoded according to the mime type for the connection and this
-	 * argument may be left as {@code null}.
+	 *                 This is required for connection using composite metadata. Otherwise the
+	 *                 value is encoded according to the mime type for the connection and this
+	 *                 argument may be left as {@code null}.
 	 */
 	RequestSpec metadata(Object metadata, @Nullable MimeType mimeType);
 
@@ -183,6 +170,7 @@ public interface RSocketRequester {
 		 * <p>This is useful for changing the default settings, yet still allowing
 		 * further customizations via {@link #rsocketStrategies(Consumer)}.
 		 * If not set, defaults are obtained from {@link RSocketStrategies#builder()}.
+		 *
 		 * @param strategies the strategies to use
 		 */
 		RSocketRequester.Builder rsocketStrategies(@Nullable RSocketStrategies strategies);
@@ -211,6 +199,7 @@ public interface RSocketRequester {
 		 * <li>To configure client side responding, see
 		 * {@link RSocketMessageHandler#responder(RSocketStrategies, Object...)}.
 		 * </ul>
+		 *
 		 * @since 5.2.6
 		 */
 		RSocketRequester.Builder rsocketConnector(RSocketConnectorConfigurer configurer);
@@ -219,6 +208,7 @@ public interface RSocketRequester {
 		 * Configure this builder through a {@code Consumer}. This enables
 		 * libraries such as Spring Security to provide shortcuts for applying
 		 * a set of related customizations.
+		 *
 		 * @param configurer the configurer to apply
 		 */
 		RSocketRequester.Builder apply(Consumer<RSocketRequester.Builder> configurer);
@@ -227,6 +217,7 @@ public interface RSocketRequester {
 		 * Build an {@link RSocketRequester} instance for use with a TCP
 		 * transport. Requests are made via {@link io.rsocket.RSocketClient}
 		 * which establishes a shared TCP connection to given host and port.
+		 *
 		 * @param host the host of the server to connect to
 		 * @param port the port of the server to connect to
 		 * @return the created {@code RSocketRequester}
@@ -238,6 +229,7 @@ public interface RSocketRequester {
 		 * Build an {@link RSocketRequester} instance for use with a WebSocket
 		 * transport. Requests are made via {@link io.rsocket.RSocketClient}
 		 * which establishes a shared WebSocket connection to given URL.
+		 *
 		 * @param uri the URL of the server to connect to
 		 * @return the created {@code RSocketRequester}
 		 * @since 5.3
@@ -248,6 +240,7 @@ public interface RSocketRequester {
 		 * Build an {@link RSocketRequester} instance for use with the given
 		 * transport. Requests are made via {@link io.rsocket.RSocketClient}
 		 * which establishes a shared connection through the given transport.
+		 *
 		 * @param transport the transport to use for connecting to the server
 		 * @return the created {@code RSocketRequester}
 		 * @since 5.3
@@ -256,27 +249,30 @@ public interface RSocketRequester {
 
 		/**
 		 * Connect to the server over TCP.
+		 *
 		 * @param host the server host
 		 * @param port the server port
 		 * @return an {@code RSocketRequester} for the connection
-		 * @deprecated as of 5.3 in favor of {@link #tcp(String, int)}
 		 * @see TcpClientTransport
+		 * @deprecated as of 5.3 in favor of {@link #tcp(String, int)}
 		 */
 		@Deprecated
 		Mono<RSocketRequester> connectTcp(String host, int port);
 
 		/**
 		 * Connect to the server over WebSocket.
+		 *
 		 * @param uri the RSocket server endpoint URI
 		 * @return an {@code RSocketRequester} for the connection
-		 * @deprecated as of 5.3 in favor of {@link #websocket(URI)}
 		 * @see WebsocketClientTransport
+		 * @deprecated as of 5.3 in favor of {@link #websocket(URI)}
 		 */
 		@Deprecated
 		Mono<RSocketRequester> connectWebSocket(URI uri);
 
 		/**
 		 * Connect to the server with the given {@code ClientTransport}.
+		 *
 		 * @param transport the client transport to use
 		 * @return an {@code RSocketRequester} for the connection
 		 * @deprecated as of 5.3 in favor of {@link #transport(ClientTransport)}
@@ -295,6 +291,7 @@ public interface RSocketRequester {
 		 * Append additional metadata entries through a {@code Consumer}.
 		 * This enables libraries such as Spring Security to provide shortcuts
 		 * for applying a set of customizations.
+		 *
 		 * @param configurer the configurer to apply
 		 * @throws IllegalArgumentException if not using composite metadata.
 		 */
@@ -302,6 +299,7 @@ public interface RSocketRequester {
 
 		/**
 		 * Perform a {@link RSocket#metadataPush(Payload) metadataPush}.
+		 *
 		 * @since 5.3
 		 */
 		Mono<Void> sendMetadata();
@@ -314,6 +312,7 @@ public interface RSocketRequester {
 		 * <li>Any other producer of value(s) that can be adapted to a
 		 * {@link Publisher} via {@link ReactiveAdapterRegistry}
 		 * </ul>
+		 *
 		 * @param data the Object value for the payload data
 		 * @return spec to declare the expected response
 		 */
@@ -323,9 +322,10 @@ public interface RSocketRequester {
 		 * Variant of {@link #data(Object)} that also accepts a hint for the
 		 * types of values that will be produced. The class hint is used to
 		 * find a compatible {@code Encoder} once, up front vs per value.
-		 * @param producer the source of payload data value(s). This must be a
-		 * {@link Publisher} or another producer adaptable to a
-		 * {@code Publisher} via {@link ReactiveAdapterRegistry}
+		 *
+		 * @param producer     the source of payload data value(s). This must be a
+		 *                     {@link Publisher} or another producer adaptable to a
+		 *                     {@code Publisher} via {@link ReactiveAdapterRegistry}
 		 * @param elementClass the type of values to be produced
 		 * @return spec to declare the expected response
 		 */
@@ -334,9 +334,10 @@ public interface RSocketRequester {
 		/**
 		 * Variant of {@link #data(Object, Class)} for when the type hint has
 		 * to have a generic type. See {@link ParameterizedTypeReference}.
-		 * @param producer the source of payload data value(s). This must be a
-		 * {@link Publisher} or another producer adaptable to a
-		 * {@code Publisher} via {@link ReactiveAdapterRegistry}
+		 *
+		 * @param producer       the source of payload data value(s). This must be a
+		 *                       {@link Publisher} or another producer adaptable to a
+		 *                       {@code Publisher} via {@link ReactiveAdapterRegistry}
 		 * @param elementTypeRef the type of values to be produced
 		 * @return spec to declare the expected response
 		 */
@@ -358,9 +359,10 @@ public interface RSocketRequester {
 		 * The metadata value be a concrete value or any producer of a single
 		 * value that can be adapted to a {@link Publisher} via
 		 * {@link ReactiveAdapterRegistry}.
+		 *
 		 * @param metadata an Object to be encoded with a suitable
-		 * {@link org.springframework.core.codec.Encoder Encoder}, or a
-		 * {@link org.springframework.core.io.buffer.DataBuffer DataBuffer}
+		 *                 {@link org.springframework.core.codec.Encoder Encoder}, or a
+		 *                 {@link org.springframework.core.io.buffer.DataBuffer DataBuffer}
 		 * @param mimeType the mime type that describes the metadata
 		 */
 		S metadata(Object metadata, MimeType mimeType);
@@ -369,6 +371,7 @@ public interface RSocketRequester {
 
 	/**
 	 * Spec to declare the expected output for an RSocket request.
+	 *
 	 * @since 5.2.2
 	 */
 	interface RetrieveSpec {
@@ -376,6 +379,7 @@ public interface RSocketRequester {
 		/**
 		 * Perform a {@link RSocket#fireAndForget fireAndForget} sending the
 		 * provided data and metadata.
+		 *
 		 * @return a completion that indicates if the payload was sent
 		 * successfully or not. Note, however that is a one-way send and there
 		 * is no indication of whether or how the even was handled on the
@@ -390,8 +394,9 @@ public interface RSocketRequester {
 		 * <p><strong>Note:</strong> This method will raise an error if
 		 * the request payload is a multi-valued {@link Publisher} as there is
 		 * no many-to-one RSocket interaction.
+		 *
 		 * @param dataType the expected data type for the response
-		 * @param <T> parameter for the expected data type
+		 * @param <T>      parameter for the expected data type
 		 * @return the decoded response
 		 */
 		<T> Mono<T> retrieveMono(Class<T> dataType);
@@ -408,8 +413,9 @@ public interface RSocketRequester {
 		 * whether the request input is single or multi-payload.
 		 * <p>If the return type is {@code Flux<Void>}, the {@code Flux} will
 		 * complete after all data is consumed.
+		 *
 		 * @param dataType the expected type for values in the response
-		 * @param <T> parameterize the expected type of values
+		 * @param <T>      parameterize the expected type of values
 		 * @return the decoded response
 		 */
 		<T> Flux<T> retrieveFlux(Class<T> dataType);

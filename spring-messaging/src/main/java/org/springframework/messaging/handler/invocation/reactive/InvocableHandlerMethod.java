@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.messaging.handler.invocation.reactive;
 
 import java.lang.reflect.InvocationTargetException;
@@ -119,7 +103,8 @@ public class InvocableHandlerMethod extends HandlerMethod {
 
 	/**
 	 * Invoke the method for the given exchange.
-	 * @param message the current message
+	 *
+	 * @param message      the current message
 	 * @param providedArgs optional list of argument values to match by type
 	 * @return a Mono with the result from the invocation
 	 */
@@ -135,20 +120,16 @@ public class InvocableHandlerMethod extends HandlerMethod {
 						&& CoroutinesUtils.isSuspendingFunction(method)) {
 					isSuspendingFunction = true;
 					value = CoroutinesUtils.invokeSuspendingFunction(method, getBean(), args);
-				}
-				else {
+				} else {
 					value = method.invoke(getBean(), args);
 				}
-			}
-			catch (IllegalArgumentException ex) {
+			} catch (IllegalArgumentException ex) {
 				assertTargetBean(getBridgedMethod(), getBean(), args);
 				String text = (ex.getMessage() != null ? ex.getMessage() : "Illegal argument");
 				return Mono.error(new IllegalStateException(formatInvokeError(text, args), ex));
-			}
-			catch (InvocationTargetException ex) {
+			} catch (InvocationTargetException ex) {
 				return Mono.error(ex.getTargetException());
-			}
-			catch (Throwable ex) {
+			} catch (Throwable ex) {
 				// Unlikely to ever get here, but it must be handled...
 				return Mono.error(new IllegalStateException(formatInvokeError("Invocation failure", args), ex));
 			}
@@ -183,8 +164,7 @@ public class InvocableHandlerMethod extends HandlerMethod {
 				argMonos.add(this.resolvers.resolveArgument(parameter, message)
 						.defaultIfEmpty(NO_ARG_VALUE)
 						.doOnError(ex -> logArgumentErrorIfNecessary(parameter, ex)));
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				logArgumentErrorIfNecessary(parameter, ex);
 				argMonos.add(Mono.error(ex));
 			}

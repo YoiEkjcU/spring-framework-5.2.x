@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.messaging.simp.config;
 
 import org.springframework.lang.Nullable;
@@ -65,7 +49,7 @@ public class StompBrokerRelayRegistration extends AbstractBrokerRegistration {
 
 
 	public StompBrokerRelayRegistration(SubscribableChannel clientInboundChannel,
-			MessageChannel clientOutboundChannel, String[] destinationPrefixes) {
+										MessageChannel clientOutboundChannel, String[] destinationPrefixes) {
 
 		super(clientInboundChannel, clientOutboundChannel, destinationPrefixes);
 	}
@@ -176,6 +160,7 @@ public class StompBrokerRelayRegistration extends AbstractBrokerRegistration {
 	 * <p><strong>Note:</strong> when this property is used, any
 	 * {@link #setRelayHost(String) host} or {@link #setRelayPort(int) port}
 	 * specified are effectively ignored.
+	 *
 	 * @since 4.3.15
 	 */
 	public void setTcpClient(TcpOperations<byte[]> tcpClient) {
@@ -198,8 +183,9 @@ public class StompBrokerRelayRegistration extends AbstractBrokerRegistration {
 	 * multi-application server scenario this gives other application servers
 	 * a chance to try.
 	 * <p>By default this is not set.
+	 *
 	 * @param destination the destination to broadcast unresolved messages to,
-	 * e.g. "/topic/unresolved-user-destination"
+	 *                    e.g. "/topic/unresolved-user-destination"
 	 */
 	public StompBrokerRelayRegistration setUserDestinationBroadcast(String destination) {
 		this.userDestinationBroadcast = destination;
@@ -217,8 +203,9 @@ public class StompBrokerRelayRegistration extends AbstractBrokerRegistration {
 	 * server scenarios this allows each server's user registry to be aware of
 	 * users connected to other servers.
 	 * <p>By default this is not set.
+	 *
 	 * @param destination the destination for broadcasting user registry details,
-	 * e.g. "/topic/simp-user-registry".
+	 *                    e.g. "/topic/simp-user-registry".
 	 */
 	public StompBrokerRelayRegistration setUserRegistryBroadcast(String destination) {
 		this.userRegistryBroadcast = destination;

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.messaging.simp.broker;
 
 import java.util.Collection;
@@ -80,25 +64,27 @@ public abstract class AbstractBrokerMessageHandler
 
 	/**
 	 * Constructor with no destination prefixes (matches all destinations).
-	 * @param inboundChannel the channel for receiving messages from clients (e.g. WebSocket clients)
+	 *
+	 * @param inboundChannel  the channel for receiving messages from clients (e.g. WebSocket clients)
 	 * @param outboundChannel the channel for sending messages to clients (e.g. WebSocket clients)
-	 * @param brokerChannel the channel for the application to send messages to the broker
+	 * @param brokerChannel   the channel for the application to send messages to the broker
 	 */
 	public AbstractBrokerMessageHandler(SubscribableChannel inboundChannel, MessageChannel outboundChannel,
-			SubscribableChannel brokerChannel) {
+										SubscribableChannel brokerChannel) {
 
 		this(inboundChannel, outboundChannel, brokerChannel, Collections.emptyList());
 	}
 
 	/**
 	 * Constructor with destination prefixes to match to destinations of messages.
-	 * @param inboundChannel the channel for receiving messages from clients (e.g. WebSocket clients)
-	 * @param outboundChannel the channel for sending messages to clients (e.g. WebSocket clients)
-	 * @param brokerChannel the channel for the application to send messages to the broker
+	 *
+	 * @param inboundChannel      the channel for receiving messages from clients (e.g. WebSocket clients)
+	 * @param outboundChannel     the channel for sending messages to clients (e.g. WebSocket clients)
+	 * @param brokerChannel       the channel for the application to send messages to the broker
 	 * @param destinationPrefixes prefixes to use to filter out messages
 	 */
 	public AbstractBrokerMessageHandler(SubscribableChannel inboundChannel, MessageChannel outboundChannel,
-			SubscribableChannel brokerChannel, @Nullable Collection<String> destinationPrefixes) {
+										SubscribableChannel brokerChannel, @Nullable Collection<String> destinationPrefixes) {
 
 		Assert.notNull(inboundChannel, "'inboundChannel' must not be null");
 		Assert.notNull(outboundChannel, "'outboundChannel' must not be null");
@@ -138,6 +124,7 @@ public abstract class AbstractBrokerMessageHandler
 	 * will be sent to the {@code "clientOutboundChannel"} one at a time in
 	 * order to preserve the order of publication. Enable this only if needed
 	 * since there is some performance overhead to keep messages in order.
+	 *
 	 * @param preservePublishOrder whether to publish in order
 	 * @since 5.1
 	 */
@@ -148,6 +135,7 @@ public abstract class AbstractBrokerMessageHandler
 
 	/**
 	 * Whether to ensure messages are received in the order of publication.
+	 *
 	 * @since 5.1
 	 */
 	public boolean isPreservePublishOrder() {
@@ -294,6 +282,7 @@ public abstract class AbstractBrokerMessageHandler
 	/**
 	 * Get the MessageChannel to use for sending messages to clients, possibly
 	 * a per-session wrapper when {@code preservePublishOrder=true}.
+	 *
 	 * @since 5.1
 	 */
 	protected MessageChannel getClientOutboundChannelForSession(String sessionId) {

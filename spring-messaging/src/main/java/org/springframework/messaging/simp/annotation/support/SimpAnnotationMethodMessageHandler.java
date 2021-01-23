@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.messaging.simp.annotation.support;
 
 import java.lang.reflect.Method;
@@ -129,12 +113,13 @@ public class SimpAnnotationMethodMessageHandler extends AbstractMethodMessageHan
 	/**
 	 * Create an instance of SimpAnnotationMethodMessageHandler with the given
 	 * message channels and broker messaging template.
-	 * @param clientInboundChannel the channel for receiving messages from clients (e.g. WebSocket clients)
+	 *
+	 * @param clientInboundChannel  the channel for receiving messages from clients (e.g. WebSocket clients)
 	 * @param clientOutboundChannel the channel for messages to clients (e.g. WebSocket clients)
-	 * @param brokerTemplate a messaging template to send application messages to the broker
+	 * @param brokerTemplate        a messaging template to send application messages to the broker
 	 */
 	public SimpAnnotationMethodMessageHandler(SubscribableChannel clientInboundChannel,
-			MessageChannel clientOutboundChannel, SimpMessageSendingOperations brokerTemplate) {
+											  MessageChannel clientOutboundChannel, SimpMessageSendingOperations brokerTemplate) {
 
 		Assert.notNull(clientInboundChannel, "clientInboundChannel must not be null");
 		Assert.notNull(clientOutboundChannel, "clientOutboundChannel must not be null");
@@ -184,6 +169,7 @@ public class SimpAnnotationMethodMessageHandler extends AbstractMethodMessageHan
 	 * Configure a {@link MessageConverter} to use to convert the payload of a message from
 	 * its serialized form with a specific MIME type to an Object matching the target method
 	 * parameter. The converter is also used when sending a message to the message broker.
+	 *
 	 * @see CompositeMessageConverter
 	 */
 	public void setMessageConverter(MessageConverter converter) {
@@ -242,6 +228,7 @@ public class SimpAnnotationMethodMessageHandler extends AbstractMethodMessageHan
 
 	/**
 	 * Set the Validator instance used for validating {@code @Payload} arguments.
+	 *
 	 * @see org.springframework.validation.annotation.Validated
 	 * @see PayloadMethodArgumentResolver
 	 */
@@ -427,6 +414,7 @@ public class SimpAnnotationMethodMessageHandler extends AbstractMethodMessageHan
 
 	/**
 	 * Resolve placeholder values in the given array of destinations.
+	 *
 	 * @return a new array with updated destinations
 	 * @since 4.2
 	 */
@@ -470,8 +458,7 @@ public class SimpAnnotationMethodMessageHandler extends AbstractMethodMessageHan
 			if (destination.startsWith(prefix)) {
 				if (this.slashPathSeparator) {
 					return destination.substring(prefix.length() - 1);
-				}
-				else {
+				} else {
 					return destination.substring(prefix.length());
 				}
 			}
@@ -493,7 +480,7 @@ public class SimpAnnotationMethodMessageHandler extends AbstractMethodMessageHan
 
 	@Override
 	protected void handleMatch(SimpMessageMappingInfo mapping, HandlerMethod handlerMethod,
-			String lookupDestination, Message<?> message) {
+							   String lookupDestination, Message<?> message) {
 
 		Set<String> patterns = mapping.getDestinationConditions().getPatterns();
 		if (!CollectionUtils.isEmpty(patterns)) {
@@ -509,8 +496,7 @@ public class SimpAnnotationMethodMessageHandler extends AbstractMethodMessageHan
 		try {
 			SimpAttributesContextHolder.setAttributesFromMessage(message);
 			super.handleMatch(mapping, handlerMethod, lookupDestination, message);
-		}
-		finally {
+		} finally {
 			SimpAttributesContextHolder.resetAttributes();
 		}
 	}
