@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.handler;
 
 import java.util.LinkedHashMap;
@@ -64,10 +48,11 @@ public class SimpleUrlHandlerMapping extends AbstractUrlHandlerMapping {
 
 	/**
 	 * Create a {@code SimpleUrlHandlerMapping} using the supplied URL map.
+	 *
 	 * @param urlMap map with URL paths as keys and handler beans (or handler
-	 * bean names) as values
-	 * @since 5.2
+	 *               bean names) as values
 	 * @see #setUrlMap(Map)
+	 * @since 5.2
 	 */
 	public SimpleUrlHandlerMapping(Map<String, ?> urlMap) {
 		setUrlMap(urlMap);
@@ -75,12 +60,13 @@ public class SimpleUrlHandlerMapping extends AbstractUrlHandlerMapping {
 
 	/**
 	 * Create a {@code SimpleUrlHandlerMapping} using the supplied URL map and order.
+	 *
 	 * @param urlMap map with URL paths as keys and handler beans (or handler
-	 * bean names) as values
-	 * @param order the order value for this {@code SimpleUrlHandlerMapping}
-	 * @since 5.2
+	 *               bean names) as values
+	 * @param order  the order value for this {@code SimpleUrlHandlerMapping}
 	 * @see #setUrlMap(Map)
 	 * @see #setOrder(int)
+	 * @since 5.2
 	 */
 	public SimpleUrlHandlerMapping(Map<String, ?> urlMap, int order) {
 		setUrlMap(urlMap);
@@ -93,6 +79,7 @@ public class SimpleUrlHandlerMapping extends AbstractUrlHandlerMapping {
 	 * This is the typical way of configuring this HandlerMapping.
 	 * <p>Supports direct URL matches and Ant-style pattern matches. For syntax details,
 	 * see the {@link org.springframework.web.util.pattern.PathPattern} javadoc.
+	 *
 	 * @param mappings properties with URLs as keys and bean names as values
 	 * @see #setUrlMap
 	 */
@@ -105,6 +92,7 @@ public class SimpleUrlHandlerMapping extends AbstractUrlHandlerMapping {
 	 * as values. Convenient for population with bean references.
 	 * <p>Supports direct URL matches and Ant-style pattern matches. For syntax details,
 	 * see the {@link org.springframework.web.util.pattern.PathPattern} javadoc.
+	 *
 	 * @param urlMap map with URLs as keys and beans as values
 	 * @see #setMappings
 	 */
@@ -136,15 +124,15 @@ public class SimpleUrlHandlerMapping extends AbstractUrlHandlerMapping {
 
 	/**
 	 * Register all handlers specified in the URL map for the corresponding paths.
+	 *
 	 * @param urlMap a Map with URL paths as keys and handler beans or bean names as values
-	 * @throws BeansException if a handler couldn't be registered
+	 * @throws BeansException        if a handler couldn't be registered
 	 * @throws IllegalStateException if there is a conflicting handler registered
 	 */
 	protected void registerHandlers(Map<String, Object> urlMap) throws BeansException {
 		if (urlMap.isEmpty()) {
 			logger.trace("No patterns in " + formatMappingName());
-		}
-		else {
+		} else {
 			for (Map.Entry<String, Object> entry : urlMap.entrySet()) {
 				String url = entry.getKey();
 				Object handler = entry.getValue();

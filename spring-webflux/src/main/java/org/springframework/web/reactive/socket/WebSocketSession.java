@@ -1,18 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.springframework.web.reactive.socket;
 
 import java.util.Map;
@@ -49,12 +34,14 @@ public interface WebSocketSession {
 
 	/**
 	 * Return a {@code DataBuffer} Factory to create message payloads.
+	 *
 	 * @return the buffer factory for the session
 	 */
 	DataBufferFactory bufferFactory();
 
 	/**
 	 * Return the map with attributes associated with the WebSocket session.
+	 *
 	 * @return a Map with the session attributes (never {@code null})
 	 * @since 5.1
 	 */
@@ -91,6 +78,7 @@ public interface WebSocketSession {
 
 	/**
 	 * Close the WebSocket session with the given status.
+	 *
 	 * @param status the close status
 	 */
 	Mono<Void> close(CloseStatus status);
@@ -99,6 +87,7 @@ public interface WebSocketSession {
 	 * Provides access to the {@code CloseStatus} with which the session is
 	 * closed either locally or remotely, or completes empty if the session ended
 	 * without a status.
+	 *
 	 * @since 5.3
 	 */
 	Mono<CloseStatus> closeStatus();

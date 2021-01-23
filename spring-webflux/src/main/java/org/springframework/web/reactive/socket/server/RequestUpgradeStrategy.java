@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.socket.server;
 
 import java.util.function.Supplier;
@@ -43,9 +27,10 @@ public interface RequestUpgradeStrategy {
 
 	/**
 	 * Upgrade to a WebSocket session and handle it with the given handler.
-	 * @param exchange the current exchange
+	 *
+	 * @param exchange         the current exchange
 	 * @param webSocketHandler handler for the WebSocket session
-	 * @param subProtocol the selected sub-protocol got the handler
+	 * @param subProtocol      the selected sub-protocol got the handler
 	 * @return completion {@code Mono<Void>} to indicate the outcome of the
 	 * WebSocket session handling.
 	 * @deprecated as of 5.1 in favor of
@@ -53,23 +38,24 @@ public interface RequestUpgradeStrategy {
 	 */
 	@Deprecated
 	default Mono<Void> upgrade(ServerWebExchange exchange, WebSocketHandler webSocketHandler,
-			@Nullable String subProtocol) {
+							   @Nullable String subProtocol) {
 
 		return Mono.error(new UnsupportedOperationException());
 	}
 
 	/**
 	 * Upgrade to a WebSocket session and handle it with the given handler.
-	 * @param exchange the current exchange
-	 * @param webSocketHandler handler for the WebSocket session
-	 * @param subProtocol the selected sub-protocol got the handler
+	 *
+	 * @param exchange             the current exchange
+	 * @param webSocketHandler     handler for the WebSocket session
+	 * @param subProtocol          the selected sub-protocol got the handler
 	 * @param handshakeInfoFactory factory to create HandshakeInfo for the WebSocket session
 	 * @return completion {@code Mono<Void>} to indicate the outcome of the
 	 * WebSocket session handling.
 	 * @since 5.1
 	 */
 	default Mono<Void> upgrade(ServerWebExchange exchange, WebSocketHandler webSocketHandler,
-			@Nullable String subProtocol, Supplier<HandshakeInfo> handshakeInfoFactory) {
+							   @Nullable String subProtocol, Supplier<HandshakeInfo> handshakeInfoFactory) {
 
 		return upgrade(exchange, webSocketHandler, subProtocol);
 	}

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.result.condition;
 
 import java.util.ArrayList;
@@ -59,9 +43,10 @@ public final class ConsumesRequestCondition extends AbstractRequestCondition<Con
 
 	/**
 	 * Creates a new instance from 0 or more "consumes" expressions.
+	 *
 	 * @param consumes expressions with the syntax described in
-	 * {@link RequestMapping#consumes()}; if 0 expressions are provided,
-	 * the condition will match to every request
+	 *                 {@link RequestMapping#consumes()}; if 0 expressions are provided,
+	 *                 the condition will match to every request
 	 */
 	public ConsumesRequestCondition(String... consumes) {
 		this(consumes, null);
@@ -72,8 +57,9 @@ public final class ConsumesRequestCondition extends AbstractRequestCondition<Con
 	 * "Header" expressions where the header name is not 'Content-Type' or have
 	 * no header value defined are ignored. If 0 expressions are provided in
 	 * total, the condition will match to every request
+	 *
 	 * @param consumes as described in {@link RequestMapping#consumes()}
-	 * @param headers as described in {@link RequestMapping#headers()}
+	 * @param headers  as described in {@link RequestMapping#headers()}
 	 */
 	public ConsumesRequestCondition(String[] consumes, String[] headers) {
 		this.expressions = parseExpressions(consumes, headers);
@@ -157,6 +143,7 @@ public final class ConsumesRequestCondition extends AbstractRequestCondition<Con
 	 * header or falls back on "Content-Type: application/octet-stream".
 	 * <p>If set to {@code false}, and the request does not have a body, then this
 	 * condition matches automatically, i.e. without checking expressions.
+	 *
 	 * @param bodyRequired whether requests are expected to have a body
 	 * @since 5.2
 	 */
@@ -166,6 +153,7 @@ public final class ConsumesRequestCondition extends AbstractRequestCondition<Con
 
 	/**
 	 * Return the setting for {@link #setBodyRequired(boolean)}.
+	 *
 	 * @since 5.2
 	 */
 	public boolean isBodyRequired() {
@@ -188,6 +176,7 @@ public final class ConsumesRequestCondition extends AbstractRequestCondition<Con
 	 * request 'Content-Type' header and returns an instance that is guaranteed
 	 * to contain matching expressions only. The match is performed via
 	 * {@link MediaType#includes(MediaType)}.
+	 *
 	 * @param exchange the current exchange
 	 * @return the same instance if the condition contains no expressions;
 	 * or a new condition with matching expressions only;
@@ -243,14 +232,11 @@ public final class ConsumesRequestCondition extends AbstractRequestCondition<Con
 	public int compareTo(ConsumesRequestCondition other, ServerWebExchange exchange) {
 		if (this.expressions.isEmpty() && other.expressions.isEmpty()) {
 			return 0;
-		}
-		else if (this.expressions.isEmpty()) {
+		} else if (this.expressions.isEmpty()) {
 			return 1;
-		}
-		else if (other.expressions.isEmpty()) {
+		} else if (other.expressions.isEmpty()) {
 			return -1;
-		}
-		else {
+		} else {
 			return this.expressions.get(0).compareTo(other.expressions.get(0));
 		}
 	}
@@ -275,8 +261,7 @@ public final class ConsumesRequestCondition extends AbstractRequestCondition<Con
 				MediaType contentType = exchange.getRequest().getHeaders().getContentType();
 				contentType = (contentType != null ? contentType : MediaType.APPLICATION_OCTET_STREAM);
 				return getMediaType().includes(contentType);
-			}
-			catch (InvalidMediaTypeException ex) {
+			} catch (InvalidMediaTypeException ex) {
 				throw new UnsupportedMediaTypeStatusException("Can't parse Content-Type [" +
 						exchange.getRequest().getHeaders().getFirst("Content-Type") +
 						"]: " + ex.getMessage());

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.function.server;
 
 import java.net.URI;
@@ -82,8 +66,7 @@ class DefaultServerResponseBuilder implements ServerResponse.BodyBuilder {
 			AbstractServerResponse abstractOther = (AbstractServerResponse) other;
 			this.statusCode = abstractOther.statusCode;
 			this.hints.putAll(abstractOther.hints);
-		}
-		else {
+		} else {
 			this.statusCode = other.statusCode().value();
 		}
 	}
@@ -248,7 +231,7 @@ class DefaultServerResponseBuilder implements ServerResponse.BodyBuilder {
 		return initBuilder(producer, BodyInserters.fromProducer(producer, elementTypeRef));
 	}
 
-	private  <T> Mono<ServerResponse> initBuilder(T entity, BodyInserter<T, ReactiveHttpOutputMessage> inserter) {
+	private <T> Mono<ServerResponse> initBuilder(T entity, BodyInserter<T, ReactiveHttpOutputMessage> inserter) {
 		return new DefaultEntityResponseBuilder<>(entity, inserter)
 				.status(this.statusCode)
 				.headers(this.headers)
@@ -346,8 +329,7 @@ class DefaultServerResponseBuilder implements ServerResponse.BodyBuilder {
 			HttpMethod httpMethod = exchange.getRequest().getMethod();
 			if (SAFE_METHODS.contains(httpMethod) && exchange.checkNotModified(headers().getETag(), lastModified)) {
 				return exchange.getResponse().setComplete();
-			}
-			else {
+			} else {
 				return writeToInternal(exchange, context);
 			}
 		}
@@ -360,7 +342,7 @@ class DefaultServerResponseBuilder implements ServerResponse.BodyBuilder {
 
 		protected abstract Mono<Void> writeToInternal(ServerWebExchange exchange, Context context);
 
-		private static <K,V> void copy(MultiValueMap<K,V> src, MultiValueMap<K,V> dst) {
+		private static <K, V> void copy(MultiValueMap<K, V> src, MultiValueMap<K, V> dst) {
 			if (!src.isEmpty()) {
 				src.entrySet().stream()
 						.filter(entry -> !dst.containsKey(entry.getKey()))
@@ -375,8 +357,8 @@ class DefaultServerResponseBuilder implements ServerResponse.BodyBuilder {
 		private final BiFunction<ServerWebExchange, Context, Mono<Void>> writeFunction;
 
 		public WriterFunctionResponse(int statusCode, HttpHeaders headers,
-				MultiValueMap<String, ResponseCookie> cookies,
-				BiFunction<ServerWebExchange, Context, Mono<Void>> writeFunction) {
+									  MultiValueMap<String, ResponseCookie> cookies,
+									  BiFunction<ServerWebExchange, Context, Mono<Void>> writeFunction) {
 
 			super(statusCode, headers, cookies, Collections.emptyMap());
 			Assert.notNull(writeFunction, "BiFunction must not be null");
@@ -396,8 +378,8 @@ class DefaultServerResponseBuilder implements ServerResponse.BodyBuilder {
 
 
 		public BodyInserterResponse(int statusCode, HttpHeaders headers,
-				MultiValueMap<String, ResponseCookie> cookies,
-				BodyInserter<T, ? super ServerHttpResponse> body, Map<String, Object> hints) {
+									MultiValueMap<String, ResponseCookie> cookies,
+									BodyInserter<T, ? super ServerHttpResponse> body, Map<String, Object> hints) {
 
 			super(statusCode, headers, cookies, hints);
 			Assert.notNull(body, "BodyInserter must not be null");
@@ -411,10 +393,12 @@ class DefaultServerResponseBuilder implements ServerResponse.BodyBuilder {
 				public List<HttpMessageWriter<?>> messageWriters() {
 					return context.messageWriters();
 				}
+
 				@Override
 				public Optional<ServerHttpRequest> serverRequest() {
 					return Optional.of(exchange.getRequest());
 				}
+
 				@Override
 				public Map<String, Object> hints() {
 					hints.put(Hints.LOG_PREFIX_HINT, exchange.getLogPrefix());

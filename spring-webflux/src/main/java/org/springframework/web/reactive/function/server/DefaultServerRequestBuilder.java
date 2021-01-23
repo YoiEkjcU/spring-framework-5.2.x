@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.function.server;
 
 import java.net.URI;
@@ -205,7 +189,7 @@ class DefaultServerRequestBuilder implements ServerRequest.Builder {
 		private final Flux<DataBuffer> body;
 
 		public BuiltServerHttpRequest(String id, String method, URI uri, HttpHeaders headers,
-				MultiValueMap<String, HttpCookie> cookies, Flux<DataBuffer> body) {
+									  MultiValueMap<String, HttpCookie> cookies, Flux<DataBuffer> body) {
 
 			this.id = id;
 			this.method = method;
@@ -232,8 +216,7 @@ class DefaultServerRequestBuilder implements ServerRequest.Builder {
 					String value = matcher.group(3);
 					if (value != null) {
 						value = UriUtils.decode(value, StandardCharsets.UTF_8);
-					}
-					else {
+					} else {
 						value = (StringUtils.hasLength(eq) ? "" : null);
 					}
 					queryParams.add(name, value);
@@ -309,7 +292,7 @@ class DefaultServerRequestBuilder implements ServerRequest.Builder {
 		private final Mono<MultiValueMap<String, Part>> multipartDataMono;
 
 		DelegatingServerWebExchange(ServerHttpRequest request, Map<String, Object> attributes,
-				ServerWebExchange delegate, List<HttpMessageReader<?>> messageReaders) {
+									ServerWebExchange delegate, List<HttpMessageReader<?>> messageReaders) {
 
 			this.request = request;
 			this.attributes = attributes;
@@ -320,7 +303,7 @@ class DefaultServerRequestBuilder implements ServerRequest.Builder {
 
 		@SuppressWarnings("unchecked")
 		private static Mono<MultiValueMap<String, String>> initFormData(ServerHttpRequest request,
-				List<HttpMessageReader<?>> readers) {
+																		List<HttpMessageReader<?>> readers) {
 
 			try {
 				MediaType contentType = request.getHeaders().getContentType();
@@ -333,8 +316,7 @@ class DefaultServerRequestBuilder implements ServerRequest.Builder {
 							.switchIfEmpty(EMPTY_FORM_DATA)
 							.cache();
 				}
-			}
-			catch (InvalidMediaTypeException ex) {
+			} catch (InvalidMediaTypeException ex) {
 				// Ignore
 			}
 			return EMPTY_FORM_DATA;
@@ -342,7 +324,7 @@ class DefaultServerRequestBuilder implements ServerRequest.Builder {
 
 		@SuppressWarnings("unchecked")
 		private static Mono<MultiValueMap<String, Part>> initMultipartData(ServerHttpRequest request,
-				List<HttpMessageReader<?>> readers) {
+																		   List<HttpMessageReader<?>> readers) {
 
 			try {
 				MediaType contentType = request.getHeaders().getContentType();
@@ -355,8 +337,7 @@ class DefaultServerRequestBuilder implements ServerRequest.Builder {
 							.switchIfEmpty(EMPTY_MULTIPART_DATA)
 							.cache();
 				}
-			}
-			catch (InvalidMediaTypeException ex) {
+			} catch (InvalidMediaTypeException ex) {
 				// Ignore
 			}
 			return EMPTY_MULTIPART_DATA;

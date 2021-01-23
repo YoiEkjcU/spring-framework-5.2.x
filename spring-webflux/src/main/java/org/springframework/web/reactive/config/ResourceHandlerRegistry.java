@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.config;
 
 import java.util.ArrayList;
@@ -69,6 +53,7 @@ public class ResourceHandlerRegistry {
 	/**
 	 * Create a new resource handler registry for the given resource loader
 	 * (typically an application context).
+	 *
 	 * @param resourceLoader the resource loader to use
 	 */
 	public ResourceHandlerRegistry(ResourceLoader resourceLoader) {
@@ -78,13 +63,13 @@ public class ResourceHandlerRegistry {
 	/**
 	 * Configure the {@link ResourceUrlProvider} that can be used by
 	 * {@link org.springframework.web.reactive.resource.ResourceTransformer} instances.
+	 *
 	 * @param resourceUrlProvider the resource URL provider to use
 	 * @since 5.0.11
 	 */
 	public void setResourceUrlProvider(@Nullable ResourceUrlProvider resourceUrlProvider) {
 		this.resourceUrlProvider = resourceUrlProvider;
 	}
-
 
 
 	/**
@@ -94,6 +79,7 @@ public class ResourceHandlerRegistry {
 	 * <p>Patterns like {@code "/static/**"} or {@code "/css/{filename:\\w+\\.css}"}
 	 * are allowed. See {@link org.springframework.web.util.pattern.PathPattern}
 	 * for more details on the syntax.
+	 *
 	 * @return a {@link ResourceHandlerRegistration} to use to further configure
 	 * the registered resource handler
 	 */
@@ -145,8 +131,7 @@ public class ResourceHandlerRegistry {
 				});
 				try {
 					handler.afterPropertiesSet();
-				}
-				catch (Throwable ex) {
+				} catch (Throwable ex) {
 					throw new BeanInitializationException("Failed to init ResourceHttpRequestHandler", ex);
 				}
 				urlMap.put(pathPattern, handler);

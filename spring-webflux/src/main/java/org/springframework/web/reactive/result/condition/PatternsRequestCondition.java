@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.result.condition;
 
 import java.util.Arrays;
@@ -54,6 +38,7 @@ public final class PatternsRequestCondition extends AbstractRequestCondition<Pat
 
 	/**
 	 * Creates a new instance with the given URL patterns.
+	 *
 	 * @param patterns 0 or more URL patterns; if 0 the condition will match to every request.
 	 */
 	public PatternsRequestCondition(PathPattern... patterns) {
@@ -92,6 +77,7 @@ public final class PatternsRequestCondition extends AbstractRequestCondition<Pat
 
 	/**
 	 * Return the mapping paths that are not patterns.
+	 *
 	 * @since 5.3
 	 */
 	public Set<String> getDirectPaths() {
@@ -122,14 +108,11 @@ public final class PatternsRequestCondition extends AbstractRequestCondition<Pat
 	public PatternsRequestCondition combine(PatternsRequestCondition other) {
 		if (isEmptyPathMapping() && other.isEmptyPathMapping()) {
 			return this;
-		}
-		else if (other.isEmptyPathMapping()) {
+		} else if (other.isEmptyPathMapping()) {
 			return this;
-		}
-		else if (isEmptyPathMapping()) {
+		} else if (isEmptyPathMapping()) {
 			return other;
-		}
-		else {
+		} else {
 			SortedSet<PathPattern> combined = new TreeSet<>();
 			for (PathPattern pattern1 : this.patterns) {
 				for (PathPattern pattern2 : other.patterns) {
@@ -143,6 +126,7 @@ public final class PatternsRequestCondition extends AbstractRequestCondition<Pat
 	/**
 	 * Checks if any of the patterns match the given request and returns an instance
 	 * that is guaranteed to contain matching patterns, sorted.
+	 *
 	 * @param exchange the current exchange
 	 * @return the same instance if the condition contains no patterns;
 	 * or a new condition with sorted matching patterns;
@@ -190,11 +174,9 @@ public final class PatternsRequestCondition extends AbstractRequestCondition<Pat
 		}
 		if (iterator.hasNext()) {
 			return -1;
-		}
-		else if (iteratorOther.hasNext()) {
+		} else if (iteratorOther.hasNext()) {
 			return 1;
-		}
-		else {
+		} else {
 			return 0;
 		}
 	}

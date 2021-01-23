@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive;
 
 import java.util.Collections;
@@ -63,6 +47,7 @@ public class BindingContext {
 
 	/**
 	 * Create a new {@code BindingContext} with the given initializer.
+	 *
 	 * @param initializer the binding initializer to apply (may be {@code null})
 	 */
 	public BindingContext(@Nullable WebBindingInitializer initializer) {
@@ -81,9 +66,10 @@ public class BindingContext {
 	/**
 	 * Create a {@link WebExchangeDataBinder} to apply data binding and
 	 * validation with on the target, command object.
+	 *
 	 * @param exchange the current exchange
-	 * @param target the object to create a data binder for
-	 * @param name the name of the target object
+	 * @param target   the object to create a data binder for
+	 * @param name     the name of the target object
 	 * @return the created data binder
 	 * @throws ServerErrorException if {@code @InitBinder} method invocation fails
 	 */
@@ -97,6 +83,7 @@ public class BindingContext {
 
 	/**
 	 * Initialize the data binder instance for the given exchange.
+	 *
 	 * @throws ServerErrorException if {@code @InitBinder} method invocation fails
 	 */
 	protected WebExchangeDataBinder initDataBinder(WebExchangeDataBinder binder, ServerWebExchange exchange) {
@@ -106,8 +93,9 @@ public class BindingContext {
 	/**
 	 * Create a {@link WebExchangeDataBinder} without a target object for type
 	 * conversion of request values to simple types.
+	 *
 	 * @param exchange the current exchange
-	 * @param name the name of the target object
+	 * @param name     the name of the target object
 	 * @return the created data binder
 	 * @throws ServerErrorException if {@code @InitBinder} method invocation fails
 	 */

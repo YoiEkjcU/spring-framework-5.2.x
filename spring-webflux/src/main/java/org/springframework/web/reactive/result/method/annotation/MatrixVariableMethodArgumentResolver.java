@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.result.method.annotation;
 
 import java.util.ArrayList;
@@ -44,8 +28,8 @@ import org.springframework.web.server.ServerWebInputException;
  * type map (vs multiple attributes collected in a map).
  *
  * @author Rossen Stoyanchev
- * @since 5.0.1
  * @see MatrixVariableMapMethodArgumentResolver
+ * @since 5.0.1
  */
 public class MatrixVariableMethodArgumentResolver extends AbstractNamedValueSyncArgumentResolver {
 
@@ -88,8 +72,7 @@ public class MatrixVariableMethodArgumentResolver extends AbstractNamedValueSync
 			if (pathParameters.containsKey(pathVar)) {
 				paramValues = pathParameters.get(pathVar).get(name);
 			}
-		}
-		else {
+		} else {
 			boolean found = false;
 			paramValues = new ArrayList<>();
 			for (MultiValueMap<String, String> params : pathParameters.values()) {
@@ -98,7 +81,7 @@ public class MatrixVariableMethodArgumentResolver extends AbstractNamedValueSync
 						String paramType = param.getNestedParameterType().getName();
 						throw new ServerErrorException(
 								"Found more than one match for URI path parameter '" + name +
-								"' for parameter type [" + paramType + "]. Use 'pathVar' attribute to disambiguate.",
+										"' for parameter type [" + paramType + "]. Use 'pathVar' attribute to disambiguate.",
 								param, null);
 					}
 					paramValues.addAll(params.get(name));
@@ -109,11 +92,9 @@ public class MatrixVariableMethodArgumentResolver extends AbstractNamedValueSync
 
 		if (CollectionUtils.isEmpty(paramValues)) {
 			return null;
-		}
-		else if (paramValues.size() == 1) {
+		} else if (paramValues.size() == 1) {
 			return paramValues.get(0);
-		}
-		else {
+		} else {
 			return paramValues;
 		}
 	}

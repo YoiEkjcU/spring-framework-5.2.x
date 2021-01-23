@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.result.view;
 
 import java.nio.charset.Charset;
@@ -52,11 +36,15 @@ import org.springframework.web.server.ServerWebExchange;
  */
 public abstract class AbstractView implements View, BeanNameAware, ApplicationContextAware {
 
-	/** Well-known name for the RequestDataValueProcessor in the bean factory. */
+	/**
+	 * Well-known name for the RequestDataValueProcessor in the bean factory.
+	 */
 	public static final String REQUEST_DATA_VALUE_PROCESSOR_BEAN_NAME = "requestDataValueProcessor";
 
 
-	/** Logger that is available to subclasses. */
+	/**
+	 * Logger that is available to subclasses.
+	 */
 	protected final Log logger = LogFactory.getLog(getClass());
 
 	private final ReactiveAdapterRegistry adapterRegistry;
@@ -167,6 +155,7 @@ public abstract class AbstractView implements View, BeanNameAware, ApplicationCo
 
 	/**
 	 * Obtain the {@link ApplicationContext} for actual use.
+	 *
 	 * @return the {@code ApplicationContext} (never {@code null})
 	 * @throws IllegalStateException if the ApplicationContext cannot be obtained
 	 * @see #getApplicationContext()
@@ -180,16 +169,17 @@ public abstract class AbstractView implements View, BeanNameAware, ApplicationCo
 
 	/**
 	 * Prepare the model to render.
-	 * @param model a map with attribute names as keys and corresponding model
-	 * objects as values (the map can also be {@code null} in case of an empty model)
+	 *
+	 * @param model       a map with attribute names as keys and corresponding model
+	 *                    objects as values (the map can also be {@code null} in case of an empty model)
 	 * @param contentType the content type selected to render with, which should
-	 * match one of the {@link #getSupportedMediaTypes() supported media types}
-	 * @param exchange the current exchange
+	 *                    match one of the {@link #getSupportedMediaTypes() supported media types}
+	 * @param exchange    the current exchange
 	 * @return a {@code Mono} that represents when and if rendering succeeds
 	 */
 	@Override
 	public Mono<Void> render(@Nullable Map<String, ?> model, @Nullable MediaType contentType,
-			ServerWebExchange exchange) {
+							 ServerWebExchange exchange) {
 
 		if (logger.isDebugEnabled()) {
 			logger.debug(exchange.getLogPrefix() + "View " + formatViewName() +
@@ -225,8 +215,7 @@ public abstract class AbstractView implements View, BeanNameAware, ApplicationCo
 					attributes.put(entry.getKey(), entry.getValue());
 				}
 			}
-		}
-		else {
+		} else {
 			attributes = new ConcurrentHashMap<>(0);
 		}
 
@@ -243,13 +232,14 @@ public abstract class AbstractView implements View, BeanNameAware, ApplicationCo
 	 * resolve them into actual values. When the returned {@code Mono<Void>}
 	 * completes, the asynchronous attributes in the model will have been
 	 * replaced with their corresponding resolved values.
+	 *
 	 * @return result a {@code Mono} that completes when the model is ready
 	 * @since 5.1.8
 	 */
 	protected Mono<Void> resolveAsyncAttributes(Map<String, Object> model, ServerWebExchange exchange) {
 		List<Mono<?>> asyncAttributes = null;
 		for (Map.Entry<String, ?> entry : model.entrySet()) {
-			Object value =  entry.getValue();
+			Object value = entry.getValue();
 			if (value == null) {
 				continue;
 			}
@@ -264,16 +254,14 @@ public abstract class AbstractView implements View, BeanNameAware, ApplicationCo
 							Flux.from(adapter.toPublisher(value))
 									.collectList()
 									.doOnSuccess(result -> model.put(name, result)));
-				}
-				else {
+				} else {
 					asyncAttributes.add(
 							Mono.from(adapter.toPublisher(value))
 									.doOnSuccess(result -> {
 										if (result != null) {
 											model.put(name, result);
 											addBindingResult(name, result, model, exchange);
-										}
-										else {
+										} else {
 											model.remove(name);
 										}
 									}));
@@ -299,6 +287,7 @@ public abstract class AbstractView implements View, BeanNameAware, ApplicationCo
 	 * resolve them into actual values. When the returned {@code Mono<Void>}
 	 * completes, the asynchronous attributes in the model would have been
 	 * replaced with their corresponding resolved values.
+	 *
 	 * @return result {@code Mono} that completes when the model is ready
 	 * @deprecated as of 5.1.8 this method is still invoked but it is a no-op.
 	 * Please use {@link #resolveAsyncAttributes(Map, ServerWebExchange)}
@@ -315,9 +304,10 @@ public abstract class AbstractView implements View, BeanNameAware, ApplicationCo
 	 * <p>The default implementation creates a standard {@code RequestContext}
 	 * instance for the given exchange and model.
 	 * <p>Can be overridden in subclasses to create custom instances.
+	 *
 	 * @param exchange the current exchange
-	 * @param model a combined output Map (never {@code null}), with dynamic values
-	 * taking precedence over static attributes
+	 * @param model    a combined output Map (never {@code null}), with dynamic values
+	 *                 taking precedence over static attributes
 	 * @return the {@code RequestContext} instance
 	 * @see #setRequestContextAttribute
 	 */
@@ -330,6 +320,7 @@ public abstract class AbstractView implements View, BeanNameAware, ApplicationCo
 	 * <p>The default implementation looks in the {@link #getApplicationContext()
 	 * ApplicationContext} for a {@code RequestDataValueProcessor} bean with
 	 * the name {@link #REQUEST_DATA_VALUE_PROCESSOR_BEAN_NAME}.
+	 *
 	 * @return the {@code RequestDataValueProcessor}, or {@code null} if there is
 	 * none in the application context
 	 */
@@ -344,15 +335,16 @@ public abstract class AbstractView implements View, BeanNameAware, ApplicationCo
 
 	/**
 	 * Subclasses must implement this method to actually render the view.
+	 *
 	 * @param renderAttributes combined output Map (never {@code null}),
-	 * with dynamic values taking precedence over static attributes
-	 * @param contentType the content type selected to render with, which should
-	 * match one of the {@linkplain #getSupportedMediaTypes() supported media types}
-	 * @param exchange current exchange
+	 *                         with dynamic values taking precedence over static attributes
+	 * @param contentType      the content type selected to render with, which should
+	 *                         match one of the {@linkplain #getSupportedMediaTypes() supported media types}
+	 * @param exchange         current exchange
 	 * @return a {@code Mono} that represents when and if rendering succeeds
 	 */
 	protected abstract Mono<Void> renderInternal(Map<String, Object> renderAttributes,
-			@Nullable MediaType contentType, ServerWebExchange exchange);
+												 @Nullable MediaType contentType, ServerWebExchange exchange);
 
 
 	@Override

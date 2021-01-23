@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.resource;
 
 import java.util.ArrayList;
@@ -94,12 +78,12 @@ public class ResourceUrlProvider implements ApplicationListener<ContextRefreshed
 		AnnotationAwareOrderComparator.sort(mappings);
 
 		mappings.forEach(mapping ->
-			mapping.getHandlerMap().forEach((pattern, handler) -> {
-				if (handler instanceof ResourceWebHandler) {
-					ResourceWebHandler resourceHandler = (ResourceWebHandler) handler;
-					this.handlerMap.put(pattern, resourceHandler);
-				}
-			}));
+				mapping.getHandlerMap().forEach((pattern, handler) -> {
+					if (handler instanceof ResourceWebHandler) {
+						ResourceWebHandler resourceHandler = (ResourceWebHandler) handler;
+						this.handlerMap.put(pattern, resourceHandler);
+					}
+				}));
 
 		if (this.handlerMap.isEmpty()) {
 			logger.trace("No resource handling mappings found");
@@ -111,8 +95,9 @@ public class ResourceUrlProvider implements ApplicationListener<ContextRefreshed
 	 * Get the public resource URL for the given URI string.
 	 * <p>The URI string is expected to be a path and if it contains a query or
 	 * fragment those will be preserved in the resulting public resource URL.
+	 *
 	 * @param uriString the URI string to transform
-	 * @param exchange the current exchange
+	 * @param exchange  the current exchange
 	 * @return the resolved public resource URL path, or empty if unresolved
 	 */
 	public final Mono<String> getForUriString(String uriString, ServerWebExchange exchange) {
@@ -154,7 +139,7 @@ public class ResourceUrlProvider implements ApplicationListener<ContextRefreshed
 					return chain.resolveUrlPath(path.value(), handler.getLocations())
 							.map(resolvedPath -> mapping.value() + resolvedPath);
 				})
-				.orElseGet(() ->{
+				.orElseGet(() -> {
 					if (logger.isTraceEnabled()) {
 						logger.trace(exchange.getLogPrefix() + "No match for \"" + lookupPath + "\"");
 					}
@@ -166,8 +151,7 @@ public class ResourceUrlProvider implements ApplicationListener<ContextRefreshed
 	private static String prependLeadingSlash(String pattern) {
 		if (StringUtils.hasLength(pattern) && !pattern.startsWith("/")) {
 			return "/" + pattern;
-		}
-		else {
+		} else {
 			return pattern;
 		}
 	}

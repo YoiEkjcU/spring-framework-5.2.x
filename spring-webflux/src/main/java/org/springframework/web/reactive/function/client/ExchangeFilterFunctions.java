@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.function.client;
 
 import java.nio.charset.Charset;
@@ -43,6 +27,7 @@ public abstract class ExchangeFilterFunctions {
 
 	/**
 	 * Name of the request attribute with {@link Credentials} for {@link #basicAuthentication()}.
+	 *
 	 * @deprecated as of Spring 5.1 in favor of using
 	 * {@link HttpHeaders#setBasicAuth(String, String)} while building the request.
 	 */
@@ -55,6 +40,7 @@ public abstract class ExchangeFilterFunctions {
 	 * Consume up to the specified number of bytes from the response body and
 	 * cancel if any more data arrives.
 	 * <p>Internally delegates to {@link DataBufferUtils#takeUntilByteCount}.
+	 *
 	 * @param maxByteCount the limit as number of bytes
 	 * @return the filter to limit the response size with
 	 * @since 5.1
@@ -70,12 +56,13 @@ public abstract class ExchangeFilterFunctions {
 	/**
 	 * Return a filter that generates an error signal when the given
 	 * {@link HttpStatus} predicate matches.
-	 * @param statusPredicate the predicate to check the HTTP status with
+	 *
+	 * @param statusPredicate   the predicate to check the HTTP status with
 	 * @param exceptionFunction the function that to create the exception
 	 * @return the filter to generate an error signal
 	 */
 	public static ExchangeFilterFunction statusError(Predicate<HttpStatus> statusPredicate,
-			Function<ClientResponse, ? extends Throwable> exceptionFunction) {
+													 Function<ClientResponse, ? extends Throwable> exceptionFunction) {
 
 		Assert.notNull(statusPredicate, "Predicate must not be null");
 		Assert.notNull(exceptionFunction, "Function must not be null");
@@ -89,6 +76,7 @@ public abstract class ExchangeFilterFunctions {
 	 * Return a filter that applies HTTP Basic Authentication to the request
 	 * headers via {@link HttpHeaders#setBasicAuth(String)} and
 	 * {@link HttpHeaders#encodeBasicAuth(String, String, Charset)}.
+	 *
 	 * @param username the username
 	 * @param password the password
 	 * @return the filter to add authentication headers with
@@ -107,6 +95,7 @@ public abstract class ExchangeFilterFunctions {
 	 * Variant of {@link #basicAuthentication(String, String)} that looks up
 	 * the {@link Credentials Credentials} in a
 	 * {@link #BASIC_AUTHENTICATION_CREDENTIALS_ATTRIBUTE request attribute}.
+	 *
 	 * @return the filter to use
 	 * @see Credentials
 	 * @deprecated as of Spring 5.1 in favor of using
@@ -121,8 +110,7 @@ public abstract class ExchangeFilterFunctions {
 				return next.exchange(ClientRequest.from(request)
 						.headers(headers -> headers.setBasicAuth(cred.username, cred.password))
 						.build());
-			}
-			else {
+			} else {
 				return next.exchange(request);
 			}
 		};
@@ -131,6 +119,7 @@ public abstract class ExchangeFilterFunctions {
 
 	/**
 	 * Stores username and password for HTTP basic authentication.
+	 *
 	 * @deprecated as of Spring 5.1 in favor of using
 	 * {@link HttpHeaders#setBasicAuth(String, String)} while building the request.
 	 */
@@ -143,6 +132,7 @@ public abstract class ExchangeFilterFunctions {
 
 		/**
 		 * Create a new {@code Credentials} instance with the given username and password.
+		 *
 		 * @param username the username
 		 * @param password the password
 		 */
@@ -157,6 +147,7 @@ public abstract class ExchangeFilterFunctions {
 		 * Return a {@literal Consumer} that stores the given username and password
 		 * as a request attribute of type {@code Credentials} that is in turn
 		 * used by {@link ExchangeFilterFunctions#basicAuthentication()}.
+		 *
 		 * @param username the username
 		 * @param password the password
 		 * @return a consumer that can be passed into

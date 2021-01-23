@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.result.method;
 
 import java.lang.reflect.Method;
@@ -93,15 +77,16 @@ public class SyncInvocableHandlerMethod extends HandlerMethod {
 
 	/**
 	 * Invoke the method for the given exchange.
-	 * @param exchange the current exchange
+	 *
+	 * @param exchange       the current exchange
 	 * @param bindingContext the binding context to use
-	 * @param providedArgs optional list of argument values to match by type
+	 * @param providedArgs   optional list of argument values to match by type
 	 * @return a Mono with a {@link HandlerResult}.
 	 * @throws ServerErrorException if method argument resolution or method invocation fails
 	 */
 	@Nullable
 	public HandlerResult invokeForHandlerResult(ServerWebExchange exchange,
-			BindingContext bindingContext, Object... providedArgs) {
+												BindingContext bindingContext, Object... providedArgs) {
 
 		MonoProcessor<HandlerResult> processor = MonoProcessor.fromSink(Sinks.one());
 		this.delegate.invoke(exchange, bindingContext, providedArgs).subscribeWith(processor);
@@ -113,8 +98,7 @@ public class SyncInvocableHandlerMethod extends HandlerMethod {
 						new ServerErrorException("Failed to invoke: " + getShortLogMessage(), getMethod(), ex));
 			}
 			return processor.peek();
-		}
-		else {
+		} else {
 			// Should never happen...
 			throw new IllegalStateException(
 					"SyncInvocableHandlerMethod should have completed synchronously.");

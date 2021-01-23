@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.function.client;
 
 import java.util.List;
@@ -37,12 +21,14 @@ public interface ExchangeStrategies {
 
 	/**
 	 * Return {@link HttpMessageReader HttpMessageReaders} to read and decode the response body with.
+	 *
 	 * @return the message readers
 	 */
 	List<HttpMessageReader<?>> messageReaders();
 
 	/**
 	 * Return {@link HttpMessageWriter HttpMessageWriters} to write and encode the request body with.
+	 *
 	 * @return the message writers
 	 */
 	List<HttpMessageWriter<?>> messageWriters();
@@ -50,6 +36,7 @@ public interface ExchangeStrategies {
 	/**
 	 * Return a builder to create a new {@link ExchangeStrategies} instance
 	 * replicated from the current instance.
+	 *
 	 * @since 5.1.12
 	 */
 	default Builder mutate() {
@@ -93,6 +80,7 @@ public interface ExchangeStrategies {
 
 		/**
 		 * Customize the list of client-side HTTP message readers and writers.
+		 *
 		 * @param consumer the consumer to customize the codecs
 		 * @return this builder
 		 */
@@ -100,6 +88,7 @@ public interface ExchangeStrategies {
 
 		/**
 		 * Builds the {@link ExchangeStrategies}.
+		 *
 		 * @return the built strategies
 		 */
 		ExchangeStrategies build();

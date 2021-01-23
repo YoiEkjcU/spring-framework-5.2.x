@@ -1,18 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.springframework.web.reactive.result.method.annotation;
 
 import java.util.Collections;
@@ -48,6 +33,7 @@ class SessionAttributesHandler {
 	 * Create a new session attributes handler. Session attribute names and types
 	 * are extracted from the {@code @SessionAttributes} annotation, if present,
 	 * on the given type.
+	 *
 	 * @param handlerType the controller type
 	 */
 	public SessionAttributesHandler(Class<?> handlerType) {
@@ -74,6 +60,7 @@ class SessionAttributesHandler {
 	 * <p>Attributes successfully resolved through this method are "remembered"
 	 * and subsequently used in {@link #retrieveAttributes(WebSession)}
 	 * and also {@link #cleanupAttributes(WebSession)}.
+	 *
 	 * @param attributeName the attribute name to check
 	 * @param attributeType the type for the attribute
 	 */
@@ -82,8 +69,7 @@ class SessionAttributesHandler {
 		if (this.attributeNames.contains(attributeName) || this.attributeTypes.contains(attributeType)) {
 			this.knownAttributeNames.add(attributeName);
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
@@ -92,6 +78,7 @@ class SessionAttributesHandler {
 	 * Retrieve "known" attributes from the session, i.e. attributes listed
 	 * by name in {@code @SessionAttributes} or attributes previously stored
 	 * in the model that matched by type.
+	 *
 	 * @param session the current session
 	 * @return a map with handler session attributes, possibly empty
 	 */
@@ -109,7 +96,8 @@ class SessionAttributesHandler {
 	/**
 	 * Store a subset of the given attributes in the session. Attributes not
 	 * declared as session attributes via {@code @SessionAttributes} are ignored.
-	 * @param session the current session
+	 *
+	 * @param session    the current session
 	 * @param attributes candidate attributes for session storage
 	 */
 	public void storeAttributes(WebSession session, Map<String, ?> attributes) {
@@ -124,6 +112,7 @@ class SessionAttributesHandler {
 	 * Remove "known" attributes from the session, i.e. attributes listed
 	 * by name in {@code @SessionAttributes} or attributes previously stored
 	 * in the model that matched by type.
+	 *
 	 * @param session the current session
 	 */
 	public void cleanupAttributes(WebSession session) {

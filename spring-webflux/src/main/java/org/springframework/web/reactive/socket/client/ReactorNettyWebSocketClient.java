@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.socket.client;
 
 import java.net.URI;
@@ -68,6 +52,7 @@ public class ReactorNettyWebSocketClient implements WebSocketClient {
 	/**
 	 * Constructor that accepts an existing {@link HttpClient} builder
 	 * with a default {@link WebsocketClientSpec.Builder}.
+	 *
 	 * @since 5.1
 	 */
 	public ReactorNettyWebSocketClient(HttpClient httpClient) {
@@ -77,6 +62,7 @@ public class ReactorNettyWebSocketClient implements WebSocketClient {
 	/**
 	 * Constructor that accepts an existing {@link HttpClient} builder
 	 * and a pre-configured {@link WebsocketClientSpec.Builder}.
+	 *
 	 * @since 5.3
 	 */
 	public ReactorNettyWebSocketClient(
@@ -101,6 +87,7 @@ public class ReactorNettyWebSocketClient implements WebSocketClient {
 	 * configuration. This can be used to check the configured parameters except
 	 * for sub-protocols which depend on the {@link WebSocketHandler} that is used
 	 * for a given upgrade.
+	 *
 	 * @since 5.3
 	 */
 	public WebsocketClientSpec getWebsocketClientSpec() {
@@ -129,6 +116,7 @@ public class ReactorNettyWebSocketClient implements WebSocketClient {
 	 * {@link io.netty.handler.codec.http.websocketx.WebSocketServerHandshakerFactory
 	 * WebSocketServerHandshakerFactory} in Netty.
 	 * <p>By default set to 65536 (64K).
+	 *
 	 * @param maxFramePayloadLength the max length for frames.
 	 * @since 5.2
 	 * @deprecated as of 5.3 in favor of providing a supplier of
@@ -141,6 +129,7 @@ public class ReactorNettyWebSocketClient implements WebSocketClient {
 
 	/**
 	 * Return the configured {@link #setMaxFramePayloadLength(int) maxFramePayloadLength}.
+	 *
 	 * @since 5.2
 	 * @deprecated as of 5.3 in favor of {@link #getWebsocketClientSpec()}
 	 */
@@ -157,6 +146,7 @@ public class ReactorNettyWebSocketClient implements WebSocketClient {
 	 * <p>By default this is set to {@code false} in which case ping frames are
 	 * handled automatically by Reactor Netty. If set to {@code true}, ping
 	 * frames will be passed through to the {@link WebSocketHandler}.
+	 *
 	 * @param handlePing whether to let Ping frames through for handling
 	 * @since 5.2.4
 	 * @deprecated as of 5.3 in favor of providing a supplier of
@@ -169,6 +159,7 @@ public class ReactorNettyWebSocketClient implements WebSocketClient {
 
 	/**
 	 * Return the configured {@link #setHandlePing(boolean)}.
+	 *
 	 * @since 5.2.4
 	 * @deprecated as of 5.3 in favor of {@link #getWebsocketClientSpec()}
 	 */

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.accept;
 
 import java.util.ArrayList;
@@ -68,6 +52,7 @@ public class RequestedContentTypeResolverBuilder {
 
 	/**
 	 * Add resolver that returns a fixed set of media types.
+	 *
 	 * @param mediaTypes the media types to use
 	 */
 	public void fixedResolver(MediaType... mediaTypes) {
@@ -76,6 +61,7 @@ public class RequestedContentTypeResolverBuilder {
 
 	/**
 	 * Add a custom resolver.
+	 *
 	 * @param resolver the resolver to add
 	 */
 	public void resolver(RequestedContentTypeResolver resolver) {
@@ -117,7 +103,8 @@ public class RequestedContentTypeResolverBuilder {
 		/**
 		 * Configure a mapping between a lookup key (extracted from a query
 		 * parameter value) and a corresponding {@code MediaType}.
-		 * @param key the lookup key
+		 *
+		 * @param key       the lookup key
 		 * @param mediaType the MediaType for that key
 		 */
 		public ParameterResolverConfigurer mediaType(String key, MediaType mediaType) {
@@ -127,6 +114,7 @@ public class RequestedContentTypeResolverBuilder {
 
 		/**
 		 * Map-based variant of {@link #mediaType(String, MediaType)}.
+		 *
 		 * @param mediaTypes the mappings to copy
 		 */
 		public ParameterResolverConfigurer mediaType(Map<String, MediaType> mediaTypes) {

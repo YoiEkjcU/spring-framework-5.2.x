@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.socket.server.upgrade;
 
 import java.net.URI;
@@ -54,6 +38,7 @@ public class ReactorNettyRequestUpgradeStrategy implements RequestUpgradeStrateg
 
 	/**
 	 * Create an instances with a default {@link WebsocketServerSpec.Builder}.
+	 *
 	 * @since 5.2.6
 	 */
 	public ReactorNettyRequestUpgradeStrategy() {
@@ -64,6 +49,7 @@ public class ReactorNettyRequestUpgradeStrategy implements RequestUpgradeStrateg
 	/**
 	 * Create an instance with a pre-configured {@link WebsocketServerSpec.Builder}
 	 * to use for WebSocket upgrades.
+	 *
 	 * @since 5.2.6
 	 */
 	public ReactorNettyRequestUpgradeStrategy(Supplier<WebsocketServerSpec.Builder> builderSupplier) {
@@ -77,6 +63,7 @@ public class ReactorNettyRequestUpgradeStrategy implements RequestUpgradeStrateg
 	 * configuration. This can be used to check the configured parameters except
 	 * for sub-protocols which depend on the {@link WebSocketHandler} that is used
 	 * for a given upgrade.
+	 *
 	 * @since 5.2.6
 	 */
 	public WebsocketServerSpec getWebsocketServerSpec() {
@@ -105,6 +92,7 @@ public class ReactorNettyRequestUpgradeStrategy implements RequestUpgradeStrateg
 	 * {@link io.netty.handler.codec.http.websocketx.WebSocketServerHandshakerFactory
 	 * WebSocketServerHandshakerFactory} in Netty.
 	 * <p>By default set to 65536 (64K).
+	 *
 	 * @param maxFramePayloadLength the max length for frames.
 	 * @since 5.1
 	 * @deprecated as of 5.2.6 in favor of providing a supplier of
@@ -117,6 +105,7 @@ public class ReactorNettyRequestUpgradeStrategy implements RequestUpgradeStrateg
 
 	/**
 	 * Return the configured max length for frames.
+	 *
 	 * @since 5.1
 	 * @deprecated as of 5.2.6 in favor of {@link #getWebsocketServerSpec()}
 	 */
@@ -133,6 +122,7 @@ public class ReactorNettyRequestUpgradeStrategy implements RequestUpgradeStrateg
 	 * <p>By default this is set to {@code false} in which case ping frames are
 	 * handled automatically by Reactor Netty. If set to {@code true}, ping
 	 * frames will be passed through to the {@link WebSocketHandler}.
+	 *
 	 * @param handlePing whether to let Ping frames through for handling
 	 * @since 5.2.4
 	 * @deprecated as of 5.2.6 in favor of providing a supplier of
@@ -145,6 +135,7 @@ public class ReactorNettyRequestUpgradeStrategy implements RequestUpgradeStrateg
 
 	/**
 	 * Return the configured {@link #setHandlePing(boolean)}.
+	 *
 	 * @since 5.2.4
 	 * @deprecated as of 5.2.6 in favor of {@link #getWebsocketServerSpec()}
 	 */
@@ -156,7 +147,7 @@ public class ReactorNettyRequestUpgradeStrategy implements RequestUpgradeStrateg
 
 	@Override
 	public Mono<Void> upgrade(ServerWebExchange exchange, WebSocketHandler handler,
-			@Nullable String subProtocol, Supplier<HandshakeInfo> handshakeInfoFactory) {
+							  @Nullable String subProtocol, Supplier<HandshakeInfo> handshakeInfoFactory) {
 
 		ServerHttpResponse response = exchange.getResponse();
 		HttpServerResponse reactorResponse = getNativeResponse(response);
@@ -180,11 +171,9 @@ public class ReactorNettyRequestUpgradeStrategy implements RequestUpgradeStrateg
 	private static HttpServerResponse getNativeResponse(ServerHttpResponse response) {
 		if (response instanceof AbstractServerHttpResponse) {
 			return ((AbstractServerHttpResponse) response).getNativeResponse();
-		}
-		else if (response instanceof ServerHttpResponseDecorator) {
+		} else if (response instanceof ServerHttpResponseDecorator) {
 			return getNativeResponse(((ServerHttpResponseDecorator) response).getDelegate());
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException(
 					"Couldn't find native response in " + response.getClass().getName());
 		}

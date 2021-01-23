@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.result.condition;
 
 import org.springframework.lang.Nullable;
@@ -27,16 +11,17 @@ import org.springframework.web.server.ServerWebExchange;
  * to each other via {@link #compareTo(Object, ServerWebExchange)} to determine
  * which is a closer match for a given request.
  *
+ * @param <T> the type of objects that this RequestCondition can be combined
+ *            with and compared to
  * @author Rossen Stoyanchev
  * @since 5.0
- * @param <T> the type of objects that this RequestCondition can be combined
- * with and compared to
  */
 public interface RequestCondition<T> {
 
 	/**
 	 * Combine this condition with another such as conditions from a
 	 * type-level and method-level {@code @RequestMapping} annotation.
+	 *
 	 * @param other the condition to combine with.
 	 * @return a request condition instance that is the result of combining
 	 * the two condition instances.
@@ -53,6 +38,7 @@ public interface RequestCondition<T> {
 	 * from the "Access-Control-Request-Method" header). If a condition cannot
 	 * be matched to a pre-flight request it should return an instance with
 	 * empty content thus not causing a failure to match.
+	 *
 	 * @return a condition instance in case of a match or {@code null} otherwise.
 	 */
 	@Nullable

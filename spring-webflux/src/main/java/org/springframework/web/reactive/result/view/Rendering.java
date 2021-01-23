@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.result.view;
 
 import java.util.Collection;
@@ -68,6 +52,7 @@ public interface Rendering {
 
 	/**
 	 * Create a new builder for response rendering based on the given view name.
+	 *
 	 * @param name the view name to be resolved to a {@link View}
 	 * @return the builder
 	 */
@@ -77,6 +62,7 @@ public interface Rendering {
 
 	/**
 	 * Create a new builder for a redirect through a {@link RedirectView}.
+	 *
 	 * @param url the redirect URL
 	 * @return the builder
 	 */
@@ -94,6 +80,7 @@ public interface Rendering {
 
 		/**
 		 * Add the given model attribute with the supplied name.
+		 *
 		 * @see Model#addAttribute(String, Object)
 		 */
 		B modelAttribute(String name, Object value);
@@ -101,6 +88,7 @@ public interface Rendering {
 		/**
 		 * Add an attribute to the model using a
 		 * {@link org.springframework.core.Conventions#getVariableName generated name}.
+		 *
 		 * @see Model#addAttribute(Object)
 		 */
 		B modelAttribute(Object value);
@@ -108,12 +96,14 @@ public interface Rendering {
 		/**
 		 * Add all given attributes to the model using
 		 * {@link org.springframework.core.Conventions#getVariableName generated names}.
+		 *
 		 * @see Model#addAllAttributes(Collection)
 		 */
 		B modelAttributes(Object... values);
 
 		/**
 		 * Add the given attributes to the model.
+		 *
 		 * @see Model#addAllAttributes(Map)
 		 */
 		B model(Map<String, ?> map);

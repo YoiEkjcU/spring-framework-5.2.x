@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.socket.server.upgrade;
 
 import java.util.Collections;
@@ -126,7 +110,7 @@ public class TomcatRequestUpgradeStrategy implements RequestUpgradeStrategy {
 
 	@Override
 	public Mono<Void> upgrade(ServerWebExchange exchange, WebSocketHandler handler,
-			@Nullable String subProtocol, Supplier<HandshakeInfo> handshakeInfoFactory){
+							  @Nullable String subProtocol, Supplier<HandshakeInfo> handshakeInfoFactory) {
 
 		ServerHttpRequest request = exchange.getRequest();
 		ServerHttpResponse response = exchange.getResponse();
@@ -157,11 +141,9 @@ public class TomcatRequestUpgradeStrategy implements RequestUpgradeStrategy {
 	private static HttpServletRequest getNativeRequest(ServerHttpRequest request) {
 		if (request instanceof AbstractServerHttpRequest) {
 			return ((AbstractServerHttpRequest) request).getNativeRequest();
-		}
-		else if (request instanceof ServerHttpRequestDecorator) {
+		} else if (request instanceof ServerHttpRequestDecorator) {
 			return getNativeRequest(((ServerHttpRequestDecorator) request).getDelegate());
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException(
 					"Couldn't find HttpServletRequest in " + request.getClass().getName());
 		}
@@ -170,11 +152,9 @@ public class TomcatRequestUpgradeStrategy implements RequestUpgradeStrategy {
 	private static HttpServletResponse getNativeResponse(ServerHttpResponse response) {
 		if (response instanceof AbstractServerHttpResponse) {
 			return ((AbstractServerHttpResponse) response).getNativeResponse();
-		}
-		else if (response instanceof ServerHttpResponseDecorator) {
+		} else if (response instanceof ServerHttpResponseDecorator) {
 			return getNativeResponse(((ServerHttpResponseDecorator) response).getDelegate());
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException(
 					"Couldn't find HttpServletResponse in " + response.getClass().getName());
 		}

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.result.condition;
 
 import java.util.Collection;
@@ -44,6 +28,7 @@ public final class RequestConditionHolder extends AbstractRequestCondition<Reque
 
 	/**
 	 * Create a new holder to wrap the given request condition.
+	 *
 	 * @param requestCondition the condition to hold (may be {@code null})
 	 */
 	@SuppressWarnings("unchecked")
@@ -79,14 +64,11 @@ public final class RequestConditionHolder extends AbstractRequestCondition<Reque
 	public RequestConditionHolder combine(RequestConditionHolder other) {
 		if (this.condition == null && other.condition == null) {
 			return this;
-		}
-		else if (this.condition == null) {
+		} else if (this.condition == null) {
 			return other;
-		}
-		else if (other.condition == null) {
+		} else if (other.condition == null) {
 			return this;
-		}
-		else {
+		} else {
 			assertEqualConditionTypes(this.condition, other.condition);
 			RequestCondition<?> combined = (RequestCondition<?>) this.condition.combine(other.condition);
 			return new RequestConditionHolder(combined);
@@ -116,14 +98,11 @@ public final class RequestConditionHolder extends AbstractRequestCondition<Reque
 	public int compareTo(RequestConditionHolder other, ServerWebExchange exchange) {
 		if (this.condition == null && other.condition == null) {
 			return 0;
-		}
-		else if (this.condition == null) {
+		} else if (this.condition == null) {
 			return 1;
-		}
-		else if (other.condition == null) {
+		} else if (other.condition == null) {
 			return -1;
-		}
-		else {
+		} else {
 			assertEqualConditionTypes(this.condition, other.condition);
 			return this.condition.compareTo(other.condition, exchange);
 		}

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.function.server.support;
 
 import java.util.Collections;
@@ -66,6 +50,7 @@ public class RouterFunctionMapping extends AbstractHandlerMapping implements Ini
 	/**
 	 * Create a {@code RouterFunctionMapping} with the given {@link RouterFunction}.
 	 * <p>If this constructor is used, no application context detection will occur.
+	 *
 	 * @param routerFunction the router function to use for mapping
 	 */
 	public RouterFunctionMapping(RouterFunction<?> routerFunction) {
@@ -78,6 +63,7 @@ public class RouterFunctionMapping extends AbstractHandlerMapping implements Ini
 	 * <p><strong>Note:</strong> When router functions are detected from the
 	 * ApplicationContext, this method may return {@code null} if invoked
 	 * prior to {@link #afterPropertiesSet()}.
+	 *
 	 * @return the router function or {@code null}
 	 */
 	@Nullable
@@ -122,7 +108,7 @@ public class RouterFunctionMapping extends AbstractHandlerMapping implements Ini
 		List<RouterFunction<?>> functions = obtainApplicationContext()
 				.getBeanProvider(RouterFunction.class)
 				.orderedStream()
-				.map(router -> (RouterFunction<?>)router)
+				.map(router -> (RouterFunction<?>) router)
 				.collect(Collectors.toList());
 		return (!CollectionUtils.isEmpty(functions) ? functions : Collections.emptyList());
 	}
@@ -134,12 +120,10 @@ public class RouterFunctionMapping extends AbstractHandlerMapping implements Ini
 			if (logger.isTraceEnabled()) {
 				if (total > 0) {
 					routerFunctions.forEach(routerFunction -> logger.trace("Mapped " + routerFunction));
-				}
-				else {
+				} else {
 					logger.trace(message);
 				}
-			}
-			else if (total > 0) {
+			} else if (total > 0) {
 				logger.debug(message);
 			}
 		}
@@ -152,8 +136,7 @@ public class RouterFunctionMapping extends AbstractHandlerMapping implements Ini
 			ServerRequest request = ServerRequest.create(exchange, this.messageReaders);
 			return this.routerFunction.route(request)
 					.doOnNext(handler -> setAttributes(exchange.getAttributes(), request, handler));
-		}
-		else {
+		} else {
 			return Mono.empty();
 		}
 	}

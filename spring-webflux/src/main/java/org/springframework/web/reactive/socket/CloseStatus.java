@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.socket;
 
 import org.springframework.lang.Nullable;
@@ -26,9 +10,9 @@ import org.springframework.util.StringUtils;
  * in the 1xxx range are pre-defined by the protocol.
  *
  * @author Rossen Stoyanchev
- * @since 5.0
  * @see <a href="https://tools.ietf.org/html/rfc6455#section-7.4.1">
- *     RFC 6455, Section 7.4.1 "Defined Status Codes"</a>
+ * RFC 6455, Section 7.4.1 "Defined Status Codes"</a>
+ * @since 5.0
  */
 public final class CloseStatus {
 
@@ -48,7 +32,7 @@ public final class CloseStatus {
 	 * "1002 indicates that an endpoint is terminating the connection due to a protocol
 	 * error."
 	 */
-	public static final CloseStatus PROTOCOL_ERROR  = new CloseStatus(1002);
+	public static final CloseStatus PROTOCOL_ERROR = new CloseStatus(1002);
 
 	/**
 	 * "1003 indicates that an endpoint is terminating the connection because it has
@@ -142,6 +126,7 @@ public final class CloseStatus {
 
 	/**
 	 * Create a new {@link CloseStatus} instance.
+	 *
 	 * @param code the status code
 	 */
 	public CloseStatus(int code) {
@@ -150,7 +135,8 @@ public final class CloseStatus {
 
 	/**
 	 * Create a new {@link CloseStatus} instance.
-	 * @param code the status code
+	 *
+	 * @param code   the status code
 	 * @param reason the reason
 	 */
 	public CloseStatus(int code, @Nullable String reason) {
@@ -177,6 +163,7 @@ public final class CloseStatus {
 
 	/**
 	 * Create a new {@link CloseStatus} from this one with the specified reason.
+	 *
 	 * @param reason the reason
 	 * @return a new {@link CloseStatus} instance
 	 */
@@ -197,6 +184,7 @@ public final class CloseStatus {
 	/**
 	 * Return a constant for the given code, or create a new instance if the
 	 * code does not match or there is a reason.
+	 *
 	 * @since 5.3
 	 */
 	public static CloseStatus create(int code, @Nullable String reason) {

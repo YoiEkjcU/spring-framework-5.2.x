@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.socket;
 
 import java.util.Collections;
@@ -40,21 +24,21 @@ import reactor.core.publisher.Mono;
  *
  * <pre class="code">
  * class ExampleHandler implements WebSocketHandler {
-
+ *
  * 	&#064;Override
  * 	public Mono&lt;Void&gt; handle(WebSocketSession session) {
  *
  * 		Flux&lt;WebSocketMessage&gt; output = session.receive()
- *			.doOnNext(message -> {
+ * 			.doOnNext(message -> {
  * 				// ...
- * 			})
+ *            })
  * 			.concatMap(message -> {
  * 				// ...
- * 			})
+ *            })
  * 			.map(value -> session.textMessage("Echo " + value));
  *
  * 		return session.send(output);
- * 	}
+ *    }
  * }
  * </pre>
  *
@@ -63,24 +47,24 @@ import reactor.core.publisher.Mono;
  *
  * <pre class="code">
  * class ExampleHandler implements WebSocketHandler {
-
+ *
  * 	&#064;Override
  * 	public Mono&lt;Void&gt; handle(WebSocketSession session) {
  *
  * 		Mono&lt;Void&gt; input = session.receive()
- *			.doOnNext(message -> {
+ * 			.doOnNext(message -> {
  * 				// ...
- * 			})
+ *            })
  * 			.concatMap(message -> {
  * 				// ...
- * 			})
+ *            })
  * 			.then();
  *
- *		Flux&lt;String&gt; source = ... ;
+ * 		Flux&lt;String&gt; source = ... ;
  * 		Mono&lt;Void&gt; output = session.send(source.map(session::textMessage));
  *
  * 		return Mono.zip(input, output).then();
- * 	}
+ *    }
  * }
  * </pre>
  *

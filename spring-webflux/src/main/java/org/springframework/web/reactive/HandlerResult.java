@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive;
 
 import java.util.function.Function;
@@ -49,9 +33,10 @@ public class HandlerResult {
 
 	/**
 	 * Create a new {@code HandlerResult}.
-	 * @param handler the handler that handled the request
+	 *
+	 * @param handler     the handler that handled the request
 	 * @param returnValue the return value from the handler possibly {@code null}
-	 * @param returnType the return value type
+	 * @param returnType  the return value type
 	 */
 	public HandlerResult(Object handler, @Nullable Object returnValue, MethodParameter returnType) {
 		this(handler, returnValue, returnType, null);
@@ -59,13 +44,14 @@ public class HandlerResult {
 
 	/**
 	 * Create a new {@code HandlerResult}.
-	 * @param handler the handler that handled the request
+	 *
+	 * @param handler     the handler that handled the request
 	 * @param returnValue the return value from the handler possibly {@code null}
-	 * @param returnType the return value type
-	 * @param context the binding context used for request handling
+	 * @param returnType  the return value type
+	 * @param context     the binding context used for request handling
 	 */
 	public HandlerResult(Object handler, @Nullable Object returnValue, MethodParameter returnType,
-			@Nullable BindingContext context) {
+						 @Nullable BindingContext context) {
 
 		Assert.notNull(handler, "'handler' is required");
 		Assert.notNull(returnType, "'returnType' is required");
@@ -128,6 +114,7 @@ public class HandlerResult {
 	 * Configure an exception handler that may be used to produce an alternative
 	 * result when result handling fails. Especially for an async return value
 	 * errors may occur after the invocation of the handler.
+	 *
 	 * @param function the error handler
 	 * @return the current instance
 	 */
@@ -145,6 +132,7 @@ public class HandlerResult {
 
 	/**
 	 * Apply the exception handler and return the alternative result.
+	 *
 	 * @param failure the exception
 	 * @return the new result or the same error if there is no exception handler
 	 */

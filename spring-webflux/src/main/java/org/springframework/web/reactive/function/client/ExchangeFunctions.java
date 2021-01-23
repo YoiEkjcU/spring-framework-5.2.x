@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.function.client;
 
 import java.net.URI;
@@ -49,6 +33,7 @@ public abstract class ExchangeFunctions {
 	 * This is the same as calling
 	 * {@link #create(ClientHttpConnector, ExchangeStrategies)} and passing
 	 * {@link ExchangeStrategies#withDefaults()}.
+	 *
 	 * @param connector the connector to use for connecting to servers
 	 * @return the created {@code ExchangeFunction}
 	 */
@@ -59,7 +44,8 @@ public abstract class ExchangeFunctions {
 	/**
 	 * Create an {@code ExchangeFunction} with the given
 	 * {@code ClientHttpConnector} and {@code ExchangeStrategies}.
-	 * @param connector the connector to use for connecting to servers
+	 *
+	 * @param connector  the connector to use for connecting to servers
 	 * @param strategies the {@code ExchangeStrategies} to use
 	 * @return the created {@code ExchangeFunction}
 	 */

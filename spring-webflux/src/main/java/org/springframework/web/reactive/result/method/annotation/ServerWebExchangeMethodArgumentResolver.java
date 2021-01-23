@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.result.method.annotation;
 
 import java.net.URI;
@@ -54,9 +38,9 @@ import org.springframework.web.util.UriComponentsBuilder;
  * and for the {@code Principal} see {@link PrincipalMethodArgumentResolver}.
  *
  * @author Rossen Stoyanchev
- * @since 5.2
  * @see WebSessionMethodArgumentResolver
  * @see PrincipalMethodArgumentResolver
+ * @since 5.2
  */
 public class ServerWebExchangeMethodArgumentResolver extends HandlerMethodArgumentResolverSupport
 		implements SyncHandlerMethodArgumentResolver {
@@ -86,34 +70,26 @@ public class ServerWebExchangeMethodArgumentResolver extends HandlerMethodArgume
 		Class<?> paramType = methodParameter.getParameterType();
 		if (ServerWebExchange.class.isAssignableFrom(paramType)) {
 			return exchange;
-		}
-		else if (ServerHttpRequest.class.isAssignableFrom(paramType)) {
+		} else if (ServerHttpRequest.class.isAssignableFrom(paramType)) {
 			return exchange.getRequest();
-		}
-		else if (ServerHttpResponse.class.isAssignableFrom(paramType)) {
+		} else if (ServerHttpResponse.class.isAssignableFrom(paramType)) {
 			return exchange.getResponse();
-		}
-		else if (HttpMethod.class == paramType) {
+		} else if (HttpMethod.class == paramType) {
 			return exchange.getRequest().getMethod();
-		}
-		else if (Locale.class == paramType) {
+		} else if (Locale.class == paramType) {
 			return exchange.getLocaleContext().getLocale();
-		}
-		else if (TimeZone.class == paramType) {
+		} else if (TimeZone.class == paramType) {
 			LocaleContext localeContext = exchange.getLocaleContext();
 			TimeZone timeZone = getTimeZone(localeContext);
 			return (timeZone != null ? timeZone : TimeZone.getDefault());
-		}
-		else if (ZoneId.class == paramType) {
+		} else if (ZoneId.class == paramType) {
 			LocaleContext localeContext = exchange.getLocaleContext();
 			TimeZone timeZone = getTimeZone(localeContext);
 			return (timeZone != null ? timeZone.toZoneId() : ZoneId.systemDefault());
-		}
-		else if (UriBuilder.class == paramType || UriComponentsBuilder.class == paramType) {
+		} else if (UriBuilder.class == paramType || UriComponentsBuilder.class == paramType) {
 			URI uri = exchange.getRequest().getURI();
 			return UriComponentsBuilder.fromUri(uri).replacePath(null).replaceQuery(null);
-		}
-		else {
+		} else {
 			// should never happen...
 			throw new IllegalArgumentException("Unknown parameter type: " +
 					paramType + " in method: " + methodParameter.getMethod());

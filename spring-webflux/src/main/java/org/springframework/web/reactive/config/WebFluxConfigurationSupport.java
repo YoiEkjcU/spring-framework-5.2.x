@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive.config;
 
 import java.util.List;
@@ -98,9 +82,9 @@ public class WebFluxConfigurationSupport implements ApplicationContextAware {
 	public void setApplicationContext(@Nullable ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
 		if (applicationContext != null) {
-				Assert.state(!applicationContext.containsBean("mvcContentNegotiationManager"),
-						"The Java/XML config for Spring MVC and Spring WebFlux cannot both be enabled, " +
-						"e.g. via @EnableWebMvc and @EnableWebFlux, in the same application.");
+			Assert.state(!applicationContext.containsBean("mvcContentNegotiationManager"),
+					"The Java/XML config for Spring MVC and Spring WebFlux cannot both be enabled, " +
+							"e.g. via @EnableWebMvc and @EnableWebFlux, in the same application.");
 		}
 	}
 
@@ -185,6 +169,7 @@ public class WebFluxConfigurationSupport implements ApplicationContextAware {
 
 	/**
 	 * Override this method to configure cross origin requests processing.
+	 *
 	 * @see CorsRegistry
 	 */
 	protected void addCorsMappings(CorsRegistry registry) {
@@ -250,8 +235,7 @@ public class WebFluxConfigurationSupport implements ApplicationContextAware {
 			if (useCaseSensitiveMatch != null) {
 				handlerMapping.setUseCaseSensitiveMatch(useCaseSensitiveMatch);
 			}
-		}
-		else {
+		} else {
 			handlerMapping = new EmptyHandlerMapping();
 		}
 		return handlerMapping;
@@ -264,6 +248,7 @@ public class WebFluxConfigurationSupport implements ApplicationContextAware {
 
 	/**
 	 * Override this method to add resource handlers for serving static resources.
+	 *
 	 * @see ResourceHandlerRegistry
 	 */
 	protected void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -362,6 +347,7 @@ public class WebFluxConfigurationSupport implements ApplicationContextAware {
 	/**
 	 * Override this method to add custom {@link Converter} and/or {@link Formatter}
 	 * delegates to the common {@link FormattingConversionService}.
+	 *
 	 * @see #webFluxConversionService()
 	 */
 	protected void addFormatters(FormatterRegistry registry) {
@@ -392,13 +378,11 @@ public class WebFluxConfigurationSupport implements ApplicationContextAware {
 				try {
 					String name = "org.springframework.validation.beanvalidation.OptionalValidatorFactoryBean";
 					clazz = ClassUtils.forName(name, getClass().getClassLoader());
-				}
-				catch (ClassNotFoundException | LinkageError ex) {
+				} catch (ClassNotFoundException | LinkageError ex) {
 					throw new BeanInitializationException("Failed to resolve default validator class", ex);
 				}
 				validator = (Validator) BeanUtils.instantiateClass(clazz);
-			}
-			else {
+			} else {
 				validator = new NoOpValidator();
 			}
 		}
@@ -488,6 +472,7 @@ public class WebFluxConfigurationSupport implements ApplicationContextAware {
 
 	/**
 	 * Configure view resolution for supporting template engines.
+	 *
 	 * @see ViewResolverRegistry
 	 */
 	protected void configureViewResolvers(ViewResolverRegistry registry) {

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.reactive;
 
 import java.util.ArrayList;
@@ -62,8 +46,8 @@ import org.springframework.web.server.adapter.WebHttpHandlerBuilder;
  * @author Rossen Stoyanchev
  * @author Sebastien Deleuze
  * @author Juergen Hoeller
- * @since 5.0
  * @see WebHttpHandlerBuilder#applicationContext(ApplicationContext)
+ * @since 5.0
  */
 public class DispatcherHandler implements WebHandler, ApplicationContextAware {
 
@@ -86,6 +70,7 @@ public class DispatcherHandler implements WebHandler, ApplicationContextAware {
 
 	/**
 	 * Create a new {@code DispatcherHandler} for the given {@link ApplicationContext}.
+	 *
 	 * @param applicationContext the application context to find the handler beans in
 	 */
 	public DispatcherHandler(ApplicationContext applicationContext) {
@@ -99,6 +84,7 @@ public class DispatcherHandler implements WebHandler, ApplicationContextAware {
 	 * {@link AnnotationAwareOrderComparator#sort(List) sorted}.
 	 * <p><strong>Note:</strong> This method may return {@code null} if invoked
 	 * prior to {@link #setApplicationContext(ApplicationContext)}.
+	 *
 	 * @return immutable list with the configured mappings or {@code null}
 	 */
 	@Nullable
