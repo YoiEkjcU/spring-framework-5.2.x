@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.mock.web;
 
 import java.io.ByteArrayInputStream;
@@ -35,8 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author Juergen Hoeller
  * @author Eric Crampton
- * @since 2.0
  * @see MockMultipartHttpServletRequest
+ * @since 2.0
  */
 public class MockMultipartFile implements MultipartFile {
 
@@ -52,7 +36,8 @@ public class MockMultipartFile implements MultipartFile {
 
 	/**
 	 * Create a new MockMultipartFile with the given content.
-	 * @param name the name of the file
+	 *
+	 * @param name    the name of the file
 	 * @param content the content of the file
 	 */
 	public MockMultipartFile(String name, @Nullable byte[] content) {
@@ -61,7 +46,8 @@ public class MockMultipartFile implements MultipartFile {
 
 	/**
 	 * Create a new MockMultipartFile with the given content.
-	 * @param name the name of the file
+	 *
+	 * @param name          the name of the file
 	 * @param contentStream the content of the file as stream
 	 * @throws IOException if reading from the stream failed
 	 */
@@ -71,10 +57,11 @@ public class MockMultipartFile implements MultipartFile {
 
 	/**
 	 * Create a new MockMultipartFile with the given content.
-	 * @param name the name of the file
+	 *
+	 * @param name             the name of the file
 	 * @param originalFilename the original filename (as on the client's machine)
-	 * @param contentType the content type (if known)
-	 * @param content the content of the file
+	 * @param contentType      the content type (if known)
+	 * @param content          the content of the file
 	 */
 	public MockMultipartFile(
 			String name, @Nullable String originalFilename, @Nullable String contentType, @Nullable byte[] content) {
@@ -88,10 +75,11 @@ public class MockMultipartFile implements MultipartFile {
 
 	/**
 	 * Create a new MockMultipartFile with the given content.
-	 * @param name the name of the file
+	 *
+	 * @param name             the name of the file
 	 * @param originalFilename the original filename (as on the client's machine)
-	 * @param contentType the content type (if known)
-	 * @param contentStream the content of the file as stream
+	 * @param contentType      the content type (if known)
+	 * @param contentStream    the content of the file as stream
 	 * @throws IOException if reading from the stream failed
 	 */
 	public MockMultipartFile(

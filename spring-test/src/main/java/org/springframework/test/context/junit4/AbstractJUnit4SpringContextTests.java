@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.context.junit4;
 
 import org.apache.commons.logging.Log;
@@ -75,7 +59,6 @@ import org.springframework.test.context.web.ServletTestExecutionListener;
  * <p><strong>NOTE:</strong> This class requires JUnit 4.12 or higher.
  *
  * @author Sam Brannen
- * @since 2.5
  * @see ContextConfiguration
  * @see TestContext
  * @see TestContextManager
@@ -87,11 +70,12 @@ import org.springframework.test.context.web.ServletTestExecutionListener;
  * @see EventPublishingTestExecutionListener
  * @see AbstractTransactionalJUnit4SpringContextTests
  * @see org.springframework.test.context.testng.AbstractTestNGSpringContextTests
+ * @since 2.5
  */
 @RunWith(SpringRunner.class)
-@TestExecutionListeners({ ServletTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,
-	DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class,
-	EventPublishingTestExecutionListener.class })
+@TestExecutionListeners({ServletTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,
+		DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class,
+		EventPublishingTestExecutionListener.class})
 public abstract class AbstractJUnit4SpringContextTests implements ApplicationContextAware {
 
 	/**
@@ -110,6 +94,7 @@ public abstract class AbstractJUnit4SpringContextTests implements ApplicationCon
 	/**
 	 * Set the {@link ApplicationContext} to be used by this test instance,
 	 * provided via {@link ApplicationContextAware} semantics.
+	 *
 	 * @param applicationContext the ApplicationContext that this test runs in
 	 */
 	@Override

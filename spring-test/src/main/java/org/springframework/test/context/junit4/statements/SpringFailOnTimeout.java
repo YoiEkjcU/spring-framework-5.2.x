@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.context.junit4.statements;
 
 import java.lang.reflect.Method;
@@ -36,8 +20,8 @@ import org.springframework.util.Assert;
  * caller and will therefore not be aborted preemptively.
  *
  * @author Sam Brannen
- * @since 3.0
  * @see #evaluate()
+ * @since 3.0
  */
 public class SpringFailOnTimeout extends Statement {
 
@@ -50,7 +34,8 @@ public class SpringFailOnTimeout extends Statement {
 	 * Construct a new {@code SpringFailOnTimeout} statement for the supplied
 	 * {@code testMethod}, retrieving the configured timeout from the
 	 * {@code @Timed} annotation on the supplied method.
-	 * @param next the next {@code Statement} in the execution chain
+	 *
+	 * @param next       the next {@code Statement} in the execution chain
 	 * @param testMethod the current test method
 	 * @see TestAnnotationUtils#getTimeout(Method)
 	 */
@@ -63,9 +48,10 @@ public class SpringFailOnTimeout extends Statement {
 	 * {@code timeout}.
 	 * <p>If the supplied {@code timeout} is {@code 0}, the execution of the
 	 * {@code next} statement will not be timed.
-	 * @param next the next {@code Statement} in the execution chain; never {@code null}
+	 *
+	 * @param next    the next {@code Statement} in the execution chain; never {@code null}
 	 * @param timeout the configured {@code timeout} for the current test, in milliseconds;
-	 * never negative
+	 *                never negative
 	 */
 	public SpringFailOnTimeout(Statement next, long timeout) {
 		Assert.notNull(next, "next statement must not be null");
@@ -85,8 +71,7 @@ public class SpringFailOnTimeout extends Statement {
 	public void evaluate() throws Throwable {
 		if (this.timeout == 0) {
 			this.next.evaluate();
-		}
-		else {
+		} else {
 			long startTime = System.currentTimeMillis();
 			this.next.evaluate();
 			long elapsed = System.currentTimeMillis() - startTime;

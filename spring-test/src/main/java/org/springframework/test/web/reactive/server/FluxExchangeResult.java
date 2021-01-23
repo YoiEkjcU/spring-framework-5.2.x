@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.web.reactive.server;
 
 import java.util.function.Consumer;
@@ -24,10 +8,10 @@ import reactor.core.publisher.Flux;
  * {@code ExchangeResult} variant with the response body decoded as
  * {@code Flux<T>} but not yet consumed.
  *
- * @author Rossen Stoyanchev
- * @since 5.0
  * @param <T> the type of elements in the response body
+ * @author Rossen Stoyanchev
  * @see EntityExchangeResult
+ * @since 5.0
  */
 public class FluxExchangeResult<T> extends ExchangeResult {
 
@@ -74,14 +58,15 @@ public class FluxExchangeResult<T> extends ExchangeResult {
 	 * passing {@code "this"} instance to it. This method allows the following,
 	 * without leaving the {@code WebTestClient} chain of calls:
 	 * <pre class="code">
-	 *	client.get()
+	 * 	client.get()
 	 * 		.uri("/persons")
 	 * 		.accept(TEXT_EVENT_STREAM)
 	 * 		.exchange()
 	 * 		.expectStatus().isOk()
-	 *	 	.returnResult()
-	 *	 	.consumeWith(result -> assertThat(...);
+	 * 	 	.returnResult()
+	 * 	 	.consumeWith(result -> assertThat(...);
 	 * </pre>
+	 *
 	 * @param consumer the consumer for {@code "this"} instance
 	 */
 	public void consumeWith(Consumer<FluxExchangeResult<T>> consumer) {

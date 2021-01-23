@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.web.client;
 
 import java.io.IOException;
@@ -85,6 +69,7 @@ public final class MockRestServiceServer {
 	 * <p>This method may be invoked any number times before starting to make
 	 * request through the underlying {@code RestTemplate} in order to set up
 	 * all expected requests.
+	 *
 	 * @param matcher request matcher
 	 * @return a representation of the expectation
 	 */
@@ -98,7 +83,8 @@ public final class MockRestServiceServer {
 	 * <p>When request expectations have an expected count greater than one, only
 	 * the first execution is expected to match the order of declaration. Subsequent
 	 * request executions may be inserted anywhere thereafter.
-	 * @param count the expected count
+	 *
+	 * @param count   the expected count
 	 * @param matcher request matcher
 	 * @return a representation of the expectation
 	 * @since 4.3
@@ -110,6 +96,7 @@ public final class MockRestServiceServer {
 	/**
 	 * Verify that all expected requests set up via
 	 * {@link #expect(RequestMatcher)} were indeed performed.
+	 *
 	 * @throws AssertionError when some expectations were not met
 	 */
 	public void verify() {
@@ -127,6 +114,7 @@ public final class MockRestServiceServer {
 	/**
 	 * Return a builder for a {@code MockRestServiceServer} that should be used
 	 * to reply to the given {@code RestTemplate}.
+	 *
 	 * @since 4.3
 	 */
 	public static MockRestServiceServerBuilder bindTo(RestTemplate restTemplate) {
@@ -136,6 +124,7 @@ public final class MockRestServiceServer {
 	/**
 	 * Return a builder for a {@code MockRestServiceServer} that should be used
 	 * to reply to the given {@code AsyncRestTemplate}.
+	 *
 	 * @since 4.3
 	 * @deprecated see deprecation notice on
 	 * {@link org.springframework.web.client.AsyncRestTemplate} itself
@@ -148,6 +137,7 @@ public final class MockRestServiceServer {
 	/**
 	 * Return a builder for a {@code MockRestServiceServer} that should be used
 	 * to reply to the given {@code RestGatewaySupport}.
+	 *
 	 * @since 4.3
 	 */
 	public static MockRestServiceServerBuilder bindTo(RestGatewaySupport restGatewaySupport) {
@@ -158,6 +148,7 @@ public final class MockRestServiceServer {
 
 	/**
 	 * A shortcut for {@code bindTo(restTemplate).build()}.
+	 *
 	 * @param restTemplate the RestTemplate to set up for mock testing
 	 * @return the mock server
 	 */
@@ -167,6 +158,7 @@ public final class MockRestServiceServer {
 
 	/**
 	 * A shortcut for {@code bindTo(asyncRestTemplate).build()}.
+	 *
 	 * @param asyncRestTemplate the AsyncRestTemplate to set up for mock testing
 	 * @return the created mock server
 	 * @deprecated see deprecation notice on
@@ -179,6 +171,7 @@ public final class MockRestServiceServer {
 
 	/**
 	 * A shortcut for {@code bindTo(restGateway).build()}.
+	 *
 	 * @param restGateway the REST gateway to set up for mock testing
 	 * @return the created mock server
 	 */
@@ -198,6 +191,7 @@ public final class MockRestServiceServer {
 		 * <p>Effectively a shortcut for:<br>
 		 * {@code builder.build(new UnorderedRequestExpectationManager)}.
 		 * <p>By default this is set to {@code false}
+		 *
 		 * @param ignoreExpectOrder whether to ignore the order of expectations
 		 */
 		MockRestServiceServerBuilder ignoreExpectOrder(boolean ignoreExpectOrder);
@@ -206,6 +200,7 @@ public final class MockRestServiceServer {
 		 * Use the {@link BufferingClientHttpRequestFactory} wrapper to buffer
 		 * the input and output streams, and for example, allow multiple reads
 		 * of the response body.
+		 *
 		 * @since 5.0.5
 		 */
 		MockRestServiceServerBuilder bufferContent();
@@ -266,8 +261,7 @@ public final class MockRestServiceServer {
 		public MockRestServiceServer build() {
 			if (this.ignoreExpectOrder) {
 				return build(new UnorderedRequestExpectationManager());
-			}
-			else {
+			} else {
 				return build(new SimpleRequestExpectationManager());
 			}
 		}
@@ -279,8 +273,7 @@ public final class MockRestServiceServer {
 			if (this.restTemplate != null) {
 				if (this.bufferContent) {
 					this.restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(factory));
-				}
-				else {
+				} else {
 					this.restTemplate.setRequestFactory(factory);
 				}
 			}

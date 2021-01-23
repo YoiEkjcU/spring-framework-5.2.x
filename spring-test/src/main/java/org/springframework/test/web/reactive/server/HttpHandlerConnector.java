@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.web.reactive.server;
 
 import java.net.URI;
@@ -75,7 +59,7 @@ public class HttpHandlerConnector implements ClientHttpConnector {
 
 	@Override
 	public Mono<ClientHttpResponse> connect(HttpMethod httpMethod, URI uri,
-			Function<? super ClientHttpRequest, Mono<Void>> requestCallback) {
+											Function<? super ClientHttpRequest, Mono<Void>> requestCallback) {
 
 		return Mono.defer(() -> doConnect(httpMethod, uri, requestCallback))
 				.subscribeOn(Schedulers.parallel());
@@ -154,6 +138,7 @@ public class HttpHandlerConnector implements ClientHttpConnector {
 	 * commits the response and the error may or may not change the response.
 	 * Therefore in tests without a server the exception is wrapped and allowed
 	 * to propagate so the application is alerted.
+	 *
 	 * @since 5.2.2
 	 */
 	@SuppressWarnings("serial")

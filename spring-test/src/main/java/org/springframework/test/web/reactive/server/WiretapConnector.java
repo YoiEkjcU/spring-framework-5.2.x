@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.web.reactive.server;
 
 import java.net.URI;
@@ -46,8 +30,8 @@ import org.springframework.util.Assert;
  * transmitted to and received from the server.
  *
  * @author Rossen Stoyanchev
- * @since 5.0
  * @see HttpHandlerConnector
+ * @since 5.0
  */
 class WiretapConnector implements ClientHttpConnector {
 
@@ -63,7 +47,7 @@ class WiretapConnector implements ClientHttpConnector {
 
 	@Override
 	public Mono<ClientHttpResponse> connect(HttpMethod method, URI uri,
-			Function<? super ClientHttpRequest, Mono<Void>> requestCallback) {
+											Function<? super ClientHttpRequest, Mono<Void>> requestCallback) {
 
 		AtomicReference<WiretapClientHttpRequest> requestRef = new AtomicReference<>();
 
@@ -73,7 +57,7 @@ class WiretapConnector implements ClientHttpConnector {
 					requestRef.set(wrapped);
 					return requestCallback.apply(wrapped);
 				})
-				.map(response ->  {
+				.map(response -> {
 					WiretapClientHttpRequest wrappedRequest = requestRef.get();
 					String header = WebTestClient.WEBTESTCLIENT_REQUEST_ID;
 					String requestId = wrappedRequest.getHeaders().getFirst(header);
@@ -139,7 +123,7 @@ class WiretapConnector implements ClientHttpConnector {
 
 
 		public WiretapRecorder(@Nullable Publisher<? extends DataBuffer> publisher,
-				@Nullable Publisher<? extends Publisher<? extends DataBuffer>> publisherNested) {
+							   @Nullable Publisher<? extends Publisher<? extends DataBuffer>> publisherNested) {
 
 			if (publisher != null && publisherNested != null) {
 				throw new IllegalArgumentException("At most one publisher expected");

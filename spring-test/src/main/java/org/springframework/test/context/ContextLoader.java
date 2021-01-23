@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.context;
 
 import org.springframework.context.ApplicationContext;
@@ -43,9 +27,9 @@ import org.springframework.context.ApplicationContext;
  *
  * @author Sam Brannen
  * @author Juergen Hoeller
- * @since 2.5
  * @see SmartContextLoader
  * @see org.springframework.test.context.support.AnnotationConfigContextLoader AnnotationConfigContextLoader
+ * @since 2.5
  */
 public interface ContextLoader {
 
@@ -53,10 +37,11 @@ public interface ContextLoader {
 	 * Processes application context resource locations for a specified class.
 	 * <p>Concrete implementations may choose to modify the supplied locations,
 	 * generate new locations, or simply return the supplied locations unchanged.
-	 * @param clazz the class with which the locations are associated: used to
-	 * determine how to process the supplied locations
+	 *
+	 * @param clazz     the class with which the locations are associated: used to
+	 *                  determine how to process the supplied locations
 	 * @param locations the unmodified locations to use for loading the
-	 * application context (can be {@code null} or empty)
+	 *                  application context (can be {@code null} or empty)
 	 * @return an array of application context resource locations
 	 */
 	String[] processLocations(Class<?> clazz, String... locations);
@@ -79,6 +64,7 @@ public interface ContextLoader {
 	 * early, all context instances will be automatically closed on JVM
 	 * shutdown. This allows for freeing external resources held by beans within
 	 * the context, e.g. temporary files.
+	 *
 	 * @param locations the resource locations to use to load the application context
 	 * @return a new application context
 	 * @throws Exception if context loading failed

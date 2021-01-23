@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.context.support;
 
 import org.apache.commons.logging.Log;
@@ -53,11 +37,12 @@ import org.springframework.util.StringUtils;
  * @author Sam Brannen
  * @author Juergen Hoeller
  * @author Phillip Webb
- * @since 2.5
  * @see #loadContext(MergedContextConfiguration)
  * @see #loadContext(String...)
+ * @since 2.5
  */
-public abstract class AbstractGenericContextLoader extends AbstractContextLoader {
+public abstract class
+AbstractGenericContextLoader extends AbstractContextLoader {
 
 	protected static final Log logger = LogFactory.getLog(AbstractGenericContextLoader.class);
 
@@ -107,7 +92,7 @@ public abstract class AbstractGenericContextLoader extends AbstractContextLoader
 	public final ConfigurableApplicationContext loadContext(MergedContextConfiguration mergedConfig) throws Exception {
 		if (logger.isDebugEnabled()) {
 			logger.debug(String.format("Loading ApplicationContext for merged context configuration [%s].",
-				mergedConfig));
+					mergedConfig));
 		}
 
 		validateMergedContextConfiguration(mergedConfig);
@@ -135,9 +120,10 @@ public abstract class AbstractGenericContextLoader extends AbstractContextLoader
 	 * what this context loader supports.
 	 * <p>The default implementation is a <em>no-op</em> but can be overridden by
 	 * subclasses as appropriate.
+	 *
 	 * @param mergedConfig the merged configuration to validate
 	 * @throws IllegalStateException if the supplied configuration is not valid
-	 * for this context loader
+	 *                               for this context loader
 	 * @since 4.0.4
 	 */
 	protected void validateMergedContextConfiguration(MergedContextConfiguration mergedConfig) {
@@ -182,7 +168,7 @@ public abstract class AbstractGenericContextLoader extends AbstractContextLoader
 	public final ConfigurableApplicationContext loadContext(String... locations) throws Exception {
 		if (logger.isDebugEnabled()) {
 			logger.debug(String.format("Loading ApplicationContext for locations [%s].",
-				StringUtils.arrayToCommaDelimitedString(locations)));
+					StringUtils.arrayToCommaDelimitedString(locations)));
 		}
 		GenericApplicationContext context = new GenericApplicationContext();
 		prepareContext(context);
@@ -203,13 +189,13 @@ public abstract class AbstractGenericContextLoader extends AbstractContextLoader
 	 * customize {@code GenericApplicationContext}'s standard settings.
 	 *
 	 * @param context the context that should be prepared
-	 * @since 2.5
 	 * @see #loadContext(MergedContextConfiguration)
 	 * @see #loadContext(String...)
 	 * @see GenericApplicationContext#setAllowBeanDefinitionOverriding
 	 * @see GenericApplicationContext#setResourceLoader
 	 * @see GenericApplicationContext#setId
 	 * @see #prepareContext(ConfigurableApplicationContext, MergedContextConfiguration)
+	 * @since 2.5
 	 */
 	protected void prepareContext(GenericApplicationContext context) {
 	}
@@ -222,13 +208,13 @@ public abstract class AbstractGenericContextLoader extends AbstractContextLoader
 	 * to customize {@code DefaultListableBeanFactory}'s standard settings.
 	 *
 	 * @param beanFactory the bean factory created by this {@code ContextLoader}
-	 * @since 2.5
 	 * @see #loadContext(MergedContextConfiguration)
 	 * @see #loadContext(String...)
 	 * @see DefaultListableBeanFactory#setAllowBeanDefinitionOverriding
 	 * @see DefaultListableBeanFactory#setAllowEagerClassLoading
 	 * @see DefaultListableBeanFactory#setAllowCircularReferences
 	 * @see DefaultListableBeanFactory#setAllowRawInjectionDespiteWrapping
+	 * @since 2.5
 	 */
 	protected void customizeBeanFactory(DefaultListableBeanFactory beanFactory) {
 	}
@@ -248,10 +234,10 @@ public abstract class AbstractGenericContextLoader extends AbstractContextLoader
 	 * and override this method to provide a custom strategy for loading or
 	 * registering bean definitions.
 	 *
-	 * @param context the context into which the bean definitions should be loaded
+	 * @param context      the context into which the bean definitions should be loaded
 	 * @param mergedConfig the merged context configuration
-	 * @since 3.1
 	 * @see #loadContext(MergedContextConfiguration)
+	 * @since 3.1
 	 */
 	protected void loadBeanDefinitions(GenericApplicationContext context, MergedContextConfiguration mergedConfig) {
 		createBeanDefinitionReader(context).loadBeanDefinitions(mergedConfig.getLocations());
@@ -262,12 +248,12 @@ public abstract class AbstractGenericContextLoader extends AbstractContextLoader
 	 * bean definitions into the supplied {@link GenericApplicationContext context}.
 	 *
 	 * @param context the context for which the {@code BeanDefinitionReader}
-	 * should be created
+	 *                should be created
 	 * @return a {@code BeanDefinitionReader} for the supplied context
-	 * @since 2.5
 	 * @see #loadContext(String...)
 	 * @see #loadBeanDefinitions
 	 * @see BeanDefinitionReader
+	 * @since 2.5
 	 */
 	protected abstract BeanDefinitionReader createBeanDefinitionReader(GenericApplicationContext context);
 
@@ -280,10 +266,10 @@ public abstract class AbstractGenericContextLoader extends AbstractContextLoader
 	 * to customize the application context.
 	 *
 	 * @param context the newly created application context
-	 * @since 2.5
 	 * @see #loadContext(MergedContextConfiguration)
 	 * @see #loadContext(String...)
 	 * @see #customizeContext(ConfigurableApplicationContext, MergedContextConfiguration)
+	 * @since 2.5
 	 */
 	protected void customizeContext(GenericApplicationContext context) {
 	}

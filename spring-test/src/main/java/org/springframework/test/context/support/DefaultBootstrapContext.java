@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.context.support;
 
 import org.springframework.core.style.ToStringCreator;
@@ -35,9 +19,10 @@ public class DefaultBootstrapContext implements BootstrapContext {
 
 	/**
 	 * Construct a new {@code DefaultBootstrapContext} from the supplied arguments.
-	 * @param testClass the test class for this bootstrap context; never {@code null}
+	 *
+	 * @param testClass                       the test class for this bootstrap context; never {@code null}
 	 * @param cacheAwareContextLoaderDelegate the context loader delegate to use for
-	 * transparent interaction with the {@code ContextCache}; never {@code null}
+	 *                                        transparent interaction with the {@code ContextCache}; never {@code null}
 	 */
 	public DefaultBootstrapContext(Class<?> testClass, CacheAwareContextLoaderDelegate cacheAwareContextLoaderDelegate) {
 		Assert.notNull(testClass, "Test class must not be null");
@@ -68,9 +53,9 @@ public class DefaultBootstrapContext implements BootstrapContext {
 	@Override
 	public String toString() {
 		return new ToStringCreator(this)//
-		.append("testClass", this.testClass.getName())//
-		.append("cacheAwareContextLoaderDelegate", this.cacheAwareContextLoaderDelegate.getClass().getName())//
-		.toString();
+				.append("testClass", this.testClass.getName())//
+				.append("cacheAwareContextLoaderDelegate", this.cacheAwareContextLoaderDelegate.getClass().getName())//
+				.toString();
 	}
 
 }

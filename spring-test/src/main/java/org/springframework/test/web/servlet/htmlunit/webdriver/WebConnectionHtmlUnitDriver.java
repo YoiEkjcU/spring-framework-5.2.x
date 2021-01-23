@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.web.servlet.htmlunit.webdriver;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
@@ -35,8 +19,8 @@ import org.springframework.util.Assert;
  *
  * @author Rob Winch
  * @author Sam Brannen
- * @since 4.2
  * @see MockMvcHtmlUnitDriverBuilder
+ * @since 4.2
  */
 public class WebConnectionHtmlUnitDriver extends HtmlUnitDriver {
 
@@ -65,6 +49,7 @@ public class WebConnectionHtmlUnitDriver extends HtmlUnitDriver {
 	 * {@link WebConnection} is {@linkplain #getWebConnection accessible} for later use.
 	 * <p>Delegates to {@link HtmlUnitDriver#modifyWebClient} for default behavior
 	 * and to {@link #modifyWebClientInternal} for further customization.
+	 *
 	 * @param webClient the client to modify
 	 * @return the modified client
 	 * @see HtmlUnitDriver#modifyWebClient(WebClient)
@@ -82,6 +67,7 @@ public class WebConnectionHtmlUnitDriver extends HtmlUnitDriver {
 	 * <p>The default implementation simply returns the supplied client unmodified.
 	 * <p>Subclasses can override this method to customize the {@code WebClient}
 	 * that the {@link HtmlUnitDriver} uses.
+	 *
 	 * @param webClient the client to modify
 	 * @return the modified client
 	 */
@@ -91,6 +77,7 @@ public class WebConnectionHtmlUnitDriver extends HtmlUnitDriver {
 
 	/**
 	 * Return the current {@link WebClient}.
+	 *
 	 * @since 4.3
 	 */
 	@Override
@@ -101,6 +88,7 @@ public class WebConnectionHtmlUnitDriver extends HtmlUnitDriver {
 
 	/**
 	 * Set the {@link WebConnection} to be used with the {@link WebClient}.
+	 *
 	 * @param webConnection the {@code WebConnection} to use
 	 */
 	public void setWebConnection(WebConnection webConnection) {
@@ -110,6 +98,7 @@ public class WebConnectionHtmlUnitDriver extends HtmlUnitDriver {
 
 	/**
 	 * Access the current {@link WebConnection} for the {@link WebClient}.
+	 *
 	 * @return the current {@code WebConnection}
 	 */
 	public WebConnection getWebConnection() {

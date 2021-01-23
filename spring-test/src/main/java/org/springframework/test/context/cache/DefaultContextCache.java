@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.context.cache;
 
 import java.util.ArrayList;
@@ -50,8 +34,8 @@ import org.springframework.util.Assert;
  *
  * @author Sam Brannen
  * @author Juergen Hoeller
- * @since 2.5
  * @see ContextCacheUtils#retrieveMaxCacheSize()
+ * @since 2.5
  */
 public class DefaultContextCache implements ContextCache {
 
@@ -82,9 +66,10 @@ public class DefaultContextCache implements ContextCache {
 	/**
 	 * Create a new {@code DefaultContextCache} using the maximum cache size
 	 * obtained via {@link ContextCacheUtils#retrieveMaxCacheSize()}.
-	 * @since 4.3
+	 *
 	 * @see #DefaultContextCache(int)
 	 * @see ContextCacheUtils#retrieveMaxCacheSize()
+	 * @since 4.3
 	 */
 	public DefaultContextCache() {
 		this(ContextCacheUtils.retrieveMaxCacheSize());
@@ -93,11 +78,12 @@ public class DefaultContextCache implements ContextCache {
 	/**
 	 * Create a new {@code DefaultContextCache} using the supplied maximum
 	 * cache size.
+	 *
 	 * @param maxSize the maximum cache size
 	 * @throws IllegalArgumentException if the supplied {@code maxSize} value
-	 * is not positive
-	 * @since 4.3
+	 *                                  is not positive
 	 * @see #DefaultContextCache()
+	 * @since 4.3
 	 */
 	public DefaultContextCache(int maxSize) {
 		Assert.isTrue(maxSize > 0, "'maxSize' must be positive");
@@ -124,8 +110,7 @@ public class DefaultContextCache implements ContextCache {
 		ApplicationContext context = this.contextMap.get(key);
 		if (context == null) {
 			this.missCount.incrementAndGet();
-		}
-		else {
+		} else {
 			this.hitCount.incrementAndGet();
 		}
 		return context;
@@ -296,6 +281,7 @@ public class DefaultContextCache implements ContextCache {
 	 * cache and its statistics.
 	 * <p>The string returned by this method contains all information
 	 * required for compliance with the contract for {@link #logStatistics()}.
+	 *
 	 * @return a string representation of this cache, including statistics
 	 */
 	@Override
@@ -314,6 +300,7 @@ public class DefaultContextCache implements ContextCache {
 	 * Simple cache implementation based on {@link LinkedHashMap} with a maximum
 	 * size and a <em>least recently used</em> (LRU) eviction policy that
 	 * properly closes application contexts.
+	 *
 	 * @since 4.3
 	 */
 	@SuppressWarnings("serial")
@@ -322,8 +309,9 @@ public class DefaultContextCache implements ContextCache {
 		/**
 		 * Create a new {@code LruCache} with the supplied initial capacity
 		 * and load factor.
+		 *
 		 * @param initialCapacity the initial capacity
-		 * @param loadFactor the load factor
+		 * @param loadFactor      the load factor
 		 */
 		LruCache(int initialCapacity, float loadFactor) {
 			super(initialCapacity, loadFactor, true);

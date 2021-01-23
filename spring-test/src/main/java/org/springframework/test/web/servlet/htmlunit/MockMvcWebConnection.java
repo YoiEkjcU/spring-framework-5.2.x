@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.web.servlet.htmlunit;
 
 import java.io.IOException;
@@ -54,8 +38,8 @@ import org.springframework.util.Assert;
  *
  * @author Rob Winch
  * @author Sam Brannen
- * @since 4.2
  * @see org.springframework.test.web.servlet.htmlunit.webdriver.WebConnectionHtmlUnitDriver
+ * @since 4.2
  */
 public final class MockMvcWebConnection implements WebConnection {
 
@@ -74,7 +58,8 @@ public final class MockMvcWebConnection implements WebConnection {
 	 * is {@code ""} (i.e., the root context).
 	 * <p>For example, the URL {@code http://localhost/test/this} would use
 	 * {@code ""} as the context path.
-	 * @param mockMvc the {@code MockMvc} instance to use; never {@code null}
+	 *
+	 * @param mockMvc   the {@code MockMvc} instance to use; never {@code null}
 	 * @param webClient the {@link WebClient} to use. never {@code null}
 	 */
 	public MockMvcWebConnection(MockMvc mockMvc, WebClient webClient) {
@@ -88,8 +73,9 @@ public final class MockMvcWebConnection implements WebConnection {
 	 * to {@link javax.servlet.http.HttpServletRequest#getContextPath()}
 	 * which states that it can be an empty string and otherwise must start
 	 * with a "/" character and not end with a "/" character.
-	 * @param mockMvc the {@code MockMvc} instance to use (never {@code null})
-	 * @param webClient the {@link WebClient} to use (never {@code null})
+	 *
+	 * @param mockMvc     the {@code MockMvc} instance to use (never {@code null})
+	 * @param webClient   the {@link WebClient} to use (never {@code null})
 	 * @param contextPath the contextPath to use
 	 */
 	public MockMvcWebConnection(MockMvc mockMvc, WebClient webClient, @Nullable String contextPath) {
@@ -108,6 +94,7 @@ public final class MockMvcWebConnection implements WebConnection {
 	 * {@link javax.servlet.http.HttpServletRequest#getContextPath()} which
 	 * states that it can be an empty string and otherwise must start with
 	 * a "/" character and not end with a "/" character.
+	 *
 	 * @param contextPath the path to validate
 	 */
 	static void validateContextPath(@Nullable String contextPath) {
@@ -147,8 +134,7 @@ public final class MockMvcWebConnection implements WebConnection {
 		ResultActions resultActions;
 		try {
 			resultActions = this.mockMvc.perform(requestBuilder);
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			throw new IOException(ex);
 		}
 
@@ -166,8 +152,7 @@ public final class MockMvcWebConnection implements WebConnection {
 			Date expires = toManage.getExpires();
 			if (expires == null || expires.after(now)) {
 				cookieManager.addCookie(toManage);
-			}
-			else {
+			} else {
 				cookieManager.removeCookie(toManage);
 			}
 		}

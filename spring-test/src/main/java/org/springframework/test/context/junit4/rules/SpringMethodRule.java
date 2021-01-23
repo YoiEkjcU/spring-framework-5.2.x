@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.context.junit4.rules;
 
 import java.lang.reflect.Method;
@@ -86,11 +70,11 @@ import org.springframework.test.context.junit4.statements.SpringRepeat;
  *
  * @author Sam Brannen
  * @author Philippe Marschall
- * @since 4.2
  * @see #apply(Statement, FrameworkMethod, Object)
  * @see SpringClassRule
  * @see org.springframework.test.context.TestContextManager
  * @see org.springframework.test.context.junit4.SpringJUnit4ClassRunner
+ * @since 4.2
  */
 public class SpringMethodRule implements MethodRule {
 
@@ -112,9 +96,10 @@ public class SpringMethodRule implements MethodRule {
 	 * non-matching {@code @IfProfileValue} annotation from running altogether,
 	 * even skipping the execution of {@code prepareTestInstance()} methods
 	 * in {@code TestExecutionListeners}.
-	 * @param base the base {@code Statement} that this rule should be applied to
+	 *
+	 * @param base            the base {@code Statement} that this rule should be applied to
 	 * @param frameworkMethod the method which is about to be invoked on the test instance
-	 * @param testInstance the current test instance
+	 * @param testInstance    the current test instance
 	 * @return a statement that wraps the supplied {@code base} with instance-level
 	 * and method-level features of the Spring TestContext Framework
 	 * @see #withBeforeTestMethodCallbacks
@@ -145,10 +130,11 @@ public class SpringMethodRule implements MethodRule {
 
 	/**
 	 * Wrap the supplied {@link Statement} with a {@code RunBeforeTestMethodCallbacks} statement.
+	 *
 	 * @see RunBeforeTestMethodCallbacks
 	 */
 	private Statement withBeforeTestMethodCallbacks(Statement next, Method testMethod,
-			Object testInstance, TestContextManager testContextManager) {
+													Object testInstance, TestContextManager testContextManager) {
 
 		return new RunBeforeTestMethodCallbacks(
 				next, testInstance, testMethod, testContextManager);
@@ -156,10 +142,11 @@ public class SpringMethodRule implements MethodRule {
 
 	/**
 	 * Wrap the supplied {@link Statement} with a {@code RunAfterTestMethodCallbacks} statement.
+	 *
 	 * @see RunAfterTestMethodCallbacks
 	 */
 	private Statement withAfterTestMethodCallbacks(Statement next, Method testMethod,
-			Object testInstance, TestContextManager testContextManager) {
+												   Object testInstance, TestContextManager testContextManager) {
 
 		return new RunAfterTestMethodCallbacks(
 				next, testInstance, testMethod, testContextManager);
@@ -167,6 +154,7 @@ public class SpringMethodRule implements MethodRule {
 
 	/**
 	 * Wrap the supplied {@link Statement} with a {@code RunPrepareTestInstanceCallbacks} statement.
+	 *
 	 * @see RunPrepareTestInstanceCallbacks
 	 */
 	private Statement withTestInstancePreparation(
@@ -179,6 +167,7 @@ public class SpringMethodRule implements MethodRule {
 	 * Wrap the supplied {@link Statement} with a {@code SpringRepeat} statement.
 	 * <p>Supports Spring's {@link org.springframework.test.annotation.Repeat @Repeat}
 	 * annotation.
+	 *
 	 * @see SpringRepeat
 	 */
 	private Statement withPotentialRepeat(Statement next, Method testMethod, Object testInstance) {
@@ -189,6 +178,7 @@ public class SpringMethodRule implements MethodRule {
 	 * Wrap the supplied {@link Statement} with a {@code SpringFailOnTimeout} statement.
 	 * <p>Supports Spring's {@link org.springframework.test.annotation.Timed @Timed}
 	 * annotation.
+	 *
 	 * @see SpringFailOnTimeout
 	 */
 	private Statement withPotentialTimeout(Statement next, Method testMethod, Object testInstance) {
@@ -197,6 +187,7 @@ public class SpringMethodRule implements MethodRule {
 
 	/**
 	 * Wrap the supplied {@link Statement} with a {@code ProfileValueChecker} statement.
+	 *
 	 * @see ProfileValueChecker
 	 */
 	private Statement withProfileValueCheck(Statement next, Method testMethod, Object testInstance) {

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.web.client;
 
 import java.io.IOException;
@@ -52,6 +36,7 @@ public interface RequestExpectationManager {
 	/**
 	 * Verify that all expectations have been met.
 	 * <p>This is a delegate for {@link MockRestServiceServer#verify()}.
+	 *
 	 * @throws AssertionError when some expectations were not met
 	 * @see MockRestServiceServer#verify()
 	 */
@@ -60,6 +45,7 @@ public interface RequestExpectationManager {
 	/**
 	 * Reset the internal state removing all expectations and recorded requests.
 	 * <p>This is a delegate for {@link MockRestServiceServer#reset()}.
+	 *
 	 * @see MockRestServiceServer#reset()
 	 */
 	void reset();
@@ -69,10 +55,11 @@ public interface RequestExpectationManager {
 	 * Validate the given actual request against the declared expectations.
 	 * Is successful return the mock response to use or raise an error.
 	 * <p>This is used in {@link MockRestServiceServer} against actual requests.
+	 *
 	 * @param request the request
 	 * @return the response to return if the request was validated.
 	 * @throws AssertionError when some expectations were not met
-	 * @throws IOException in case of any validation errors
+	 * @throws IOException    in case of any validation errors
 	 */
 	ClientHttpResponse validateRequest(ClientHttpRequest request) throws IOException;
 

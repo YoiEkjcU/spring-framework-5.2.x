@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.context.support;
 
 import java.util.ArrayList;
@@ -44,9 +28,9 @@ import org.springframework.util.StringUtils;
  *
  * @author Sam Brannen
  * @author Michail Nikolaev
- * @since 4.1
  * @see ActiveProfiles
  * @see ActiveProfilesResolver
+ * @since 4.1
  */
 abstract class ActiveProfilesUtils {
 
@@ -59,8 +43,9 @@ abstract class ActiveProfilesUtils {
 	 * {@link ActiveProfiles @ActiveProfiles} will be taken into consideration.
 	 * Specifically, if the {@code inheritProfiles} flag is set to {@code true}, profiles
 	 * defined in the test class will be merged with those defined in superclasses.
+	 *
 	 * @param testClass the class for which to resolve the active profiles (must not be
-	 * {@code null})
+	 *                  {@code null})
 	 * @return the set of active profiles for the specified class, including active
 	 * profiles from superclasses if appropriate (never {@code null})
 	 * @see ActiveProfiles
@@ -99,8 +84,7 @@ abstract class ActiveProfilesUtils {
 			ActiveProfilesResolver resolver;
 			try {
 				resolver = BeanUtils.instantiateClass(resolverClass, ActiveProfilesResolver.class);
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				String msg = String.format("Could not instantiate ActiveProfilesResolver of type [%s] " +
 						"for test class [%s]", resolverClass.getName(), rootDeclaringClass.getName());
 				logger.error(msg);

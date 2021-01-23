@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.web.servlet;
 
 import java.util.ArrayList;
@@ -85,6 +69,7 @@ public final class MockMvc {
 
 	/**
 	 * Private constructor, not for direct instantiation.
+	 *
 	 * @see org.springframework.test.web.servlet.setup.MockMvcBuilders
 	 */
 	MockMvc(TestDispatcherServlet servlet, Filter... filters) {
@@ -100,6 +85,7 @@ public final class MockMvc {
 
 	/**
 	 * A default request builder merged into every performed request.
+	 *
 	 * @see org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder#defaultRequest(RequestBuilder)
 	 */
 	void setDefaultRequest(@Nullable RequestBuilder requestBuilder) {
@@ -108,6 +94,7 @@ public final class MockMvc {
 
 	/**
 	 * Expectations to assert after every performed request.
+	 *
 	 * @see org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder#alwaysExpect(ResultMatcher)
 	 */
 	void setGlobalResultMatchers(List<ResultMatcher> resultMatchers) {
@@ -117,6 +104,7 @@ public final class MockMvc {
 
 	/**
 	 * General actions to apply after every performed request.
+	 *
 	 * @see org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder#alwaysDo(ResultHandler)
 	 */
 	void setGlobalResultHandlers(List<ResultHandler> resultHandlers) {
@@ -133,6 +121,7 @@ public final class MockMvc {
 	 * <p>For most processing scenarios, simply use {@link MockMvc#perform},
 	 * or if you need to configure the {@code DispatcherServlet}, provide a
 	 * {@link DispatcherServletCustomizer} to the {@code MockMvcBuilder}.
+	 *
 	 * @since 5.1
 	 */
 	public DispatcherServlet getDispatcherServlet() {
@@ -143,9 +132,10 @@ public final class MockMvc {
 	/**
 	 * Perform a request and return a type that allows chaining further
 	 * actions, such as asserting expectations, on the result.
+	 *
 	 * @param requestBuilder used to prepare the request to execute;
-	 * see static factory methods in
-	 * {@link org.springframework.test.web.servlet.request.MockMvcRequestBuilders}
+	 *                       see static factory methods in
+	 *                       {@link org.springframework.test.web.servlet.request.MockMvcRequestBuilders}
 	 * @return an instance of {@link ResultActions} (never {@code null})
 	 * @see org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 	 * @see org.springframework.test.web.servlet.result.MockMvcResultMatchers
@@ -163,8 +153,7 @@ public final class MockMvc {
 		if (asyncContext != null) {
 			servletResponse = (HttpServletResponse) asyncContext.getResponse();
 			mockResponse = unwrapResponseIfNecessary(servletResponse);
-		}
-		else {
+		} else {
 			mockResponse = new MockHttpServletResponse();
 			servletResponse = mockResponse;
 		}
@@ -196,11 +185,13 @@ public final class MockMvc {
 				matcher.match(mvcResult);
 				return this;
 			}
+
 			@Override
 			public ResultActions andDo(ResultHandler handler) throws Exception {
 				handler.handle(mvcResult);
 				return this;
 			}
+
 			@Override
 			public MvcResult andReturn() {
 				return mvcResult;

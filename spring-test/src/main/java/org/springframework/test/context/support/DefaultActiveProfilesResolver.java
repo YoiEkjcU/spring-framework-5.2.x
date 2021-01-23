@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.context.support;
 
 import java.util.LinkedHashSet;
@@ -37,9 +21,9 @@ import static org.springframework.test.util.MetaAnnotationUtils.findAnnotationDe
  * {@link ActiveProfiles#value}.
  *
  * @author Sam Brannen
- * @since 4.1
  * @see ActiveProfiles
  * @see ActiveProfilesResolver
+ * @since 4.1
  */
 public class DefaultActiveProfilesResolver implements ActiveProfilesResolver {
 
@@ -50,8 +34,9 @@ public class DefaultActiveProfilesResolver implements ActiveProfilesResolver {
 	 * Resolve the <em>bean definition profiles</em> for the given {@linkplain
 	 * Class test class} based on profiles configured declaratively via
 	 * {@link ActiveProfiles#profiles} or {@link ActiveProfiles#value}.
+	 *
 	 * @param testClass the test class for which the profiles should be resolved;
-	 * never {@code null}
+	 *                  never {@code null}
 	 * @return the list of bean definition profiles to use when loading the
 	 * {@code ApplicationContext}; never {@code null}
 	 */
@@ -67,17 +52,16 @@ public class DefaultActiveProfilesResolver implements ActiveProfilesResolver {
 		if (descriptor == null) {
 			if (logger.isDebugEnabled()) {
 				logger.debug(String.format(
-					"Could not find an 'annotation declaring class' for annotation type [%s] and class [%s]",
-					annotationType.getName(), testClass.getName()));
+						"Could not find an 'annotation declaring class' for annotation type [%s] and class [%s]",
+						annotationType.getName(), testClass.getName()));
 			}
-		}
-		else {
+		} else {
 			Class<?> declaringClass = descriptor.getDeclaringClass();
 			ActiveProfiles annotation = descriptor.synthesizeAnnotation();
 
 			if (logger.isTraceEnabled()) {
 				logger.trace(String.format("Retrieved @ActiveProfiles [%s] for declaring class [%s].", annotation,
-					declaringClass.getName()));
+						declaringClass.getName()));
 			}
 
 			for (String profile : annotation.profiles()) {

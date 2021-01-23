@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.util;
 
 import java.lang.annotation.Annotation;
@@ -50,9 +34,9 @@ import org.springframework.util.ObjectUtils;
  * {@link org.springframework.test.context.ContextConfiguration#inheritLocations}).
  *
  * @author Sam Brannen
- * @since 4.0
  * @see AnnotationUtils
  * @see AnnotationDescriptor
+ * @since 4.0
  */
 public abstract class MetaAnnotationUtils {
 
@@ -74,7 +58,8 @@ public abstract class MetaAnnotationUtils {
 	 * <p>In this context, the term <em>recursively</em> means that the search
 	 * process continues by returning to step #1 with the current annotation,
 	 * interface, or superclass as the class to look for annotations on.
-	 * @param clazz the class to look for annotations on
+	 *
+	 * @param clazz          the class to look for annotations on
 	 * @param annotationType the type of annotation to look for
 	 * @return the corresponding annotation descriptor if the annotation was found;
 	 * otherwise {@code null}
@@ -91,8 +76,9 @@ public abstract class MetaAnnotationUtils {
 	 * Perform the search algorithm for {@link #findAnnotationDescriptor(Class, Class)},
 	 * avoiding endless recursion by tracking which annotations have already been
 	 * <em>visited</em>.
-	 * @param clazz the class to look for annotations on
-	 * @param visited the set of annotations that have already been visited
+	 *
+	 * @param clazz          the class to look for annotations on
+	 * @param visited        the set of annotations that have already been visited
 	 * @param annotationType the type of annotation to look for
 	 * @return the corresponding annotation descriptor if the annotation was found;
 	 * otherwise {@code null}
@@ -159,7 +145,8 @@ public abstract class MetaAnnotationUtils {
 	 * <p>In this context, the term <em>recursively</em> means that the search
 	 * process continues by returning to step #1 with the current annotation,
 	 * interface, or superclass as the class to look for annotations on.
-	 * @param clazz the class to look for annotations on
+	 *
+	 * @param clazz           the class to look for annotations on
 	 * @param annotationTypes the types of annotations to look for
 	 * @return the corresponding annotation descriptor if one of the annotations
 	 * was found; otherwise {@code null}
@@ -177,8 +164,9 @@ public abstract class MetaAnnotationUtils {
 	 * Perform the search algorithm for {@link #findAnnotationDescriptorForTypes(Class, Class...)},
 	 * avoiding endless recursion by tracking which annotations have already been
 	 * <em>visited</em>.
-	 * @param clazz the class to look for annotations on
-	 * @param visited the set of annotations that have already been visited
+	 *
+	 * @param clazz           the class to look for annotations on
+	 * @param visited         the set of annotations that have already been visited
 	 * @param annotationTypes the types of annotations to look for
 	 * @return the corresponding annotation descriptor if one of the annotations
 	 * was found; otherwise {@code null}
@@ -186,7 +174,7 @@ public abstract class MetaAnnotationUtils {
 	@SuppressWarnings("unchecked")
 	@Nullable
 	private static UntypedAnnotationDescriptor findAnnotationDescriptorForTypes(@Nullable Class<?> clazz,
-			Set<Annotation> visited, Class<? extends Annotation>... annotationTypes) {
+																				Set<Annotation> visited, Class<? extends Annotation>... annotationTypes) {
 
 		assertNonEmptyAnnotationTypeArray(annotationTypes, "The list of annotation types must not be empty");
 		if (clazz == null || Object.class == clazz) {
@@ -299,7 +287,7 @@ public abstract class MetaAnnotationUtils {
 		}
 
 		public AnnotationDescriptor(Class<?> rootDeclaringClass, Class<?> declaringClass,
-				@Nullable Annotation composedAnnotation, T annotation) {
+									@Nullable Annotation composedAnnotation, T annotation) {
 
 			Assert.notNull(rootDeclaringClass, "'rootDeclaringClass' must not be null");
 			Assert.notNull(annotation, "Annotation must not be null");
@@ -329,10 +317,11 @@ public abstract class MetaAnnotationUtils {
 		 * Synthesize the merged {@link #getAnnotationAttributes AnnotationAttributes}
 		 * in this descriptor back into an annotation of the target
 		 * {@linkplain #getAnnotationType annotation type}.
-		 * @since 4.2
+		 *
 		 * @see #getAnnotationAttributes()
 		 * @see #getAnnotationType()
 		 * @see AnnotationUtils#synthesizeAnnotation(java.util.Map, Class, java.lang.reflect.AnnotatedElement)
+		 * @since 4.2
 		 */
 		@SuppressWarnings("unchecked")
 		public T synthesizeAnnotation() {
@@ -385,7 +374,7 @@ public abstract class MetaAnnotationUtils {
 		}
 
 		public UntypedAnnotationDescriptor(Class<?> rootDeclaringClass, Class<?> declaringClass,
-				@Nullable Annotation composedAnnotation, Annotation annotation) {
+										   @Nullable Annotation composedAnnotation, Annotation annotation) {
 
 			super(rootDeclaringClass, declaringClass, composedAnnotation, annotation);
 		}
@@ -394,6 +383,7 @@ public abstract class MetaAnnotationUtils {
 		 * Throws an {@link UnsupportedOperationException} since the type of annotation
 		 * represented by the {@link #getAnnotationAttributes AnnotationAttributes} in
 		 * an {@code UntypedAnnotationDescriptor} is unknown.
+		 *
 		 * @since 4.2
 		 */
 		@Override

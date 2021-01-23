@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.context.testng;
 
 import javax.sql.DataSource;
@@ -70,7 +54,6 @@ import org.springframework.util.Assert;
  *
  * @author Sam Brannen
  * @author Juergen Hoeller
- * @since 2.5
  * @see AbstractTestNGSpringContextTests
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.TestExecutionListeners
@@ -83,16 +66,18 @@ import org.springframework.util.Assert;
  * @see org.springframework.test.context.transaction.AfterTransaction
  * @see org.springframework.test.jdbc.JdbcTestUtils
  * @see org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests
+ * @since 2.5
  */
-@TestExecutionListeners(listeners = { ServletTestExecutionListener.class,
-	DirtiesContextBeforeModesTestExecutionListener.class, DependencyInjectionTestExecutionListener.class,
-	DirtiesContextTestExecutionListener.class, TransactionalTestExecutionListener.class,
-	SqlScriptsTestExecutionListener.class, EventPublishingTestExecutionListener.class }, inheritListeners = false)
+@TestExecutionListeners(listeners = {ServletTestExecutionListener.class,
+		DirtiesContextBeforeModesTestExecutionListener.class, DependencyInjectionTestExecutionListener.class,
+		DirtiesContextTestExecutionListener.class, TransactionalTestExecutionListener.class,
+		SqlScriptsTestExecutionListener.class, EventPublishingTestExecutionListener.class}, inheritListeners = false)
 @Transactional
 public abstract class AbstractTransactionalTestNGSpringContextTests extends AbstractTestNGSpringContextTests {
 
 	/**
 	 * The {@code JdbcTemplate} that this base class manages, available to subclasses.
+	 *
 	 * @since 3.2
 	 */
 	protected final JdbcTemplate jdbcTemplate = new JdbcTemplate();
@@ -112,6 +97,7 @@ public abstract class AbstractTransactionalTestNGSpringContextTests extends Abst
 
 	/**
 	 * Specify the encoding for SQL scripts, if different from the platform encoding.
+	 *
 	 * @see #executeSqlScript
 	 */
 	public void setSqlScriptEncoding(String sqlScriptEncoding) {
@@ -120,6 +106,7 @@ public abstract class AbstractTransactionalTestNGSpringContextTests extends Abst
 
 	/**
 	 * Convenience method for counting the rows in the given table.
+	 *
 	 * @param tableName table name to count rows in
 	 * @return the number of rows in the table
 	 * @see JdbcTestUtils#countRowsInTable
@@ -132,12 +119,13 @@ public abstract class AbstractTransactionalTestNGSpringContextTests extends Abst
 	 * Convenience method for counting the rows in the given table, using the
 	 * provided {@code WHERE} clause.
 	 * <p>See the Javadoc for {@link JdbcTestUtils#countRowsInTableWhere} for details.
-	 * @param tableName the name of the table to count rows in
+	 *
+	 * @param tableName   the name of the table to count rows in
 	 * @param whereClause the {@code WHERE} clause to append to the query
 	 * @return the number of rows in the table that match the provided
 	 * {@code WHERE} clause
-	 * @since 3.2
 	 * @see JdbcTestUtils#countRowsInTableWhere
+	 * @since 3.2
 	 */
 	protected int countRowsInTableWhere(String tableName, String whereClause) {
 		return JdbcTestUtils.countRowsInTableWhere(this.jdbcTemplate, tableName, whereClause);
@@ -146,6 +134,7 @@ public abstract class AbstractTransactionalTestNGSpringContextTests extends Abst
 	/**
 	 * Convenience method for deleting all rows from the specified tables.
 	 * <p>Use with caution outside of a transaction!
+	 *
 	 * @param names the names of the tables from which to delete
 	 * @return the total number of rows deleted from all specified tables
 	 * @see JdbcTestUtils#deleteFromTables
@@ -159,16 +148,17 @@ public abstract class AbstractTransactionalTestNGSpringContextTests extends Abst
 	 * provided {@code WHERE} clause.
 	 * <p>Use with caution outside of a transaction!
 	 * <p>See the Javadoc for {@link JdbcTestUtils#deleteFromTableWhere} for details.
-	 * @param tableName the name of the table to delete rows from
+	 *
+	 * @param tableName   the name of the table to delete rows from
 	 * @param whereClause the {@code WHERE} clause to append to the query
-	 * @param args arguments to bind to the query (leaving it to the {@code
-	 * PreparedStatement} to guess the corresponding SQL type); may also contain
-	 * {@link org.springframework.jdbc.core.SqlParameterValue SqlParameterValue}
-	 * objects which indicate not only the argument value but also the SQL type
-	 * and optionally the scale.
+	 * @param args        arguments to bind to the query (leaving it to the {@code
+	 *                    PreparedStatement} to guess the corresponding SQL type); may also contain
+	 *                    {@link org.springframework.jdbc.core.SqlParameterValue SqlParameterValue}
+	 *                    objects which indicate not only the argument value but also the SQL type
+	 *                    and optionally the scale.
 	 * @return the number of rows deleted from the table
-	 * @since 4.0
 	 * @see JdbcTestUtils#deleteFromTableWhere
+	 * @since 4.0
 	 */
 	protected int deleteFromTableWhere(String tableName, String whereClause, Object... args) {
 		return JdbcTestUtils.deleteFromTableWhere(this.jdbcTemplate, tableName, whereClause, args);
@@ -177,9 +167,10 @@ public abstract class AbstractTransactionalTestNGSpringContextTests extends Abst
 	/**
 	 * Convenience method for dropping all of the specified tables.
 	 * <p>Use with caution outside of a transaction!
+	 *
 	 * @param names the names of the tables to drop
-	 * @since 3.2
 	 * @see JdbcTestUtils#dropTables
+	 * @since 3.2
 	 */
 	protected void dropTables(String... names) {
 		JdbcTestUtils.dropTables(this.jdbcTemplate, names);
@@ -190,9 +181,10 @@ public abstract class AbstractTransactionalTestNGSpringContextTests extends Abst
 	 * <p>Use with caution outside of a transaction!
 	 * <p>The script will normally be loaded by classpath.
 	 * <p><b>Do not use this method to execute DDL if you expect rollback.</b>
+	 *
 	 * @param sqlResourcePath the Spring resource path for the SQL script
 	 * @param continueOnError whether or not to continue without throwing an
-	 * exception in the event of an error
+	 *                        exception in the event of an error
 	 * @throws DataAccessException if there is an error executing a statement
 	 * @see ResourceDatabasePopulator
 	 * @see #setSqlScriptEncoding

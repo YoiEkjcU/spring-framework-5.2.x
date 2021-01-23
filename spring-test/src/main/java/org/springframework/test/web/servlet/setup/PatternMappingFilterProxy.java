@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.web.servlet.setup;
 
 import java.io.IOException;
@@ -47,13 +31,19 @@ final class PatternMappingFilterProxy implements Filter {
 
 	private final Filter delegate;
 
-	/** Patterns that require an exact match, e.g. "/test" */
+	/**
+	 * Patterns that require an exact match, e.g. "/test"
+	 */
 	private final List<String> exactMatches = new ArrayList<>();
 
-	/** Patterns that require the URL to have a specific prefix, e.g. "/test/*" */
+	/**
+	 * Patterns that require the URL to have a specific prefix, e.g. "/test/*"
+	 */
 	private final List<String> startsWithMatches = new ArrayList<>();
 
-	/** Patterns that require the request URL to have a specific suffix, e.g. "*.html" */
+	/**
+	 * Patterns that require the request URL to have a specific suffix, e.g. "*.html"
+	 */
 	private final List<String> endsWithMatches = new ArrayList<>();
 
 
@@ -72,15 +62,12 @@ final class PatternMappingFilterProxy implements Filter {
 		Assert.notNull(urlPattern, "Found null URL Pattern");
 		if (urlPattern.startsWith(EXTENSION_MAPPING_PATTERN)) {
 			this.endsWithMatches.add(urlPattern.substring(1));
-		}
-		else if (urlPattern.equals(PATH_MAPPING_PATTERN)) {
+		} else if (urlPattern.equals(PATH_MAPPING_PATTERN)) {
 			this.startsWithMatches.add("");
-		}
-		else if (urlPattern.endsWith(PATH_MAPPING_PATTERN)) {
+		} else if (urlPattern.endsWith(PATH_MAPPING_PATTERN)) {
 			this.startsWithMatches.add(urlPattern.substring(0, urlPattern.length() - 1));
 			this.exactMatches.add(urlPattern.substring(0, urlPattern.length() - 2));
-		}
-		else {
+		} else {
 			if (urlPattern.isEmpty()) {
 				urlPattern = "/";
 			}
@@ -98,8 +85,7 @@ final class PatternMappingFilterProxy implements Filter {
 
 		if (matches(requestPath)) {
 			this.delegate.doFilter(request, response, filterChain);
-		}
-		else {
+		} else {
 			filterChain.doFilter(request, response);
 		}
 	}

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.context.web;
 
 import javax.servlet.ServletContext;
@@ -54,9 +38,9 @@ import org.springframework.web.context.support.GenericWebApplicationContext;
  *
  * @author Sam Brannen
  * @author Phillip Webb
- * @since 3.2
  * @see #loadContext(MergedContextConfiguration)
  * @see #loadContext(String...)
+ * @since 3.2
  */
 public abstract class AbstractGenericWebContextLoader extends AbstractContextLoader {
 
@@ -95,6 +79,7 @@ public abstract class AbstractGenericWebContextLoader extends AbstractContextLoa
 	 * <li>{@link ConfigurableApplicationContext#refresh Refreshes} the
 	 * context and registers a JVM shutdown hook for it.</li>
 	 * </ul>
+	 *
 	 * @return a new web application context
 	 * @see org.springframework.test.context.SmartContextLoader#loadContext(MergedContextConfiguration)
 	 * @see GenericWebApplicationContext
@@ -109,7 +94,7 @@ public abstract class AbstractGenericWebContextLoader extends AbstractContextLoa
 
 		if (logger.isDebugEnabled()) {
 			logger.debug(String.format("Loading WebApplicationContext for merged context configuration %s.",
-				webMergedConfig));
+					webMergedConfig));
 		}
 
 		validateMergedContextConfiguration(webMergedConfig);
@@ -136,9 +121,10 @@ public abstract class AbstractGenericWebContextLoader extends AbstractContextLoa
 	 * what this context loader supports.
 	 * <p>The default implementation is a <em>no-op</em> but can be overridden by
 	 * subclasses as appropriate.
+	 *
 	 * @param mergedConfig the merged configuration to validate
 	 * @throws IllegalStateException if the supplied configuration is not valid
-	 * for this context loader
+	 *                               for this context loader
 	 * @since 4.0.4
 	 */
 	protected void validateMergedContextConfiguration(WebMergedContextConfiguration mergedConfig) {
@@ -171,11 +157,12 @@ public abstract class AbstractGenericWebContextLoader extends AbstractContextLoa
 	 * <li>Finally, the {@code MockServletContext} is set in the
 	 * {@code WebApplicationContext}.</li>
 	 * </ul>
-	 * @param context the web application context for which to configure the web resources
+	 *
+	 * @param context         the web application context for which to configure the web resources
 	 * @param webMergedConfig the merged context configuration to use to load the web application context
 	 */
 	protected void configureWebResources(GenericWebApplicationContext context,
-			WebMergedContextConfiguration webMergedConfig) {
+										 WebMergedContextConfiguration webMergedConfig) {
 
 		ApplicationContext parent = context.getParent();
 
@@ -188,8 +175,7 @@ public abstract class AbstractGenericWebContextLoader extends AbstractContextLoa
 			ServletContext servletContext = new MockServletContext(resourceBasePath, resourceLoader);
 			servletContext.setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, context);
 			context.setServletContext(servletContext);
-		}
-		else {
+		} else {
 			ServletContext servletContext = null;
 			// Find the root WebApplicationContext
 			while (parent != null) {
@@ -209,9 +195,10 @@ public abstract class AbstractGenericWebContextLoader extends AbstractContextLoa
 	 * created by this context loader.
 	 * <p>The default implementation is empty but can be overridden in subclasses
 	 * to customize {@code DefaultListableBeanFactory}'s standard settings.
-	 * @param beanFactory the bean factory created by this context loader
+	 *
+	 * @param beanFactory     the bean factory created by this context loader
 	 * @param webMergedConfig the merged context configuration to use to load the
-	 * web application context
+	 *                        web application context
 	 * @see #loadContext(MergedContextConfiguration)
 	 * @see DefaultListableBeanFactory#setAllowBeanDefinitionOverriding
 	 * @see DefaultListableBeanFactory#setAllowEagerClassLoading
@@ -226,9 +213,10 @@ public abstract class AbstractGenericWebContextLoader extends AbstractContextLoa
 	 * Load bean definitions into the supplied {@link GenericWebApplicationContext context}
 	 * from the locations or classes in the supplied {@code WebMergedContextConfiguration}.
 	 * <p>Concrete subclasses must provide an appropriate implementation.
-	 * @param context the context into which the bean definitions should be loaded
+	 *
+	 * @param context         the context into which the bean definitions should be loaded
 	 * @param webMergedConfig the merged context configuration to use to load the
-	 * web application context
+	 *                        web application context
 	 * @see #loadContext(MergedContextConfiguration)
 	 */
 	protected abstract void loadBeanDefinitions(
@@ -240,9 +228,10 @@ public abstract class AbstractGenericWebContextLoader extends AbstractContextLoa
 	 * <i>before</i> the context is refreshed.
 	 * <p>The default implementation simply delegates to
 	 * {@link AbstractContextLoader#customizeContext(ConfigurableApplicationContext, MergedContextConfiguration)}.
-	 * @param context the newly created web application context
+	 *
+	 * @param context         the newly created web application context
 	 * @param webMergedConfig the merged context configuration to use to load the
-	 * web application context
+	 *                        web application context
 	 * @see #loadContext(MergedContextConfiguration)
 	 * @see #customizeContext(ConfigurableApplicationContext, MergedContextConfiguration)
 	 */
@@ -260,8 +249,9 @@ public abstract class AbstractGenericWebContextLoader extends AbstractContextLoa
 	 * {@link org.springframework.test.context.SmartContextLoader SmartContextLoader},
 	 * not as a legacy {@link org.springframework.test.context.ContextLoader ContextLoader}.
 	 * Consequently, this method is not supported.
-	 * @see org.springframework.test.context.ContextLoader#loadContext(java.lang.String[])
+	 *
 	 * @throws UnsupportedOperationException in this implementation
+	 * @see org.springframework.test.context.ContextLoader#loadContext(java.lang.String[])
 	 */
 	@Override
 	public final ApplicationContext loadContext(String... locations) throws Exception {

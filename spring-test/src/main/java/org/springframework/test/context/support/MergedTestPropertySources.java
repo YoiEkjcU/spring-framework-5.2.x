@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2014 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.context.support;
 
 import org.springframework.test.context.TestPropertySource;
@@ -25,8 +9,8 @@ import org.springframework.util.Assert;
  * via {@link TestPropertySource @TestPropertySource}.
  *
  * @author Sam Brannen
- * @since 4.1
  * @see TestPropertySource
+ * @since 4.1
  */
 class MergedTestPropertySources {
 
@@ -48,10 +32,11 @@ class MergedTestPropertySources {
 	/**
 	 * Create a {@code MergedTestPropertySources} instance with the supplied
 	 * {@code locations} and {@code properties}.
-	 * @param locations the resource locations of properties files; may be
-	 * empty but never {@code null}
+	 *
+	 * @param locations  the resource locations of properties files; may be
+	 *                   empty but never {@code null}
 	 * @param properties the properties in the form of {@code key=value} pairs;
-	 * may be empty but never {@code null}
+	 *                   may be empty but never {@code null}
 	 */
 	MergedTestPropertySources(String[] locations, String[] properties) {
 		Assert.notNull(locations, "The locations array must not be null");
@@ -62,6 +47,7 @@ class MergedTestPropertySources {
 
 	/**
 	 * Get the resource locations of properties files.
+	 *
 	 * @see TestPropertySource#locations()
 	 */
 	String[] getLocations() {
@@ -70,6 +56,7 @@ class MergedTestPropertySources {
 
 	/**
 	 * Get the properties in the form of <em>key-value</em> pairs.
+	 *
 	 * @see TestPropertySource#properties()
 	 */
 	String[] getProperties() {

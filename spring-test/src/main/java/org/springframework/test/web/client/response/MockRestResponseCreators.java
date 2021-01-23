@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.web.client.response;
 
 import java.io.IOException;
@@ -45,7 +29,8 @@ public abstract class MockRestResponseCreators {
 
 	/**
 	 * {@code ResponseCreator} for a 200 response (OK) with String body.
-	 * @param body the response body, a "UTF-8" string
+	 *
+	 * @param body        the response body, a "UTF-8" string
 	 * @param contentType the type of the content (may be {@code null})
 	 */
 	public static DefaultResponseCreator withSuccess(String body, @Nullable MediaType contentType) {
@@ -55,7 +40,8 @@ public abstract class MockRestResponseCreators {
 
 	/**
 	 * {@code ResponseCreator} for a 200 response (OK) with byte[] body.
-	 * @param body the response body
+	 *
+	 * @param body        the response body
 	 * @param contentType the type of the content (may be {@code null})
 	 */
 	public static DefaultResponseCreator withSuccess(byte[] body, @Nullable MediaType contentType) {
@@ -65,7 +51,8 @@ public abstract class MockRestResponseCreators {
 
 	/**
 	 * {@code ResponseCreator} for a 200 response (OK) content with {@link Resource}-based body.
-	 * @param body the response body
+	 *
+	 * @param body        the response body
 	 * @param contentType the type of the content (may be {@code null})
 	 */
 	public static DefaultResponseCreator withSuccess(Resource body, @Nullable MediaType contentType) {
@@ -75,6 +62,7 @@ public abstract class MockRestResponseCreators {
 
 	/**
 	 * {@code ResponseCreator} for a 201 response (CREATED) with a 'Location' header.
+	 *
 	 * @param location the value for the {@code Location} header
 	 */
 	public static DefaultResponseCreator withCreatedEntity(URI location) {
@@ -111,6 +99,7 @@ public abstract class MockRestResponseCreators {
 
 	/**
 	 * {@code ResponseCreator} with a specific HTTP status.
+	 *
 	 * @param status the response status
 	 */
 	public static DefaultResponseCreator withStatus(HttpStatus status) {
@@ -120,6 +109,7 @@ public abstract class MockRestResponseCreators {
 	/**
 	 * {@code ResponseCreator} with an internal application {@code IOException}.
 	 * <p>For example, one could use this to simulate a {@code SocketTimeoutException}.
+	 *
 	 * @param ex the {@code Exception} to be thrown at HTTP call time
 	 * @since 5.2.2
 	 */

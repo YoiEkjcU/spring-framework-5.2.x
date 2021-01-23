@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.context.junit.jupiter;
 
 import java.lang.annotation.Annotation;
@@ -56,9 +40,9 @@ import org.springframework.util.StringUtils;
  *
  * @author Sam Brannen
  * @author Tadaya Tsuyukubo
- * @since 5.0
  * @see EnabledIf
  * @see DisabledIf
+ * @since 5.0
  */
 abstract class AbstractExpressionEvaluatingCondition implements ExecutionCondition {
 
@@ -68,23 +52,24 @@ abstract class AbstractExpressionEvaluatingCondition implements ExecutionConditi
 	/**
 	 * Evaluate the expression configured via the supplied annotation type on
 	 * the {@link AnnotatedElement} for the supplied {@link ExtensionContext}.
-	 * @param annotationType the type of annotation to process
-	 * @param expressionExtractor a function that extracts the expression from
-	 * the annotation
-	 * @param reasonExtractor a function that extracts the reason from the
-	 * annotation
+	 *
+	 * @param annotationType       the type of annotation to process
+	 * @param expressionExtractor  a function that extracts the expression from
+	 *                             the annotation
+	 * @param reasonExtractor      a function that extracts the reason from the
+	 *                             annotation
 	 * @param loadContextExtractor a function that extracts the {@code loadContext}
-	 * flag from the annotation
-	 * @param enabledOnTrue indicates whether the returned {@code ConditionEvaluationResult}
-	 * should be {@link ConditionEvaluationResult#enabled enabled} if the expression
-	 * evaluates to {@code true}
-	 * @param context the {@code ExtensionContext}
+	 *                             flag from the annotation
+	 * @param enabledOnTrue        indicates whether the returned {@code ConditionEvaluationResult}
+	 *                             should be {@link ConditionEvaluationResult#enabled enabled} if the expression
+	 *                             evaluates to {@code true}
+	 * @param context              the {@code ExtensionContext}
 	 * @return {@link ConditionEvaluationResult#enabled enabled} if the container
 	 * or test should be enabled; otherwise {@link ConditionEvaluationResult#disabled disabled}
 	 */
 	protected <A extends Annotation> ConditionEvaluationResult evaluateAnnotation(Class<A> annotationType,
-			Function<A, String> expressionExtractor, Function<A, String> reasonExtractor,
-			Function<A, Boolean> loadContextExtractor, boolean enabledOnTrue, ExtensionContext context) {
+																				  Function<A, String> expressionExtractor, Function<A, String> reasonExtractor,
+																				  Function<A, Boolean> loadContextExtractor, boolean enabledOnTrue, ExtensionContext context) {
 
 		Assert.state(context.getElement().isPresent(), "No AnnotatedElement");
 		AnnotatedElement element = context.getElement().get();
@@ -110,14 +95,13 @@ abstract class AbstractExpressionEvaluatingCondition implements ExecutionConditi
 			String adjective = (enabledOnTrue ? "enabled" : "disabled");
 			String reason = annotation.map(reasonExtractor).filter(StringUtils::hasText).orElseGet(
 					() -> String.format("%s is %s because @%s(\"%s\") evaluated to true", element, adjective,
-						annotationType.getSimpleName(), expression));
+							annotationType.getSimpleName(), expression));
 			if (logger.isInfoEnabled()) {
 				logger.info(reason);
 			}
 			return (enabledOnTrue ? ConditionEvaluationResult.enabled(reason)
 					: ConditionEvaluationResult.disabled(reason));
-		}
-		else {
+		} else {
 			String adjective = (enabledOnTrue ? "disabled" : "enabled");
 			String reason = String.format("%s is %s because @%s(\"%s\") did not evaluate to true",
 					element, adjective, annotationType.getSimpleName(), expression);
@@ -130,7 +114,7 @@ abstract class AbstractExpressionEvaluatingCondition implements ExecutionConditi
 	}
 
 	private <A extends Annotation> boolean evaluateExpression(String expression, boolean loadContext,
-			Class<A> annotationType, ExtensionContext context) {
+															  Class<A> annotationType, ExtensionContext context) {
 
 		Assert.state(context.getElement().isPresent(), "No AnnotatedElement");
 		AnnotatedElement element = context.getElement().get();
@@ -139,8 +123,7 @@ abstract class AbstractExpressionEvaluatingCondition implements ExecutionConditi
 
 		if (loadContext) {
 			applicationContext = SpringExtension.getApplicationContext(context);
-		}
-		else {
+		} else {
 			gac = new GenericApplicationContext();
 			gac.refresh();
 			applicationContext = gac;
@@ -150,7 +133,7 @@ abstract class AbstractExpressionEvaluatingCondition implements ExecutionConditi
 			if (logger.isWarnEnabled()) {
 				String contextType = applicationContext.getClass().getName();
 				logger.warn(String.format("@%s(\"%s\") could not be evaluated on [%s] since the test " +
-						"ApplicationContext [%s] is not a ConfigurableApplicationContext",
+								"ApplicationContext [%s] is not a ConfigurableApplicationContext",
 						annotationType.getSimpleName(), expression, element, contextType));
 			}
 			return false;
@@ -170,18 +153,16 @@ abstract class AbstractExpressionEvaluatingCondition implements ExecutionConditi
 
 		if (result instanceof Boolean) {
 			return (Boolean) result;
-		}
-		else if (result instanceof String) {
+		} else if (result instanceof String) {
 			String str = ((String) result).trim().toLowerCase();
 			if ("true".equals(str)) {
 				return true;
 			}
 			Assert.state("false".equals(str),
-				() -> String.format("@%s(\"%s\") on %s must evaluate to \"true\" or \"false\", not \"%s\"",
-					annotationType.getSimpleName(), expression, element, result));
+					() -> String.format("@%s(\"%s\") on %s must evaluate to \"true\" or \"false\", not \"%s\"",
+							annotationType.getSimpleName(), expression, element, result));
 			return false;
-		}
-		else {
+		} else {
 			String message = String.format("@%s(\"%s\") on %s must evaluate to a String or a Boolean, not %s",
 					annotationType.getSimpleName(), expression, element,
 					(result != null ? result.getClass().getName() : "null"));

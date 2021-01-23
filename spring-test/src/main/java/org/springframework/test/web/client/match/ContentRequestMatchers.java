@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.web.client.match;
 
 import java.io.IOException;
@@ -144,6 +128,7 @@ public class ContentRequestMatchers {
 
 	/**
 	 * Parse the body as form data and compare to the given {@code MultiValueMap}.
+	 *
 	 * @since 4.3
 	 */
 	public RequestMatcher formData(MultiValueMap<String, String> expected) {
@@ -153,6 +138,7 @@ public class ContentRequestMatchers {
 	/**
 	 * Variant of {@link #formData(MultiValueMap)} that matches the given subset
 	 * of expected form parameters.
+	 *
 	 * @since 5.3
 	 */
 	public RequestMatcher formDataContains(Map<String, String> expected) {
@@ -169,8 +155,7 @@ public class ContentRequestMatchers {
 			MultiValueMap<String, String> actualMap = new FormHttpMessageConverter().read(null, message);
 			if (containsExactly) {
 				assertEquals("Form data", expectedMap, actualMap);
-			}
-			else {
+			} else {
 				assertTrue("Form data " + actualMap, expectedMap.size() <= actualMap.size());
 				for (Map.Entry<String, ? extends List<?>> entry : expectedMap.entrySet()) {
 					String name = entry.getKey();
@@ -195,6 +180,7 @@ public class ContentRequestMatchers {
 	 * </ul>
 	 * <p><strong>Note:</strong> This method uses the Apache Commons File Upload
 	 * library to parse the multipart data and it must be on the test classpath.
+	 *
 	 * @param expectedMap the expected multipart values
 	 * @since 5.3
 	 */
@@ -205,6 +191,7 @@ public class ContentRequestMatchers {
 	/**
 	 * Variant of {@link #multipartData(MultiValueMap)} that does the same but
 	 * only for a subset of the actual values.
+	 *
 	 * @param expectedMap the expected multipart values
 	 * @since 5.3
 	 */
@@ -237,12 +224,10 @@ public class ContentRequestMatchers {
 					if (expected instanceof byte[]) {
 						assertTrue("Multipart is not a file", actual instanceof MultipartFile);
 						assertEquals("Multipart content", expected, ((MultipartFile) actual).getBytes());
-					}
-					else if (expected instanceof String) {
+					} else if (expected instanceof String) {
 						assertTrue("Multipart is not a String", actual instanceof String);
 						assertEquals("Multipart content", expected, actual);
-					}
-					else {
+					} else {
 						throw new IllegalArgumentException("Unexpected multipart value: " + expected.getClass());
 					}
 				}
@@ -256,6 +241,7 @@ public class ContentRequestMatchers {
 	 * regardless of order.
 	 * <p>Use of this matcher assumes the
 	 * <a href="http://xmlunit.sourceforge.net/">XMLUnit</a> library is available.
+	 *
 	 * @param expectedXmlContent the expected XML content
 	 */
 	public RequestMatcher xml(String expectedXmlContent) {
@@ -281,6 +267,7 @@ public class ContentRequestMatchers {
 
 	/**
 	 * Parse the request content as {@link DOMSource} and apply the given {@link Matcher}.
+	 *
 	 * @see <a href="https://code.google.com/p/xml-matchers/">https://code.google.com/p/xml-matchers/</a>
 	 */
 	public RequestMatcher source(Matcher<? super Source> matcher) {
@@ -299,6 +286,7 @@ public class ContentRequestMatchers {
 	 * ordering).
 	 * <p>Use of this matcher requires the <a
 	 * href="https://jsonassert.skyscreamer.org/">JSONassert</a> library.
+	 *
 	 * @param expectedJsonContent the expected JSON content
 	 * @since 5.0.5
 	 */
@@ -317,8 +305,9 @@ public class ContentRequestMatchers {
 	 * </ul>
 	 * <p>Use of this matcher requires the <a
 	 * href="https://jsonassert.skyscreamer.org/">JSONassert</a> library.
+	 *
 	 * @param expectedJsonContent the expected JSON content
-	 * @param strict enables strict checking
+	 * @param strict              enables strict checking
 	 * @since 5.0.5
 	 */
 	public RequestMatcher json(String expectedJsonContent, boolean strict) {
@@ -326,8 +315,7 @@ public class ContentRequestMatchers {
 			try {
 				MockClientHttpRequest mockRequest = (MockClientHttpRequest) request;
 				this.jsonHelper.assertJsonEqual(expectedJsonContent, mockRequest.getBodyAsString(), strict);
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				throw new AssertionError("Failed to parse expected or actual JSON request content", ex);
 			}
 		};
@@ -344,8 +332,7 @@ public class ContentRequestMatchers {
 			try {
 				MockClientHttpRequest mockRequest = (MockClientHttpRequest) request;
 				matchInternal(mockRequest);
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				throw new AssertionError("Failed to parse expected or actual XML request content", ex);
 			}
 		}

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.mock.jndi;
 
 import java.util.HashMap;
@@ -118,6 +102,7 @@ public class SimpleNamingContext implements Context {
 	 * Look up the object with the given name.
 	 * <p>Note: Not intended for direct use by applications.
 	 * Will be used by any standard InitialContext JNDI lookups.
+	 *
 	 * @throws javax.naming.NameNotFoundException if the object could not be found
 	 */
 	@Override
@@ -141,7 +126,7 @@ public class SimpleNamingContext implements Context {
 			}
 			throw new NameNotFoundException(
 					"Name [" + this.root + lookupName + "] not bound; " + this.boundObjects.size() + " bindings: [" +
-					StringUtils.collectionToDelimitedString(this.boundObjects.keySet(), ",") + "]");
+							StringUtils.collectionToDelimitedString(this.boundObjects.keySet(), ",") + "]");
 		}
 		return found;
 	}
@@ -156,6 +141,7 @@ public class SimpleNamingContext implements Context {
 	 * Note: Not intended for direct use by applications
 	 * if setting up a JVM-level JNDI environment.
 	 * Use SimpleNamingContextBuilder to set up JNDI bindings then.
+	 *
 	 * @see org.springframework.mock.jndi.SimpleNamingContextBuilder#bind
 	 */
 	@Override
@@ -320,8 +306,7 @@ public class SimpleNamingContext implements Context {
 					if (!contents.containsKey(strippedName)) {
 						try {
 							contents.put(strippedName, createObject(strippedName, context.lookup(proot + strippedName)));
-						}
-						catch (NameNotFoundException ex) {
+						} catch (NameNotFoundException ex) {
 							// cannot happen
 						}
 					}

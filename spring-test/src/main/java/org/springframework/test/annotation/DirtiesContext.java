@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.annotation;
 
 import java.lang.annotation.Documented;
@@ -71,10 +55,10 @@ import java.lang.annotation.Target;
  *
  * @author Sam Brannen
  * @author Rod Johnson
- * @since 2.0
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener
  * @see org.springframework.test.context.support.DirtiesContextTestExecutionListener
+ * @since 2.0
  */
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
@@ -88,6 +72,7 @@ public @interface DirtiesContext {
 	 * <p>Defaults to {@link MethodMode#AFTER_METHOD AFTER_METHOD}.
 	 * <p>Setting the method mode on an annotated test class has no meaning.
 	 * For class-level control, use {@link #classMode} instead.
+	 *
 	 * @since 4.2
 	 */
 	MethodMode methodMode() default MethodMode.AFTER_METHOD;
@@ -98,6 +83,7 @@ public @interface DirtiesContext {
 	 * <p>Defaults to {@link ClassMode#AFTER_CLASS AFTER_CLASS}.
 	 * <p>Setting the class mode on an annotated test method has no meaning.
 	 * For method-level control, use {@link #methodMode} instead.
+	 *
 	 * @since 3.0
 	 */
 	ClassMode classMode() default ClassMode.AFTER_CLASS;
@@ -107,6 +93,7 @@ public @interface DirtiesContext {
 	 * configured as part of a hierarchy via
 	 * {@link org.springframework.test.context.ContextHierarchy @ContextHierarchy}.
 	 * <p>Defaults to {@link HierarchyMode#EXHAUSTIVE EXHAUSTIVE}.
+	 *
 	 * @since 3.2.2
 	 */
 	HierarchyMode hierarchyMode() default HierarchyMode.EXHAUSTIVE;
@@ -115,6 +102,7 @@ public @interface DirtiesContext {
 	/**
 	 * Defines <i>modes</i> which determine how {@code @DirtiesContext} is
 	 * interpreted when used to annotate a test method.
+	 *
 	 * @since 4.2
 	 */
 	enum MethodMode {
@@ -136,6 +124,7 @@ public @interface DirtiesContext {
 	/**
 	 * Defines <i>modes</i> which determine how {@code @DirtiesContext} is
 	 * interpreted when used to annotate a test class.
+	 *
 	 * @since 3.0
 	 */
 	enum ClassMode {
@@ -175,6 +164,7 @@ public @interface DirtiesContext {
 	 * when {@code @DirtiesContext} is used in a test whose context is
 	 * configured as part of a hierarchy via
 	 * {@link org.springframework.test.context.ContextHierarchy @ContextHierarchy}.
+	 *
 	 * @since 3.2.2
 	 */
 	enum HierarchyMode {

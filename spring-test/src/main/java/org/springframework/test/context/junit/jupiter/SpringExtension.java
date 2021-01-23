@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.context.junit.jupiter;
 
 import java.lang.reflect.Constructor;
@@ -52,12 +36,12 @@ import org.springframework.util.Assert;
  * {@code @SpringJUnitWebConfig}.
  *
  * @author Sam Brannen
- * @since 5.0
  * @see org.springframework.test.context.junit.jupiter.EnabledIf
  * @see org.springframework.test.context.junit.jupiter.DisabledIf
  * @see org.springframework.test.context.junit.jupiter.SpringJUnitConfig
  * @see org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig
  * @see org.springframework.test.context.TestContextManager
+ * @since 5.0
  */
 public class SpringExtension implements BeforeAllCallback, AfterAllCallback, TestInstancePostProcessor,
 		BeforeEachCallback, AfterEachCallback, BeforeTestExecutionCallback, AfterTestExecutionCallback,
@@ -85,8 +69,7 @@ public class SpringExtension implements BeforeAllCallback, AfterAllCallback, Tes
 	public void afterAll(ExtensionContext context) throws Exception {
 		try {
 			getTestContextManager(context).afterTestClass();
-		}
-		finally {
+		} finally {
 			getStore(context).remove(context.getRequiredTestClass());
 		}
 	}
@@ -161,6 +144,7 @@ public class SpringExtension implements BeforeAllCallback, AfterAllCallback, Tes
 	 * Spring will assume the responsibility for resolving all parameters in the
 	 * constructor. Consequently, no other registered {@link ParameterResolver}
 	 * will be able to resolve parameters.
+	 *
 	 * @see #resolveParameter
 	 * @see TestConstructorUtils#isAutowirableConstructor(Constructor, Class)
 	 * @see ParameterResolutionDelegate#isAutowirable
@@ -181,6 +165,7 @@ public class SpringExtension implements BeforeAllCallback, AfterAllCallback, Tes
 	 * Resolve a value for the {@link Parameter} in the supplied {@link ParameterContext} by
 	 * retrieving the corresponding dependency from the test's {@link ApplicationContext}.
 	 * <p>Delegates to {@link ParameterResolutionDelegate#resolveDependency}.
+	 *
 	 * @see #supportsParameter
 	 * @see ParameterResolutionDelegate#resolveDependency
 	 */
@@ -198,6 +183,7 @@ public class SpringExtension implements BeforeAllCallback, AfterAllCallback, Tes
 
 	/**
 	 * Get the {@link ApplicationContext} associated with the supplied {@code ExtensionContext}.
+	 *
 	 * @param context the current {@code ExtensionContext} (never {@code null})
 	 * @return the application context
 	 * @throws IllegalStateException if an error occurs while retrieving the application context
@@ -209,6 +195,7 @@ public class SpringExtension implements BeforeAllCallback, AfterAllCallback, Tes
 
 	/**
 	 * Get the {@link TestContextManager} associated with the supplied {@code ExtensionContext}.
+	 *
 	 * @return the {@code TestContextManager} (never {@code null})
 	 */
 	private static TestContextManager getTestContextManager(ExtensionContext context) {

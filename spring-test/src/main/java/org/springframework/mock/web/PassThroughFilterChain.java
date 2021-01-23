@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.mock.web;
 
 import java.io.IOException;
@@ -35,10 +19,10 @@ import org.springframework.util.Assert;
  * supposed to work on) or to a given Servlet (indicating the end of the chain).
  *
  * @author Juergen Hoeller
- * @since 2.0.3
  * @see javax.servlet.Filter
  * @see javax.servlet.Servlet
  * @see MockFilterChain
+ * @since 2.0.3
  */
 public class PassThroughFilterChain implements FilterChain {
 
@@ -55,7 +39,8 @@ public class PassThroughFilterChain implements FilterChain {
 	/**
 	 * Create a new PassThroughFilterChain that delegates to the given Filter,
 	 * calling it with the given FilterChain.
-	 * @param filter the Filter to delegate to
+	 *
+	 * @param filter          the Filter to delegate to
 	 * @param nextFilterChain the FilterChain to use for that next Filter
 	 */
 	public PassThroughFilterChain(Filter filter, FilterChain nextFilterChain) {
@@ -67,6 +52,7 @@ public class PassThroughFilterChain implements FilterChain {
 
 	/**
 	 * Create a new PassThroughFilterChain that delegates to the given Servlet.
+	 *
 	 * @param servlet the Servlet to delegate to
 	 */
 	public PassThroughFilterChain(Servlet servlet) {
@@ -82,8 +68,7 @@ public class PassThroughFilterChain implements FilterChain {
 	public void doFilter(ServletRequest request, ServletResponse response) throws ServletException, IOException {
 		if (this.filter != null) {
 			this.filter.doFilter(request, response, this.nextFilterChain);
-		}
-		else {
+		} else {
 			Assert.state(this.servlet != null, "Neither a Filter not a Servlet set");
 			this.servlet.service(request, response);
 		}

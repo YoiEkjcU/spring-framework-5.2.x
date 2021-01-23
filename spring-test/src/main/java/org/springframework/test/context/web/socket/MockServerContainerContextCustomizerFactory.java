@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2016 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.context.web.socket;
 
 import java.util.List;
@@ -49,15 +33,14 @@ class MockServerContainerContextCustomizerFactory implements ContextCustomizerFa
 	@Override
 	@Nullable
 	public ContextCustomizer createContextCustomizer(Class<?> testClass,
-			List<ContextConfigurationAttributes> configAttributes) {
+													 List<ContextConfigurationAttributes> configAttributes) {
 
 		if (webSocketPresent && isAnnotatedWithWebAppConfiguration(testClass)) {
 			try {
 				Class<?> clazz = ClassUtils.forName(MOCK_SERVER_CONTAINER_CONTEXT_CUSTOMIZER_CLASS_NAME,
 						getClass().getClassLoader());
 				return (ContextCustomizer) BeanUtils.instantiateClass(clazz);
-			}
-			catch (Throwable ex) {
+			} catch (Throwable ex) {
 				throw new IllegalStateException("Failed to enable WebSocket test support; could not load class: " +
 						MOCK_SERVER_CONTAINER_CONTEXT_CUSTOMIZER_CLASS_NAME, ex);
 			}

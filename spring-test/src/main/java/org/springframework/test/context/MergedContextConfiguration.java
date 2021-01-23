@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.context;
 
 import java.io.Serializable;
@@ -56,13 +40,13 @@ import org.springframework.util.StringUtils;
  *
  * @author Sam Brannen
  * @author Phillip Webb
- * @since 3.1
  * @see ContextConfiguration
  * @see ContextHierarchy
  * @see ActiveProfiles
  * @see TestPropertySource
  * @see ContextConfigurationAttributes
  * @see SmartContextLoader#loadContext(MergedContextConfiguration)
+ * @since 3.1
  */
 public class MergedContextConfiguration implements Serializable {
 
@@ -73,9 +57,9 @@ public class MergedContextConfiguration implements Serializable {
 	private static final Class<?>[] EMPTY_CLASS_ARRAY = new Class<?>[0];
 
 	private static final Set<Class<? extends ApplicationContextInitializer<?>>> EMPTY_INITIALIZER_CLASSES =
-			Collections.<Class<? extends ApplicationContextInitializer<?>>> emptySet();
+			Collections.<Class<? extends ApplicationContextInitializer<?>>>emptySet();
 
-	private static final Set<ContextCustomizer> EMPTY_CONTEXT_CUSTOMIZERS = Collections.<ContextCustomizer> emptySet();
+	private static final Set<ContextCustomizer> EMPTY_CONTEXT_CUSTOMIZERS = Collections.<ContextCustomizer>emptySet();
 
 
 	private final Class<?> testClass;
@@ -106,14 +90,15 @@ public class MergedContextConfiguration implements Serializable {
 	/**
 	 * Create a new {@code MergedContextConfiguration} instance for the
 	 * supplied parameters.
-	 * @param testClass the test class for which the configuration was merged
-	 * @param locations the merged context resource locations
-	 * @param classes the merged annotated classes
+	 *
+	 * @param testClass      the test class for which the configuration was merged
+	 * @param locations      the merged context resource locations
+	 * @param classes        the merged annotated classes
 	 * @param activeProfiles the merged active bean definition profiles
-	 * @param contextLoader the resolved {@code ContextLoader}
+	 * @param contextLoader  the resolved {@code ContextLoader}
 	 */
 	public MergedContextConfiguration(Class<?> testClass, String[] locations, Class<?>[] classes,
-			String[] activeProfiles, ContextLoader contextLoader) {
+									  String[] activeProfiles, ContextLoader contextLoader) {
 
 		this(testClass, locations, classes, null, activeProfiles, contextLoader);
 	}
@@ -121,16 +106,17 @@ public class MergedContextConfiguration implements Serializable {
 	/**
 	 * Create a new {@code MergedContextConfiguration} instance for the
 	 * supplied parameters.
-	 * @param testClass the test class for which the configuration was merged
-	 * @param locations the merged context resource locations
-	 * @param classes the merged annotated classes
+	 *
+	 * @param testClass                 the test class for which the configuration was merged
+	 * @param locations                 the merged context resource locations
+	 * @param classes                   the merged annotated classes
 	 * @param contextInitializerClasses the merged context initializer classes
-	 * @param activeProfiles the merged active bean definition profiles
-	 * @param contextLoader the resolved {@code ContextLoader}
+	 * @param activeProfiles            the merged active bean definition profiles
+	 * @param contextLoader             the resolved {@code ContextLoader}
 	 */
 	public MergedContextConfiguration(Class<?> testClass, String[] locations, Class<?>[] classes,
-			@Nullable Set<Class<? extends ApplicationContextInitializer<?>>> contextInitializerClasses,
-			String[] activeProfiles, ContextLoader contextLoader) {
+									  @Nullable Set<Class<? extends ApplicationContextInitializer<?>>> contextInitializerClasses,
+									  String[] activeProfiles, ContextLoader contextLoader) {
 
 		this(testClass, locations, classes, contextInitializerClasses, activeProfiles, contextLoader, null, null);
 	}
@@ -138,22 +124,23 @@ public class MergedContextConfiguration implements Serializable {
 	/**
 	 * Create a new {@code MergedContextConfiguration} instance for the
 	 * supplied parameters.
-	 * @param testClass the test class for which the configuration was merged
-	 * @param locations the merged context resource locations
-	 * @param classes the merged annotated classes
-	 * @param contextInitializerClasses the merged context initializer classes
-	 * @param activeProfiles the merged active bean definition profiles
-	 * @param contextLoader the resolved {@code ContextLoader}
+	 *
+	 * @param testClass                       the test class for which the configuration was merged
+	 * @param locations                       the merged context resource locations
+	 * @param classes                         the merged annotated classes
+	 * @param contextInitializerClasses       the merged context initializer classes
+	 * @param activeProfiles                  the merged active bean definition profiles
+	 * @param contextLoader                   the resolved {@code ContextLoader}
 	 * @param cacheAwareContextLoaderDelegate a cache-aware context loader
-	 * delegate with which to retrieve the parent context
-	 * @param parent the parent configuration or {@code null} if there is no parent
+	 *                                        delegate with which to retrieve the parent context
+	 * @param parent                          the parent configuration or {@code null} if there is no parent
 	 * @since 3.2.2
 	 */
 	public MergedContextConfiguration(Class<?> testClass, String[] locations, Class<?>[] classes,
-			@Nullable Set<Class<? extends ApplicationContextInitializer<?>>> contextInitializerClasses,
-			String[] activeProfiles, ContextLoader contextLoader,
-			@Nullable CacheAwareContextLoaderDelegate cacheAwareContextLoaderDelegate,
-			@Nullable MergedContextConfiguration parent) {
+									  @Nullable Set<Class<? extends ApplicationContextInitializer<?>>> contextInitializerClasses,
+									  String[] activeProfiles, ContextLoader contextLoader,
+									  @Nullable CacheAwareContextLoaderDelegate cacheAwareContextLoaderDelegate,
+									  @Nullable MergedContextConfiguration parent) {
 
 		this(testClass, locations, classes, contextInitializerClasses, activeProfiles, null, null,
 				contextLoader, cacheAwareContextLoaderDelegate, parent);
@@ -162,6 +149,7 @@ public class MergedContextConfiguration implements Serializable {
 	/**
 	 * Create a new {@code MergedContextConfiguration} instance by copying
 	 * all fields from the supplied {@code MergedContextConfiguration}.
+	 *
 	 * @since 4.1
 	 */
 	public MergedContextConfiguration(MergedContextConfiguration mergedConfig) {
@@ -181,25 +169,26 @@ public class MergedContextConfiguration implements Serializable {
 	 * {@code contextInitializerClasses} an empty set will be stored instead.
 	 * Furthermore, active profiles will be sorted, and duplicate profiles
 	 * will be removed.
-	 * @param testClass the test class for which the configuration was merged
-	 * @param locations the merged context resource locations
-	 * @param classes the merged annotated classes
-	 * @param contextInitializerClasses the merged context initializer classes
-	 * @param activeProfiles the merged active bean definition profiles
-	 * @param propertySourceLocations the merged {@code PropertySource} locations
-	 * @param propertySourceProperties the merged {@code PropertySource} properties
-	 * @param contextLoader the resolved {@code ContextLoader}
+	 *
+	 * @param testClass                       the test class for which the configuration was merged
+	 * @param locations                       the merged context resource locations
+	 * @param classes                         the merged annotated classes
+	 * @param contextInitializerClasses       the merged context initializer classes
+	 * @param activeProfiles                  the merged active bean definition profiles
+	 * @param propertySourceLocations         the merged {@code PropertySource} locations
+	 * @param propertySourceProperties        the merged {@code PropertySource} properties
+	 * @param contextLoader                   the resolved {@code ContextLoader}
 	 * @param cacheAwareContextLoaderDelegate a cache-aware context loader
-	 * delegate with which to retrieve the parent context
-	 * @param parent the parent configuration or {@code null} if there is no parent
+	 *                                        delegate with which to retrieve the parent context
+	 * @param parent                          the parent configuration or {@code null} if there is no parent
 	 * @since 4.1
 	 */
 	public MergedContextConfiguration(Class<?> testClass, @Nullable String[] locations, @Nullable Class<?>[] classes,
-			@Nullable Set<Class<? extends ApplicationContextInitializer<?>>> contextInitializerClasses,
-			@Nullable String[] activeProfiles, @Nullable String[] propertySourceLocations,
-			@Nullable String[] propertySourceProperties, ContextLoader contextLoader,
-			@Nullable CacheAwareContextLoaderDelegate cacheAwareContextLoaderDelegate,
-			@Nullable MergedContextConfiguration parent) {
+									  @Nullable Set<Class<? extends ApplicationContextInitializer<?>>> contextInitializerClasses,
+									  @Nullable String[] activeProfiles, @Nullable String[] propertySourceLocations,
+									  @Nullable String[] propertySourceProperties, ContextLoader contextLoader,
+									  @Nullable CacheAwareContextLoaderDelegate cacheAwareContextLoaderDelegate,
+									  @Nullable MergedContextConfiguration parent) {
 
 		this(testClass, locations, classes, contextInitializerClasses, activeProfiles,
 				propertySourceLocations, propertySourceProperties,
@@ -217,26 +206,27 @@ public class MergedContextConfiguration implements Serializable {
 	 * or {@code contextCustomizers}, an empty set will be stored instead.
 	 * Furthermore, active profiles will be sorted, and duplicate profiles
 	 * will be removed.
-	 * @param testClass the test class for which the configuration was merged
-	 * @param locations the merged context resource locations
-	 * @param classes the merged annotated classes
-	 * @param contextInitializerClasses the merged context initializer classes
-	 * @param activeProfiles the merged active bean definition profiles
-	 * @param propertySourceLocations the merged {@code PropertySource} locations
-	 * @param propertySourceProperties the merged {@code PropertySource} properties
-	 * @param contextCustomizers the context customizers
-	 * @param contextLoader the resolved {@code ContextLoader}
+	 *
+	 * @param testClass                       the test class for which the configuration was merged
+	 * @param locations                       the merged context resource locations
+	 * @param classes                         the merged annotated classes
+	 * @param contextInitializerClasses       the merged context initializer classes
+	 * @param activeProfiles                  the merged active bean definition profiles
+	 * @param propertySourceLocations         the merged {@code PropertySource} locations
+	 * @param propertySourceProperties        the merged {@code PropertySource} properties
+	 * @param contextCustomizers              the context customizers
+	 * @param contextLoader                   the resolved {@code ContextLoader}
 	 * @param cacheAwareContextLoaderDelegate a cache-aware context loader
-	 * delegate with which to retrieve the parent context
-	 * @param parent the parent configuration or {@code null} if there is no parent
+	 *                                        delegate with which to retrieve the parent context
+	 * @param parent                          the parent configuration or {@code null} if there is no parent
 	 * @since 4.3
 	 */
 	public MergedContextConfiguration(Class<?> testClass, @Nullable String[] locations, @Nullable Class<?>[] classes,
-			@Nullable Set<Class<? extends ApplicationContextInitializer<?>>> contextInitializerClasses,
-			@Nullable String[] activeProfiles, @Nullable String[] propertySourceLocations,
-			@Nullable String[] propertySourceProperties, @Nullable Set<ContextCustomizer> contextCustomizers,
-			ContextLoader contextLoader, @Nullable CacheAwareContextLoaderDelegate cacheAwareContextLoaderDelegate,
-			@Nullable MergedContextConfiguration parent) {
+									  @Nullable Set<Class<? extends ApplicationContextInitializer<?>>> contextInitializerClasses,
+									  @Nullable String[] activeProfiles, @Nullable String[] propertySourceLocations,
+									  @Nullable String[] propertySourceProperties, @Nullable Set<ContextCustomizer> contextCustomizers,
+									  ContextLoader contextLoader, @Nullable CacheAwareContextLoaderDelegate cacheAwareContextLoaderDelegate,
+									  @Nullable MergedContextConfiguration parent) {
 
 		this.testClass = testClass;
 		this.locations = processStrings(locations);
@@ -280,10 +270,11 @@ public class MergedContextConfiguration implements Serializable {
 	/**
 	 * Determine if this {@code MergedContextConfiguration} instance has
 	 * path-based context resource locations.
+	 *
 	 * @return {@code true} if the {@link #getLocations() locations} array is not empty
-	 * @since 4.0.4
 	 * @see #hasResources()
 	 * @see #hasClasses()
+	 * @since 4.0.4
 	 */
 	public boolean hasLocations() {
 		return !ObjectUtils.isEmpty(getLocations());
@@ -292,10 +283,11 @@ public class MergedContextConfiguration implements Serializable {
 	/**
 	 * Determine if this {@code MergedContextConfiguration} instance has
 	 * class-based resources.
+	 *
 	 * @return {@code true} if the {@link #getClasses() classes} array is not empty
-	 * @since 4.0.4
 	 * @see #hasResources()
 	 * @see #hasLocations()
+	 * @since 4.0.4
 	 */
 	public boolean hasClasses() {
 		return !ObjectUtils.isEmpty(getClasses());
@@ -304,11 +296,12 @@ public class MergedContextConfiguration implements Serializable {
 	/**
 	 * Determine if this {@code MergedContextConfiguration} instance has
 	 * either path-based context resource locations or class-based resources.
+	 *
 	 * @return {@code true} if either the {@link #getLocations() locations}
 	 * or the {@link #getClasses() classes} array is not empty
-	 * @since 4.0.4
 	 * @see #hasLocations()
 	 * @see #hasClasses()
+	 * @since 4.0.4
 	 */
 	public boolean hasResources() {
 		return (hasLocations() || hasClasses());
@@ -325,6 +318,7 @@ public class MergedContextConfiguration implements Serializable {
 	/**
 	 * Get the merged active bean definition profiles for the
 	 * {@linkplain #getTestClass() test class}.
+	 *
 	 * @see ActiveProfiles
 	 */
 	public String[] getActiveProfiles() {
@@ -334,6 +328,7 @@ public class MergedContextConfiguration implements Serializable {
 	/**
 	 * Get the merged resource locations for test {@code PropertySources}
 	 * for the {@linkplain #getTestClass() test class}.
+	 *
 	 * @see TestPropertySource#locations
 	 * @see java.util.Properties
 	 */
@@ -346,6 +341,7 @@ public class MergedContextConfiguration implements Serializable {
 	 * {@linkplain #getTestClass() test class}.
 	 * <p>Properties will be loaded into the {@code Environment}'s set of
 	 * {@code PropertySources}.
+	 *
 	 * @see TestPropertySource#properties
 	 * @see java.util.Properties
 	 */
@@ -371,6 +367,7 @@ public class MergedContextConfiguration implements Serializable {
 	/**
 	 * Get the {@link MergedContextConfiguration} for the parent application context
 	 * in a context hierarchy.
+	 *
 	 * @return the parent configuration or {@code null} if there is no parent
 	 * @see #getParentApplicationContext()
 	 * @since 3.2.2
@@ -385,6 +382,7 @@ public class MergedContextConfiguration implements Serializable {
 	 * {@code MergedContextConfiguration} from the context cache.
 	 * <p>If the parent context has not yet been loaded, it will be loaded, stored
 	 * in the cache, and then returned.
+	 *
 	 * @return the parent {@code ApplicationContext} or {@code null} if there is no parent
 	 * @see #getParent()
 	 * @since 3.2.2
@@ -447,8 +445,7 @@ public class MergedContextConfiguration implements Serializable {
 			if (otherConfig.parent != null) {
 				return false;
 			}
-		}
-		else if (!this.parent.equals(otherConfig.parent)) {
+		} else if (!this.parent.equals(otherConfig.parent)) {
 			return false;
 		}
 

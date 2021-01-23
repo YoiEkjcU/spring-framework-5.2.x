@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.mock.web.server;
 
 import reactor.core.publisher.Mono;
@@ -53,6 +37,7 @@ public final class MockServerWebExchange extends DefaultServerWebExchange {
 
 	/**
 	 * Create a {@link MockServerWebExchange} from the given mock request.
+	 *
 	 * @param request the request to use.
 	 * @return the exchange
 	 */
@@ -62,6 +47,7 @@ public final class MockServerWebExchange extends DefaultServerWebExchange {
 
 	/**
 	 * Variant of {@link #from(MockServerHttpRequest)} with a mock request builder.
+	 *
 	 * @param requestBuilder the builder for the mock request.
 	 * @return the exchange
 	 */
@@ -71,6 +57,7 @@ public final class MockServerWebExchange extends DefaultServerWebExchange {
 
 	/**
 	 * Create a {@link Builder} starting with the given mock request.
+	 *
 	 * @param request the request to use.
 	 * @return the exchange builder
 	 * @since 5.1
@@ -81,6 +68,7 @@ public final class MockServerWebExchange extends DefaultServerWebExchange {
 
 	/**
 	 * Variant of {@link #builder(MockServerHttpRequest)} with a mock request builder.
+	 *
 	 * @param requestBuilder the builder for the mock request.
 	 * @return the exchange builder
 	 * @since 5.1
@@ -92,6 +80,7 @@ public final class MockServerWebExchange extends DefaultServerWebExchange {
 
 	/**
 	 * Builder for a {@link MockServerWebExchange}.
+	 *
 	 * @since 5.1
 	 */
 	public static class Builder {
@@ -109,6 +98,7 @@ public final class MockServerWebExchange extends DefaultServerWebExchange {
 		 * Set the session to use for the exchange.
 		 * <p>This method is mutually exclusive with
 		 * {@link #sessionManager(WebSessionManager)}.
+		 *
 		 * @param session the session to use
 		 * @see MockWebSession
 		 */
@@ -120,6 +110,7 @@ public final class MockServerWebExchange extends DefaultServerWebExchange {
 		/**
 		 * Provide a {@code WebSessionManager} instance to use with the exchange.
 		 * <p>This is mutually exclusive with {@link #session(WebSession)}.
+		 *
 		 * @param sessionManager the session manager to use
 		 */
 		public Builder sessionManager(WebSessionManager sessionManager) {

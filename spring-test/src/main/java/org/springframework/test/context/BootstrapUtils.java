@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.context;
 
 import java.lang.reflect.Constructor;
@@ -34,10 +18,10 @@ import org.springframework.util.ClassUtils;
  *
  * @author Sam Brannen
  * @author Phillip Webb
- * @since 4.1
  * @see BootstrapWith
  * @see BootstrapContext
  * @see TestContextBootstrapper
+ * @since 4.1
  */
 abstract class BootstrapUtils {
 
@@ -63,6 +47,7 @@ abstract class BootstrapUtils {
 	 * Create the {@code BootstrapContext} for the specified {@linkplain Class test class}.
 	 * <p>Uses reflection to create a {@link org.springframework.test.context.support.DefaultBootstrapContext}
 	 * that uses a {@link org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate}.
+	 *
 	 * @param testClass the test class for which the bootstrap context should be created
 	 * @return a new {@code BootstrapContext}; never {@code null}
 	 */
@@ -79,8 +64,7 @@ abstract class BootstrapUtils {
 				logger.debug(String.format("Instantiating BootstrapContext using constructor [%s]", constructor));
 			}
 			return BeanUtils.instantiateClass(constructor, testClass, cacheAwareContextLoaderDelegate);
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			throw new IllegalStateException("Could not load BootstrapContext [" + clazz + "]", ex);
 		}
 	}
@@ -90,15 +74,14 @@ abstract class BootstrapUtils {
 		Class<? extends CacheAwareContextLoaderDelegate> clazz = null;
 		try {
 			clazz = (Class<? extends CacheAwareContextLoaderDelegate>) ClassUtils.forName(
-				DEFAULT_CACHE_AWARE_CONTEXT_LOADER_DELEGATE_CLASS_NAME, BootstrapUtils.class.getClassLoader());
+					DEFAULT_CACHE_AWARE_CONTEXT_LOADER_DELEGATE_CLASS_NAME, BootstrapUtils.class.getClassLoader());
 
 			if (logger.isDebugEnabled()) {
 				logger.debug(String.format("Instantiating CacheAwareContextLoaderDelegate from class [%s]",
-					clazz.getName()));
+						clazz.getName()));
 			}
 			return BeanUtils.instantiateClass(clazz, CacheAwareContextLoaderDelegate.class);
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			throw new IllegalStateException("Could not load CacheAwareContextLoaderDelegate [" + clazz + "]", ex);
 		}
 	}
@@ -116,6 +99,7 @@ abstract class BootstrapUtils {
 	 * {@link org.springframework.test.context.web.WebTestContextBootstrapper
 	 * WebTestContextBootstrapper} will be used, depending on the presence of
 	 * {@link org.springframework.test.context.web.WebAppConfiguration @WebAppConfiguration}.
+	 *
 	 * @param bootstrapContext the bootstrap context to use
 	 * @return a fully configured {@code TestContextBootstrapper}
 	 */
@@ -136,11 +120,9 @@ abstract class BootstrapUtils {
 					BeanUtils.instantiateClass(clazz, TestContextBootstrapper.class);
 			testContextBootstrapper.setBootstrapContext(bootstrapContext);
 			return testContextBootstrapper;
-		}
-		catch (IllegalStateException ex) {
+		} catch (IllegalStateException ex) {
 			throw ex;
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			throw new IllegalStateException("Could not load TestContextBootstrapper [" + clazz +
 					"]. Specify @BootstrapWith's 'value' attribute or make the default bootstrapper class available.",
 					ex);
@@ -171,7 +153,7 @@ abstract class BootstrapUtils {
 	private static Class<?> resolveDefaultTestContextBootstrapper(Class<?> testClass) throws Exception {
 		ClassLoader classLoader = BootstrapUtils.class.getClassLoader();
 		AnnotationAttributes attributes = AnnotatedElementUtils.findMergedAnnotationAttributes(testClass,
-			WEB_APP_CONFIGURATION_ANNOTATION_CLASS_NAME, false, false);
+				WEB_APP_CONFIGURATION_ANNOTATION_CLASS_NAME, false, false);
 		if (attributes != null) {
 			return ClassUtils.forName(DEFAULT_WEB_TEST_CONTEXT_BOOTSTRAPPER_CLASS_NAME, classLoader);
 		}

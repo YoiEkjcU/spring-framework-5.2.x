@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.mock.web;
 
 import javax.servlet.jsp.JspException;
@@ -30,8 +14,8 @@ import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
  * available on the classpath to use this expression evaluator.
  *
  * @author Juergen Hoeller
- * @since 1.1.5
  * @see org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager
+ * @since 1.1.5
  */
 @SuppressWarnings("deprecation")
 public class MockExpressionEvaluator extends javax.servlet.jsp.el.ExpressionEvaluator {
@@ -41,6 +25,7 @@ public class MockExpressionEvaluator extends javax.servlet.jsp.el.ExpressionEval
 
 	/**
 	 * Create a new MockExpressionEvaluator for the given PageContext.
+	 *
 	 * @param pageContext the JSP PageContext to run in
 	 */
 	public MockExpressionEvaluator(PageContext pageContext) {
@@ -51,7 +36,7 @@ public class MockExpressionEvaluator extends javax.servlet.jsp.el.ExpressionEval
 	@Override
 	@SuppressWarnings("rawtypes")
 	public javax.servlet.jsp.el.Expression parseExpression(final String expression, final Class expectedType,
-			final javax.servlet.jsp.el.FunctionMapper functionMapper) throws javax.servlet.jsp.el.ELException {
+														   final javax.servlet.jsp.el.FunctionMapper functionMapper) throws javax.servlet.jsp.el.ELException {
 
 		return new javax.servlet.jsp.el.Expression() {
 			@Override
@@ -64,7 +49,7 @@ public class MockExpressionEvaluator extends javax.servlet.jsp.el.ExpressionEval
 	@Override
 	@SuppressWarnings("rawtypes")
 	public Object evaluate(String expression, Class expectedType, javax.servlet.jsp.el.VariableResolver variableResolver,
-			javax.servlet.jsp.el.FunctionMapper functionMapper) throws javax.servlet.jsp.el.ELException {
+						   javax.servlet.jsp.el.FunctionMapper functionMapper) throws javax.servlet.jsp.el.ELException {
 
 		return doEvaluate(expression, expectedType, functionMapper);
 	}
@@ -75,8 +60,7 @@ public class MockExpressionEvaluator extends javax.servlet.jsp.el.ExpressionEval
 
 		try {
 			return ExpressionEvaluatorManager.evaluate("JSP EL expression", expression, expectedType, this.pageContext);
-		}
-		catch (JspException ex) {
+		} catch (JspException ex) {
 			throw new javax.servlet.jsp.el.ELException("Parsing of JSP EL expression \"" + expression + "\" failed", ex);
 		}
 	}

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.test.context.support;
 
 import java.util.ArrayList;
@@ -48,11 +32,11 @@ import static org.springframework.test.util.MetaAnnotationUtils.findAnnotationDe
  * {@link SmartContextLoader SmartContextLoaders}.
  *
  * @author Sam Brannen
- * @since 3.1
  * @see SmartContextLoader
  * @see ContextConfigurationAttributes
  * @see ContextConfiguration
  * @see ContextHierarchy
+ * @since 3.1
  */
 abstract class ContextLoaderUtils {
 
@@ -81,19 +65,20 @@ abstract class ContextLoaderUtils {
 	 * {@link ContextConfiguration @ContextConfiguration} will <strong>not</strong>
 	 * be taken into consideration. If these flags need to be honored, that must be
 	 * handled manually when traversing the nested lists returned by this method.
+	 *
 	 * @param testClass the class for which to resolve the context hierarchy attributes
-	 * (must not be {@code null})
+	 *                  (must not be {@code null})
 	 * @return the list of lists of configuration attributes for the specified class;
 	 * never {@code null}
 	 * @throws IllegalArgumentException if the supplied class is {@code null}; or if
-	 * neither {@code @ContextConfiguration} nor {@code @ContextHierarchy} is
-	 * <em>present</em> on the supplied class
-	 * @throws IllegalStateException if a test class or composed annotation
-	 * in the class hierarchy declares both {@code @ContextConfiguration} and
-	 * {@code @ContextHierarchy} as top-level annotations.
-	 * @since 3.2.2
+	 *                                  neither {@code @ContextConfiguration} nor {@code @ContextHierarchy} is
+	 *                                  <em>present</em> on the supplied class
+	 * @throws IllegalStateException    if a test class or composed annotation
+	 *                                  in the class hierarchy declares both {@code @ContextConfiguration} and
+	 *                                  {@code @ContextHierarchy} as top-level annotations.
 	 * @see #buildContextHierarchyMap(Class)
 	 * @see #resolveContextConfigurationAttributes(Class)
+	 * @since 3.2.2
 	 */
 	@SuppressWarnings("unchecked")
 	static List<List<ContextConfigurationAttributes>> resolveContextHierarchyAttributes(Class<?> testClass) {
@@ -106,8 +91,8 @@ abstract class ContextLoaderUtils {
 		UntypedAnnotationDescriptor desc =
 				findAnnotationDescriptorForTypes(testClass, contextConfigType, contextHierarchyType);
 		Assert.notNull(desc, () -> String.format(
-					"Could not find an 'annotation declaring class' for annotation type [%s] or [%s] and test class [%s]",
-					contextConfigType.getName(), contextHierarchyType.getName(), testClass.getName()));
+				"Could not find an 'annotation declaring class' for annotation type [%s] or [%s] and test class [%s]",
+				contextConfigType.getName(), contextHierarchyType.getName(), testClass.getName()));
 
 		while (desc != null) {
 			Class<?> rootDeclaringClass = desc.getRootDeclaringClass();
@@ -131,8 +116,7 @@ abstract class ContextLoaderUtils {
 						desc.getAnnotationAttributes(), ContextConfiguration.class, desc.getRootDeclaringClass());
 				convertContextConfigToConfigAttributesAndAddToList(
 						contextConfiguration, rootDeclaringClass, configAttributesList);
-			}
-			else if (contextHierarchyDeclaredLocally) {
+			} else if (contextHierarchyDeclaredLocally) {
 				ContextHierarchy contextHierarchy = getAnnotation(declaringClass, contextHierarchyType);
 				if (contextHierarchy != null) {
 					for (ContextConfiguration contextConfiguration : contextHierarchy.value()) {
@@ -140,8 +124,7 @@ abstract class ContextLoaderUtils {
 								contextConfiguration, rootDeclaringClass, configAttributesList);
 					}
 				}
-			}
-			else {
+			} else {
 				// This should theoretically never happen...
 				String msg = String.format("Test class [%s] has been configured with neither @ContextConfiguration " +
 						"nor @ContextHierarchy as a class-level annotation.", rootDeclaringClass.getName());
@@ -171,15 +154,16 @@ abstract class ContextLoaderUtils {
 	 * name (i.e., configured via {@link ContextConfiguration#name}), a name will
 	 * be generated for that hierarchy level by appending the numerical level to
 	 * the {@link #GENERATED_CONTEXT_HIERARCHY_LEVEL_PREFIX}.
+	 *
 	 * @param testClass the class for which to resolve the context hierarchy map
-	 * (must not be {@code null})
+	 *                  (must not be {@code null})
 	 * @return a map of context configuration attributes for the context hierarchy,
 	 * keyed by context hierarchy level name; never {@code null}
 	 * @throws IllegalArgumentException if the lists of context configuration
-	 * attributes for each level in the {@code @ContextHierarchy} do not define
-	 * unique context configuration within the overall hierarchy.
-	 * @since 3.2.2
+	 *                                  attributes for each level in the {@code @ContextHierarchy} do not define
+	 *                                  unique context configuration within the overall hierarchy.
 	 * @see #resolveContextHierarchyAttributes(Class)
+	 * @since 3.2.2
 	 */
 	static Map<String, List<ContextConfigurationAttributes>> buildContextHierarchyMap(Class<?> testClass) {
 		final Map<String, List<ContextConfigurationAttributes>> map = new LinkedHashMap<>();
@@ -208,7 +192,7 @@ abstract class ContextLoaderUtils {
 		Set<List<ContextConfigurationAttributes>> set = new HashSet<>(map.values());
 		if (set.size() != map.size()) {
 			String msg = String.format("The @ContextConfiguration elements configured via @ContextHierarchy in " +
-					"test class [%s] and its superclasses must define unique contexts per hierarchy level.",
+							"test class [%s] and its superclasses must define unique contexts per hierarchy level.",
 					testClass.getName());
 			logger.error(msg);
 			throw new IllegalStateException(msg);
@@ -226,13 +210,14 @@ abstract class ContextLoaderUtils {
 	 * {@link ContextConfiguration @ContextConfiguration} will <strong>not</strong>
 	 * be taken into consideration. If these flags need to be honored, that must be
 	 * handled manually when traversing the list returned by this method.
+	 *
 	 * @param testClass the class for which to resolve the configuration attributes
-	 * (must not be {@code null})
+	 *                  (must not be {@code null})
 	 * @return the list of configuration attributes for the specified class, ordered
 	 * <em>bottom-up</em> (i.e., as if we were traversing up the class hierarchy);
 	 * never {@code null}
 	 * @throws IllegalArgumentException if the supplied class is {@code null} or if
-	 * {@code @ContextConfiguration} is not <em>present</em> on the supplied class
+	 *                                  {@code @ContextConfiguration} is not <em>present</em> on the supplied class
 	 */
 	static List<ContextConfigurationAttributes> resolveContextConfigurationAttributes(Class<?> testClass) {
 		Assert.notNull(testClass, "Class must not be null");
@@ -242,8 +227,8 @@ abstract class ContextLoaderUtils {
 
 		AnnotationDescriptor<ContextConfiguration> descriptor = findAnnotationDescriptor(testClass, annotationType);
 		Assert.notNull(descriptor, () -> String.format(
-					"Could not find an 'annotation declaring class' for annotation type [%s] and class [%s]",
-					annotationType.getName(), testClass.getName()));
+				"Could not find an 'annotation declaring class' for annotation type [%s] and class [%s]",
+				annotationType.getName(), testClass.getName()));
 
 		while (descriptor != null) {
 			convertContextConfigToConfigAttributesAndAddToList(descriptor.synthesizeAnnotation(),
@@ -260,7 +245,7 @@ abstract class ContextLoaderUtils {
 	 * declaring class and then adding the attributes to the supplied list.
 	 */
 	private static void convertContextConfigToConfigAttributesAndAddToList(ContextConfiguration contextConfiguration,
-			Class<?> declaringClass, final List<ContextConfigurationAttributes> attributesList) {
+																		   Class<?> declaringClass, final List<ContextConfigurationAttributes> attributesList) {
 
 		if (logger.isTraceEnabled()) {
 			logger.trace(String.format("Retrieved @ContextConfiguration [%s] for declaring class [%s].",
