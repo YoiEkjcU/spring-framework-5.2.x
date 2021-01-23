@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.context.expression;
 
 import java.util.Map;
@@ -31,8 +15,8 @@ import org.springframework.util.ObjectUtils;
  * are defined on {@link java.lang.reflect.AnnotatedElement}.
  *
  * @author Stephane Nicoll
- * @since 4.2
  * @see AnnotatedElementKey
+ * @since 4.2
  */
 public abstract class CachedExpressionEvaluator {
 
@@ -66,6 +50,7 @@ public abstract class CachedExpressionEvaluator {
 
 	/**
 	 * Return a shared parameter name discoverer which caches data internally.
+	 *
 	 * @since 4.3
 	 */
 	protected ParameterNameDiscoverer getParameterNameDiscoverer() {
@@ -76,12 +61,13 @@ public abstract class CachedExpressionEvaluator {
 	/**
 	 * Return the {@link Expression} for the specified SpEL value
 	 * <p>Parse the expression if it hasn't been already.
-	 * @param cache the cache to use
+	 *
+	 * @param cache      the cache to use
 	 * @param elementKey the element on which the expression is defined
 	 * @param expression the expression to parse
 	 */
 	protected Expression getExpression(Map<ExpressionKey, Expression> cache,
-			AnnotatedElementKey elementKey, String expression) {
+									   AnnotatedElementKey elementKey, String expression) {
 
 		ExpressionKey expressionKey = createKey(elementKey, expression);
 		Expression expr = cache.get(expressionKey);

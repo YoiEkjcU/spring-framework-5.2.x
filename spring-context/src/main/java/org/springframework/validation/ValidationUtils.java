@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.validation;
 
 import org.apache.commons.logging.Log;
@@ -33,9 +17,9 @@ import org.springframework.util.StringUtils;
  *
  * @author Juergen Hoeller
  * @author Dmitriy Kopylenko
- * @since 06.05.2003
  * @see Validator
  * @see Errors
+ * @since 06.05.2003
  */
 public abstract class ValidationUtils {
 
@@ -45,12 +29,13 @@ public abstract class ValidationUtils {
 	/**
 	 * Invoke the given {@link Validator} for the supplied object and
 	 * {@link Errors} instance.
+	 *
 	 * @param validator the {@code Validator} to be invoked
-	 * @param target the object to bind the parameters to
-	 * @param errors the {@link Errors} instance that should store the errors
+	 * @param target    the object to bind the parameters to
+	 * @param errors    the {@link Errors} instance that should store the errors
 	 * @throws IllegalArgumentException if either of the {@code Validator} or {@code Errors}
-	 * arguments is {@code null}, or if the supplied {@code Validator} does not
-	 * {@link Validator#supports(Class) support} the validation of the supplied object's type
+	 *                                  arguments is {@code null}, or if the supplied {@code Validator} does not
+	 *                                  {@link Validator#supports(Class) support} the validation of the supplied object's type
 	 */
 	public static void invokeValidator(Validator validator, Object target, Errors errors) {
 		invokeValidator(validator, target, errors, (Object[]) null);
@@ -59,13 +44,14 @@ public abstract class ValidationUtils {
 	/**
 	 * Invoke the given {@link Validator}/{@link SmartValidator} for the supplied object and
 	 * {@link Errors} instance.
-	 * @param validator the {@code Validator} to be invoked
-	 * @param target the object to bind the parameters to
-	 * @param errors the {@link Errors} instance that should store the errors
+	 *
+	 * @param validator       the {@code Validator} to be invoked
+	 * @param target          the object to bind the parameters to
+	 * @param errors          the {@link Errors} instance that should store the errors
 	 * @param validationHints one or more hint objects to be passed to the validation engine
 	 * @throws IllegalArgumentException if either of the {@code Validator} or {@code Errors}
-	 * arguments is {@code null}, or if the supplied {@code Validator} does not
-	 * {@link Validator#supports(Class) support} the validation of the supplied object's type
+	 *                                  arguments is {@code null}, or if the supplied {@code Validator} does not
+	 *                                  {@link Validator#supports(Class) support} the validation of the supplied object's type
 	 */
 	public static void invokeValidator(
 			Validator validator, Object target, Errors errors, @Nullable Object... validationHints) {
@@ -84,16 +70,14 @@ public abstract class ValidationUtils {
 
 		if (!ObjectUtils.isEmpty(validationHints) && validator instanceof SmartValidator) {
 			((SmartValidator) validator).validate(target, errors, validationHints);
-		}
-		else {
+		} else {
 			validator.validate(target, errors);
 		}
 
 		if (logger.isDebugEnabled()) {
 			if (errors.hasErrors()) {
 				logger.debug("Validator found " + errors.getErrorCount() + " errors");
-			}
-			else {
+			} else {
 				logger.debug("Validator found no errors");
 			}
 		}
@@ -107,8 +91,9 @@ public abstract class ValidationUtils {
 	 * <p>The object whose field is being validated does not need to be passed
 	 * in because the {@link Errors} instance can resolve field values by itself
 	 * (it will usually hold an internal reference to the target object).
-	 * @param errors the {@code Errors} instance to register errors on
-	 * @param field the field name to check
+	 *
+	 * @param errors    the {@code Errors} instance to register errors on
+	 * @param field     the field name to check
 	 * @param errorCode the error code, interpretable as message key
 	 */
 	public static void rejectIfEmpty(Errors errors, String field, String errorCode) {
@@ -123,9 +108,10 @@ public abstract class ValidationUtils {
 	 * <p>The object whose field is being validated does not need to be passed
 	 * in because the {@link Errors} instance can resolve field values by itself
 	 * (it will usually hold an internal reference to the target object).
-	 * @param errors the {@code Errors} instance to register errors on
-	 * @param field the field name to check
-	 * @param errorCode error code, interpretable as message key
+	 *
+	 * @param errors         the {@code Errors} instance to register errors on
+	 * @param field          the field name to check
+	 * @param errorCode      error code, interpretable as message key
 	 * @param defaultMessage fallback default message
 	 */
 	public static void rejectIfEmpty(Errors errors, String field, String errorCode, String defaultMessage) {
@@ -140,11 +126,12 @@ public abstract class ValidationUtils {
 	 * <p>The object whose field is being validated does not need to be passed
 	 * in because the {@link Errors} instance can resolve field values by itself
 	 * (it will usually hold an internal reference to the target object).
-	 * @param errors the {@code Errors} instance to register errors on
-	 * @param field the field name to check
+	 *
+	 * @param errors    the {@code Errors} instance to register errors on
+	 * @param field     the field name to check
 	 * @param errorCode the error code, interpretable as message key
 	 * @param errorArgs the error arguments, for argument binding via MessageFormat
-	 * (can be {@code null})
+	 *                  (can be {@code null})
 	 */
 	public static void rejectIfEmpty(Errors errors, String field, String errorCode, Object[] errorArgs) {
 		rejectIfEmpty(errors, field, errorCode, errorArgs, null);
@@ -158,15 +145,16 @@ public abstract class ValidationUtils {
 	 * <p>The object whose field is being validated does not need to be passed
 	 * in because the {@link Errors} instance can resolve field values by itself
 	 * (it will usually hold an internal reference to the target object).
-	 * @param errors the {@code Errors} instance to register errors on
-	 * @param field the field name to check
-	 * @param errorCode the error code, interpretable as message key
-	 * @param errorArgs the error arguments, for argument binding via MessageFormat
-	 * (can be {@code null})
+	 *
+	 * @param errors         the {@code Errors} instance to register errors on
+	 * @param field          the field name to check
+	 * @param errorCode      the error code, interpretable as message key
+	 * @param errorArgs      the error arguments, for argument binding via MessageFormat
+	 *                       (can be {@code null})
 	 * @param defaultMessage fallback default message
 	 */
 	public static void rejectIfEmpty(Errors errors, String field, String errorCode,
-			@Nullable Object[] errorArgs, @Nullable String defaultMessage) {
+									 @Nullable Object[] errorArgs, @Nullable String defaultMessage) {
 
 		Assert.notNull(errors, "Errors object must not be null");
 		Object value = errors.getFieldValue(field);
@@ -183,8 +171,9 @@ public abstract class ValidationUtils {
 	 * <p>The object whose field is being validated does not need to be passed
 	 * in because the {@link Errors} instance can resolve field values by itself
 	 * (it will usually hold an internal reference to the target object).
-	 * @param errors the {@code Errors} instance to register errors on
-	 * @param field the field name to check
+	 *
+	 * @param errors    the {@code Errors} instance to register errors on
+	 * @param field     the field name to check
 	 * @param errorCode the error code, interpretable as message key
 	 */
 	public static void rejectIfEmptyOrWhitespace(Errors errors, String field, String errorCode) {
@@ -199,9 +188,10 @@ public abstract class ValidationUtils {
 	 * <p>The object whose field is being validated does not need to be passed
 	 * in because the {@link Errors} instance can resolve field values by itself
 	 * (it will usually hold an internal reference to the target object).
-	 * @param errors the {@code Errors} instance to register errors on
-	 * @param field the field name to check
-	 * @param errorCode the error code, interpretable as message key
+	 *
+	 * @param errors         the {@code Errors} instance to register errors on
+	 * @param field          the field name to check
+	 * @param errorCode      the error code, interpretable as message key
 	 * @param defaultMessage fallback default message
 	 */
 	public static void rejectIfEmptyOrWhitespace(
@@ -218,11 +208,12 @@ public abstract class ValidationUtils {
 	 * <p>The object whose field is being validated does not need to be passed
 	 * in because the {@link Errors} instance can resolve field values by itself
 	 * (it will usually hold an internal reference to the target object).
-	 * @param errors the {@code Errors} instance to register errors on
-	 * @param field the field name to check
+	 *
+	 * @param errors    the {@code Errors} instance to register errors on
+	 * @param field     the field name to check
 	 * @param errorCode the error code, interpretable as message key
 	 * @param errorArgs the error arguments, for argument binding via MessageFormat
-	 * (can be {@code null})
+	 *                  (can be {@code null})
 	 */
 	public static void rejectIfEmptyOrWhitespace(
 			Errors errors, String field, String errorCode, @Nullable Object[] errorArgs) {
@@ -238,11 +229,12 @@ public abstract class ValidationUtils {
 	 * <p>The object whose field is being validated does not need to be passed
 	 * in because the {@link Errors} instance can resolve field values by itself
 	 * (it will usually hold an internal reference to the target object).
-	 * @param errors the {@code Errors} instance to register errors on
-	 * @param field the field name to check
-	 * @param errorCode the error code, interpretable as message key
-	 * @param errorArgs the error arguments, for argument binding via MessageFormat
-	 * (can be {@code null})
+	 *
+	 * @param errors         the {@code Errors} instance to register errors on
+	 * @param field          the field name to check
+	 * @param errorCode      the error code, interpretable as message key
+	 * @param errorArgs      the error arguments, for argument binding via MessageFormat
+	 *                       (can be {@code null})
 	 * @param defaultMessage fallback default message
 	 */
 	public static void rejectIfEmptyOrWhitespace(
@@ -250,7 +242,7 @@ public abstract class ValidationUtils {
 
 		Assert.notNull(errors, "Errors object must not be null");
 		Object value = errors.getFieldValue(field);
-		if (value == null ||!StringUtils.hasText(value.toString())) {
+		if (value == null || !StringUtils.hasText(value.toString())) {
 			errors.rejectValue(field, errorCode, errorArgs, defaultMessage);
 		}
 	}

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.scheduling.support;
 
 import java.time.DateTimeException;
@@ -43,7 +27,6 @@ final class BitsCronField extends CronField {
 	}
 
 	private final BitSet bits;
-
 
 
 	private BitsCronField(Type type) {
@@ -126,8 +109,7 @@ final class BitsCronField extends CronField {
 				if (slashPos == -1) {
 					ValueRange range = parseRange(field, type);
 					result.setBits(range);
-				}
-				else {
+				} else {
 					String rangeStr = value.substring(0, slashPos);
 					String deltaStr = value.substring(slashPos + 1);
 					ValueRange range = parseRange(rangeStr, type);
@@ -142,8 +124,7 @@ final class BitsCronField extends CronField {
 				}
 			}
 			return result;
-		}
-		catch (DateTimeException | IllegalArgumentException ex) {
+		} catch (DateTimeException | IllegalArgumentException ex) {
 			String msg = ex.getMessage() + " '" + value + "'";
 			throw new IllegalArgumentException(msg, ex);
 		}
@@ -152,14 +133,12 @@ final class BitsCronField extends CronField {
 	private static ValueRange parseRange(String value, Type type) {
 		if (value.equals("*")) {
 			return type.range();
-		}
-		else {
+		} else {
 			int hyphenPos = value.indexOf('-');
 			if (hyphenPos == -1) {
 				int result = type.checkValidValue(Integer.parseInt(value));
 				return ValueRange.of(result, result);
-			}
-			else {
+			} else {
 				int min = Integer.parseInt(value.substring(0, hyphenPos));
 				int max = Integer.parseInt(value.substring(hyphenPos + 1));
 				min = type.checkValidValue(min);
@@ -180,8 +159,7 @@ final class BitsCronField extends CronField {
 		}
 		if (next == current) {
 			return temporal;
-		}
-		else {
+		} else {
 			int count = 0;
 			current = type().get(temporal);
 			while (current != next && count++ < CronExpression.MAX_ATTEMPTS) {

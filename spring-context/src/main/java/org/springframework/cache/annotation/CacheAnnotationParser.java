@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.cache.annotation;
 
 import java.lang.reflect.Method;
@@ -31,9 +15,9 @@ import org.springframework.lang.Nullable;
  * @author Costin Leau
  * @author Stephane Nicoll
  * @author Juergen Hoeller
- * @since 3.1
  * @see AnnotationCacheOperationSource
  * @see SpringCacheAnnotationParser
+ * @since 3.1
  */
 public interface CacheAnnotationParser {
 
@@ -45,6 +29,7 @@ public interface CacheAnnotationParser {
 	 * Returning {@code false} is therefore an optimization for non-affected
 	 * classes, whereas {@code true} simply means that the class needs to get
 	 * fully introspected for each method on the given class individually.
+	 *
 	 * @param targetClass the class to introspect
 	 * @return {@code false} if the class is known to have no cache operation
 	 * annotations at class or method level; {@code true} otherwise. The default
@@ -60,6 +45,7 @@ public interface CacheAnnotationParser {
 	 * based on an annotation type understood by this parser.
 	 * <p>This essentially parses a known cache annotation into Spring's metadata
 	 * attribute class. Returns {@code null} if the class is not cacheable.
+	 *
 	 * @param type the annotated class
 	 * @return the configured caching operation, or {@code null} if none found
 	 * @see AnnotationCacheOperationSource#findCacheOperations(Class)
@@ -72,6 +58,7 @@ public interface CacheAnnotationParser {
 	 * based on an annotation type understood by this parser.
 	 * <p>This essentially parses a known cache annotation into Spring's metadata
 	 * attribute class. Returns {@code null} if the method is not cacheable.
+	 *
 	 * @param method the annotated method
 	 * @return the configured caching operation, or {@code null} if none found
 	 * @see AnnotationCacheOperationSource#findCacheOperations(Method)

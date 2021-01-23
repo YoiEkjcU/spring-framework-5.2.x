@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.context.index;
 
 import java.util.Collections;
@@ -73,8 +57,9 @@ public class CandidateComponentsIndex {
 
 	/**
 	 * Return the candidate types that are associated with the specified stereotype.
+	 *
 	 * @param basePackage the package to check for candidates
-	 * @param stereotype the stereotype to use
+	 * @param stereotype  the stereotype to use
 	 * @return the candidate types associated with the specified {@code stereotype}
 	 * or an empty set if none has been found for the specified {@code basePackage}
 	 */
@@ -104,8 +89,7 @@ public class CandidateComponentsIndex {
 		public boolean match(String basePackage) {
 			if (pathMatcher.isPattern(basePackage)) {
 				return pathMatcher.match(basePackage, this.packageName);
-			}
-			else {
+			} else {
 				return this.type.startsWith(basePackage);
 			}
 		}

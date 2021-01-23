@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.format.datetime.standard;
 
 import java.time.ZoneId;
@@ -32,8 +16,8 @@ import org.springframework.lang.Nullable;
  * A {@code null} property value indicate the user has not specified a setting.
  *
  * @author Juergen Hoeller
- * @since 4.0
  * @see DateTimeContextHolder
+ * @since 4.0
  */
 public class DateTimeContext {
 
@@ -64,6 +48,7 @@ public class DateTimeContext {
 	 * <p>Alternatively, set a {@link TimeZoneAwareLocaleContext} on
 	 * {@link LocaleContextHolder}. This context class will fall back to
 	 * checking the locale context if no setting has been provided here.
+	 *
 	 * @see org.springframework.context.i18n.LocaleContextHolder#getTimeZone()
 	 * @see org.springframework.context.i18n.LocaleContextHolder#setLocaleContext
 	 */
@@ -83,8 +68,9 @@ public class DateTimeContext {
 	/**
 	 * Get the DateTimeFormatter with the this context's settings
 	 * applied to the base {@code formatter}.
+	 *
 	 * @param formatter the base formatter that establishes default
-	 * formatting rules, generally context-independent
+	 *                  formatting rules, generally context-independent
 	 * @return the contextual DateTimeFormatter
 	 */
 	public DateTimeFormatter getFormatter(DateTimeFormatter formatter) {
@@ -93,8 +79,7 @@ public class DateTimeContext {
 		}
 		if (this.timeZone != null) {
 			formatter = formatter.withZone(this.timeZone);
-		}
-		else {
+		} else {
 			LocaleContext localeContext = LocaleContextHolder.getLocaleContext();
 			if (localeContext instanceof TimeZoneAwareLocaleContext) {
 				TimeZone timeZone = ((TimeZoneAwareLocaleContext) localeContext).getTimeZone();

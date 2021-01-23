@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.scheduling.support;
 
 import java.time.temporal.ChronoUnit;
@@ -34,14 +18,14 @@ import org.springframework.util.StringUtils;
  * {@link #next(Temporal)}.
  *
  * @author Arjen Poutsma
- * @since 5.3
  * @see CronTrigger
+ * @since 5.3
  */
 public final class CronExpression {
 
 	static final int MAX_ATTEMPTS = 366;
 
-	private static final String[] MACROS = new String[] {
+	private static final String[] MACROS = new String[]{
 			"@yearly", "0 0 0 1 1 *",
 			"@annually", "0 0 0 1 1 *",
 			"@monthly", "0 0 0 1 * *",
@@ -174,7 +158,7 @@ public final class CronExpression {
 	 * @param expression the expression string to parse
 	 * @return the parsed {@code CronExpression} object
 	 * @throws IllegalArgumentException in the expression does not conform to
-	 * the cron format
+	 *                                  the cron format
 	 */
 	public static CronExpression parse(String expression) {
 		Assert.hasLength(expression, "Expression string must not be empty");
@@ -195,8 +179,7 @@ public final class CronExpression {
 			CronField daysOfWeek = CronField.parseDaysOfWeek(fields[5]);
 
 			return new CronExpression(seconds, minutes, hours, daysOfMonth, months, daysOfWeek, expression);
-		}
-		catch (IllegalArgumentException ex) {
+		} catch (IllegalArgumentException ex) {
 			String msg = ex.getMessage() + " in cron expression \"" + expression + "\"";
 			throw new IllegalArgumentException(msg, ex);
 		}
@@ -216,8 +199,9 @@ public final class CronExpression {
 
 	/**
 	 * Calculate the next {@link Temporal} that matches this expression.
+	 *
 	 * @param temporal the seed value
-	 * @param <T> the type of temporal
+	 * @param <T>      the type of temporal
 	 * @return the next temporal that matches this expression, or {@code null}
 	 * if no such temporal can be found
 	 */
@@ -264,14 +248,14 @@ public final class CronExpression {
 		if (o instanceof CronExpression) {
 			CronExpression other = (CronExpression) o;
 			return Arrays.equals(this.fields, other.fields);
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
 
 	/**
 	 * Return the expression string used to create this {@code CronExpression}.
+	 *
 	 * @return the expression string
 	 */
 	@Override

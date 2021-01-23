@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2012 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.scripting.support;
 
 import org.springframework.aop.target.dynamic.BeanFactoryRefreshableTargetSource;
@@ -42,15 +26,16 @@ public class RefreshableScriptTargetSource extends BeanFactoryRefreshableTargetS
 
 	/**
 	 * Create a new RefreshableScriptTargetSource.
-	 * @param beanFactory the BeanFactory to fetch the scripted bean from
-	 * @param beanName the name of the target bean
+	 *
+	 * @param beanFactory   the BeanFactory to fetch the scripted bean from
+	 * @param beanName      the name of the target bean
 	 * @param scriptFactory the ScriptFactory to delegate to for determining
-	 * whether a refresh is required
-	 * @param scriptSource the ScriptSource for the script definition
+	 *                      whether a refresh is required
+	 * @param scriptSource  the ScriptSource for the script definition
 	 * @param isFactoryBean whether the target script defines a FactoryBean
 	 */
 	public RefreshableScriptTargetSource(BeanFactory beanFactory, String beanName,
-			ScriptFactory scriptFactory, ScriptSource scriptSource, boolean isFactoryBean) {
+										 ScriptFactory scriptFactory, ScriptSource scriptSource, boolean isFactoryBean) {
 
 		super(beanFactory, beanName);
 		Assert.notNull(scriptFactory, "ScriptFactory must not be null");
@@ -64,6 +49,7 @@ public class RefreshableScriptTargetSource extends BeanFactoryRefreshableTargetS
 	/**
 	 * Determine whether a refresh is required through calling
 	 * ScriptFactory's {@code requiresScriptedObjectRefresh} method.
+	 *
 	 * @see ScriptFactory#requiresScriptedObjectRefresh(ScriptSource)
 	 */
 	@Override

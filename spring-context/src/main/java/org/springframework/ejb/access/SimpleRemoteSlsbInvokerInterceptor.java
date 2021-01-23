@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.ejb.access;
 
 import java.lang.reflect.InvocationTargetException;
@@ -56,11 +40,11 @@ import org.springframework.remoting.RemoteLookupFailureException;
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
- * @since 09.05.2003
  * @see org.springframework.remoting.RemoteAccessException
  * @see AbstractSlsbInvokerInterceptor#setLookupHomeOnStartup
  * @see AbstractSlsbInvokerInterceptor#setCacheHome
  * @see AbstractRemoteSlsbInvokerInterceptor#setRefreshHomeOnConnectFailure
+ * @since 09.05.2003
  */
 public class SimpleRemoteSlsbInvokerInterceptor extends AbstractRemoteSlsbInvokerInterceptor
 		implements DisposableBean {
@@ -78,6 +62,7 @@ public class SimpleRemoteSlsbInvokerInterceptor extends AbstractRemoteSlsbInvoke
 	 * <p>Off by default for standard EJB compliance. Turn this flag
 	 * on to optimize session bean access for servers that are
 	 * known to allow for caching the actual session bean object.
+	 *
 	 * @see #setCacheHome
 	 */
 	public void setCacheSessionBean(boolean cacheSessionBean) {
@@ -100,24 +85,20 @@ public class SimpleRemoteSlsbInvokerInterceptor extends AbstractRemoteSlsbInvoke
 		try {
 			ejb = getSessionBeanInstance();
 			return org.springframework.remoting.rmi.RmiClientInterceptorUtils.invokeRemoteMethod(invocation, ejb);
-		}
-		catch (NamingException ex) {
+		} catch (NamingException ex) {
 			throw new RemoteLookupFailureException("Failed to locate remote EJB [" + getJndiName() + "]", ex);
-		}
-		catch (InvocationTargetException ex) {
+		} catch (InvocationTargetException ex) {
 			Throwable targetEx = ex.getTargetException();
 			if (targetEx instanceof RemoteException) {
 				RemoteException rex = (RemoteException) targetEx;
 				throw org.springframework.remoting.rmi.RmiClientInterceptorUtils.convertRmiAccessException(
 						invocation.getMethod(), rex, isConnectFailure(rex), getJndiName());
-			}
-			else if (targetEx instanceof CreateException) {
+			} else if (targetEx instanceof CreateException) {
 				throw org.springframework.remoting.rmi.RmiClientInterceptorUtils.convertRmiAccessException(
 						invocation.getMethod(), targetEx, "Could not create remote EJB [" + getJndiName() + "]");
 			}
 			throw targetEx;
-		}
-		finally {
+		} finally {
 			if (ejb instanceof EJBObject) {
 				releaseSessionBeanInstance((EJBObject) ejb);
 			}
@@ -127,8 +108,9 @@ public class SimpleRemoteSlsbInvokerInterceptor extends AbstractRemoteSlsbInvoke
 	/**
 	 * Return an EJB component instance to delegate the call to.
 	 * <p>The default implementation delegates to {@link #newSessionBeanInstance}.
+	 *
 	 * @return the EJB component instance
-	 * @throws NamingException if thrown by JNDI
+	 * @throws NamingException           if thrown by JNDI
 	 * @throws InvocationTargetException if thrown by the create method
 	 * @see #newSessionBeanInstance
 	 */
@@ -140,8 +122,7 @@ public class SimpleRemoteSlsbInvokerInterceptor extends AbstractRemoteSlsbInvoke
 				}
 				return this.beanInstance;
 			}
-		}
-		else {
+		} else {
 			return newSessionBeanInstance();
 		}
 	}
@@ -149,6 +130,7 @@ public class SimpleRemoteSlsbInvokerInterceptor extends AbstractRemoteSlsbInvoke
 	/**
 	 * Release the given EJB instance.
 	 * <p>The default implementation delegates to {@link #removeSessionBeanInstance}.
+	 *
 	 * @param ejb the EJB component instance to release
 	 * @see #removeSessionBeanInstance
 	 */

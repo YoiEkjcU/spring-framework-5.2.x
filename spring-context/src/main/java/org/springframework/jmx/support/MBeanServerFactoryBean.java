@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jmx.support;
 
 import javax.management.MBeanServer;
@@ -43,7 +27,6 @@ import org.springframework.lang.Nullable;
  *
  * @author Rob Harrop
  * @author Juergen Hoeller
- * @since 1.2
  * @see #setLocateExistingServerIfPossible
  * @see #locateMBeanServer
  * @see javax.management.MBeanServer
@@ -52,6 +35,7 @@ import org.springframework.lang.Nullable;
  * @see javax.management.MBeanServerFactory#newMBeanServer
  * @see MBeanServerConnectionFactoryBean
  * @see ConnectorServerFactoryBean
+ * @since 1.2
  */
 public class MBeanServerFactoryBean implements FactoryBean<MBeanServer>, InitializingBean, DisposableBean {
 
@@ -90,6 +74,7 @@ public class MBeanServerFactoryBean implements FactoryBean<MBeanServer>, Initial
 	 * attempt will be made to create a new MBeanServer (and an
 	 * MBeanServerNotFoundException will be thrown at resolution time).
 	 * <p>Specifying the empty String indicates the platform MBeanServer.
+	 *
 	 * @see javax.management.MBeanServerFactory#findMBeanServer(String)
 	 */
 	public void setAgentId(String agentId) {
@@ -101,6 +86,7 @@ public class MBeanServerFactoryBean implements FactoryBean<MBeanServer>, Initial
 	 * to be passed to {@code MBeanServerFactory.createMBeanServer()}
 	 * or {@code MBeanServerFactory.findMBeanServer()}.
 	 * <p>Default is none.
+	 *
 	 * @see javax.management.MBeanServerFactory#createMBeanServer(String)
 	 * @see javax.management.MBeanServerFactory#findMBeanServer(String)
 	 */
@@ -113,6 +99,7 @@ public class MBeanServerFactoryBean implements FactoryBean<MBeanServer>, Initial
 	 * {@code MBeanServerFactory}, making it available through
 	 * {@code MBeanServerFactory.findMBeanServer()}.
 	 * <p>Default is {@code true}.
+	 *
 	 * @see javax.management.MBeanServerFactory#createMBeanServer
 	 * @see javax.management.MBeanServerFactory#findMBeanServer
 	 */
@@ -130,8 +117,7 @@ public class MBeanServerFactoryBean implements FactoryBean<MBeanServer>, Initial
 		if (this.locateExistingServerIfPossible || this.agentId != null) {
 			try {
 				this.server = locateMBeanServer(this.agentId);
-			}
-			catch (MBeanServerNotFoundException ex) {
+			} catch (MBeanServerNotFoundException ex) {
 				// If agentId was specified, we were only supposed to locate that
 				// specific MBeanServer; so let's bail if we can't find it.
 				if (this.agentId != null) {
@@ -153,12 +139,12 @@ public class MBeanServerFactoryBean implements FactoryBean<MBeanServer>, Initial
 	 * Called if {@code locateExistingServerIfPossible} is set to {@code true}.
 	 * <p>The default implementation attempts to find an {@code MBeanServer} using
 	 * a standard lookup. Subclasses may override to add additional location logic.
+	 *
 	 * @param agentId the agent identifier of the MBeanServer to retrieve.
-	 * If this parameter is {@code null}, all registered MBeanServers are
-	 * considered.
+	 *                If this parameter is {@code null}, all registered MBeanServers are
+	 *                considered.
 	 * @return the {@code MBeanServer} if found
-	 * @throws org.springframework.jmx.MBeanServerNotFoundException
-	 * if no {@code MBeanServer} could be found
+	 * @throws org.springframework.jmx.MBeanServerNotFoundException if no {@code MBeanServer} could be found
 	 * @see #setLocateExistingServerIfPossible
 	 * @see JmxUtils#locateMBeanServer(String)
 	 * @see javax.management.MBeanServerFactory#findMBeanServer(String)
@@ -170,17 +156,17 @@ public class MBeanServerFactoryBean implements FactoryBean<MBeanServer>, Initial
 	/**
 	 * Create a new {@code MBeanServer} instance and register it with the
 	 * {@code MBeanServerFactory}, if desired.
-	 * @param defaultDomain the default domain, or {@code null} if none
+	 *
+	 * @param defaultDomain       the default domain, or {@code null} if none
 	 * @param registerWithFactory whether to register the {@code MBeanServer}
-	 * with the {@code MBeanServerFactory}
+	 *                            with the {@code MBeanServerFactory}
 	 * @see javax.management.MBeanServerFactory#createMBeanServer
 	 * @see javax.management.MBeanServerFactory#newMBeanServer
 	 */
 	protected MBeanServer createMBeanServer(@Nullable String defaultDomain, boolean registerWithFactory) {
 		if (registerWithFactory) {
 			return MBeanServerFactory.createMBeanServer(defaultDomain);
-		}
-		else {
+		} else {
 			return MBeanServerFactory.newMBeanServer(defaultDomain);
 		}
 	}

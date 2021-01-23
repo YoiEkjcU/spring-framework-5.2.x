@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.validation;
 
 import java.io.Serializable;
@@ -66,8 +50,7 @@ public abstract class AbstractErrors implements Errors, Serializable {
 		try {
 			String formerNestedPath = this.nestedPathStack.pop();
 			doSetNestedPath(formerNestedPath);
-		}
-		catch (NoSuchElementException ex) {
+		} catch (NoSuchElementException ex) {
 			throw new IllegalStateException("Cannot pop nested path: no nested path on stack");
 		}
 	}
@@ -94,8 +77,7 @@ public abstract class AbstractErrors implements Errors, Serializable {
 	protected String fixedField(@Nullable String field) {
 		if (StringUtils.hasLength(field)) {
 			return getNestedPath() + canonicalFieldName(field);
-		}
-		else {
+		} else {
 			String path = getNestedPath();
 			return (path.endsWith(Errors.NESTED_PATH_SEPARATOR) ?
 					path.substring(0, path.length() - NESTED_PATH_SEPARATOR.length()) : path);
@@ -105,6 +87,7 @@ public abstract class AbstractErrors implements Errors, Serializable {
 	/**
 	 * Determine the canonical field name for the given field.
 	 * <p>The default implementation simply returns the field name as-is.
+	 *
 	 * @param field the original field name
 	 * @return the canonical field name
 	 */
@@ -225,7 +208,8 @@ public abstract class AbstractErrors implements Errors, Serializable {
 
 	/**
 	 * Check whether the given FieldError matches the given field.
-	 * @param field the field that we are looking up FieldErrors for
+	 *
+	 * @param field      the field that we are looking up FieldErrors for
 	 * @param fieldError the candidate FieldError
 	 * @return whether the FieldError matches the given field
 	 */

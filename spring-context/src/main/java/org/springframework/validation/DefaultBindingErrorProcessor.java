@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.validation;
 
 import org.springframework.beans.PropertyAccessException;
@@ -34,7 +18,6 @@ import org.springframework.util.StringUtils;
  *
  * @author Alef Arendsen
  * @author Juergen Hoeller
- * @since 1.2
  * @see #MISSING_FIELD_ERROR_CODE
  * @see DataBinder#setBindingErrorProcessor
  * @see BeanPropertyBindingResult#addError
@@ -42,6 +25,7 @@ import org.springframework.util.StringUtils;
  * @see org.springframework.beans.PropertyAccessException#getErrorCode
  * @see org.springframework.beans.TypeMismatchException#ERROR_CODE
  * @see org.springframework.beans.MethodInvocationException#ERROR_CODE
+ * @since 1.2
  */
 public class DefaultBindingErrorProcessor implements BindingErrorProcessor {
 
@@ -86,15 +70,16 @@ public class DefaultBindingErrorProcessor implements BindingErrorProcessor {
 	 * Invoked for each missing required field and each type mismatch.
 	 * <p>The default implementation returns a single argument indicating the field name
 	 * (of type DefaultMessageSourceResolvable, with "objectName.field" and "field" as codes).
+	 *
 	 * @param objectName the name of the target object
-	 * @param field the field that caused the binding error
+	 * @param field      the field that caused the binding error
 	 * @return the Object array that represents the FieldError arguments
 	 * @see org.springframework.validation.FieldError#getArguments
 	 * @see org.springframework.context.support.DefaultMessageSourceResolvable
 	 */
 	protected Object[] getArgumentsForBindError(String objectName, String field) {
-		String[] codes = new String[] {objectName + Errors.NESTED_PATH_SEPARATOR + field, field};
-		return new Object[] {new DefaultMessageSourceResolvable(codes, field)};
+		String[] codes = new String[]{objectName + Errors.NESTED_PATH_SEPARATOR + field, field};
+		return new Object[]{new DefaultMessageSourceResolvable(codes, field)};
 	}
 
 }

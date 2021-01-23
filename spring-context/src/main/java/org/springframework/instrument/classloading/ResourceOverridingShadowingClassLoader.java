@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.instrument.classloading;
 
 import java.io.IOException;
@@ -41,6 +25,7 @@ public class ResourceOverridingShadowingClassLoader extends ShadowingClassLoader
 		public boolean hasMoreElements() {
 			return false;
 		}
+
 		@Override
 		public URL nextElement() {
 			throw new UnsupportedOperationException("Should not be called. I am empty.");
@@ -57,6 +42,7 @@ public class ResourceOverridingShadowingClassLoader extends ShadowingClassLoader
 	/**
 	 * Create a new ResourceOverridingShadowingClassLoader,
 	 * decorating the given ClassLoader.
+	 *
 	 * @param enclosingClassLoader the ClassLoader to decorate
 	 */
 	public ResourceOverridingShadowingClassLoader(ClassLoader enclosingClassLoader) {
@@ -67,6 +53,7 @@ public class ResourceOverridingShadowingClassLoader extends ShadowingClassLoader
 	/**
 	 * Return the resource (if any) at the new path
 	 * on an attempt to locate a resource at the old path.
+	 *
 	 * @param oldPath the path requested
 	 * @param newPath the actual path to be looked up
 	 */
@@ -76,8 +63,9 @@ public class ResourceOverridingShadowingClassLoader extends ShadowingClassLoader
 
 	/**
 	 * Ensure that a resource with the given path is not found.
+	 *
 	 * @param oldPath the path of the resource to hide even if
-	 * it exists in the parent ClassLoader
+	 *                it exists in the parent ClassLoader
 	 */
 	public void suppress(String oldPath) {
 		this.overrides.put(oldPath, null);
@@ -85,6 +73,7 @@ public class ResourceOverridingShadowingClassLoader extends ShadowingClassLoader
 
 	/**
 	 * Copy all overrides from the given ClassLoader.
+	 *
 	 * @param other the other ClassLoader to copy from
 	 */
 	public void copyOverrides(ResourceOverridingShadowingClassLoader other) {
@@ -98,8 +87,7 @@ public class ResourceOverridingShadowingClassLoader extends ShadowingClassLoader
 		if (this.overrides.containsKey(requestedPath)) {
 			String overriddenPath = this.overrides.get(requestedPath);
 			return (overriddenPath != null ? super.getResource(overriddenPath) : null);
-		}
-		else {
+		} else {
 			return super.getResource(requestedPath);
 		}
 	}
@@ -110,8 +98,7 @@ public class ResourceOverridingShadowingClassLoader extends ShadowingClassLoader
 		if (this.overrides.containsKey(requestedPath)) {
 			String overriddenPath = this.overrides.get(requestedPath);
 			return (overriddenPath != null ? super.getResourceAsStream(overriddenPath) : null);
-		}
-		else {
+		} else {
 			return super.getResourceAsStream(requestedPath);
 		}
 	}
@@ -122,8 +109,7 @@ public class ResourceOverridingShadowingClassLoader extends ShadowingClassLoader
 			String overriddenLocation = this.overrides.get(requestedPath);
 			return (overriddenLocation != null ?
 					super.getResources(overriddenLocation) : EMPTY_URL_ENUMERATION);
-		}
-		else {
+		} else {
 			return super.getResources(requestedPath);
 		}
 	}

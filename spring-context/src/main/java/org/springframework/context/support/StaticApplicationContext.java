@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.context.support;
 
 import java.util.Locale;
@@ -45,6 +29,7 @@ public class StaticApplicationContext extends GenericApplicationContext {
 
 	/**
 	 * Create a new StaticApplicationContext.
+	 *
 	 * @see #registerSingleton
 	 * @see #registerPrototype
 	 * @see #registerBeanDefinition
@@ -56,6 +41,7 @@ public class StaticApplicationContext extends GenericApplicationContext {
 
 	/**
 	 * Create a new StaticApplicationContext with the given parent.
+	 *
 	 * @see #registerSingleton
 	 * @see #registerPrototype
 	 * @see #registerBeanDefinition
@@ -80,6 +66,7 @@ public class StaticApplicationContext extends GenericApplicationContext {
 	/**
 	 * Return the internal StaticMessageSource used by this context.
 	 * Can be used to register messages on it.
+	 *
 	 * @see #addMessage
 	 */
 	public final StaticMessageSource getStaticMessageSource() {
@@ -89,6 +76,7 @@ public class StaticApplicationContext extends GenericApplicationContext {
 	/**
 	 * Register a singleton bean with the underlying bean factory.
 	 * <p>For more advanced needs, register with the underlying BeanFactory directly.
+	 *
 	 * @see #getDefaultListableBeanFactory
 	 */
 	public void registerSingleton(String name, Class<?> clazz) throws BeansException {
@@ -100,6 +88,7 @@ public class StaticApplicationContext extends GenericApplicationContext {
 	/**
 	 * Register a singleton bean with the underlying bean factory.
 	 * <p>For more advanced needs, register with the underlying BeanFactory directly.
+	 *
 	 * @see #getDefaultListableBeanFactory
 	 */
 	public void registerSingleton(String name, Class<?> clazz, MutablePropertyValues pvs) throws BeansException {
@@ -112,6 +101,7 @@ public class StaticApplicationContext extends GenericApplicationContext {
 	/**
 	 * Register a prototype bean with the underlying bean factory.
 	 * <p>For more advanced needs, register with the underlying BeanFactory directly.
+	 *
 	 * @see #getDefaultListableBeanFactory
 	 */
 	public void registerPrototype(String name, Class<?> clazz) throws BeansException {
@@ -124,6 +114,7 @@ public class StaticApplicationContext extends GenericApplicationContext {
 	/**
 	 * Register a prototype bean with the underlying bean factory.
 	 * <p>For more advanced needs, register with the underlying BeanFactory directly.
+	 *
 	 * @see #getDefaultListableBeanFactory
 	 */
 	public void registerPrototype(String name, Class<?> clazz, MutablePropertyValues pvs) throws BeansException {
@@ -136,8 +127,9 @@ public class StaticApplicationContext extends GenericApplicationContext {
 
 	/**
 	 * Associate the given message with the given code.
-	 * @param code lookup code
-	 * @param locale the locale message should be found within
+	 *
+	 * @param code           lookup code
+	 * @param locale         the locale message should be found within
 	 * @param defaultMessage message associated with this lookup code
 	 * @see #getStaticMessageSource
 	 */

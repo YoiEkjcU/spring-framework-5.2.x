@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.validation.beanvalidation;
 
 import java.lang.reflect.Method;
@@ -55,9 +39,9 @@ import org.springframework.validation.annotation.Validated;
  * <p>As of Spring 5.0, this functionality requires a Bean Validation 1.1+ provider.
  *
  * @author Juergen Hoeller
- * @since 3.1
  * @see MethodValidationPostProcessor
  * @see javax.validation.executable.ExecutableValidator
+ * @since 3.1
  */
 public class MethodValidationInterceptor implements MethodInterceptor {
 
@@ -73,6 +57,7 @@ public class MethodValidationInterceptor implements MethodInterceptor {
 
 	/**
 	 * Create a new MethodValidationInterceptor using the given JSR-303 ValidatorFactory.
+	 *
 	 * @param validatorFactory the JSR-303 ValidatorFactory to use
 	 */
 	public MethodValidationInterceptor(ValidatorFactory validatorFactory) {
@@ -81,6 +66,7 @@ public class MethodValidationInterceptor implements MethodInterceptor {
 
 	/**
 	 * Create a new MethodValidationInterceptor using the given JSR-303 Validator.
+	 *
 	 * @param validator the JSR-303 Validator to use
 	 */
 	public MethodValidationInterceptor(Validator validator) {
@@ -108,8 +94,7 @@ public class MethodValidationInterceptor implements MethodInterceptor {
 
 		try {
 			result = execVal.validateParameters(target, methodToValidate, invocation.getArguments(), groups);
-		}
-		catch (IllegalArgumentException ex) {
+		} catch (IllegalArgumentException ex) {
 			// Probably a generic type mismatch between interface and impl as reported in SPR-12237 / HV-1011
 			// Let's try to find the bridged method on the implementation class...
 			methodToValidate = BridgeMethodResolver.findBridgedMethod(
@@ -143,8 +128,7 @@ public class MethodValidationInterceptor implements MethodInterceptor {
 		Class<?> factoryBeanType = null;
 		if (SmartFactoryBean.class.isAssignableFrom(clazz)) {
 			factoryBeanType = SmartFactoryBean.class;
-		}
-		else if (FactoryBean.class.isAssignableFrom(clazz)) {
+		} else if (FactoryBean.class.isAssignableFrom(clazz)) {
 			factoryBeanType = FactoryBean.class;
 		}
 		return (factoryBeanType != null && !method.getName().equals("getObject") &&
@@ -155,6 +139,7 @@ public class MethodValidationInterceptor implements MethodInterceptor {
 	 * Determine the validation groups to validate against for the given method invocation.
 	 * <p>Default are the validation groups as specified in the {@link Validated} annotation
 	 * on the containing target class of the method.
+	 *
 	 * @param invocation the current MethodInvocation
 	 * @return the applicable validation groups as a Class array
 	 */

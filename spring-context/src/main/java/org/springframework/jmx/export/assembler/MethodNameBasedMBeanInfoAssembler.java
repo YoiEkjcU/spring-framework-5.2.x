@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jmx.export.assembler;
 
 import java.lang.reflect.Method;
@@ -45,13 +29,13 @@ import org.springframework.util.StringUtils;
  * method names defined by {@code managedMethods}.
  *
  * @author Juergen Hoeller
- * @since 1.2
  * @see #setManagedMethods
  * @see #setMethodMappings
  * @see InterfaceBasedMBeanInfoAssembler
  * @see SimpleReflectiveMBeanInfoAssembler
  * @see MethodExclusionMBeanInfoAssembler
  * @see org.springframework.jmx.export.MBeanExporter
+ * @since 1.2
  */
 public class MethodNameBasedMBeanInfoAssembler extends AbstractConfigurableMBeanInfoAssembler {
 
@@ -72,6 +56,7 @@ public class MethodNameBasedMBeanInfoAssembler extends AbstractConfigurableMBean
 	 * Set the array of method names to use for creating the management info.
 	 * These method names will be used for a bean if no entry corresponding to
 	 * that bean is found in the {@code methodMappings} property.
+	 *
 	 * @param methodNames an array of method names indicating the methods to use
 	 * @see #setMethodMappings
 	 */
@@ -84,11 +69,12 @@ public class MethodNameBasedMBeanInfoAssembler extends AbstractConfigurableMBean
 	 * The property key should match the bean key and the property value should match
 	 * the list of method names. When searching for method names for a bean, Spring
 	 * will check these mappings first.
+	 *
 	 * @param mappings the mappings of bean keys to method names
 	 */
 	public void setMethodMappings(Properties mappings) {
 		this.methodMappings = new HashMap<>();
-		for (Enumeration<?> en = mappings.keys(); en.hasMoreElements();) {
+		for (Enumeration<?> en = mappings.keys(); en.hasMoreElements(); ) {
 			String beanKey = (String) en.nextElement();
 			String[] methodNames = StringUtils.commaDelimitedListToStringArray(mappings.getProperty(beanKey));
 			this.methodMappings.put(beanKey, new HashSet<>(Arrays.asList(methodNames)));

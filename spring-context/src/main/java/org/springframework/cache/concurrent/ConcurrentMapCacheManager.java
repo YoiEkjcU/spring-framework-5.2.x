@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.cache.concurrent;
 
 import java.util.Arrays;
@@ -43,8 +27,8 @@ import org.springframework.lang.Nullable;
  * {@link org.springframework.cache.caffeine.CaffeineCacheManager}.
  *
  * @author Juergen Hoeller
- * @since 3.1
  * @see ConcurrentMapCache
+ * @since 3.1
  */
 public class ConcurrentMapCacheManager implements CacheManager, BeanClassLoaderAware {
 
@@ -89,8 +73,7 @@ public class ConcurrentMapCacheManager implements CacheManager, BeanClassLoaderA
 				this.cacheMap.put(name, createConcurrentMapCache(name));
 			}
 			this.dynamic = false;
-		}
-		else {
+		} else {
 			this.dynamic = true;
 		}
 	}
@@ -126,6 +109,7 @@ public class ConcurrentMapCacheManager implements CacheManager, BeanClassLoaderA
 	 * contract is required on cached values.
 	 * <p>Note: A change of the store-by-value setting will reset all existing caches,
 	 * if any, to reconfigure them with the new store-by-value requirement.
+	 *
 	 * @since 4.3
 	 */
 	public void setStoreByValue(boolean storeByValue) {
@@ -140,6 +124,7 @@ public class ConcurrentMapCacheManager implements CacheManager, BeanClassLoaderA
 	 * Return whether this cache manager stores a copy of each entry or
 	 * a reference for all its caches. If store by value is enabled, any
 	 * cache entry must be serializable.
+	 *
 	 * @since 4.3
 	 */
 	public boolean isStoreByValue() {
@@ -185,6 +170,7 @@ public class ConcurrentMapCacheManager implements CacheManager, BeanClassLoaderA
 
 	/**
 	 * Create a new ConcurrentMapCache instance for the specified cache name.
+	 *
 	 * @param name the name of the cache
 	 * @return the ConcurrentMapCache (or a decorator thereof)
 	 */

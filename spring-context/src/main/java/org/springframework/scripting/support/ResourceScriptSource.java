@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.scripting.support;
 
 import java.io.IOException;
@@ -40,14 +24,16 @@ import org.springframework.util.StringUtils;
  *
  * @author Rob Harrop
  * @author Juergen Hoeller
- * @since 2.0
  * @see org.springframework.core.io.Resource#getInputStream()
  * @see org.springframework.core.io.Resource#getFile()
  * @see org.springframework.core.io.ResourceLoader
+ * @since 2.0
  */
 public class ResourceScriptSource implements ScriptSource {
 
-	/** Logger available to subclasses. */
+	/**
+	 * Logger available to subclasses.
+	 */
 	protected final Log logger = LogFactory.getLog(getClass());
 
 	private EncodedResource resource;
@@ -59,6 +45,7 @@ public class ResourceScriptSource implements ScriptSource {
 
 	/**
 	 * Create a new ResourceScriptSource for the given resource.
+	 *
 	 * @param resource the EncodedResource to load the script from
 	 */
 	public ResourceScriptSource(EncodedResource resource) {
@@ -68,6 +55,7 @@ public class ResourceScriptSource implements ScriptSource {
 
 	/**
 	 * Create a new ResourceScriptSource for the given resource.
+	 *
 	 * @param resource the Resource to load the script from (using UTF-8 encoding)
 	 */
 	public ResourceScriptSource(Resource resource) {
@@ -112,13 +100,13 @@ public class ResourceScriptSource implements ScriptSource {
 
 	/**
 	 * Retrieve the current last-modified timestamp of the underlying resource.
+	 *
 	 * @return the current timestamp, or 0 if not determinable
 	 */
 	protected long retrieveLastModifiedTime() {
 		try {
 			return getResource().lastModified();
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			if (logger.isDebugEnabled()) {
 				logger.debug(getResource() + " could not be resolved in the file system - " +
 						"current timestamp not available for script modification check", ex);

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.scheduling.config;
 
 import java.util.concurrent.RejectedExecutionHandler;
@@ -119,23 +103,20 @@ public class TaskExecutorFactoryBean implements
 							// but allow core threads to timeout...
 							executor.setAllowCoreThreadTimeOut(true);
 							corePoolSize = maxPoolSize;
-						}
-						else {
+						} else {
 							// Non-zero lower bound implies a core-max size range...
 							throw new IllegalArgumentException(
 									"A non-zero lower bound for the size range requires a queue-capacity value");
 						}
 					}
-				}
-				else {
+				} else {
 					int value = Integer.parseInt(this.poolSize);
 					corePoolSize = value;
 					maxPoolSize = value;
 				}
 				executor.setCorePoolSize(corePoolSize);
 				executor.setMaxPoolSize(maxPoolSize);
-			}
-			catch (NumberFormatException ex) {
+			} catch (NumberFormatException ex) {
 				throw new IllegalArgumentException("Invalid pool-size value [" + this.poolSize + "]: only single " +
 						"maximum integer (e.g. \"5\") and minimum-maximum range (e.g. \"3-5\") are supported", ex);
 			}

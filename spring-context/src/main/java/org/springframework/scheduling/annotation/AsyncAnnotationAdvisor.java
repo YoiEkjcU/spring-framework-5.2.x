@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.scheduling.annotation;
 
 import java.lang.annotation.Annotation;
@@ -48,9 +32,9 @@ import org.springframework.util.function.SingletonSupplier;
  * {@link #setAsyncAnnotationType "asyncAnnotationType"} property.
  *
  * @author Juergen Hoeller
- * @since 3.0
  * @see Async
  * @see AnnotationAsyncExecutionInterceptor
+ * @since 3.0
  */
 @SuppressWarnings("serial")
 public class AsyncAnnotationAdvisor extends AbstractPointcutAdvisor implements BeanFactoryAware {
@@ -69,10 +53,11 @@ public class AsyncAnnotationAdvisor extends AbstractPointcutAdvisor implements B
 
 	/**
 	 * Create a new {@code AsyncAnnotationAdvisor} for the given task executor.
-	 * @param executor the task executor to use for asynchronous methods
-	 * (can be {@code null} to trigger default executor resolution)
+	 *
+	 * @param executor         the task executor to use for asynchronous methods
+	 *                         (can be {@code null} to trigger default executor resolution)
 	 * @param exceptionHandler the {@link AsyncUncaughtExceptionHandler} to use to
-	 * handle unexpected exception thrown by asynchronous method executions
+	 *                         handle unexpected exception thrown by asynchronous method executions
 	 * @see AnnotationAsyncExecutionInterceptor#getDefaultExecutor(BeanFactory)
 	 */
 	@SuppressWarnings("unchecked")
@@ -84,12 +69,13 @@ public class AsyncAnnotationAdvisor extends AbstractPointcutAdvisor implements B
 
 	/**
 	 * Create a new {@code AsyncAnnotationAdvisor} for the given task executor.
-	 * @param executor the task executor to use for asynchronous methods
-	 * (can be {@code null} to trigger default executor resolution)
+	 *
+	 * @param executor         the task executor to use for asynchronous methods
+	 *                         (can be {@code null} to trigger default executor resolution)
 	 * @param exceptionHandler the {@link AsyncUncaughtExceptionHandler} to use to
-	 * handle unexpected exception thrown by asynchronous method executions
-	 * @since 5.1
+	 *                         handle unexpected exception thrown by asynchronous method executions
 	 * @see AnnotationAsyncExecutionInterceptor#getDefaultExecutor(BeanFactory)
+	 * @since 5.1
 	 */
 	@SuppressWarnings("unchecked")
 	public AsyncAnnotationAdvisor(
@@ -100,8 +86,7 @@ public class AsyncAnnotationAdvisor extends AbstractPointcutAdvisor implements B
 		try {
 			asyncAnnotationTypes.add((Class<? extends Annotation>)
 					ClassUtils.forName("javax.ejb.Asynchronous", AsyncAnnotationAdvisor.class.getClassLoader()));
-		}
-		catch (ClassNotFoundException ex) {
+		} catch (ClassNotFoundException ex) {
 			// If EJB 3.1 API not present, simply ignore.
 		}
 		this.advice = buildAdvice(executor, exceptionHandler);
@@ -116,6 +101,7 @@ public class AsyncAnnotationAdvisor extends AbstractPointcutAdvisor implements B
 	 * <p>This setter property exists so that developers can provide their own
 	 * (non-Spring-specific) annotation type to indicate that a method is to
 	 * be executed asynchronously.
+	 *
 	 * @param asyncAnnotationType the desired annotation type
 	 */
 	public void setAsyncAnnotationType(Class<? extends Annotation> asyncAnnotationType) {
@@ -157,6 +143,7 @@ public class AsyncAnnotationAdvisor extends AbstractPointcutAdvisor implements B
 
 	/**
 	 * Calculate a pointcut for the given async annotation types, if any.
+	 *
 	 * @param asyncAnnotationTypes the async annotation types to introspect
 	 * @return the applicable Pointcut object, or {@code null} if none
 	 */
@@ -167,8 +154,7 @@ public class AsyncAnnotationAdvisor extends AbstractPointcutAdvisor implements B
 			Pointcut mpc = new AnnotationMatchingPointcut(null, asyncAnnotationType, true);
 			if (result == null) {
 				result = new ComposablePointcut(cpc);
-			}
-			else {
+			} else {
 				result.union(cpc);
 			}
 			result = result.union(mpc);

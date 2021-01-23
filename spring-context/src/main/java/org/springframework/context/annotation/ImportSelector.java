@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.context.annotation;
 
 import java.util.function.Predicate;
@@ -52,17 +36,18 @@ import org.springframework.lang.Nullable;
  *
  * @author Chris Beams
  * @author Juergen Hoeller
- * @since 3.1
  * @see DeferredImportSelector
  * @see Import
  * @see ImportBeanDefinitionRegistrar
  * @see Configuration
+ * @since 3.1
  */
 public interface ImportSelector {
 
 	/**
 	 * Select and return the names of which class(es) should be imported based on
 	 * the {@link AnnotationMetadata} of the importing @{@link Configuration} class.
+	 *
 	 * @return the class names, or an empty array if none
 	 */
 	String[] selectImports(AnnotationMetadata importingClassMetadata);
@@ -73,6 +58,7 @@ public interface ImportSelector {
 	 * <p>If this predicate returns {@code true} for a given fully-qualified
 	 * class name, said class will not be considered as an imported configuration
 	 * class, bypassing class file loading as well as metadata introspection.
+	 *
 	 * @return the filter predicate for fully-qualified candidate class names
 	 * of transitively imported configuration classes, or {@code null} if none
 	 * @since 5.2.4

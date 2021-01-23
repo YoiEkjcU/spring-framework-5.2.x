@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.scripting.support;
 
 import org.springframework.lang.Nullable;
@@ -42,6 +26,7 @@ public class StaticScriptSource implements ScriptSource {
 
 	/**
 	 * Create a new StaticScriptSource for the given script.
+	 *
 	 * @param script the script String
 	 */
 	public StaticScriptSource(String script) {
@@ -50,9 +35,10 @@ public class StaticScriptSource implements ScriptSource {
 
 	/**
 	 * Create a new StaticScriptSource for the given script.
-	 * @param script the script String
+	 *
+	 * @param script    the script String
 	 * @param className the suggested class name for the script
-	 * (may be {@code null})
+	 *                  (may be {@code null})
 	 */
 	public StaticScriptSource(String script, @Nullable String className) {
 		setScript(script);
@@ -61,6 +47,7 @@ public class StaticScriptSource implements ScriptSource {
 
 	/**
 	 * Set a fresh script String, overriding the previous script.
+	 *
 	 * @param script the script String
 	 */
 	public synchronized void setScript(String script) {

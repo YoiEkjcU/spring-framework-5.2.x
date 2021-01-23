@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.instrument.classloading.weblogic;
 
 import java.lang.instrument.ClassFileTransformer;
@@ -57,21 +41,16 @@ class WebLogicClassPreProcessorAdapter implements InvocationHandler {
 		String name = method.getName();
 		if ("equals".equals(name)) {
 			return (proxy == args[0]);
-		}
-		else if ("hashCode".equals(name)) {
+		} else if ("hashCode".equals(name)) {
 			return hashCode();
-		}
-		else if ("toString".equals(name)) {
+		} else if ("toString".equals(name)) {
 			return toString();
-		}
-		else if ("initialize".equals(name)) {
+		} else if ("initialize".equals(name)) {
 			initialize((Hashtable<?, ?>) args[0]);
 			return null;
-		}
-		else if ("preProcess".equals(name)) {
+		} else if ("preProcess".equals(name)) {
 			return preProcess((String) args[0], (byte[]) args[1]);
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException("Unknown method: " + method);
 		}
 	}
@@ -83,8 +62,7 @@ class WebLogicClassPreProcessorAdapter implements InvocationHandler {
 		try {
 			byte[] result = this.transformer.transform(this.loader, className, null, null, classBytes);
 			return (result != null ? result : classBytes);
-		}
-		catch (IllegalClassFormatException ex) {
+		} catch (IllegalClassFormatException ex) {
 			throw new IllegalStateException("Cannot transform due to illegal class format", ex);
 		}
 	}

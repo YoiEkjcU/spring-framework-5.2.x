@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.validation;
 
 import java.io.Serializable;
@@ -125,8 +109,9 @@ public class DefaultMessageCodesResolver implements MessageCodesResolver, Serial
 	/**
 	 * Specify the format for message codes built by this resolver.
 	 * <p>The default is {@link Format#PREFIX_ERROR_CODE}.
-	 * @since 3.2
+	 *
 	 * @see Format
+	 * @since 3.2
 	 */
 	public void setMessageCodeFormatter(@Nullable MessageCodeFormatter formatter) {
 		this.formatter = (formatter != null ? formatter : DEFAULT_FORMATTER);
@@ -145,6 +130,7 @@ public class DefaultMessageCodesResolver implements MessageCodesResolver, Serial
 	 * the whole collection.
 	 * <p>See the {@link DefaultMessageCodesResolver class level javadoc} for
 	 * details on the generated codes.
+	 *
 	 * @return the list of codes
 	 */
 	@Override
@@ -189,8 +175,7 @@ public class DefaultMessageCodesResolver implements MessageCodesResolver, Serial
 				plainField = plainField.substring(0, keyIndex) + plainField.substring(endKeyIndex + 1);
 				fieldList.add(plainField);
 				keyIndex = plainField.lastIndexOf('[');
-			}
-			else {
+			} else {
 				keyIndex = -1;
 			}
 		}
@@ -199,6 +184,7 @@ public class DefaultMessageCodesResolver implements MessageCodesResolver, Serial
 	/**
 	 * Post-process the given message code, built by this resolver.
 	 * <p>The default implementation applies the specified prefix, if any.
+	 *
 	 * @param code the message code as built by this resolver
 	 * @return the final message code to be returned
 	 * @see #setPrefix
@@ -210,6 +196,7 @@ public class DefaultMessageCodesResolver implements MessageCodesResolver, Serial
 
 	/**
 	 * Common message code formats.
+	 *
 	 * @see MessageCodeFormatter
 	 * @see DefaultMessageCodesResolver#setMessageCodeFormatter(MessageCodeFormatter)
 	 */

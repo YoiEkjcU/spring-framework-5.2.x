@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.ui;
 
 import java.util.Collection;
@@ -48,6 +32,7 @@ public class ConcurrentModel extends ConcurrentHashMap<String, Object> implement
 	/**
 	 * Construct a new {@code ModelMap} containing the supplied attribute
 	 * under the supplied name.
+	 *
 	 * @see #addAttribute(String, Object)
 	 */
 	public ConcurrentModel(String attributeName, Object attributeValue) {
@@ -58,6 +43,7 @@ public class ConcurrentModel extends ConcurrentHashMap<String, Object> implement
 	 * Construct a new {@code ModelMap} containing the supplied attribute.
 	 * Uses attribute name generation to generate the key for the supplied model
 	 * object.
+	 *
 	 * @see #addAttribute(Object)
 	 */
 	public ConcurrentModel(Object attributeValue) {
@@ -69,8 +55,7 @@ public class ConcurrentModel extends ConcurrentHashMap<String, Object> implement
 	public Object put(String key, Object value) {
 		if (value != null) {
 			return super.put(key, value);
-		}
-		else {
+		} else {
 			return remove(key);
 		}
 	}
@@ -84,9 +69,10 @@ public class ConcurrentModel extends ConcurrentHashMap<String, Object> implement
 
 	/**
 	 * Add the supplied attribute under the supplied name.
-	 * @param attributeName the name of the model attribute (never {@code null})
+	 *
+	 * @param attributeName  the name of the model attribute (never {@code null})
 	 * @param attributeValue the model attribute value (ignored if {@code null},
-	 * just removing an existing entry if any)
+	 *                       just removing an existing entry if any)
 	 */
 	@Override
 	public ConcurrentModel addAttribute(String attributeName, @Nullable Object attributeValue) {
@@ -102,6 +88,7 @@ public class ConcurrentModel extends ConcurrentHashMap<String, Object> implement
 	 * the model when using this method because we cannot correctly determine
 	 * the true convention name. View code should check for {@code null} rather
 	 * than for empty collections as is already done by JSTL tags.</i>
+	 *
 	 * @param attributeValue the model attribute value (never {@code null})
 	 */
 	@Override
@@ -116,6 +103,7 @@ public class ConcurrentModel extends ConcurrentHashMap<String, Object> implement
 	/**
 	 * Copy all attributes in the supplied {@code Collection} into this
 	 * {@code Map}, using attribute name generation for each element.
+	 *
 	 * @see #addAttribute(Object)
 	 */
 	@Override
@@ -130,6 +118,7 @@ public class ConcurrentModel extends ConcurrentHashMap<String, Object> implement
 
 	/**
 	 * Copy all attributes in the supplied {@code Map} into this {@code Map}.
+	 *
 	 * @see #addAttribute(String, Object)
 	 */
 	@Override
@@ -159,6 +148,7 @@ public class ConcurrentModel extends ConcurrentHashMap<String, Object> implement
 
 	/**
 	 * Does this model contain an attribute of the given name?
+	 *
 	 * @param attributeName the name of the model attribute (never {@code null})
 	 * @return whether this model contains a corresponding attribute
 	 */

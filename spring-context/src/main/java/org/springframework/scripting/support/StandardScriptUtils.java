@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2016 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.scripting.support;
 
 import java.util.LinkedHashSet;
@@ -40,11 +24,12 @@ public abstract class StandardScriptUtils {
 	 * Retrieve a {@link ScriptEngine} from the given {@link ScriptEngineManager}
 	 * by name, delegating to {@link ScriptEngineManager#getEngineByName} but
 	 * throwing a descriptive exception if not found or if initialization failed.
+	 *
 	 * @param scriptEngineManager the ScriptEngineManager to use
-	 * @param engineName the name of the engine
+	 * @param engineName          the name of the engine
 	 * @return a corresponding ScriptEngine (never {@code null})
 	 * @throws IllegalArgumentException if no matching engine has been found
-	 * @throws IllegalStateException if the desired engine failed to initialize
+	 * @throws IllegalStateException    if the desired engine failed to initialize
 	 */
 	public static ScriptEngine retrieveEngineByName(ScriptEngineManager scriptEngineManager, String engineName) {
 		ScriptEngine engine = scriptEngineManager.getEngineByName(engineName);
@@ -59,8 +44,7 @@ public abstract class StandardScriptUtils {
 					try {
 						engine = engineFactory.getScriptEngine();
 						engine.setBindings(scriptEngineManager.getBindings(), ScriptContext.GLOBAL_SCOPE);
-					}
-					catch (Throwable ex) {
+					} catch (Throwable ex) {
 						throw new IllegalStateException("Script engine with name '" + engineName +
 								"' failed to initialize", ex);
 					}

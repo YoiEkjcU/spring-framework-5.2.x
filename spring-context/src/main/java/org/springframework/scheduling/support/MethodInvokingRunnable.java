@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.scheduling.support;
 
 import java.lang.reflect.InvocationTargetException;
@@ -35,8 +19,8 @@ import org.springframework.util.ClassUtils;
  * {@link org.springframework.util.MethodInvoker}.
  *
  * @author Juergen Hoeller
- * @since 1.2.4
  * @see java.util.concurrent.Executor#execute(Runnable)
+ * @since 1.2.4
  */
 public class MethodInvokingRunnable extends ArgumentConvertingMethodInvoker
 		implements Runnable, BeanClassLoaderAware, InitializingBean {
@@ -67,12 +51,10 @@ public class MethodInvokingRunnable extends ArgumentConvertingMethodInvoker
 	public void run() {
 		try {
 			invoke();
-		}
-		catch (InvocationTargetException ex) {
+		} catch (InvocationTargetException ex) {
 			logger.error(getInvocationFailureMessage(), ex.getTargetException());
 			// Do not throw exception, else the main loop of the scheduler might stop!
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			logger.error(getInvocationFailureMessage(), ex);
 			// Do not throw exception, else the main loop of the scheduler might stop!
 		}
@@ -80,6 +62,7 @@ public class MethodInvokingRunnable extends ArgumentConvertingMethodInvoker
 
 	/**
 	 * Build a message for an invocation failure exception.
+	 *
 	 * @return the error message, including the target method name etc
 	 */
 	protected String getInvocationFailureMessage() {

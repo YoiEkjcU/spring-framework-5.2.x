@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.instrument.classloading;
 
 import java.io.IOException;
@@ -40,15 +24,17 @@ import org.springframework.util.StringUtils;
  * @author Rob Harrop
  * @author Juergen Hoeller
  * @author Costin Leau
- * @since 2.0
  * @see #addTransformer
  * @see org.springframework.core.OverridingClassLoader
+ * @since 2.0
  */
 public class ShadowingClassLoader extends DecoratingClassLoader {
 
-	/** Packages that are excluded by default. */
+	/**
+	 * Packages that are excluded by default.
+	 */
 	public static final String[] DEFAULT_EXCLUDED_PACKAGES =
-			new String[] {"java.", "javax.", "jdk.", "sun.", "oracle.", "com.sun.", "com.ibm.", "COM.ibm.",
+			new String[]{"java.", "javax.", "jdk.", "sun.", "oracle.", "com.sun.", "com.ibm.", "COM.ibm.",
 					"org.w3c.", "org.xml.", "org.dom4j.", "org.eclipse", "org.aspectj.", "net.sf.cglib",
 					"org.springframework.cglib", "org.apache.xerces.", "org.apache.commons.logging."};
 
@@ -63,6 +49,7 @@ public class ShadowingClassLoader extends DecoratingClassLoader {
 	/**
 	 * Create a new ShadowingClassLoader, decorating the given ClassLoader,
 	 * applying {@link #DEFAULT_EXCLUDED_PACKAGES}.
+	 *
 	 * @param enclosingClassLoader the ClassLoader to decorate
 	 * @see #ShadowingClassLoader(ClassLoader, boolean)
 	 */
@@ -72,8 +59,9 @@ public class ShadowingClassLoader extends DecoratingClassLoader {
 
 	/**
 	 * Create a new ShadowingClassLoader, decorating the given ClassLoader.
+	 *
 	 * @param enclosingClassLoader the ClassLoader to decorate
-	 * @param defaultExcludes whether to apply {@link #DEFAULT_EXCLUDED_PACKAGES}
+	 * @param defaultExcludes      whether to apply {@link #DEFAULT_EXCLUDED_PACKAGES}
 	 * @since 4.3.8
 	 */
 	public ShadowingClassLoader(ClassLoader enclosingClassLoader, boolean defaultExcludes) {
@@ -90,6 +78,7 @@ public class ShadowingClassLoader extends DecoratingClassLoader {
 	/**
 	 * Add the given ClassFileTransformer to the list of transformers that this
 	 * ClassLoader will apply.
+	 *
 	 * @param transformer the ClassFileTransformer
 	 */
 	public void addTransformer(ClassFileTransformer transformer) {
@@ -100,6 +89,7 @@ public class ShadowingClassLoader extends DecoratingClassLoader {
 	/**
 	 * Copy all ClassFileTransformers from the given ClassLoader to the list of
 	 * transformers that this ClassLoader will apply.
+	 *
 	 * @param other the ClassLoader to copy from
 	 */
 	public void copyTransformers(ShadowingClassLoader other) {
@@ -116,14 +106,14 @@ public class ShadowingClassLoader extends DecoratingClassLoader {
 				return cls;
 			}
 			return doLoadClass(name);
-		}
-		else {
+		} else {
 			return this.enclosingClassLoader.loadClass(name);
 		}
 	}
 
 	/**
 	 * Determine whether the given class should be excluded from shadowing.
+	 *
 	 * @param className the name of the class
 	 * @return whether the specified class should be shadowed
 	 */
@@ -135,6 +125,7 @@ public class ShadowingClassLoader extends DecoratingClassLoader {
 	/**
 	 * Determine whether the specified class is eligible for shadowing
 	 * by this class loader.
+	 *
 	 * @param className the class name to check
 	 * @return whether the specified class is eligible
 	 * @see #isExcluded
@@ -164,8 +155,7 @@ public class ShadowingClassLoader extends DecoratingClassLoader {
 			}
 			this.classCache.put(name, cls);
 			return cls;
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new ClassNotFoundException("Cannot load resource for class [" + name + "]", ex);
 		}
 	}
@@ -178,8 +168,7 @@ public class ShadowingClassLoader extends DecoratingClassLoader {
 				bytes = (transformed != null ? transformed : bytes);
 			}
 			return bytes;
-		}
-		catch (IllegalClassFormatException ex) {
+		} catch (IllegalClassFormatException ex) {
 			throw new IllegalStateException(ex);
 		}
 	}

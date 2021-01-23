@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.instrument.classloading.websphere;
 
 import java.lang.instrument.ClassFileTransformer;
@@ -67,8 +51,7 @@ class WebSphereClassLoaderAdapter {
 			this.addPreDefinePlugin = classLoader.getClass().getMethod("addPreDefinePlugin", this.wsPreProcessorClass);
 			this.transformerList = wsCompoundClassLoaderClass.getDeclaredField(PLUGINS_FIELD);
 			this.transformerList.setAccessible(true);
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			throw new IllegalStateException(
 					"Could not initialize WebSphere LoadTimeWeaver because WebSphere API classes are not available", ex);
 		}
@@ -90,13 +73,11 @@ class WebSphereClassLoaderAdapter {
 		try {
 			InvocationHandler adapter = new WebSphereClassPreDefinePlugin(transformer);
 			Object adapterInstance = Proxy.newProxyInstance(this.wsPreProcessorClass.getClassLoader(),
-					new Class<?>[] {this.wsPreProcessorClass}, adapter);
+					new Class<?>[]{this.wsPreProcessorClass}, adapter);
 			this.addPreDefinePlugin.invoke(this.classLoader, adapterInstance);
-		}
-		catch (InvocationTargetException ex) {
+		} catch (InvocationTargetException ex) {
 			throw new IllegalStateException("WebSphere addPreDefinePlugin method threw exception", ex.getCause());
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			throw new IllegalStateException("Could not invoke WebSphere addPreDefinePlugin method", ex);
 		}
 	}
@@ -108,11 +89,9 @@ class WebSphereClassLoaderAdapter {
 			List<?> list = (List<?>) this.transformerList.get(loader);
 			list.clear();
 			return loader;
-		}
-		catch (InvocationTargetException ex) {
+		} catch (InvocationTargetException ex) {
 			throw new IllegalStateException("WebSphere CompoundClassLoader constructor failed", ex.getCause());
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			throw new IllegalStateException("Could not construct WebSphere CompoundClassLoader", ex);
 		}
 	}

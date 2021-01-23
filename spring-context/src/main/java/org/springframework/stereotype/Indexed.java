@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.stereotype;
 
 import java.lang.annotation.Documented;
@@ -50,7 +34,7 @@ import java.lang.annotation.Target;
  * &#064;Service
  * public @interface PrivilegedService { ... }
  * </pre>
- *
+ * <p>
  * If the above annotation is present on a type, it will be indexed with two
  * stereotypes: {@code org.springframework.stereotype.Component} and
  * {@code com.example.PrivilegedService}. While {@link Service} isn't directly
@@ -58,7 +42,7 @@ import java.lang.annotation.Target;
  *
  * <p>It is also possible to index all implementations of a certain interface or
  * all the subclasses of a given class by adding {@code @Indexed} on it.
- *
+ * <p>
  * Consider this base interface:
  * <pre class="code">
  * package com.example;
@@ -66,7 +50,7 @@ import java.lang.annotation.Target;
  * &#064;Indexed
  * public interface AdminService { ... }
  * </pre>
- *
+ * <p>
  * Now, consider an implementation of this {@code AdminService} somewhere:
  * <pre class="code">
  * package com.example.foo;
@@ -75,7 +59,7 @@ import java.lang.annotation.Target;
  *
  * public class ConfigurationAdminService implements AdminService { ... }
  * </pre>
- *
+ * <p>
  * Because this class implements an interface that is indexed, it will be
  * automatically included with the {@code com.example.AdminService} stereotype.
  * If there are more {@code @Indexed} interfaces and/or superclasses in the

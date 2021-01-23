@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.remoting.rmi;
 
 import java.io.IOException;
@@ -40,11 +24,11 @@ import org.springframework.util.ClassUtils;
  * {@code ObjectOutputStream} handling.
  *
  * @author Juergen Hoeller
- * @since 2.5.1
  * @see java.io.ObjectInputStream
  * @see java.io.ObjectOutputStream
  * @see #doReadRemoteInvocation
  * @see #doWriteRemoteInvocationResult
+ * @since 2.5.1
  * @deprecated as of 5.3 (phasing out serialization-based remoting)
  */
 @Deprecated
@@ -119,6 +103,7 @@ public abstract class RemoteInvocationSerializingExporter extends RemoteInvocati
 	/**
 	 * Create an ObjectInputStream for the given InputStream.
 	 * <p>The default implementation creates a Spring {@link CodebaseAwareObjectInputStream}.
+	 *
 	 * @param is the InputStream to read from
 	 * @return the new ObjectInputStream instance to use
 	 * @throws java.io.IOException if creation of the ObjectInputStream failed
@@ -134,11 +119,12 @@ public abstract class RemoteInvocationSerializingExporter extends RemoteInvocati
 	 * {@link java.io.ObjectInputStream#readObject()}.
 	 * Can be overridden for deserialization of a custom wrapper object rather
 	 * than the plain invocation, for example an encryption-aware holder.
+	 *
 	 * @param ois the ObjectInputStream to read from
 	 * @return the RemoteInvocationResult object
-	 * @throws java.io.IOException in case of I/O failure
+	 * @throws java.io.IOException    in case of I/O failure
 	 * @throws ClassNotFoundException if case of a transferred class not
-	 * being found in the local ClassLoader
+	 *                                being found in the local ClassLoader
 	 */
 	protected RemoteInvocation doReadRemoteInvocation(ObjectInputStream ois)
 			throws IOException, ClassNotFoundException {
@@ -155,6 +141,7 @@ public abstract class RemoteInvocationSerializingExporter extends RemoteInvocati
 	 * Create an ObjectOutputStream for the given OutputStream.
 	 * <p>The default implementation creates a plain
 	 * {@link java.io.ObjectOutputStream}.
+	 *
 	 * @param os the OutputStream to write to
 	 * @return the new ObjectOutputStream instance to use
 	 * @throws java.io.IOException if creation of the ObjectOutputStream failed
@@ -170,8 +157,9 @@ public abstract class RemoteInvocationSerializingExporter extends RemoteInvocati
 	 * {@link java.io.ObjectOutputStream#writeObject}.
 	 * Can be overridden for serialization of a custom wrapper object rather
 	 * than the plain invocation, for example an encryption-aware holder.
+	 *
 	 * @param result the RemoteInvocationResult object
-	 * @param oos the ObjectOutputStream to write to
+	 * @param oos    the ObjectOutputStream to write to
 	 * @throws java.io.IOException if thrown by I/O methods
 	 */
 	protected void doWriteRemoteInvocationResult(RemoteInvocationResult result, ObjectOutputStream oos)

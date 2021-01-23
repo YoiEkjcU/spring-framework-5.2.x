@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.instrument.classloading;
 
 import java.lang.instrument.ClassFileTransformer;
@@ -46,8 +30,8 @@ import org.springframework.util.ClassUtils;
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
- * @since 2.0
  * @see InstrumentationSavingAgent
+ * @since 2.0
  */
 public class InstrumentationLoadTimeWeaver implements LoadTimeWeaver {
 
@@ -74,6 +58,7 @@ public class InstrumentationLoadTimeWeaver implements LoadTimeWeaver {
 
 	/**
 	 * Create a new InstrumentationLoadTimeWeaver for the given ClassLoader.
+	 *
 	 * @param classLoader the ClassLoader that registered transformers are supposed to apply to
 	 */
 	public InstrumentationLoadTimeWeaver(@Nullable ClassLoader classLoader) {
@@ -131,6 +116,7 @@ public class InstrumentationLoadTimeWeaver implements LoadTimeWeaver {
 
 	/**
 	 * Check whether an Instrumentation instance is available for the current VM.
+	 *
 	 * @see #getInstrumentation()
 	 */
 	public static boolean isInstrumentationAvailable() {
@@ -139,6 +125,7 @@ public class InstrumentationLoadTimeWeaver implements LoadTimeWeaver {
 
 	/**
 	 * Obtain the Instrumentation instance for the current VM, if available.
+	 *
 	 * @return the Instrumentation instance, or {@code null} if none found
 	 * @see #isInstrumentationAvailable()
 	 */
@@ -146,8 +133,7 @@ public class InstrumentationLoadTimeWeaver implements LoadTimeWeaver {
 	private static Instrumentation getInstrumentation() {
 		if (AGENT_CLASS_PRESENT) {
 			return InstrumentationAccessor.getInstrumentation();
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
@@ -184,7 +170,7 @@ public class InstrumentationLoadTimeWeaver implements LoadTimeWeaver {
 		@Override
 		@Nullable
 		public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
-				ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
+								ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
 
 			if (this.targetClassLoader != loader) {
 				return null;

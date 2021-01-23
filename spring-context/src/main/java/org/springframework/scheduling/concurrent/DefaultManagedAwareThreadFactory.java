@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.scheduling.concurrent;
 
 import java.util.Properties;
@@ -62,6 +46,7 @@ public class DefaultManagedAwareThreadFactory extends CustomizableThreadFactory 
 
 	/**
 	 * Set the JNDI template to use for JNDI lookups.
+	 *
 	 * @see org.springframework.jndi.JndiAccessor#setJndiTemplate
 	 */
 	public void setJndiTemplate(JndiTemplate jndiTemplate) {
@@ -70,6 +55,7 @@ public class DefaultManagedAwareThreadFactory extends CustomizableThreadFactory 
 
 	/**
 	 * Set the JNDI environment to use for JNDI lookups.
+	 *
 	 * @see org.springframework.jndi.JndiAccessor#setJndiEnvironment
 	 */
 	public void setJndiEnvironment(Properties jndiEnvironment) {
@@ -80,6 +66,7 @@ public class DefaultManagedAwareThreadFactory extends CustomizableThreadFactory 
 	 * Set whether the lookup occurs in a Java EE container, i.e. if the prefix
 	 * "java:comp/env/" needs to be added if the JNDI name doesn't already
 	 * contain it. PersistenceAnnotationBeanPostProcessor's default is "true".
+	 *
 	 * @see org.springframework.jndi.JndiLocatorSupport#setResourceRef
 	 */
 	public void setResourceRef(boolean resourceRef) {
@@ -91,6 +78,7 @@ public class DefaultManagedAwareThreadFactory extends CustomizableThreadFactory 
 	 * replacing the default JNDI name "java:comp/DefaultManagedThreadFactory".
 	 * <p>This can either be a fully qualified JNDI name, or the JNDI name relative
 	 * to the current environment naming context if "resourceRef" is set to "true".
+	 *
 	 * @see #setResourceRef
 	 */
 	public void setJndiName(String jndiName) {
@@ -102,8 +90,7 @@ public class DefaultManagedAwareThreadFactory extends CustomizableThreadFactory 
 		if (this.jndiName != null) {
 			try {
 				this.threadFactory = this.jndiLocator.lookup(this.jndiName, ThreadFactory.class);
-			}
-			catch (NamingException ex) {
+			} catch (NamingException ex) {
 				if (logger.isTraceEnabled()) {
 					logger.trace("Failed to retrieve [" + this.jndiName + "] from JNDI", ex);
 				}
@@ -118,8 +105,7 @@ public class DefaultManagedAwareThreadFactory extends CustomizableThreadFactory 
 	public Thread newThread(Runnable runnable) {
 		if (this.threadFactory != null) {
 			return this.threadFactory.newThread(runnable);
-		}
-		else {
+		} else {
 			return super.newThread(runnable);
 		}
 	}

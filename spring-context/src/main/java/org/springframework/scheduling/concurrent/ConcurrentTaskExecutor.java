@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.scheduling.concurrent;
 
 import java.util.HashMap;
@@ -54,13 +38,13 @@ import org.springframework.util.concurrent.ListenableFuture;
  * a separate definition of the present adapter class.
  *
  * @author Juergen Hoeller
- * @since 2.0
  * @see java.util.concurrent.Executor
  * @see java.util.concurrent.ExecutorService
  * @see java.util.concurrent.ThreadPoolExecutor
  * @see java.util.concurrent.Executors
  * @see DefaultManagedTaskExecutor
  * @see ThreadPoolTaskExecutor
+ * @since 2.0
  */
 public class ConcurrentTaskExecutor implements AsyncListenableTaskExecutor, SchedulingTaskExecutor {
 
@@ -72,8 +56,7 @@ public class ConcurrentTaskExecutor implements AsyncListenableTaskExecutor, Sche
 			managedExecutorServiceClass = ClassUtils.forName(
 					"javax.enterprise.concurrent.ManagedExecutorService",
 					ConcurrentTaskScheduler.class.getClassLoader());
-		}
-		catch (ClassNotFoundException ex) {
+		} catch (ClassNotFoundException ex) {
 			// JSR-236 API not available...
 			managedExecutorServiceClass = null;
 		}
@@ -86,6 +69,7 @@ public class ConcurrentTaskExecutor implements AsyncListenableTaskExecutor, Sche
 
 	/**
 	 * Create a new ConcurrentTaskExecutor, using a single thread executor as default.
+	 *
 	 * @see java.util.concurrent.Executors#newSingleThreadExecutor()
 	 */
 	public ConcurrentTaskExecutor() {
@@ -97,6 +81,7 @@ public class ConcurrentTaskExecutor implements AsyncListenableTaskExecutor, Sche
 	 * Create a new ConcurrentTaskExecutor, using the given {@link java.util.concurrent.Executor}.
 	 * <p>Autodetects a JSR-236 {@link javax.enterprise.concurrent.ManagedExecutorService}
 	 * in order to expose {@link javax.enterprise.concurrent.ManagedTask} adapters for it.
+	 *
 	 * @param executor the {@link java.util.concurrent.Executor} to delegate to
 	 */
 	public ConcurrentTaskExecutor(@Nullable Executor executor) {
@@ -135,6 +120,7 @@ public class ConcurrentTaskExecutor implements AsyncListenableTaskExecutor, Sche
 	 * In case of {@code #submit} calls, the exposed {@code Runnable} will be a
 	 * {@code FutureTask} which does not propagate any exceptions; you might
 	 * have to cast it and call {@code Future#get} to evaluate exceptions.
+	 *
 	 * @since 4.3
 	 */
 	public final void setTaskDecorator(TaskDecorator taskDecorator) {
@@ -233,8 +219,7 @@ public class ConcurrentTaskExecutor implements AsyncListenableTaskExecutor, Sche
 				properties = new HashMap<>(4);
 				properties.put(ManagedTask.LONGRUNNING_HINT,
 						Boolean.toString(((SchedulingAwareRunnable) task).isLongLived()));
-			}
-			else {
+			} else {
 				properties = new HashMap<>(2);
 			}
 			properties.put(ManagedTask.IDENTITY_NAME, identityName);

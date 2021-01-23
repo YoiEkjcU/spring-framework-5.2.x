@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.format.datetime.joda;
 
 import java.util.Calendar;
@@ -47,7 +31,6 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
  * @author Keith Donald
  * @author Juergen Hoeller
  * @author Phillip Webb
- * @since 3.1
  * @see #setDateStyle
  * @see #setTimeStyle
  * @see #setDateTimeStyle
@@ -55,6 +38,7 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
  * @see FormatterRegistrar#registerFormatters
  * @see org.springframework.format.datetime.DateFormatterRegistrar
  * @see DateTimeFormatterFactoryBean
+ * @since 3.1
  */
 public class JodaTimeFormatterRegistrar implements FormatterRegistrar {
 
@@ -122,10 +106,11 @@ public class JodaTimeFormatterRegistrar implements FormatterRegistrar {
 	 * <p>This formatter will be used for the {@link LocalDate} type. When specified
 	 * the {@link #setDateStyle(String) dateStyle} and
 	 * {@link #setUseIsoFormat(boolean) useIsoFormat} properties will be ignored.
+	 *
 	 * @param formatter the formatter to use
-	 * @since 3.2
 	 * @see #setTimeFormatter
 	 * @see #setDateTimeFormatter
+	 * @since 3.2
 	 */
 	public void setDateFormatter(DateTimeFormatter formatter) {
 		this.formatters.put(Type.DATE, formatter);
@@ -136,10 +121,11 @@ public class JodaTimeFormatterRegistrar implements FormatterRegistrar {
 	 * <p>This formatter will be used for the {@link LocalTime} type. When specified
 	 * the {@link #setTimeStyle(String) timeStyle} and
 	 * {@link #setUseIsoFormat(boolean) useIsoFormat} properties will be ignored.
+	 *
 	 * @param formatter the formatter to use
-	 * @since 3.2
 	 * @see #setDateFormatter
 	 * @see #setDateTimeFormatter
+	 * @since 3.2
 	 */
 	public void setTimeFormatter(DateTimeFormatter formatter) {
 		this.formatters.put(Type.TIME, formatter);
@@ -151,10 +137,11 @@ public class JodaTimeFormatterRegistrar implements FormatterRegistrar {
 	 * {@link Date} and {@link Calendar} types. When specified
 	 * the {@link #setDateTimeStyle(String) dateTimeStyle} and
 	 * {@link #setUseIsoFormat(boolean) useIsoFormat} properties will be ignored.
+	 *
 	 * @param formatter the formatter to use
-	 * @since 3.2
 	 * @see #setDateFormatter
 	 * @see #setTimeFormatter
+	 * @since 3.2
 	 */
 	public void setDateTimeFormatter(DateTimeFormatter formatter) {
 		this.formatters.put(Type.DATE_TIME, formatter);
@@ -217,14 +204,17 @@ public class JodaTimeFormatterRegistrar implements FormatterRegistrar {
 
 	private DateTimeFormatter getFallbackFormatter(Type type) {
 		switch (type) {
-			case DATE: return DateTimeFormat.shortDate();
-			case TIME: return DateTimeFormat.shortTime();
-			default: return DateTimeFormat.shortDateTime();
+			case DATE:
+				return DateTimeFormat.shortDate();
+			case TIME:
+				return DateTimeFormat.shortTime();
+			default:
+				return DateTimeFormat.shortDateTime();
 		}
 	}
 
 	private void addFormatterForFields(FormatterRegistry registry, Printer<?> printer,
-			Parser<?> parser, Class<?>... fieldTypes) {
+									   Parser<?> parser, Class<?>... fieldTypes) {
 
 		for (Class<?> fieldType : fieldTypes) {
 			registry.addFormatterForFieldType(fieldType, printer, parser);

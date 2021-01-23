@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2013 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.context.support;
 
 import java.util.Enumeration;
@@ -31,10 +15,10 @@ import org.springframework.util.Assert;
  * Used for example to expose a Spring MessageSource to JSTL web views.
  *
  * @author Juergen Hoeller
- * @since 27.02.2003
  * @see org.springframework.context.MessageSource
  * @see java.util.ResourceBundle
  * @see org.springframework.web.servlet.support.JstlUtils#exposeLocalizationContext
+ * @since 27.02.2003
  */
 public class MessageSourceResourceBundle extends ResourceBundle {
 
@@ -45,6 +29,7 @@ public class MessageSourceResourceBundle extends ResourceBundle {
 
 	/**
 	 * Create a new MessageSourceResourceBundle for the given MessageSource and Locale.
+	 *
 	 * @param source the MessageSource to retrieve messages from
 	 * @param locale the Locale to retrieve messages for
 	 */
@@ -56,6 +41,7 @@ public class MessageSourceResourceBundle extends ResourceBundle {
 
 	/**
 	 * Create a new MessageSourceResourceBundle for the given MessageSource and Locale.
+	 *
 	 * @param source the MessageSource to retrieve messages from
 	 * @param locale the Locale to retrieve messages for
 	 * @param parent the parent ResourceBundle to delegate to if no local message found
@@ -75,8 +61,7 @@ public class MessageSourceResourceBundle extends ResourceBundle {
 	protected Object handleGetObject(String key) {
 		try {
 			return this.messageSource.getMessage(key, null, this.locale);
-		}
-		catch (NoSuchMessageException ex) {
+		} catch (NoSuchMessageException ex) {
 			return null;
 		}
 	}
@@ -92,8 +77,7 @@ public class MessageSourceResourceBundle extends ResourceBundle {
 		try {
 			this.messageSource.getMessage(key, null, this.locale);
 			return true;
-		}
-		catch (NoSuchMessageException ex) {
+		} catch (NoSuchMessageException ex) {
 			return false;
 		}
 	}

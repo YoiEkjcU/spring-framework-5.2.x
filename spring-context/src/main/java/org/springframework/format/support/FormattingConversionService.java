@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.format.support;
 
 import java.lang.annotation.Annotation;
@@ -121,8 +105,8 @@ public class FormattingConversionService extends GenericConversionService
 					((DecoratingProxy) instance).getDecoratedClass(), genericInterface);
 		}
 		Assert.notNull(fieldType, () -> "Unable to extract the parameterized field type from " +
-					ClassUtils.getShortName(genericInterface) + " [" + instance.getClass().getName() +
-					"]; does the class parameterize the <T> generic type?");
+				ClassUtils.getShortName(genericInterface) + " [" + instance.getClass().getName() +
+				"]; does the class parameterize the <T> generic type?");
 		return fieldType;
 	}
 
@@ -215,11 +199,9 @@ public class FormattingConversionService extends GenericConversionService
 			Object result;
 			try {
 				result = this.parser.parse(text, LocaleContextHolder.getLocale());
-			}
-			catch (IllegalArgumentException ex) {
+			} catch (IllegalArgumentException ex) {
 				throw ex;
-			}
-			catch (Throwable ex) {
+			} catch (Throwable ex) {
 				throw new IllegalArgumentException("Parse attempt failed for value [" + text + "]", ex);
 			}
 			TypeDescriptor resultType = TypeDescriptor.valueOf(result.getClass());
@@ -246,7 +228,7 @@ public class FormattingConversionService extends GenericConversionService
 		private final Class<?> fieldType;
 
 		public AnnotationPrinterConverter(Class<? extends Annotation> annotationType,
-				AnnotationFormatterFactory<?> annotationFormatterFactory, Class<?> fieldType) {
+										  AnnotationFormatterFactory<?> annotationFormatterFactory, Class<?> fieldType) {
 
 			this.annotationType = annotationType;
 			this.annotationFormatterFactory = annotationFormatterFactory;
@@ -301,7 +283,7 @@ public class FormattingConversionService extends GenericConversionService
 		private final Class<?> fieldType;
 
 		public AnnotationParserConverter(Class<? extends Annotation> annotationType,
-				AnnotationFormatterFactory<?> annotationFormatterFactory, Class<?> fieldType) {
+										 AnnotationFormatterFactory<?> annotationFormatterFactory, Class<?> fieldType) {
 
 			this.annotationType = annotationType;
 			this.annotationFormatterFactory = annotationFormatterFactory;

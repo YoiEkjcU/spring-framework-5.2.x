@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.context.annotation;
 
 import java.util.HashMap;
@@ -34,11 +18,11 @@ import org.springframework.lang.Nullable;
  * this resolver with custom scoping annotations that point to extended Spring scopes.
  *
  * @author Juergen Hoeller
- * @since 3.0
  * @see #registerScope
  * @see #resolveScopeName
  * @see ClassPathBeanDefinitionScanner#setScopeMetadataResolver
  * @see AnnotatedBeanDefinitionReader#setScopeMetadataResolver
+ * @since 3.0
  */
 public class Jsr330ScopeMetadataResolver implements ScopeMetadataResolver {
 
@@ -53,8 +37,9 @@ public class Jsr330ScopeMetadataResolver implements ScopeMetadataResolver {
 	/**
 	 * Register an extended JSR-330 scope annotation, mapping it onto a
 	 * specific Spring scope by name.
+	 *
 	 * @param annotationType the JSR-330 annotation type as a Class
-	 * @param scopeName the Spring scope name
+	 * @param scopeName      the Spring scope name
 	 */
 	public final void registerScope(Class<?> annotationType, String scopeName) {
 		this.scopeMap.put(annotationType.getName(), scopeName);
@@ -63,8 +48,9 @@ public class Jsr330ScopeMetadataResolver implements ScopeMetadataResolver {
 	/**
 	 * Register an extended JSR-330 scope annotation, mapping it onto a
 	 * specific Spring scope by name.
+	 *
 	 * @param annotationType the JSR-330 annotation type by name
-	 * @param scopeName the Spring scope name
+	 * @param scopeName      the Spring scope name
 	 */
 	public final void registerScope(String annotationType, String scopeName) {
 		this.scopeMap.put(annotationType, scopeName);
@@ -74,6 +60,7 @@ public class Jsr330ScopeMetadataResolver implements ScopeMetadataResolver {
 	 * Resolve the given annotation type into a named Spring scope.
 	 * <p>The default implementation simply checks against registered scopes.
 	 * Can be overridden for custom mapping rules, e.g. naming conventions.
+	 *
 	 * @param annotationType the JSR-330 annotation type
 	 * @return the Spring scope name
 	 */

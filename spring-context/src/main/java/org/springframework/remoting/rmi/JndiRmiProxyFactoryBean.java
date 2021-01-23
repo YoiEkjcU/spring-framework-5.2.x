@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.remoting.rmi;
 
 import javax.naming.NamingException;
@@ -44,13 +28,12 @@ import org.springframework.util.ClassUtils;
  *
  * <pre class="code">&lt;property name="jndiEnvironment"&gt;
  * 	 &lt;props>
- *		 &lt;prop key="java.naming.factory.initial"&gt;com.sun.jndi.cosnaming.CNCtxFactory&lt;/prop&gt;
- *		 &lt;prop key="java.naming.provider.url"&gt;iiop://localhost:1050&lt;/prop&gt;
- *	 &lt;/props&gt;
+ * 		 &lt;prop key="java.naming.factory.initial"&gt;com.sun.jndi.cosnaming.CNCtxFactory&lt;/prop&gt;
+ * 		 &lt;prop key="java.naming.provider.url"&gt;iiop://localhost:1050&lt;/prop&gt;
+ * 	 &lt;/props&gt;
  * &lt;/property&gt;</pre>
  *
  * @author Juergen Hoeller
- * @since 1.1
  * @see #setServiceInterface
  * @see #setJndiName
  * @see #setJndiTemplate
@@ -61,6 +44,7 @@ import org.springframework.util.ClassUtils;
  * @see java.rmi.RemoteException
  * @see java.rmi.Remote
  * @see javax.rmi.PortableRemoteObject#narrow
+ * @since 1.1
  * @deprecated as of 5.3 (phasing out serialization-based remoting)
  */
 @Deprecated

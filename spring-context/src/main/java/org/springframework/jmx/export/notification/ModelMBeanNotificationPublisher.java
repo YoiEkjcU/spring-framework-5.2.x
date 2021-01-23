@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jmx.export.notification;
 
 import javax.management.AttributeChangeNotification;
@@ -34,9 +18,9 @@ import org.springframework.util.Assert;
  * @author Rob Harrop
  * @author Juergen Hoeller
  * @author Rick Evans
- * @since 2.0
  * @see javax.management.modelmbean.ModelMBeanNotificationBroadcaster
  * @see NotificationPublisherAware
+ * @since 2.0
  */
 public class ModelMBeanNotificationPublisher implements NotificationPublisher {
 
@@ -61,8 +45,9 @@ public class ModelMBeanNotificationPublisher implements NotificationPublisher {
 	 * Create a new instance of the {@link ModelMBeanNotificationPublisher} class
 	 * that will publish all {@link javax.management.Notification Notifications}
 	 * to the supplied {@link ModelMBean}.
-	 * @param modelMBean the target {@link ModelMBean}; must not be {@code null}
-	 * @param objectName the {@link ObjectName} of the source {@link ModelMBean}
+	 *
+	 * @param modelMBean      the target {@link ModelMBean}; must not be {@code null}
+	 * @param objectName      the {@link ObjectName} of the source {@link ModelMBean}
 	 * @param managedResource the managed resource exposed by the supplied {@link ModelMBean}
 	 * @throws IllegalArgumentException if any of the parameters is {@code null}
 	 */
@@ -81,8 +66,9 @@ public class ModelMBeanNotificationPublisher implements NotificationPublisher {
 	/**
 	 * Send the supplied {@link Notification} using the wrapped
 	 * {@link ModelMBean} instance.
+	 *
 	 * @param notification the {@link Notification} to be sent
-	 * @throws IllegalArgumentException if the supplied {@code notification} is {@code null}
+	 * @throws IllegalArgumentException          if the supplied {@code notification} is {@code null}
 	 * @throws UnableToSendNotificationException if the supplied {@code notification} could not be sent
 	 */
 	@Override
@@ -92,12 +78,10 @@ public class ModelMBeanNotificationPublisher implements NotificationPublisher {
 		try {
 			if (notification instanceof AttributeChangeNotification) {
 				this.modelMBean.sendAttributeChangeNotification((AttributeChangeNotification) notification);
-			}
-			else {
+			} else {
 				this.modelMBean.sendNotification(notification);
 			}
-		}
-		catch (MBeanException ex) {
+		} catch (MBeanException ex) {
 			throw new UnableToSendNotificationException("Unable to send notification [" + notification + "]", ex);
 		}
 	}
@@ -107,8 +91,9 @@ public class ModelMBeanNotificationPublisher implements NotificationPublisher {
 	 * From the {@link Notification javadoc}:
 	 * <i>"It is strongly recommended that notification senders use the object name
 	 * rather than a reference to the MBean object as the source."</i>
+	 *
 	 * @param notification the {@link Notification} whose
-	 * {@link javax.management.Notification#getSource()} might need massaging
+	 *                     {@link javax.management.Notification#getSource()} might need massaging
 	 */
 	private void replaceNotificationSourceIfNecessary(Notification notification) {
 		if (notification.getSource() == null || notification.getSource().equals(this.managedResource)) {

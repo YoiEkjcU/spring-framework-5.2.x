@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.scheduling.support;
 
 import java.lang.reflect.InvocationTargetException;
@@ -28,8 +12,8 @@ import org.springframework.util.ReflectionUtils;
  * assuming that an error strategy for Runnables is in place.
  *
  * @author Juergen Hoeller
- * @since 3.0.6
  * @see org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor
+ * @since 3.0.6
  */
 public class ScheduledMethodRunnable implements Runnable {
 
@@ -41,6 +25,7 @@ public class ScheduledMethodRunnable implements Runnable {
 	/**
 	 * Create a {@code ScheduledMethodRunnable} for the given target instance,
 	 * calling the specified method.
+	 *
 	 * @param target the target instance to call the method on
 	 * @param method the target method to call
 	 */
@@ -52,7 +37,8 @@ public class ScheduledMethodRunnable implements Runnable {
 	/**
 	 * Create a {@code ScheduledMethodRunnable} for the given target instance,
 	 * calling the specified method by name.
-	 * @param target the target instance to call the method on
+	 *
+	 * @param target     the target instance to call the method on
 	 * @param methodName the name of the target method
 	 * @throws NoSuchMethodException if the specified method does not exist
 	 */
@@ -82,11 +68,9 @@ public class ScheduledMethodRunnable implements Runnable {
 		try {
 			ReflectionUtils.makeAccessible(this.method);
 			this.method.invoke(this.target);
-		}
-		catch (InvocationTargetException ex) {
+		} catch (InvocationTargetException ex) {
 			ReflectionUtils.rethrowRuntimeException(ex.getTargetException());
-		}
-		catch (IllegalAccessException ex) {
+		} catch (IllegalAccessException ex) {
 			throw new UndeclaredThrowableException(ex);
 		}
 	}

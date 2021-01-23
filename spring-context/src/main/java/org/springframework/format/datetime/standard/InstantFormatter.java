@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.format.datetime.standard;
 
 import java.text.ParseException;
@@ -32,10 +16,10 @@ import org.springframework.format.Formatter;
  *
  * @author Juergen Hoeller
  * @author Andrei Nevedomskii
- * @since 4.0
  * @see java.time.Instant#parse
  * @see java.time.format.DateTimeFormatter#ISO_INSTANT
  * @see java.time.format.DateTimeFormatter#RFC_1123_DATE_TIME
+ * @since 4.0
  */
 public class InstantFormatter implements Formatter<Instant> {
 
@@ -44,8 +28,7 @@ public class InstantFormatter implements Formatter<Instant> {
 		if (text.length() > 0 && Character.isAlphabetic(text.charAt(0))) {
 			// assuming RFC-1123 value a la "Tue, 3 Jun 2008 11:05:30 GMT"
 			return Instant.from(DateTimeFormatter.RFC_1123_DATE_TIME.parse(text));
-		}
-		else {
+		} else {
 			// assuming UTC instant a la "2007-12-03T10:15:30.00Z"
 			return Instant.parse(text);
 		}

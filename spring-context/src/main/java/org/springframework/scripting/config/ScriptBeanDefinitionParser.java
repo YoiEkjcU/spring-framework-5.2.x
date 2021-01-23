@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.scripting.config;
 
 import java.util.List;
@@ -91,6 +75,7 @@ class ScriptBeanDefinitionParser extends AbstractBeanDefinitionParser {
 	/**
 	 * Create a new instance of this parser, creating bean definitions for the
 	 * supplied {@link org.springframework.scripting.ScriptFactory} class.
+	 *
 	 * @param scriptFactoryClassName the ScriptFactory class to operate on
 	 */
 	public ScriptBeanDefinitionParser(String scriptFactoryClassName) {
@@ -136,8 +121,7 @@ class ScriptBeanDefinitionParser extends AbstractBeanDefinitionParser {
 		// Only "byType" and "byName" supported, but maybe other default inherited...
 		if (autowireMode == AbstractBeanDefinition.AUTOWIRE_AUTODETECT) {
 			autowireMode = AbstractBeanDefinition.AUTOWIRE_BY_TYPE;
-		}
-		else if (autowireMode == AbstractBeanDefinition.AUTOWIRE_CONSTRUCTOR) {
+		} else if (autowireMode == AbstractBeanDefinition.AUTOWIRE_CONSTRUCTOR) {
 			autowireMode = AbstractBeanDefinition.AUTOWIRE_NO;
 		}
 		bd.setAutowireMode(autowireMode);
@@ -156,16 +140,14 @@ class ScriptBeanDefinitionParser extends AbstractBeanDefinitionParser {
 		String initMethod = element.getAttribute(INIT_METHOD_ATTRIBUTE);
 		if (StringUtils.hasLength(initMethod)) {
 			bd.setInitMethodName(initMethod);
-		}
-		else if (beanDefinitionDefaults.getInitMethodName() != null) {
+		} else if (beanDefinitionDefaults.getInitMethodName() != null) {
 			bd.setInitMethodName(beanDefinitionDefaults.getInitMethodName());
 		}
 
 		if (element.hasAttribute(DESTROY_METHOD_ATTRIBUTE)) {
 			String destroyMethod = element.getAttribute(DESTROY_METHOD_ATTRIBUTE);
 			bd.setDestroyMethodName(destroyMethod);
-		}
-		else if (beanDefinitionDefaults.getDestroyMethodName() != null) {
+		} else if (beanDefinitionDefaults.getDestroyMethodName() != null) {
 			bd.setDestroyMethodName(beanDefinitionDefaults.getDestroyMethodName());
 		}
 
@@ -198,8 +180,7 @@ class ScriptBeanDefinitionParser extends AbstractBeanDefinitionParser {
 			String customizerBeanName = element.getAttribute(CUSTOMIZER_REF_ATTRIBUTE);
 			if (!StringUtils.hasText(customizerBeanName)) {
 				parserContext.getReaderContext().error("Attribute 'customizer-ref' has empty value", element);
-			}
-			else {
+			} else {
 				cav.addIndexedArgumentValue(constructorArgNum++, new RuntimeBeanReference(customizerBeanName));
 			}
 		}
@@ -222,15 +203,12 @@ class ScriptBeanDefinitionParser extends AbstractBeanDefinitionParser {
 		if (hasScriptSource && !elements.isEmpty()) {
 			readerContext.error("Only one of 'script-source' and 'inline-script' should be specified.", element);
 			return null;
-		}
-		else if (hasScriptSource) {
+		} else if (hasScriptSource) {
 			return element.getAttribute(SCRIPT_SOURCE_ATTRIBUTE);
-		}
-		else if (!elements.isEmpty()) {
+		} else if (!elements.isEmpty()) {
 			Element inlineElement = elements.get(0);
 			return "inline:" + DomUtils.getTextValue(inlineElement);
-		}
-		else {
+		} else {
 			readerContext.error("Must specify either 'script-source' or 'inline-script'.", element);
 			return null;
 		}

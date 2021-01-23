@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.cache.annotation;
 
 import java.io.Serializable;
@@ -63,9 +47,10 @@ public class AnnotationCacheOperationSource extends AbstractFallbackCacheOperati
 	/**
 	 * Create a default {@code AnnotationCacheOperationSource}, supporting public methods
 	 * that carry the {@code Cacheable} and {@code CacheEvict} annotations.
+	 *
 	 * @param publicMethodsOnly whether to support only annotated public methods
-	 * typically for use with proxy-based AOP), or protected/private methods as well
-	 * (typically used with AspectJ class weaving)
+	 *                          typically for use with proxy-based AOP), or protected/private methods as well
+	 *                          (typically used with AspectJ class weaving)
 	 */
 	public AnnotationCacheOperationSource(boolean publicMethodsOnly) {
 		this.publicMethodsOnly = publicMethodsOnly;
@@ -74,6 +59,7 @@ public class AnnotationCacheOperationSource extends AbstractFallbackCacheOperati
 
 	/**
 	 * Create a custom AnnotationCacheOperationSource.
+	 *
 	 * @param annotationParser the CacheAnnotationParser to use
 	 */
 	public AnnotationCacheOperationSource(CacheAnnotationParser annotationParser) {
@@ -84,6 +70,7 @@ public class AnnotationCacheOperationSource extends AbstractFallbackCacheOperati
 
 	/**
 	 * Create a custom AnnotationCacheOperationSource.
+	 *
 	 * @param annotationParsers the CacheAnnotationParser to use
 	 */
 	public AnnotationCacheOperationSource(CacheAnnotationParser... annotationParsers) {
@@ -94,6 +81,7 @@ public class AnnotationCacheOperationSource extends AbstractFallbackCacheOperati
 
 	/**
 	 * Create a custom AnnotationCacheOperationSource.
+	 *
 	 * @param annotationParsers the CacheAnnotationParser to use
 	 */
 	public AnnotationCacheOperationSource(Set<CacheAnnotationParser> annotationParsers) {
@@ -131,6 +119,7 @@ public class AnnotationCacheOperationSource extends AbstractFallbackCacheOperati
 	 * {@link CacheAnnotationParser CacheAnnotationParsers}
 	 * for parsing known annotations into Spring's metadata attribute class.
 	 * <p>Can be overridden to support custom annotations that carry caching metadata.
+	 *
 	 * @param provider the cache operation provider to use
 	 * @return the configured caching operations, or {@code null} if none found
 	 */
@@ -142,8 +131,7 @@ public class AnnotationCacheOperationSource extends AbstractFallbackCacheOperati
 			if (annOps != null) {
 				if (ops == null) {
 					ops = annOps;
-				}
-				else {
+				} else {
 					Collection<CacheOperation> combined = new ArrayList<>(ops.size() + annOps.size());
 					combined.addAll(ops);
 					combined.addAll(annOps);
@@ -191,6 +179,7 @@ public class AnnotationCacheOperationSource extends AbstractFallbackCacheOperati
 
 		/**
 		 * Return the {@link CacheOperation} instance(s) provided by the specified parser.
+		 *
 		 * @param parser the parser to use
 		 * @return the cache operations, or {@code null} if none found
 		 */

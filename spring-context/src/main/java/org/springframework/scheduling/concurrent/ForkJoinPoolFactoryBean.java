@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.scheduling.concurrent;
 
 import java.util.concurrent.ForkJoinPool;
@@ -59,8 +43,9 @@ public class ForkJoinPoolFactoryBean implements FactoryBean<ForkJoinPool>, Initi
 	 * properties on this FactoryBean, reusing the shared common JDK {@link ForkJoinPool}
 	 * instead. This is a fine choice on JDK 8 but does remove the application's ability
 	 * to customize ForkJoinPool behavior, in particular the use of custom threads.
-	 * @since 3.2
+	 *
 	 * @see java.util.concurrent.ForkJoinPool#commonPool()
+	 * @since 3.2
 	 */
 	public void setCommonPool(boolean commonPool) {
 		this.commonPool = commonPool;
@@ -113,6 +98,7 @@ public class ForkJoinPoolFactoryBean implements FactoryBean<ForkJoinPool>, Initi
 	 * <p>Note that this feature works for the {@link #setCommonPool "commonPool"}
 	 * mode as well. The underlying ForkJoinPool won't actually terminate in that
 	 * case but will wait for all tasks to terminate.
+	 *
 	 * @see java.util.concurrent.ForkJoinPool#shutdown()
 	 * @see java.util.concurrent.ForkJoinPool#awaitTermination
 	 */
@@ -154,8 +140,7 @@ public class ForkJoinPoolFactoryBean implements FactoryBean<ForkJoinPool>, Initi
 			if (this.awaitTerminationSeconds > 0) {
 				try {
 					this.forkJoinPool.awaitTermination(this.awaitTerminationSeconds, TimeUnit.SECONDS);
-				}
-				catch (InterruptedException ex) {
+				} catch (InterruptedException ex) {
 					Thread.currentThread().interrupt();
 				}
 			}

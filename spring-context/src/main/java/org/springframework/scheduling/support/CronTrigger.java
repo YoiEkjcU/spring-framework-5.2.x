@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2015 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.scheduling.support;
 
 import java.time.ZoneId;
@@ -32,8 +16,8 @@ import org.springframework.util.Assert;
  *
  * @author Juergen Hoeller
  * @author Arjen Poutsma
- * @since 3.0
  * @see CronExpression
+ * @since 3.0
  */
 public class CronTrigger implements Trigger {
 
@@ -44,8 +28,9 @@ public class CronTrigger implements Trigger {
 
 	/**
 	 * Build a {@code CronTrigger} from the pattern provided in the default time zone.
+	 *
 	 * @param expression a space-separated list of time fields, following cron
-	 * expression conventions
+	 *                   expression conventions
 	 */
 	public CronTrigger(String expression) {
 		this(expression, ZoneId.systemDefault());
@@ -53,9 +38,10 @@ public class CronTrigger implements Trigger {
 
 	/**
 	 * Build a {@code CronTrigger} from the pattern provided in the given time zone.
+	 *
 	 * @param expression a space-separated list of time fields, following cron
-	 * expression conventions
-	 * @param timeZone a time zone in which the trigger times will be generated
+	 *                   expression conventions
+	 * @param timeZone   a time zone in which the trigger times will be generated
 	 */
 	public CronTrigger(String expression, TimeZone timeZone) {
 		this(expression, timeZone.toZoneId());
@@ -63,11 +49,12 @@ public class CronTrigger implements Trigger {
 
 	/**
 	 * Build a {@code CronTrigger} from the pattern provided in the given time zone.
+	 *
 	 * @param expression a space-separated list of time fields, following cron
-	 * expression conventions
-	 * @param zoneId a time zone in which the trigger times will be generated
-	 * @since 5.3
+	 *                   expression conventions
+	 * @param zoneId     a time zone in which the trigger times will be generated
 	 * @see CronExpression#parse(String)
+	 * @since 5.3
 	 */
 	public CronTrigger(String expression, ZoneId zoneId) {
 		Assert.hasLength(expression, "Expression must not be empty");
@@ -103,8 +90,7 @@ public class CronTrigger implements Trigger {
 				// in order to prevent accidental re-fires in the same second.
 				date = scheduled;
 			}
-		}
-		else {
+		} else {
 			date = new Date();
 		}
 		ZonedDateTime dateTime = ZonedDateTime.ofInstant(date.toInstant(), this.zoneId);

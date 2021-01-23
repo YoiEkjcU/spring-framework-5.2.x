@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.cache.support;
 
 import org.springframework.cache.Cache;
@@ -38,6 +22,7 @@ public abstract class AbstractValueAdaptingCache implements Cache {
 
 	/**
 	 * Create an {@code AbstractValueAdaptingCache} with the given setting.
+	 *
 	 * @param allowNullValues whether to allow for {@code null} values
 	 */
 	protected AbstractValueAdaptingCache(boolean allowNullValues) {
@@ -72,6 +57,7 @@ public abstract class AbstractValueAdaptingCache implements Cache {
 
 	/**
 	 * Perform an actual lookup in the underlying store.
+	 *
 	 * @param key the key whose associated value is to be returned
 	 * @return the raw store value for the key, or {@code null} if none
 	 */
@@ -82,6 +68,7 @@ public abstract class AbstractValueAdaptingCache implements Cache {
 	/**
 	 * Convert the given value from the internal store to a user value
 	 * returned from the get method (adapting {@code null}).
+	 *
 	 * @param storeValue the store value
 	 * @return the value to return to the user
 	 */
@@ -96,6 +83,7 @@ public abstract class AbstractValueAdaptingCache implements Cache {
 	/**
 	 * Convert the given user value, as passed into the put method,
 	 * to a value in the internal store (adapting {@code null}).
+	 *
 	 * @param userValue the given user value
 	 * @return the value to store
 	 */
@@ -114,6 +102,7 @@ public abstract class AbstractValueAdaptingCache implements Cache {
 	 * Wrap the given store value with a {@link SimpleValueWrapper}, also going
 	 * through {@link #fromStoreValue} conversion. Useful for {@link #get(Object)}
 	 * and {@link #putIfAbsent(Object, Object)} implementations.
+	 *
 	 * @param storeValue the original value
 	 * @return the wrapped value
 	 */

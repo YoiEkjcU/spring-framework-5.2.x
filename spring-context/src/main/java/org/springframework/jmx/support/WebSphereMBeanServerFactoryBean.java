@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jmx.support;
 
 import java.lang.reflect.InvocationTargetException;
@@ -43,9 +27,9 @@ import org.springframework.lang.Nullable;
  *
  * @author Juergen Hoeller
  * @author Rob Harrop
- * @since 2.0.3
  * @see javax.management.MBeanServer
  * @see MBeanServerFactoryBean
+ * @since 2.0.3
  */
 public class WebSphereMBeanServerFactoryBean implements FactoryBean<MBeanServer>, InitializingBean {
 
@@ -71,15 +55,12 @@ public class WebSphereMBeanServerFactoryBean implements FactoryBean<MBeanServer>
 			Object mbeanFactory = getMBeanFactoryMethod.invoke(null);
 			Method getMBeanServerMethod = mbeanFactory.getClass().getMethod(GET_MBEAN_SERVER_METHOD);
 			this.mbeanServer = (MBeanServer) getMBeanServerMethod.invoke(mbeanFactory);
-		}
-		catch (ClassNotFoundException ex) {
+		} catch (ClassNotFoundException ex) {
 			throw new MBeanServerNotFoundException("Could not find WebSphere's AdminServiceFactory class", ex);
-		}
-		catch (InvocationTargetException ex) {
+		} catch (InvocationTargetException ex) {
 			throw new MBeanServerNotFoundException(
 					"WebSphere's AdminServiceFactory.getMBeanFactory/getMBeanServer method failed", ex.getTargetException());
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			throw new MBeanServerNotFoundException(
 					"Could not access WebSphere's AdminServiceFactory.getMBeanFactory/getMBeanServer method", ex);
 		}

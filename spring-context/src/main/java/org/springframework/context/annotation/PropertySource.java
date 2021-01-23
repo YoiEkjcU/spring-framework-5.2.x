@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.context.annotation;
 
 import java.lang.annotation.Documented;
@@ -157,12 +141,12 @@ import org.springframework.core.io.support.PropertySourceFactory;
  * @author Juergen Hoeller
  * @author Phillip Webb
  * @author Sam Brannen
- * @since 3.1
  * @see PropertySources
  * @see Configuration
  * @see org.springframework.core.env.PropertySource
  * @see org.springframework.core.env.ConfigurableEnvironment#getPropertySources()
  * @see org.springframework.core.env.MutablePropertySources
+ * @since 3.1
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
@@ -176,6 +160,7 @@ public @interface PropertySource {
 	 * {@link org.springframework.core.io.support.DefaultPropertySourceFactory}:
 	 * derived from the resource description through a corresponding name-less
 	 * {@link org.springframework.core.io.support.ResourcePropertySource} constructor).
+	 *
 	 * @see org.springframework.core.env.PropertySource#getName()
 	 * @see org.springframework.core.io.Resource#getDescription()
 	 */
@@ -202,12 +187,14 @@ public @interface PropertySource {
 	 * ignored.
 	 * <p>{@code true} is appropriate if the properties file is completely optional.
 	 * <p>Default is {@code false}.
+	 *
 	 * @since 4.0
 	 */
 	boolean ignoreResourceNotFound() default false;
 
 	/**
 	 * A specific character encoding for the given resources, e.g. "UTF-8".
+	 *
 	 * @since 4.3
 	 */
 	String encoding() default "";
@@ -215,9 +202,10 @@ public @interface PropertySource {
 	/**
 	 * Specify a custom {@link PropertySourceFactory}, if any.
 	 * <p>By default, a default factory for standard resource files will be used.
-	 * @since 4.3
+	 *
 	 * @see org.springframework.core.io.support.DefaultPropertySourceFactory
 	 * @see org.springframework.core.io.support.ResourcePropertySource
+	 * @since 4.3
 	 */
 	Class<? extends PropertySourceFactory> factory() default PropertySourceFactory.class;
 

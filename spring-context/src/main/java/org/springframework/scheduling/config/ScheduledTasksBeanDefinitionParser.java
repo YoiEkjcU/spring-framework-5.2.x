@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2016 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.scheduling.config;
 
 import org.w3c.dom.Element;
@@ -145,7 +129,7 @@ public class ScheduledTasksBeanDefinitionParser extends AbstractSingleBeanDefini
 	}
 
 	private RuntimeBeanReference intervalTaskReference(String runnableBeanName,
-			String initialDelay, String interval, Element taskElement, ParserContext parserContext) {
+													   String initialDelay, String interval, Element taskElement, ParserContext parserContext) {
 		BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(
 				"org.springframework.scheduling.config.IntervalTask");
 		builder.addConstructorArgReference(runnableBeanName);
@@ -155,7 +139,7 @@ public class ScheduledTasksBeanDefinitionParser extends AbstractSingleBeanDefini
 	}
 
 	private RuntimeBeanReference cronTaskReference(String runnableBeanName,
-			String cronExpression, Element taskElement, ParserContext parserContext) {
+												   String cronExpression, Element taskElement, ParserContext parserContext) {
 		BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(
 				"org.springframework.scheduling.config.CronTask");
 		builder.addConstructorArgReference(runnableBeanName);
@@ -164,7 +148,7 @@ public class ScheduledTasksBeanDefinitionParser extends AbstractSingleBeanDefini
 	}
 
 	private RuntimeBeanReference triggerTaskReference(String runnableBeanName,
-			String triggerBeanName, Element taskElement, ParserContext parserContext) {
+													  String triggerBeanName, Element taskElement, ParserContext parserContext) {
 		BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(
 				"org.springframework.scheduling.config.TriggerTask");
 		builder.addConstructorArgReference(runnableBeanName);
@@ -173,7 +157,7 @@ public class ScheduledTasksBeanDefinitionParser extends AbstractSingleBeanDefini
 	}
 
 	private RuntimeBeanReference beanReference(Element taskElement,
-			ParserContext parserContext, BeanDefinitionBuilder builder) {
+											   ParserContext parserContext, BeanDefinitionBuilder builder) {
 		// Extract the source of the current task
 		builder.getRawBeanDefinition().setSource(parserContext.extractSource(taskElement));
 		String generatedName = parserContext.getReaderContext().generateBeanName(builder.getRawBeanDefinition());
