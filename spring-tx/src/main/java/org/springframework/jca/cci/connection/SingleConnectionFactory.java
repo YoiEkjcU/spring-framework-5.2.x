@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jca.cci.connection;
 
 import java.lang.reflect.InvocationHandler;
@@ -47,10 +31,10 @@ import org.springframework.util.Assert;
  * factory lazily create a Connection via a given target ConnectionFactory.
  *
  * @author Juergen Hoeller
- * @since 1.2
  * @see #getConnection()
  * @see javax.resource.cci.Connection#close()
  * @see org.springframework.jca.cci.core.CciTemplate
+ * @since 1.2
  * @deprecated as of 5.3, in favor of specific data access APIs
  * (or native CCI usage if there is no alternative)
  */
@@ -60,20 +44,27 @@ public class SingleConnectionFactory extends DelegatingConnectionFactory impleme
 
 	protected final Log logger = LogFactory.getLog(getClass());
 
-	/** Wrapped Connection. */
+	/**
+	 * Wrapped Connection.
+	 */
 	@Nullable
 	private Connection target;
 
-	/** Proxy Connection. */
+	/**
+	 * Proxy Connection.
+	 */
 	@Nullable
 	private Connection connection;
 
-	/** Synchronization monitor for the shared Connection. */
+	/**
+	 * Synchronization monitor for the shared Connection.
+	 */
 	private final Object connectionMonitor = new Object();
 
 
 	/**
 	 * Create a new SingleConnectionFactory for bean-style usage.
+	 *
 	 * @see #setTargetConnectionFactory
 	 */
 	public SingleConnectionFactory() {
@@ -82,6 +73,7 @@ public class SingleConnectionFactory extends DelegatingConnectionFactory impleme
 	/**
 	 * Create a new SingleConnectionFactory that always returns the
 	 * given Connection.
+	 *
 	 * @param target the single Connection
 	 */
 	public SingleConnectionFactory(Connection target) {
@@ -94,6 +86,7 @@ public class SingleConnectionFactory extends DelegatingConnectionFactory impleme
 	 * Create a new SingleConnectionFactory that always returns a single
 	 * Connection which it will lazily create via the given target
 	 * ConnectionFactory.
+	 *
 	 * @param targetConnectionFactory the target ConnectionFactory
 	 */
 	public SingleConnectionFactory(ConnectionFactory targetConnectionFactory) {
@@ -145,6 +138,7 @@ public class SingleConnectionFactory extends DelegatingConnectionFactory impleme
 	 * Initialize the single underlying Connection.
 	 * <p>Closes and reinitializes the Connection if an underlying
 	 * Connection is present already.
+	 *
 	 * @throws javax.resource.ResourceException if thrown by CCI API methods
 	 */
 	public void initConnection() throws ResourceException {
@@ -180,6 +174,7 @@ public class SingleConnectionFactory extends DelegatingConnectionFactory impleme
 
 	/**
 	 * Create a CCI Connection via this template's ConnectionFactory.
+	 *
 	 * @return the new CCI Connection
 	 * @throws javax.resource.ResourceException if thrown by CCI API methods
 	 */
@@ -192,6 +187,7 @@ public class SingleConnectionFactory extends DelegatingConnectionFactory impleme
 	/**
 	 * Prepare the given Connection before it is exposed.
 	 * <p>The default implementation is empty. Can be overridden in subclasses.
+	 *
 	 * @param con the Connection to prepare
 	 */
 	protected void prepareConnection(Connection con) throws ResourceException {
@@ -199,13 +195,13 @@ public class SingleConnectionFactory extends DelegatingConnectionFactory impleme
 
 	/**
 	 * Close the given Connection.
+	 *
 	 * @param con the Connection to close
 	 */
 	protected void closeConnection(Connection con) {
 		try {
 			con.close();
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			logger.warn("Could not close shared CCI Connection", ex);
 		}
 	}
@@ -215,13 +211,14 @@ public class SingleConnectionFactory extends DelegatingConnectionFactory impleme
 	 * but suppresses close calls. This is useful for allowing application code to
 	 * handle a special framework Connection just like an ordinary Connection from a
 	 * CCI ConnectionFactory.
+	 *
 	 * @param target the original Connection to wrap
 	 * @return the wrapped Connection
 	 */
 	protected Connection getCloseSuppressingConnectionProxy(Connection target) {
 		return (Connection) Proxy.newProxyInstance(
 				Connection.class.getClassLoader(),
-				new Class<?>[] {Connection.class},
+				new Class<?>[]{Connection.class},
 				new CloseSuppressingInvocationHandler(target));
 	}
 
@@ -254,8 +251,7 @@ public class SingleConnectionFactory extends DelegatingConnectionFactory impleme
 
 			try {
 				return method.invoke(this.target, args);
-			}
-			catch (InvocationTargetException ex) {
+			} catch (InvocationTargetException ex) {
 				throw ex.getTargetException();
 			}
 		}

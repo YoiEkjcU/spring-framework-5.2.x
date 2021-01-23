@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.transaction.interceptor;
 
 import java.lang.reflect.Method;
@@ -41,17 +25,21 @@ import org.springframework.util.StringValueResolver;
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
- * @since 24.04.2003
  * @see #isMatch
  * @see NameMatchTransactionAttributeSource
+ * @since 24.04.2003
  */
 public class MethodMapTransactionAttributeSource
 		implements TransactionAttributeSource, EmbeddedValueResolverAware, BeanClassLoaderAware, InitializingBean {
 
-	/** Logger available to subclasses. */
+	/**
+	 * Logger available to subclasses.
+	 */
 	protected final Log logger = LogFactory.getLog(getClass());
 
-	/** Map from method name to attribute value. */
+	/**
+	 * Map from method name to attribute value.
+	 */
 	@Nullable
 	private Map<String, TransactionAttribute> methodMap;
 
@@ -65,10 +53,14 @@ public class MethodMapTransactionAttributeSource
 
 	private boolean initialized = false;
 
-	/** Map from Method to TransactionAttribute. */
+	/**
+	 * Map from Method to TransactionAttribute.
+	 */
 	private final Map<Method, TransactionAttribute> transactionAttributeMap = new HashMap<>();
 
-	/** Map from Method to name pattern used for registration. */
+	/**
+	 * Map from Method to name pattern used for registration.
+	 */
 	private final Map<Method, String> methodNameMap = new HashMap<>();
 
 
@@ -80,6 +72,7 @@ public class MethodMapTransactionAttributeSource
 	 * <p>Intended for configuration via setter injection, typically within
 	 * a Spring bean factory. Relies on {@link #afterPropertiesSet()}
 	 * being called afterwards.
+	 *
 	 * @param methodMap said {@link Map} from method name to attribute value
 	 * @see TransactionAttribute
 	 * @see TransactionAttributeEditor
@@ -102,6 +95,7 @@ public class MethodMapTransactionAttributeSource
 	/**
 	 * Eagerly initializes the specified
 	 * {@link #setMethodMap(java.util.Map) "methodMap"}, if any.
+	 *
 	 * @see #initMethodMap(java.util.Map)
 	 */
 	@Override
@@ -113,6 +107,7 @@ public class MethodMapTransactionAttributeSource
 
 	/**
 	 * Initialize the specified {@link #setMethodMap(java.util.Map) "methodMap"}, if any.
+	 *
 	 * @param methodMap a Map from method names to {@code TransactionAttribute} instances
 	 * @see #setMethodMap
 	 */
@@ -126,6 +121,7 @@ public class MethodMapTransactionAttributeSource
 	/**
 	 * Add an attribute for a transactional method.
 	 * <p>Method names can end or start with "*" for matching multiple methods.
+	 *
 	 * @param name class and method name, separated by a dot
 	 * @param attr attribute associated with the method
 	 * @throws IllegalArgumentException in case of an invalid name
@@ -145,14 +141,15 @@ public class MethodMapTransactionAttributeSource
 	/**
 	 * Add an attribute for a transactional method.
 	 * Method names can end or start with "*" for matching multiple methods.
-	 * @param clazz target interface or class
+	 *
+	 * @param clazz      target interface or class
 	 * @param mappedName mapped method name
-	 * @param attr attribute associated with the method
+	 * @param attr       attribute associated with the method
 	 */
 	public void addTransactionalMethod(Class<?> clazz, String mappedName, TransactionAttribute attr) {
 		Assert.notNull(clazz, "Class must not be null");
 		Assert.notNull(mappedName, "Mapped name must not be null");
-		String name = clazz.getName() + '.'  + mappedName;
+		String name = clazz.getName() + '.' + mappedName;
 
 		Method[] methods = clazz.getDeclaredMethods();
 		List<Method> matchingMethods = new ArrayList<>();
@@ -178,8 +175,7 @@ public class MethodMapTransactionAttributeSource
 				}
 				this.methodNameMap.put(method, name);
 				addTransactionalMethod(method, attr);
-			}
-			else {
+			} else {
 				if (logger.isDebugEnabled()) {
 					logger.debug("Keeping attribute for transactional method [" + method + "]: current name '" +
 							name + "' is not more specific than '" + regMethodName + "'");
@@ -190,8 +186,9 @@ public class MethodMapTransactionAttributeSource
 
 	/**
 	 * Add an attribute for a transactional method.
+	 *
 	 * @param method the method
-	 * @param attr attribute associated with the method
+	 * @param attr   attribute associated with the method
 	 */
 	public void addTransactionalMethod(Method method, TransactionAttribute attr) {
 		Assert.notNull(method, "Method must not be null");
@@ -209,6 +206,7 @@ public class MethodMapTransactionAttributeSource
 	 * Return if the given method name matches the mapped name.
 	 * <p>The default implementation checks for "xxx*", "*xxx" and "*xxx*"
 	 * matches, as well as direct equality.
+	 *
 	 * @param methodName the method name of the class
 	 * @param mappedName the name in the descriptor
 	 * @return if the names match
@@ -224,8 +222,7 @@ public class MethodMapTransactionAttributeSource
 	public TransactionAttribute getTransactionAttribute(Method method, @Nullable Class<?> targetClass) {
 		if (this.eagerlyInitialized) {
 			return this.transactionAttributeMap.get(method);
-		}
-		else {
+		} else {
 			synchronized (this.transactionAttributeMap) {
 				if (!this.initialized) {
 					initMethodMap(this.methodMap);

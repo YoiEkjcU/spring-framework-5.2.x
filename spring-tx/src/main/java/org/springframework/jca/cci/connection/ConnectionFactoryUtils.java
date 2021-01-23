@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jca.cci.connection;
 
 import javax.resource.ResourceException;
@@ -42,12 +26,12 @@ import org.springframework.util.Assert;
  *
  * @author Thierry Templier
  * @author Juergen Hoeller
- * @since 1.2
  * @see #getConnection
  * @see #releaseConnection
  * @see CciLocalTransactionManager
  * @see org.springframework.transaction.jta.JtaTransactionManager
  * @see org.springframework.transaction.support.TransactionSynchronizationManager
+ * @since 1.2
  * @deprecated as of 5.3, in favor of specific data access APIs
  * (or native CCI usage if there is no alternative)
  */
@@ -64,10 +48,10 @@ public abstract class ConnectionFactoryUtils {
 	 * <p>Is aware of a corresponding Connection bound to the current thread, for example
 	 * when using {@link CciLocalTransactionManager}. Will bind a Connection to the thread
 	 * if transaction synchronization is active (e.g. if in a JTA transaction).
+	 *
 	 * @param cf the ConnectionFactory to obtain Connection from
 	 * @return a CCI Connection from the given ConnectionFactory
-	 * @throws org.springframework.jca.cci.CannotGetCciConnectionException
-	 * if the attempt to get a Connection failed
+	 * @throws org.springframework.jca.cci.CannotGetCciConnectionException if the attempt to get a Connection failed
 	 * @see #releaseConnection
 	 */
 	public static Connection getConnection(ConnectionFactory cf)
@@ -83,13 +67,13 @@ public abstract class ConnectionFactoryUtils {
 	 * <p>Is aware of a corresponding Connection bound to the current thread, for example
 	 * when using {@link CciLocalTransactionManager}. Will bind a Connection to the thread
 	 * if transaction synchronization is active (e.g. if in a JTA transaction).
-	 * @param cf the ConnectionFactory to obtain Connection from
+	 *
+	 * @param cf   the ConnectionFactory to obtain Connection from
 	 * @param spec the ConnectionSpec for the desired Connection (may be {@code null}).
-	 * Note: If this is specified, a new Connection will be obtained for every call,
-	 * without participating in a shared transactional Connection.
+	 *             Note: If this is specified, a new Connection will be obtained for every call,
+	 *             without participating in a shared transactional Connection.
 	 * @return a CCI Connection from the given ConnectionFactory
-	 * @throws org.springframework.jca.cci.CannotGetCciConnectionException
-	 * if the attempt to get a Connection failed
+	 * @throws org.springframework.jca.cci.CannotGetCciConnectionException if the attempt to get a Connection failed
 	 * @see #releaseConnection
 	 */
 	public static Connection getConnection(ConnectionFactory cf, @Nullable ConnectionSpec spec)
@@ -98,12 +82,10 @@ public abstract class ConnectionFactoryUtils {
 			if (spec != null) {
 				Assert.notNull(cf, "No ConnectionFactory specified");
 				return cf.getConnection(spec);
-			}
-			else {
+			} else {
 				return doGetConnection(cf);
 			}
-		}
-		catch (ResourceException ex) {
+		} catch (ResourceException ex) {
 			throw new org.springframework.jca.cci.CannotGetCciConnectionException("Could not get CCI Connection", ex);
 		}
 	}
@@ -115,6 +97,7 @@ public abstract class ConnectionFactoryUtils {
 	 * when using {@link CciLocalTransactionManager}. Will bind a Connection to the thread
 	 * if transaction synchronization is active (e.g. if in a JTA transaction).
 	 * <p>Directly accessed by {@link TransactionAwareConnectionFactoryProxy}.
+	 *
 	 * @param cf the ConnectionFactory to obtain Connection from
 	 * @return a CCI Connection from the given ConnectionFactory
 	 * @throws ResourceException if thrown by CCI API methods
@@ -144,9 +127,10 @@ public abstract class ConnectionFactoryUtils {
 	/**
 	 * Determine whether the given JCA CCI Connection is transactional, that is,
 	 * bound to the current thread by Spring's transaction facilities.
+	 *
 	 * @param con the Connection to check
-	 * @param cf the ConnectionFactory that the Connection was obtained from
-	 * (may be {@code null})
+	 * @param cf  the ConnectionFactory that the Connection was obtained from
+	 *            (may be {@code null})
 	 * @return whether the Connection is transactional
 	 */
 	public static boolean isConnectionTransactional(Connection con, @Nullable ConnectionFactory cf) {
@@ -160,20 +144,19 @@ public abstract class ConnectionFactoryUtils {
 	/**
 	 * Close the given Connection, obtained from the given ConnectionFactory,
 	 * if it is not managed externally (that is, not bound to the thread).
+	 *
 	 * @param con the Connection to close if necessary
-	 * (if this is {@code null}, the call will be ignored)
-	 * @param cf the ConnectionFactory that the Connection was obtained from
-	 * (can be {@code null})
+	 *            (if this is {@code null}, the call will be ignored)
+	 * @param cf  the ConnectionFactory that the Connection was obtained from
+	 *            (can be {@code null})
 	 * @see #getConnection
 	 */
 	public static void releaseConnection(@Nullable Connection con, @Nullable ConnectionFactory cf) {
 		try {
 			doReleaseConnection(con, cf);
-		}
-		catch (ResourceException ex) {
+		} catch (ResourceException ex) {
 			logger.debug("Could not close CCI Connection", ex);
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			// We don't trust the CCI driver: It might throw RuntimeException or Error.
 			logger.debug("Unexpected exception on closing CCI Connection", ex);
 		}
@@ -183,10 +166,11 @@ public abstract class ConnectionFactoryUtils {
 	 * Actually close the given Connection, obtained from the given ConnectionFactory.
 	 * Same as {@link #releaseConnection}, but throwing the original ResourceException.
 	 * <p>Directly accessed by {@link TransactionAwareConnectionFactoryProxy}.
+	 *
 	 * @param con the Connection to close if necessary
-	 * (if this is {@code null}, the call will be ignored)
-	 * @param cf the ConnectionFactory that the Connection was obtained from
-	 * (can be {@code null})
+	 *            (if this is {@code null}, the call will be ignored)
+	 * @param cf  the ConnectionFactory that the Connection was obtained from
+	 *            (can be {@code null})
 	 * @throws ResourceException if thrown by JCA CCI methods
 	 * @see #doGetConnection
 	 */

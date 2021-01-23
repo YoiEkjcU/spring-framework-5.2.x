@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.transaction.reactive;
 
 import java.util.LinkedHashMap;
@@ -32,13 +16,14 @@ import org.springframework.util.StringUtils;
  *
  * @author Mark Paluch
  * @author Juergen Hoeller
- * @since 5.2
  * @see TransactionContextManager
  * @see reactor.util.context.Context
+ * @since 5.2
  */
 public class TransactionContext {
 
-	private final @Nullable TransactionContext parent;
+	private final @Nullable
+	TransactionContext parent;
 
 	private final UUID contextId = UUID.randomUUID();
 
@@ -47,11 +32,13 @@ public class TransactionContext {
 	@Nullable
 	private Set<TransactionSynchronization> synchronizations;
 
-	private volatile @Nullable String currentTransactionName;
+	private volatile @Nullable
+	String currentTransactionName;
 
 	private volatile boolean currentTransactionReadOnly;
 
-	private volatile @Nullable Integer currentTransactionIsolationLevel;
+	private volatile @Nullable
+	Integer currentTransactionIsolationLevel;
 
 	private volatile boolean actualTransactionActive;
 

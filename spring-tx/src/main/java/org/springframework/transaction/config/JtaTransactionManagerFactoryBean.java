@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.transaction.config;
 
 import org.springframework.beans.BeanUtils;
@@ -30,9 +14,9 @@ import org.springframework.util.ClassUtils;
  * {@link org.springframework.transaction.jta.JtaTransactionManager} subclass.
  *
  * @author Juergen Hoeller
- * @since 4.1.1
  * @see org.springframework.transaction.jta.WebLogicJtaTransactionManager
  * @see org.springframework.transaction.jta.WebSphereUowTransactionManager
+ * @since 4.1.1
  */
 public class JtaTransactionManagerFactoryBean implements FactoryBean<JtaTransactionManager>, InitializingBean {
 
@@ -67,8 +51,7 @@ public class JtaTransactionManagerFactoryBean implements FactoryBean<JtaTransact
 			Class<? extends JtaTransactionManager> clazz = (Class<? extends JtaTransactionManager>)
 					ClassUtils.forName(className, JtaTransactionManagerFactoryBean.class.getClassLoader());
 			this.transactionManager = BeanUtils.instantiateClass(clazz);
-		}
-		catch (ClassNotFoundException ex) {
+		} catch (ClassNotFoundException ex) {
 			throw new IllegalStateException("Failed to load JtaTransactionManager class: " + className, ex);
 		}
 	}
@@ -99,11 +82,9 @@ public class JtaTransactionManagerFactoryBean implements FactoryBean<JtaTransact
 	static String resolveJtaTransactionManagerClassName() {
 		if (weblogicPresent) {
 			return WEBLOGIC_JTA_TRANSACTION_MANAGER_CLASS_NAME;
-		}
-		else if (webspherePresent) {
+		} else if (webspherePresent) {
 			return WEBSPHERE_TRANSACTION_MANAGER_CLASS_NAME;
-		}
-		else {
+		} else {
 			return JTA_TRANSACTION_MANAGER_CLASS_NAME;
 		}
 	}

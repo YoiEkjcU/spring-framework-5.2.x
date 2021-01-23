@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.dao.support;
 
 import java.util.Collection;
@@ -40,10 +24,11 @@ public abstract class DataAccessUtils {
 	 * Return a single result object from the given Collection.
 	 * <p>Returns {@code null} if 0 result objects found;
 	 * throws an exception if more than 1 element found.
+	 *
 	 * @param results the result Collection (can be {@code null})
 	 * @return the single result object, or {@code null} if none
 	 * @throws IncorrectResultSizeDataAccessException if more than one
-	 * element has been found in the given Collection
+	 *                                                element has been found in the given Collection
 	 */
 	@Nullable
 	public static <T> T singleResult(@Nullable Collection<T> results) throws IncorrectResultSizeDataAccessException {
@@ -59,13 +44,14 @@ public abstract class DataAccessUtils {
 	/**
 	 * Return a single result object from the given Collection.
 	 * <p>Throws an exception if 0 or more than 1 element found.
+	 *
 	 * @param results the result Collection (can be {@code null}
-	 * but is not expected to contain {@code null} elements)
+	 *                but is not expected to contain {@code null} elements)
 	 * @return the single result object
 	 * @throws IncorrectResultSizeDataAccessException if more than one
-	 * element has been found in the given Collection
-	 * @throws EmptyResultDataAccessException if no element at all
-	 * has been found in the given Collection
+	 *                                                element has been found in the given Collection
+	 * @throws EmptyResultDataAccessException         if no element at all
+	 *                                                has been found in the given Collection
 	 */
 	public static <T> T requiredSingleResult(@Nullable Collection<T> results) throws IncorrectResultSizeDataAccessException {
 		if (CollectionUtils.isEmpty(results)) {
@@ -80,13 +66,14 @@ public abstract class DataAccessUtils {
 	/**
 	 * Return a single result object from the given Collection.
 	 * <p>Throws an exception if 0 or more than 1 element found.
+	 *
 	 * @param results the result Collection (can be {@code null}
-	 * and is also expected to contain {@code null} elements)
+	 *                and is also expected to contain {@code null} elements)
 	 * @return the single result object
 	 * @throws IncorrectResultSizeDataAccessException if more than one
-	 * element has been found in the given Collection
-	 * @throws EmptyResultDataAccessException if no element at all
-	 * has been found in the given Collection
+	 *                                                element has been found in the given Collection
+	 * @throws EmptyResultDataAccessException         if no element at all
+	 *                                                has been found in the given Collection
 	 * @since 5.0.2
 	 */
 	@Nullable
@@ -106,10 +93,11 @@ public abstract class DataAccessUtils {
 	 * Return a unique result object from the given Collection.
 	 * <p>Returns {@code null} if 0 result objects found;
 	 * throws an exception if more than 1 instance found.
+	 *
 	 * @param results the result Collection (can be {@code null})
 	 * @return the unique result object, or {@code null} if none
 	 * @throws IncorrectResultSizeDataAccessException if more than one
-	 * result object has been found in the given Collection
+	 *                                                result object has been found in the given Collection
 	 * @see org.springframework.util.CollectionUtils#hasUniqueObject
 	 */
 	@Nullable
@@ -126,13 +114,14 @@ public abstract class DataAccessUtils {
 	/**
 	 * Return a unique result object from the given Collection.
 	 * <p>Throws an exception if 0 or more than 1 instance found.
+	 *
 	 * @param results the result Collection (can be {@code null}
-	 * but is not expected to contain {@code null} elements)
+	 *                but is not expected to contain {@code null} elements)
 	 * @return the unique result object
 	 * @throws IncorrectResultSizeDataAccessException if more than one
-	 * result object has been found in the given Collection
-	 * @throws EmptyResultDataAccessException if no result object at all
-	 * has been found in the given Collection
+	 *                                                result object has been found in the given Collection
+	 * @throws EmptyResultDataAccessException         if no result object at all
+	 *                                                has been found in the given Collection
 	 * @see org.springframework.util.CollectionUtils#hasUniqueObject
 	 */
 	public static <T> T requiredUniqueResult(@Nullable Collection<T> results) throws IncorrectResultSizeDataAccessException {
@@ -150,15 +139,16 @@ public abstract class DataAccessUtils {
 	 * Throws an exception if 0 or more than 1 result objects found,
 	 * of if the unique result object is not convertible to the
 	 * specified required type.
+	 *
 	 * @param results the result Collection (can be {@code null}
-	 * but is not expected to contain {@code null} elements)
+	 *                but is not expected to contain {@code null} elements)
 	 * @return the unique result object
 	 * @throws IncorrectResultSizeDataAccessException if more than one
-	 * result object has been found in the given Collection
-	 * @throws EmptyResultDataAccessException if no result object
-	 * at all has been found in the given Collection
-	 * @throws TypeMismatchDataAccessException if the unique object does
-	 * not match the specified required type
+	 *                                                result object has been found in the given Collection
+	 * @throws EmptyResultDataAccessException         if no result object
+	 *                                                at all has been found in the given Collection
+	 * @throws TypeMismatchDataAccessException        if the unique object does
+	 *                                                not match the specified required type
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T objectResult(@Nullable Collection<?> results, @Nullable Class<T> requiredType)
@@ -168,19 +158,16 @@ public abstract class DataAccessUtils {
 		if (requiredType != null && !requiredType.isInstance(result)) {
 			if (String.class == requiredType) {
 				result = result.toString();
-			}
-			else if (Number.class.isAssignableFrom(requiredType) && result instanceof Number) {
+			} else if (Number.class.isAssignableFrom(requiredType) && result instanceof Number) {
 				try {
 					result = NumberUtils.convertNumberToTargetClass(((Number) result), (Class<? extends Number>) requiredType);
-				}
-				catch (IllegalArgumentException ex) {
+				} catch (IllegalArgumentException ex) {
 					throw new TypeMismatchDataAccessException(ex.getMessage());
 				}
-			}
-			else {
+			} else {
 				throw new TypeMismatchDataAccessException(
 						"Result object is of type [" + result.getClass().getName() +
-						"] and could not be converted to required type [" + requiredType.getName() + "]");
+								"] and could not be converted to required type [" + requiredType.getName() + "]");
 			}
 		}
 		return (T) result;
@@ -190,15 +177,16 @@ public abstract class DataAccessUtils {
 	 * Return a unique int result from the given Collection.
 	 * Throws an exception if 0 or more than 1 result objects found,
 	 * of if the unique result object is not convertible to an int.
+	 *
 	 * @param results the result Collection (can be {@code null}
-	 * but is not expected to contain {@code null} elements)
+	 *                but is not expected to contain {@code null} elements)
 	 * @return the unique int result
 	 * @throws IncorrectResultSizeDataAccessException if more than one
-	 * result object has been found in the given Collection
-	 * @throws EmptyResultDataAccessException if no result object
-	 * at all has been found in the given Collection
-	 * @throws TypeMismatchDataAccessException if the unique object
-	 * in the collection is not convertible to an int
+	 *                                                result object has been found in the given Collection
+	 * @throws EmptyResultDataAccessException         if no result object
+	 *                                                at all has been found in the given Collection
+	 * @throws TypeMismatchDataAccessException        if the unique object
+	 *                                                in the collection is not convertible to an int
 	 */
 	public static int intResult(@Nullable Collection<?> results)
 			throws IncorrectResultSizeDataAccessException, TypeMismatchDataAccessException {
@@ -210,15 +198,16 @@ public abstract class DataAccessUtils {
 	 * Return a unique long result from the given Collection.
 	 * Throws an exception if 0 or more than 1 result objects found,
 	 * of if the unique result object is not convertible to a long.
+	 *
 	 * @param results the result Collection (can be {@code null}
-	 * but is not expected to contain {@code null} elements)
+	 *                but is not expected to contain {@code null} elements)
 	 * @return the unique long result
 	 * @throws IncorrectResultSizeDataAccessException if more than one
-	 * result object has been found in the given Collection
-	 * @throws EmptyResultDataAccessException if no result object
-	 * at all has been found in the given Collection
-	 * @throws TypeMismatchDataAccessException if the unique object
-	 * in the collection is not convertible to a long
+	 *                                                result object has been found in the given Collection
+	 * @throws EmptyResultDataAccessException         if no result object
+	 *                                                at all has been found in the given Collection
+	 * @throws TypeMismatchDataAccessException        if the unique object
+	 *                                                in the collection is not convertible to a long
 	 */
 	public static long longResult(@Nullable Collection<?> results)
 			throws IncorrectResultSizeDataAccessException, TypeMismatchDataAccessException {
@@ -230,8 +219,9 @@ public abstract class DataAccessUtils {
 	/**
 	 * Return a translated exception if this is appropriate,
 	 * otherwise return the given exception as-is.
+	 *
 	 * @param rawException an exception that we may wish to translate
-	 * @param pet the PersistenceExceptionTranslator to use to perform the translation
+	 * @param pet          the PersistenceExceptionTranslator to use to perform the translation
 	 * @return a translated persistence exception if translation is possible,
 	 * or the raw exception if it is not
 	 */

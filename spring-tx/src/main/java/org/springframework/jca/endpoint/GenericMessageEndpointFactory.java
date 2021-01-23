@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jca.endpoint;
 
 import javax.resource.ResourceException;
@@ -47,10 +31,10 @@ import org.springframework.util.ReflectionUtils;
  * {@link javax.resource.spi.ResourceAdapter} instance.
  *
  * @author Juergen Hoeller
- * @since 2.5
  * @see #setMessageListener
  * @see #setTransactionManager
  * @see GenericMessageEndpointManager
+ * @since 2.5
  */
 public class GenericMessageEndpointFactory extends AbstractMessageEndpointFactory {
 
@@ -69,6 +53,7 @@ public class GenericMessageEndpointFactory extends AbstractMessageEndpointFactor
 
 	/**
 	 * Return the message listener object for this endpoint.
+	 *
 	 * @since 5.0
 	 */
 	protected Object getMessageListener() {
@@ -114,25 +99,21 @@ public class GenericMessageEndpointFactory extends AbstractMessageEndpointFactor
 			if (applyDeliveryCalls) {
 				try {
 					beforeDelivery(null);
-				}
-				catch (ResourceException ex) {
+				} catch (ResourceException ex) {
 					throw adaptExceptionIfNecessary(methodInvocation, ex);
 				}
 			}
 			try {
 				return methodInvocation.proceed();
-			}
-			catch (Throwable ex) {
+			} catch (Throwable ex) {
 				endpointEx = ex;
 				onEndpointException(ex);
 				throw ex;
-			}
-			finally {
+			} finally {
 				if (applyDeliveryCalls) {
 					try {
 						afterDelivery();
-					}
-					catch (ResourceException ex) {
+					} catch (ResourceException ex) {
 						if (endpointEx == null) {
 							throw adaptExceptionIfNecessary(methodInvocation, ex);
 						}
@@ -144,8 +125,7 @@ public class GenericMessageEndpointFactory extends AbstractMessageEndpointFactor
 		private Exception adaptExceptionIfNecessary(MethodInvocation methodInvocation, ResourceException ex) {
 			if (ReflectionUtils.declaresException(methodInvocation.getMethod(), ex.getClass())) {
 				return ex;
-			}
-			else {
+			} else {
 				return new InternalResourceException(ex);
 			}
 		}

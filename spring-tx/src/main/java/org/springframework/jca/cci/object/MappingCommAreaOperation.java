@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jca.cci.object;
 
 import java.io.IOException;
@@ -40,6 +24,7 @@ public abstract class MappingCommAreaOperation extends MappingRecordOperation {
 
 	/**
 	 * Create a new MappingCommAreaQuery.
+	 *
 	 * @see #setConnectionFactory
 	 * @see #setInteractionSpec
 	 */
@@ -48,8 +33,9 @@ public abstract class MappingCommAreaOperation extends MappingRecordOperation {
 
 	/**
 	 * Create a new MappingCommAreaQuery.
+	 *
 	 * @param connectionFactory the ConnectionFactory to use to obtain connections
-	 * @param interactionSpec specification to configure the interaction
+	 * @param interactionSpec   specification to configure the interaction
 	 */
 	public MappingCommAreaOperation(ConnectionFactory connectionFactory, InteractionSpec interactionSpec) {
 		super(connectionFactory, interactionSpec);
@@ -60,8 +46,7 @@ public abstract class MappingCommAreaOperation extends MappingRecordOperation {
 	protected final Record createInputRecord(RecordFactory recordFactory, Object inObject) {
 		try {
 			return new org.springframework.jca.cci.core.support.CommAreaRecord(objectToBytes(inObject));
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new DataRetrievalFailureException("I/O exception during bytes conversion", ex);
 		}
 	}
@@ -72,8 +57,7 @@ public abstract class MappingCommAreaOperation extends MappingRecordOperation {
 				(org.springframework.jca.cci.core.support.CommAreaRecord) record;
 		try {
 			return bytesToObject(commAreaRecord.toByteArray());
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new DataRetrievalFailureException("I/O exception during bytes conversion", ex);
 		}
 	}
@@ -81,18 +65,20 @@ public abstract class MappingCommAreaOperation extends MappingRecordOperation {
 
 	/**
 	 * Method used to convert an object into COMMAREA bytes.
+	 *
 	 * @param inObject the input data
 	 * @return the COMMAREA's bytes
-	 * @throws IOException if thrown by I/O methods
+	 * @throws IOException         if thrown by I/O methods
 	 * @throws DataAccessException if conversion failed
 	 */
 	protected abstract byte[] objectToBytes(Object inObject) throws IOException, DataAccessException;
 
 	/**
 	 * Method used to convert the COMMAREA's bytes to an object.
+	 *
 	 * @param bytes the COMMAREA's bytes
 	 * @return the output data
-	 * @throws IOException if thrown by I/O methods
+	 * @throws IOException         if thrown by I/O methods
 	 * @throws DataAccessException if conversion failed
 	 */
 	protected abstract Object bytesToObject(byte[] bytes) throws IOException, DataAccessException;

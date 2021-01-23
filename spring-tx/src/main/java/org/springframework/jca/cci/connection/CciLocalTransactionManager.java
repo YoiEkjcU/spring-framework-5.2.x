@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jca.cci.connection;
 
 import javax.resource.NotSupportedException;
@@ -56,11 +40,11 @@ import org.springframework.util.Assert;
  *
  * @author Thierry Templier
  * @author Juergen Hoeller
- * @since 1.2
  * @see ConnectionFactoryUtils#getConnection(javax.resource.cci.ConnectionFactory)
  * @see ConnectionFactoryUtils#releaseConnection
  * @see TransactionAwareConnectionFactoryProxy
  * @see org.springframework.jca.cci.core.CciTemplate
+ * @since 1.2
  * @deprecated as of 5.3, in favor of specific data access APIs
  * (or native CCI usage if there is no alternative)
  */
@@ -76,6 +60,7 @@ public class CciLocalTransactionManager extends AbstractPlatformTransactionManag
 	/**
 	 * Create a new CciLocalTransactionManager instance.
 	 * A ConnectionFactory has to be set to be able to use it.
+	 *
 	 * @see #setConnectionFactory
 	 */
 	public CciLocalTransactionManager() {
@@ -83,6 +68,7 @@ public class CciLocalTransactionManager extends AbstractPlatformTransactionManag
 
 	/**
 	 * Create a new CciLocalTransactionManager instance.
+	 *
 	 * @param connectionFactory the CCI ConnectionFactory to manage local transactions for
 	 */
 	public CciLocalTransactionManager(ConnectionFactory connectionFactory) {
@@ -101,8 +87,7 @@ public class CciLocalTransactionManager extends AbstractPlatformTransactionManag
 			// for its underlying target ConnectionFactory, else JMS access code won't see
 			// properly exposed transactions (i.e. transactions for the target ConnectionFactory).
 			this.connectionFactory = ((TransactionAwareConnectionFactoryProxy) cf).getTargetConnectionFactory();
-		}
-		else {
+		} else {
 			this.connectionFactory = cf;
 		}
 	}
@@ -174,16 +159,13 @@ public class CciLocalTransactionManager extends AbstractPlatformTransactionManag
 
 			txObject.setConnectionHolder(connectionHolder);
 			TransactionSynchronizationManager.bindResource(connectionFactory, connectionHolder);
-		}
-		catch (NotSupportedException ex) {
+		} catch (NotSupportedException ex) {
 			ConnectionFactoryUtils.releaseConnection(con, connectionFactory);
 			throw new CannotCreateTransactionException("CCI Connection does not support local transactions", ex);
-		}
-		catch (LocalTransactionException ex) {
+		} catch (LocalTransactionException ex) {
 			ConnectionFactoryUtils.releaseConnection(con, connectionFactory);
 			throw new CannotCreateTransactionException("Could not begin local CCI transaction", ex);
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			ConnectionFactoryUtils.releaseConnection(con, connectionFactory);
 			throw new TransactionSystemException("Unexpected failure on begin of CCI local transaction", ex);
 		}
@@ -216,11 +198,9 @@ public class CciLocalTransactionManager extends AbstractPlatformTransactionManag
 		}
 		try {
 			con.getLocalTransaction().commit();
-		}
-		catch (LocalTransactionException ex) {
+		} catch (LocalTransactionException ex) {
 			throw new TransactionSystemException("Could not commit CCI local transaction", ex);
-		}
-		catch (ResourceException ex) {
+		} catch (ResourceException ex) {
 			throw new TransactionSystemException("Unexpected failure on commit of CCI local transaction", ex);
 		}
 	}
@@ -234,11 +214,9 @@ public class CciLocalTransactionManager extends AbstractPlatformTransactionManag
 		}
 		try {
 			con.getLocalTransaction().rollback();
-		}
-		catch (LocalTransactionException ex) {
+		} catch (LocalTransactionException ex) {
 			throw new TransactionSystemException("Could not roll back CCI local transaction", ex);
-		}
-		catch (ResourceException ex) {
+		} catch (ResourceException ex) {
 			throw new TransactionSystemException("Unexpected failure on rollback of CCI local transaction", ex);
 		}
 	}
@@ -273,6 +251,7 @@ public class CciLocalTransactionManager extends AbstractPlatformTransactionManag
 	/**
 	 * CCI local transaction object, representing a ConnectionHolder.
 	 * Used as transaction object by CciLocalTransactionManager.
+	 *
 	 * @see ConnectionHolder
 	 */
 	private static class CciLocalTransactionObject {

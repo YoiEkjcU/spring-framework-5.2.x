@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.transaction.reactive;
 
 import java.util.Collection;
@@ -34,9 +18,9 @@ import org.springframework.util.ClassUtils;
  *
  * @author Mark Paluch
  * @author Juergen Hoeller
- * @since 5.2
  * @see TransactionSynchronization
  * @see TransactionSynchronizationManager#getSynchronizations()
+ * @since 5.2
  */
 abstract class TransactionSynchronizationUtils {
 
@@ -49,6 +33,7 @@ abstract class TransactionSynchronizationUtils {
 	/**
 	 * Unwrap the given resource handle if necessary; otherwise return
 	 * the given handle as-is.
+	 *
 	 * @see InfrastructureProxy#getWrappedObject()
 	 */
 	static Object unwrapResourceIfNecessary(Object resource) {
@@ -69,6 +54,7 @@ abstract class TransactionSynchronizationUtils {
 	/**
 	 * Actually invoke the {@code triggerBeforeCommit} methods of the
 	 * given Spring TransactionSynchronization objects.
+	 *
 	 * @param synchronizations a List of TransactionSynchronization objects
 	 * @see TransactionSynchronization#beforeCommit(boolean)
 	 */
@@ -79,6 +65,7 @@ abstract class TransactionSynchronizationUtils {
 	/**
 	 * Actually invoke the {@code beforeCompletion} methods of the
 	 * given Spring TransactionSynchronization objects.
+	 *
 	 * @param synchronizations a List of TransactionSynchronization objects
 	 * @see TransactionSynchronization#beforeCompletion()
 	 */
@@ -91,6 +78,7 @@ abstract class TransactionSynchronizationUtils {
 	/**
 	 * Actually invoke the {@code afterCommit} methods of the
 	 * given Spring TransactionSynchronization objects.
+	 *
 	 * @param synchronizations a List of TransactionSynchronization objects
 	 * @see TransactionSynchronization#afterCommit()
 	 */
@@ -103,9 +91,10 @@ abstract class TransactionSynchronizationUtils {
 	/**
 	 * Actually invoke the {@code afterCompletion} methods of the
 	 * given Spring TransactionSynchronization objects.
+	 *
 	 * @param synchronizations a List of TransactionSynchronization objects
 	 * @param completionStatus the completion status according to the
-	 * constants in the TransactionSynchronization interface
+	 *                         constants in the TransactionSynchronization interface
 	 * @see TransactionSynchronization#afterCompletion(int)
 	 * @see TransactionSynchronization#STATUS_COMMITTED
 	 * @see TransactionSynchronization#STATUS_ROLLED_BACK
@@ -127,8 +116,7 @@ abstract class TransactionSynchronizationUtils {
 		public static Object unwrapIfNecessary(Object resource) {
 			if (resource instanceof ScopedObject) {
 				return ((ScopedObject) resource).getTargetObject();
-			}
-			else {
+			} else {
 				return resource;
 			}
 		}

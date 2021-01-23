@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2015 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.dao.annotation;
 
 import java.lang.annotation.Annotation;
@@ -38,7 +22,7 @@ import org.springframework.util.Assert;
  * PersistenceExceptionTranslator} interface, which are subsequently asked to translate
  * candidate exceptions.
  *
-
+ *
  * <p>All of Spring's applicable resource factories (e.g.
  * {@link org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean})
  * implement the {@code PersistenceExceptionTranslator} interface out of the box.
@@ -49,11 +33,11 @@ import org.springframework.util.Assert;
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
- * @since 2.0
  * @see PersistenceExceptionTranslationAdvisor
  * @see org.springframework.stereotype.Repository
  * @see org.springframework.dao.DataAccessException
  * @see org.springframework.dao.support.PersistenceExceptionTranslator
+ * @since 2.0
  */
 @SuppressWarnings("serial")
 public class PersistenceExceptionTranslationPostProcessor extends AbstractBeanFactoryAwareAdvisingPostProcessor {
@@ -67,6 +51,7 @@ public class PersistenceExceptionTranslationPostProcessor extends AbstractBeanFa
 	 * <p>This setter property exists so that developers can provide their own
 	 * (non-Spring-specific) annotation type to indicate that a class has a
 	 * repository role.
+	 *
 	 * @param repositoryAnnotationType the desired annotation type
 	 */
 	public void setRepositoryAnnotationType(Class<? extends Annotation> repositoryAnnotationType) {

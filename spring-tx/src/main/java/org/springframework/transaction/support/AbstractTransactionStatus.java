@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.transaction.support;
 
 import org.springframework.lang.Nullable;
@@ -35,7 +19,6 @@ import org.springframework.transaction.TransactionUsageException;
  * underlying transaction object, and no transaction synchronization mechanism.
  *
  * @author Juergen Hoeller
- * @since 1.2.3
  * @see #setRollbackOnly()
  * @see #isRollbackOnly()
  * @see #setCompleted()
@@ -43,6 +26,7 @@ import org.springframework.transaction.TransactionUsageException;
  * @see #getSavepointManager()
  * @see SimpleTransactionStatus
  * @see DefaultTransactionStatus
+ * @since 1.2.3
  */
 public abstract class AbstractTransactionStatus implements TransactionStatus {
 
@@ -67,6 +51,7 @@ public abstract class AbstractTransactionStatus implements TransactionStatus {
 	 * Determine the rollback-only flag via checking both the local rollback-only flag
 	 * of this TransactionStatus and the global rollback-only flag of the underlying
 	 * transaction, if any.
+	 *
 	 * @see #isLocalRollbackOnly()
 	 * @see #isGlobalRollbackOnly()
 	 */
@@ -117,6 +102,7 @@ public abstract class AbstractTransactionStatus implements TransactionStatus {
 
 	/**
 	 * Set a savepoint for this transaction. Useful for PROPAGATION_NESTED.
+	 *
 	 * @see org.springframework.transaction.TransactionDefinition#PROPAGATION_NESTED
 	 */
 	protected void setSavepoint(@Nullable Object savepoint) {
@@ -133,8 +119,8 @@ public abstract class AbstractTransactionStatus implements TransactionStatus {
 
 	/**
 	 * Create a savepoint and hold it for the transaction.
-	 * @throws org.springframework.transaction.NestedTransactionNotSupportedException
-	 * if the underlying transaction does not support savepoints
+	 *
+	 * @throws org.springframework.transaction.NestedTransactionNotSupportedException if the underlying transaction does not support savepoints
 	 */
 	public void createAndHoldSavepoint() throws TransactionException {
 		setSavepoint(getSavepointManager().createSavepoint());
@@ -176,6 +162,7 @@ public abstract class AbstractTransactionStatus implements TransactionStatus {
 	/**
 	 * This implementation delegates to a SavepointManager for the
 	 * underlying transaction, if possible.
+	 *
 	 * @see #getSavepointManager()
 	 * @see SavepointManager#createSavepoint()
 	 */
@@ -187,6 +174,7 @@ public abstract class AbstractTransactionStatus implements TransactionStatus {
 	/**
 	 * This implementation delegates to a SavepointManager for the
 	 * underlying transaction, if possible.
+	 *
 	 * @see #getSavepointManager()
 	 * @see SavepointManager#rollbackToSavepoint(Object)
 	 */
@@ -198,6 +186,7 @@ public abstract class AbstractTransactionStatus implements TransactionStatus {
 	/**
 	 * This implementation delegates to a SavepointManager for the
 	 * underlying transaction, if possible.
+	 *
 	 * @see #getSavepointManager()
 	 * @see SavepointManager#releaseSavepoint(Object)
 	 */
@@ -209,8 +198,8 @@ public abstract class AbstractTransactionStatus implements TransactionStatus {
 	/**
 	 * Return a SavepointManager for the underlying transaction, if possible.
 	 * <p>Default implementation always throws a NestedTransactionNotSupportedException.
-	 * @throws org.springframework.transaction.NestedTransactionNotSupportedException
-	 * if the underlying transaction does not support savepoints
+	 *
+	 * @throws org.springframework.transaction.NestedTransactionNotSupportedException if the underlying transaction does not support savepoints
 	 */
 	protected SavepointManager getSavepointManager() {
 		throw new NestedTransactionNotSupportedException("This transaction does not support savepoints");

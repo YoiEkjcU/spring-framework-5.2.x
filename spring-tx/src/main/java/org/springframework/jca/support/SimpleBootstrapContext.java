@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jca.support;
 
 import java.util.Timer;
@@ -36,9 +20,9 @@ import org.springframework.util.Assert;
  * local instances of {@code java.util.Timer}.
  *
  * @author Juergen Hoeller
- * @since 2.0.3
  * @see javax.resource.spi.ResourceAdapter#start(javax.resource.spi.BootstrapContext)
  * @see ResourceAdapterFactoryBean
+ * @since 2.0.3
  */
 public class SimpleBootstrapContext implements BootstrapContext {
 
@@ -55,6 +39,7 @@ public class SimpleBootstrapContext implements BootstrapContext {
 	/**
 	 * Create a new SimpleBootstrapContext for the given WorkManager,
 	 * with no XATerminator available.
+	 *
 	 * @param workManager the JCA WorkManager to use (may be {@code null})
 	 */
 	public SimpleBootstrapContext(@Nullable WorkManager workManager) {
@@ -63,7 +48,8 @@ public class SimpleBootstrapContext implements BootstrapContext {
 
 	/**
 	 * Create a new SimpleBootstrapContext for the given WorkManager and XATerminator.
-	 * @param workManager the JCA WorkManager to use (may be {@code null})
+	 *
+	 * @param workManager  the JCA WorkManager to use (may be {@code null})
 	 * @param xaTerminator the JCA XATerminator to use (may be {@code null})
 	 */
 	public SimpleBootstrapContext(@Nullable WorkManager workManager, @Nullable XATerminator xaTerminator) {
@@ -74,14 +60,15 @@ public class SimpleBootstrapContext implements BootstrapContext {
 	/**
 	 * Create a new SimpleBootstrapContext for the given WorkManager, XATerminator
 	 * and TransactionSynchronizationRegistry.
-	 * @param workManager the JCA WorkManager to use (may be {@code null})
-	 * @param xaTerminator the JCA XATerminator to use (may be {@code null})
+	 *
+	 * @param workManager                        the JCA WorkManager to use (may be {@code null})
+	 * @param xaTerminator                       the JCA XATerminator to use (may be {@code null})
 	 * @param transactionSynchronizationRegistry the TransactionSynchronizationRegistry
-	 * to use (may be {@code null})
+	 *                                           to use (may be {@code null})
 	 * @since 5.0
 	 */
 	public SimpleBootstrapContext(@Nullable WorkManager workManager, @Nullable XATerminator xaTerminator,
-			@Nullable TransactionSynchronizationRegistry transactionSynchronizationRegistry) {
+								  @Nullable TransactionSynchronizationRegistry transactionSynchronizationRegistry) {
 
 		this.workManager = workManager;
 		this.xaTerminator = xaTerminator;

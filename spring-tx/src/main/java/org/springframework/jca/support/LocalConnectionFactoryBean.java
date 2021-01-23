@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jca.support;
 
 import javax.resource.ResourceException;
@@ -62,12 +46,12 @@ import org.springframework.lang.Nullable;
  * to drive local transactions.
  *
  * @author Juergen Hoeller
- * @since 1.2
  * @see #setManagedConnectionFactory
  * @see #setConnectionManager
  * @see javax.resource.cci.ConnectionFactory
  * @see javax.resource.cci.Connection#getLocalTransaction
  * @see org.springframework.jca.cci.connection.CciLocalTransactionManager
+ * @since 1.2
  */
 public class LocalConnectionFactoryBean implements FactoryBean<Object>, InitializingBean {
 
@@ -95,6 +79,7 @@ public class LocalConnectionFactoryBean implements FactoryBean<Object>, Initiali
 	 * Simply inject the corresponding ResourceAdapter instance into its
 	 * "resourceAdapter" bean property in this case, before passing the
 	 * ManagerConnectionFactory into this LocalConnectionFactoryBean.
+	 *
 	 * @see javax.resource.spi.ManagedConnectionFactory#createConnectionFactory()
 	 */
 	public void setManagedConnectionFactory(ManagedConnectionFactory managedConnectionFactory) {
@@ -107,6 +92,7 @@ public class LocalConnectionFactoryBean implements FactoryBean<Object>, Initiali
 	 * <p>A ConnectionManager implementation for local usage is often
 	 * included with a JCA connector. Such an included ConnectionManager
 	 * might be set as default, with no need to explicitly specify one.
+	 *
 	 * @see javax.resource.spi.ManagedConnectionFactory#createConnectionFactory(javax.resource.spi.ConnectionManager)
 	 */
 	public void setConnectionManager(ConnectionManager connectionManager) {
@@ -120,8 +106,7 @@ public class LocalConnectionFactoryBean implements FactoryBean<Object>, Initiali
 		}
 		if (this.connectionManager != null) {
 			this.connectionFactory = this.managedConnectionFactory.createConnectionFactory(this.connectionManager);
-		}
-		else {
+		} else {
 			this.connectionFactory = this.managedConnectionFactory.createConnectionFactory();
 		}
 	}

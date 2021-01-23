@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jca.cci.core.support;
 
 import javax.resource.cci.Connection;
@@ -37,10 +21,10 @@ import org.springframework.util.Assert;
  *
  * @author Thierry Templier
  * @author Juergen Hoeller
- * @since 1.2
  * @see #setConnectionFactory
  * @see #getCciTemplate
  * @see org.springframework.jca.cci.core.CciTemplate
+ * @since 1.2
  * @deprecated as of 5.3, in favor of specific data access APIs
  * (or native CCI usage if there is no alternative)
  */
@@ -65,6 +49,7 @@ public abstract class CciDaoSupport extends DaoSupport {
 	 * Only invoked if populating the DAO with a ConnectionFactory reference!
 	 * <p>Can be overridden in subclasses to provide a CciTemplate instance
 	 * with different configuration, or a custom CciTemplate subclass.
+	 *
 	 * @param connectionFactory the CCI ConnectionFactory to create a CciTemplate for
 	 * @return the new CciTemplate instance
 	 * @see #setConnectionFactory(javax.resource.cci.ConnectionFactory)
@@ -110,8 +95,9 @@ public abstract class CciDaoSupport extends DaoSupport {
 	 * Obtain a CciTemplate derived from the main template instance,
 	 * inheriting the ConnectionFactory and other settings but
 	 * overriding the ConnectionSpec used for obtaining Connections.
+	 *
 	 * @param connectionSpec the CCI ConnectionSpec that the returned
-	 * template instance is supposed to obtain Connections for
+	 *                       template instance is supposed to obtain Connections for
 	 * @return the derived template instance
 	 * @see org.springframework.jca.cci.core.CciTemplate#getDerivedTemplate(javax.resource.cci.ConnectionSpec)
 	 */
@@ -123,9 +109,9 @@ public abstract class CciDaoSupport extends DaoSupport {
 
 	/**
 	 * Get a CCI Connection, either from the current transaction or a new one.
+	 *
 	 * @return the CCI Connection
-	 * @throws org.springframework.jca.cci.CannotGetCciConnectionException
-	 * if the attempt to get a Connection failed
+	 * @throws org.springframework.jca.cci.CannotGetCciConnectionException if the attempt to get a Connection failed
 	 * @see org.springframework.jca.cci.connection.ConnectionFactoryUtils#getConnection(javax.resource.cci.ConnectionFactory)
 	 */
 	protected final Connection getConnection() throws org.springframework.jca.cci.CannotGetCciConnectionException {
@@ -137,6 +123,7 @@ public abstract class CciDaoSupport extends DaoSupport {
 	/**
 	 * Close the given CCI Connection, created via this bean's ConnectionFactory,
 	 * if it isn't bound to the thread.
+	 *
 	 * @param con the Connection to close
 	 * @see org.springframework.jca.cci.connection.ConnectionFactoryUtils#releaseConnection
 	 */

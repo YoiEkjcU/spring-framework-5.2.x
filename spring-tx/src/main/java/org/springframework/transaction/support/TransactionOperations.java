@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.transaction.support;
 
 import java.util.function.Consumer;
@@ -39,10 +23,11 @@ public interface TransactionOperations {
 	 * a domain object or a collection of domain objects. A RuntimeException thrown
 	 * by the callback is treated as a fatal exception that enforces a rollback.
 	 * Such an exception gets propagated to the caller of the template.
+	 *
 	 * @param action the callback object that specifies the transactional action
 	 * @return a result object returned by the callback, or {@code null} if none
 	 * @throws TransactionException in case of initialization, rollback, or system errors
-	 * @throws RuntimeException if thrown by the TransactionCallback
+	 * @throws RuntimeException     if thrown by the TransactionCallback
 	 * @see #executeWithoutResult(Consumer)
 	 */
 	@Nullable
@@ -56,12 +41,13 @@ public interface TransactionOperations {
 	 * <p>This variant is analogous to using a {@link TransactionCallbackWithoutResult}
 	 * but with a simplified signature for common cases - and conveniently usable with
 	 * Java 8 lambda expressions.
+	 *
 	 * @param action the Runnable that specifies the transactional action
 	 * @throws TransactionException in case of initialization, rollback, or system errors
-	 * @throws RuntimeException if thrown by the Runnable
-	 * @since 5.2
+	 * @throws RuntimeException     if thrown by the Runnable
 	 * @see #execute(TransactionCallback)
 	 * @see TransactionCallbackWithoutResult
+	 * @since 5.2
 	 */
 	default void executeWithoutResult(Consumer<TransactionStatus> action) throws TransactionException {
 		execute(status -> {
@@ -80,10 +66,11 @@ public interface TransactionOperations {
 	 * <p>For a {@link TransactionOperations} implementation with actual
 	 * transaction processing, use {@link TransactionTemplate} with an appropriate
 	 * {@link org.springframework.transaction.PlatformTransactionManager}.
-	 * @since 5.2
+	 *
 	 * @see org.springframework.transaction.TransactionDefinition#PROPAGATION_SUPPORTS
 	 * @see AbstractPlatformTransactionManager#SYNCHRONIZATION_NEVER
 	 * @see TransactionTemplate
+	 * @since 5.2
 	 */
 	static TransactionOperations withoutTransaction() {
 		return WithoutTransactionOperations.INSTANCE;
