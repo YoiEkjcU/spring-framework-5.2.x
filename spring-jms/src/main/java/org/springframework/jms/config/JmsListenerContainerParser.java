@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jms.config;
 
 import javax.jms.Session;
@@ -58,7 +42,7 @@ class JmsListenerContainerParser extends AbstractListenerContainerParser {
 
 	@Override
 	protected RootBeanDefinition createContainerFactory(String factoryId, Element containerEle, ParserContext parserContext,
-			PropertyValues commonContainerProperties, PropertyValues specificContainerProperties) {
+														PropertyValues commonContainerProperties, PropertyValues specificContainerProperties) {
 
 		RootBeanDefinition factoryDef = new RootBeanDefinition();
 
@@ -66,11 +50,9 @@ class JmsListenerContainerParser extends AbstractListenerContainerParser {
 		String containerClass = containerEle.getAttribute(CONTAINER_CLASS_ATTRIBUTE);
 		if (!"".equals(containerClass)) {
 			return null; // Not supported
-		}
-		else if ("".equals(containerType) || containerType.startsWith("default")) {
+		} else if ("".equals(containerType) || containerType.startsWith("default")) {
 			factoryDef.setBeanClassName("org.springframework.jms.config.DefaultJmsListenerContainerFactory");
-		}
-		else if (containerType.startsWith("simple")) {
+		} else if (containerType.startsWith("simple")) {
 			factoryDef.setBeanClassName("org.springframework.jms.config.SimpleJmsListenerContainerFactory");
 		}
 
@@ -82,7 +64,7 @@ class JmsListenerContainerParser extends AbstractListenerContainerParser {
 
 	@Override
 	protected RootBeanDefinition createContainer(Element containerEle, Element listenerEle, ParserContext parserContext,
-			PropertyValues commonContainerProperties, PropertyValues specificContainerProperties) {
+												 PropertyValues commonContainerProperties, PropertyValues specificContainerProperties) {
 
 		RootBeanDefinition containerDef = new RootBeanDefinition();
 		containerDef.setSource(parserContext.extractSource(containerEle));
@@ -93,14 +75,11 @@ class JmsListenerContainerParser extends AbstractListenerContainerParser {
 		String containerClass = containerEle.getAttribute(CONTAINER_CLASS_ATTRIBUTE);
 		if (!"".equals(containerClass)) {
 			containerDef.setBeanClassName(containerClass);
-		}
-		else if ("".equals(containerType) || containerType.startsWith("default")) {
+		} else if ("".equals(containerType) || containerType.startsWith("default")) {
 			containerDef.setBeanClassName("org.springframework.jms.listener.DefaultMessageListenerContainer");
-		}
-		else if (containerType.startsWith("simple")) {
+		} else if (containerType.startsWith("simple")) {
 			containerDef.setBeanClassName("org.springframework.jms.listener.SimpleMessageListenerContainer");
-		}
-		else {
+		} else {
 			parserContext.getReaderContext().error(
 					"Invalid 'container-type' attribute: only \"default\" and \"simple\" supported.", containerEle);
 		}
@@ -150,10 +129,9 @@ class JmsListenerContainerParser extends AbstractListenerContainerParser {
 				if (!("auto".equals(cache) || "consumer".equals(cache))) {
 					parserContext.getReaderContext().warning(
 							"'cache' attribute not actively supported for listener container of type \"simple\". " +
-							"Effective runtime behavior will be equivalent to \"consumer\" / \"auto\".", containerEle);
+									"Effective runtime behavior will be equivalent to \"consumer\" / \"auto\".", containerEle);
 				}
-			}
-			else {
+			} else {
 				properties.add("cacheLevelName", "CACHE_" + cache.toUpperCase());
 			}
 		}
@@ -162,8 +140,7 @@ class JmsListenerContainerParser extends AbstractListenerContainerParser {
 		if (acknowledgeMode != null) {
 			if (acknowledgeMode == Session.SESSION_TRANSACTED) {
 				properties.add("sessionTransacted", Boolean.TRUE);
-			}
-			else {
+			} else {
 				properties.add("sessionAcknowledgeMode", acknowledgeMode);
 			}
 		}
@@ -173,8 +150,7 @@ class JmsListenerContainerParser extends AbstractListenerContainerParser {
 			if (isSimpleContainer) {
 				parserContext.getReaderContext().error(
 						"'transaction-manager' attribute not supported for listener container of type \"simple\".", containerEle);
-			}
-			else {
+			} else {
 				properties.add("transactionManager", new RuntimeBeanReference(transactionManagerBeanName));
 			}
 		}
@@ -208,8 +184,7 @@ class JmsListenerContainerParser extends AbstractListenerContainerParser {
 			if (!isSimpleContainer) {
 				properties.add("backOff", new RuntimeBeanReference(backOffBeanName));
 			}
-		}
-		else { // No need to consider this if back-off is set
+		} else { // No need to consider this if back-off is set
 			String recoveryInterval = containerEle.getAttribute(RECOVERY_INTERVAL_ATTRIBUTE);
 			if (StringUtils.hasText(recoveryInterval)) {
 				if (!isSimpleContainer) {

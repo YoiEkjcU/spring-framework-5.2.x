@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jms.remoting;
 
 import javax.jms.JMSException;
@@ -48,9 +32,9 @@ import org.springframework.remoting.support.RemoteInvocationResult;
  *
  * @author Juergen Hoeller
  * @author James Strachan
- * @since 2.0
  * @see JmsInvokerClientInterceptor
  * @see JmsInvokerProxyFactoryBean
+ * @since 2.0
  * @deprecated as of 5.3 (phasing out serialization-based remoting)
  */
 @Deprecated
@@ -110,6 +94,7 @@ public class JmsInvokerServiceExporter extends RemoteInvocationBasedExporter
 
 	/**
 	 * Read a RemoteInvocation from the given JMS message.
+	 *
 	 * @param requestMessage current request message
 	 * @return the RemoteInvocation object (or {@code null}
 	 * in case of an invalid message that will simply be ignored)
@@ -127,9 +112,10 @@ public class JmsInvokerServiceExporter extends RemoteInvocationBasedExporter
 
 	/**
 	 * Send the given RemoteInvocationResult as a JMS message to the originator.
+	 *
 	 * @param requestMessage current request message
-	 * @param session the JMS Session to use
-	 * @param result the RemoteInvocationResult object
+	 * @param session        the JMS Session to use
+	 * @param result         the RemoteInvocationResult object
 	 * @throws javax.jms.JMSException if thrown by trying to send the message
 	 */
 	protected void writeRemoteInvocationResult(
@@ -139,8 +125,7 @@ public class JmsInvokerServiceExporter extends RemoteInvocationBasedExporter
 		MessageProducer producer = session.createProducer(requestMessage.getJMSReplyTo());
 		try {
 			producer.send(response);
-		}
-		finally {
+		} finally {
 			JmsUtils.closeMessageProducer(producer);
 		}
 	}
@@ -151,9 +136,10 @@ public class JmsInvokerServiceExporter extends RemoteInvocationBasedExporter
 	 * RemoteInvocationResult object. It sets the response's correlation id
 	 * to the request message's correlation id, if any; otherwise to the
 	 * request message id.
+	 *
 	 * @param request the original request message
 	 * @param session the JMS session to use
-	 * @param result the invocation result
+	 * @param result  the invocation result
 	 * @return the message response to send
 	 * @throws javax.jms.JMSException if creating the message failed
 	 */
@@ -175,11 +161,12 @@ public class JmsInvokerServiceExporter extends RemoteInvocationBasedExporter
 	 * <p>The default implementation either discards the invalid message or
 	 * throws a MessageFormatException - according to the "ignoreInvalidRequests"
 	 * flag, which is set to "true" (that is, discard invalid messages) by default.
+	 *
 	 * @param requestMessage the invalid request message
 	 * @return the RemoteInvocation to expose for the invalid request (typically
 	 * {@code null} in case of an invalid message that will simply be ignored)
 	 * @throws javax.jms.JMSException in case of the invalid request supposed
-	 * to lead to an exception (instead of ignoring it)
+	 *                                to lead to an exception (instead of ignoring it)
 	 * @see #readRemoteInvocation
 	 * @see #setIgnoreInvalidRequests
 	 */
@@ -190,8 +177,7 @@ public class JmsInvokerServiceExporter extends RemoteInvocationBasedExporter
 				logger.debug("Invalid request message will be discarded: " + requestMessage);
 			}
 			return null;
-		}
-		else {
+		} else {
 			throw new MessageFormatException("Invalid request message: " + requestMessage);
 		}
 	}

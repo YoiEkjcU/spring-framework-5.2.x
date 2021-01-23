@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jms.config;
 
 import java.util.Collection;
@@ -54,10 +38,10 @@ import org.springframework.util.Assert;
  *
  * @author Stephane Nicoll
  * @author Juergen Hoeller
- * @since 4.1
  * @see JmsListenerEndpoint
  * @see MessageListenerContainer
  * @see JmsListenerContainerFactory
+ * @since 4.1
  */
 public class JmsListenerEndpointRegistry implements DisposableBean, SmartLifecycle,
 		ApplicationContextAware, ApplicationListener<ContextRefreshedEvent> {
@@ -91,6 +75,7 @@ public class JmsListenerEndpointRegistry implements DisposableBean, SmartLifecyc
 	/**
 	 * Return the {@link MessageListenerContainer} with the specified id or
 	 * {@code null} if no such container exists.
+	 *
 	 * @param id the id of the container
 	 * @return the container or {@code null} if no container with that id exists
 	 * @see JmsListenerEndpoint#getId()
@@ -104,8 +89,9 @@ public class JmsListenerEndpointRegistry implements DisposableBean, SmartLifecyc
 
 	/**
 	 * Return the ids of the managed {@link MessageListenerContainer} instance(s).
-	 * @since 4.2.3
+	 *
 	 * @see #getListenerContainer(String)
+	 * @since 4.2.3
 	 */
 	public Set<String> getListenerContainerIds() {
 		return Collections.unmodifiableSet(this.listenerContainers.keySet());
@@ -124,14 +110,15 @@ public class JmsListenerEndpointRegistry implements DisposableBean, SmartLifecyc
 	 * with regards to its configuration.
 	 * <p>The {@code startImmediately} flag determines if the container should be
 	 * started immediately.
-	 * @param endpoint the endpoint to add
-	 * @param factory the listener factory to use
+	 *
+	 * @param endpoint         the endpoint to add
+	 * @param factory          the listener factory to use
 	 * @param startImmediately start the container immediately if necessary
 	 * @see #getListenerContainers()
 	 * @see #getListenerContainer(String)
 	 */
 	public void registerListenerContainer(JmsListenerEndpoint endpoint, JmsListenerContainerFactory<?> factory,
-			boolean startImmediately) {
+										  boolean startImmediately) {
 
 		Assert.notNull(endpoint, "Endpoint must not be null");
 		Assert.notNull(factory, "Factory must not be null");
@@ -154,8 +141,9 @@ public class JmsListenerEndpointRegistry implements DisposableBean, SmartLifecyc
 	 * Create a message listener container for the given {@link JmsListenerEndpoint}.
 	 * <p>This create the necessary infrastructure to honor that endpoint
 	 * with regards to its configuration.
+	 *
 	 * @param endpoint the endpoint to add
-	 * @param factory the listener factory to use
+	 * @param factory  the listener factory to use
 	 * @see #registerListenerContainer(JmsListenerEndpoint, JmsListenerContainerFactory, boolean)
 	 */
 	public void registerListenerContainer(JmsListenerEndpoint endpoint, JmsListenerContainerFactory<?> factory) {
@@ -166,15 +154,14 @@ public class JmsListenerEndpointRegistry implements DisposableBean, SmartLifecyc
 	 * Create and start a new container using the specified factory.
 	 */
 	protected MessageListenerContainer createListenerContainer(JmsListenerEndpoint endpoint,
-			JmsListenerContainerFactory<?> factory) {
+															   JmsListenerContainerFactory<?> factory) {
 
 		MessageListenerContainer listenerContainer = factory.createListenerContainer(endpoint);
 
 		if (listenerContainer instanceof InitializingBean) {
 			try {
 				((InitializingBean) listenerContainer).afterPropertiesSet();
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				throw new BeanInitializationException("Failed to initialize message listener container", ex);
 			}
 		}
@@ -235,6 +222,7 @@ public class JmsListenerEndpointRegistry implements DisposableBean, SmartLifecyc
 	/**
 	 * Start the specified {@link MessageListenerContainer} if it should be started
 	 * on startup or when start is called explicitly after startup.
+	 *
 	 * @see MessageListenerContainer#isAutoStartup()
 	 */
 	private void startIfNecessary(MessageListenerContainer listenerContainer) {
@@ -249,8 +237,7 @@ public class JmsListenerEndpointRegistry implements DisposableBean, SmartLifecyc
 			if (listenerContainer instanceof DisposableBean) {
 				try {
 					((DisposableBean) listenerContainer).destroy();
-				}
-				catch (Throwable ex) {
+				} catch (Throwable ex) {
 					logger.warn("Failed to destroy message listener container", ex);
 				}
 			}

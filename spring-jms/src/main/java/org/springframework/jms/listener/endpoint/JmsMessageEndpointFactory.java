@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jms.listener.endpoint;
 
 import javax.jms.Message;
@@ -42,12 +26,12 @@ import org.springframework.util.Assert;
  *
  * @author Juergen Hoeller
  * @author Stephane Nicoll
- * @since 2.5
  * @see #setMessageListener
  * @see #setTransactionManager
  * @see JmsMessageEndpointManager
+ * @since 2.5
  */
-public class JmsMessageEndpointFactory extends AbstractMessageEndpointFactory  {
+public class JmsMessageEndpointFactory extends AbstractMessageEndpointFactory {
 
 	@Nullable
 	private MessageListener messageListener;
@@ -89,25 +73,21 @@ public class JmsMessageEndpointFactory extends AbstractMessageEndpointFactory  {
 			if (applyDeliveryCalls) {
 				try {
 					beforeDelivery(null);
-				}
-				catch (ResourceException ex) {
+				} catch (ResourceException ex) {
 					throw new JmsResourceException(ex);
 				}
 			}
 			try {
 				getMessageListener().onMessage(message);
-			}
-			catch (RuntimeException | Error ex) {
+			} catch (RuntimeException | Error ex) {
 				endpointEx = ex;
 				onEndpointException(ex);
 				throw ex;
-			}
-			finally {
+			} finally {
 				if (applyDeliveryCalls) {
 					try {
 						afterDelivery();
-					}
-					catch (ResourceException ex) {
+					} catch (ResourceException ex) {
 						if (endpointEx == null) {
 							throw new JmsResourceException(ex);
 						}

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jms.listener.endpoint;
 
 import javax.jms.MessageListener;
@@ -44,12 +28,12 @@ import org.springframework.lang.Nullable;
  *
  * @author Juergen Hoeller
  * @author Stephane Nicoll
- * @since 2.5
  * @see javax.jms.MessageListener
  * @see #setActivationSpecConfig
  * @see JmsActivationSpecConfig
  * @see JmsActivationSpecFactory
  * @see JmsMessageEndpointFactory
+ * @since 2.5
  */
 public class JmsMessageEndpointManager extends GenericMessageEndpointManager
 		implements BeanNameAware, MessageListenerContainer {
@@ -67,6 +51,7 @@ public class JmsMessageEndpointManager extends GenericMessageEndpointManager
 	/**
 	 * Set the JMS MessageListener for this endpoint.
 	 * <p>This is a shortcut for configuring a dedicated JmsMessageEndpointFactory.
+	 *
 	 * @see JmsMessageEndpointFactory#setMessageListener
 	 */
 	public void setMessageListener(MessageListener messageListener) {
@@ -92,6 +77,7 @@ public class JmsMessageEndpointManager extends GenericMessageEndpointManager
 	 * resource provider's ActivationSpec documentation for the local
 	 * transaction options of your particular provider.
 	 * <p>This is a shortcut for configuring a dedicated JmsMessageEndpointFactory.
+	 *
 	 * @see JmsMessageEndpointFactory#setTransactionManager
 	 */
 	public void setTransactionManager(Object transactionManager) {
@@ -108,6 +94,7 @@ public class JmsMessageEndpointManager extends GenericMessageEndpointManager
 	 * "ActiveMQActivationSpec" in the same package), and populates the
 	 * ActivationSpec properties as suggested by the JCA 1.5 specification
 	 * (plus a couple of autodetected vendor-specific properties).
+	 *
 	 * @see DefaultJmsActivationSpecFactory
 	 */
 	public void setActivationSpecFactory(@Nullable JmsActivationSpecFactory activationSpecFactory) {
@@ -124,6 +111,7 @@ public class JmsMessageEndpointManager extends GenericMessageEndpointManager
 	 * (see {@link StandardJmsActivationSpecFactory#setDestinationResolver}). This is simply
 	 * a shortcut for parameterizing the default JmsActivationSpecFactory; it will replace
 	 * any custom JmsActivationSpecFactory that might have been set before.
+	 *
 	 * @see StandardJmsActivationSpecFactory#setDestinationResolver
 	 */
 	public void setDestinationResolver(DestinationResolver destinationResolver) {
@@ -182,8 +170,7 @@ public class JmsMessageEndpointManager extends GenericMessageEndpointManager
 	public void setupMessageListener(Object messageListener) {
 		if (messageListener instanceof MessageListener) {
 			setMessageListener((MessageListener) messageListener);
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException("Unsupported message listener '" +
 					messageListener.getClass().getName() + "': only '" + MessageListener.class.getName() +
 					"' type is supported");

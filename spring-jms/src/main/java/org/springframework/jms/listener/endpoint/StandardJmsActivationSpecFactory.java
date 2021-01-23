@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jms.listener.endpoint;
 
 import java.util.Map;
@@ -46,9 +30,9 @@ import org.springframework.lang.Nullable;
  * JMS 1.5 specification.
  *
  * @author Juergen Hoeller
- * @since 2.5
  * @see #setActivationSpecClass
  * @see DefaultJmsActivationSpecFactory
+ * @since 2.5
  */
 public class StandardJmsActivationSpecFactory implements JmsActivationSpecFactory {
 
@@ -126,6 +110,7 @@ public class StandardJmsActivationSpecFactory implements JmsActivationSpecFactor
 	/**
 	 * Determine the ActivationSpec class for the given ResourceAdapter,
 	 * if possible. Called if no 'activationSpecClass' has been set explicitly
+	 *
 	 * @param adapter the ResourceAdapter to check
 	 * @return the corresponding ActivationSpec class, or {@code null}
 	 * if not determinable
@@ -141,7 +126,8 @@ public class StandardJmsActivationSpecFactory implements JmsActivationSpecFactor
 	 * defined in the given configuration object.
 	 * <p>This implementation applies all standard JMS settings, but ignores
 	 * "maxConcurrency" and "prefetchSize" - not supported in standard JCA 1.5.
-	 * @param bw the BeanWrapper wrapping the ActivationSpec object
+	 *
+	 * @param bw     the BeanWrapper wrapping the ActivationSpec object
 	 * @param config the configured object holding common JMS settings
 	 */
 	protected void populateActivationSpecProperties(BeanWrapper bw, JmsActivationSpecConfig config) {
@@ -152,8 +138,7 @@ public class StandardJmsActivationSpecFactory implements JmsActivationSpecFactor
 			if (this.destinationResolver != null) {
 				try {
 					destination = this.destinationResolver.resolveDestinationName(null, destinationName, pubSubDomain);
-				}
-				catch (JMSException ex) {
+				} catch (JMSException ex) {
 					throw new DestinationResolutionException(
 							"Cannot resolve destination name [" + destinationName + "]", ex);
 				}
@@ -164,8 +149,7 @@ public class StandardJmsActivationSpecFactory implements JmsActivationSpecFactor
 
 		if (bw.isWritableProperty("subscriptionDurability")) {
 			bw.setPropertyValue("subscriptionDurability", config.isSubscriptionDurable() ? "Durable" : "NonDurable");
-		}
-		else if (config.isSubscriptionDurable()) {
+		} else if (config.isSubscriptionDurable()) {
 			// Standard JCA 1.5 "subscriptionDurability" apparently not supported...
 			throw new IllegalArgumentException("Durable subscriptions not supported by underlying provider");
 		}
@@ -191,9 +175,10 @@ public class StandardJmsActivationSpecFactory implements JmsActivationSpecFactor
 	 * "Auto-acknowledge" and "Dups-ok-acknowledge". It throws an exception in
 	 * case of {@code CLIENT_ACKNOWLEDGE} or {@code SESSION_TRANSACTED}
 	 * having been requested.
-	 * @param bw the BeanWrapper wrapping the ActivationSpec object
+	 *
+	 * @param bw      the BeanWrapper wrapping the ActivationSpec object
 	 * @param ackMode the configured acknowledge mode
-	 * (according to the constants in {@link javax.jms.Session}
+	 *                (according to the constants in {@link javax.jms.Session}
 	 * @see javax.jms.Session#AUTO_ACKNOWLEDGE
 	 * @see javax.jms.Session#DUPS_OK_ACKNOWLEDGE
 	 * @see javax.jms.Session#CLIENT_ACKNOWLEDGE
@@ -203,16 +188,13 @@ public class StandardJmsActivationSpecFactory implements JmsActivationSpecFactor
 		if (ackMode == Session.SESSION_TRANSACTED) {
 			throw new IllegalArgumentException("No support for SESSION_TRANSACTED: Only \"Auto-acknowledge\" " +
 					"and \"Dups-ok-acknowledge\" supported in standard JCA 1.5");
-		}
-		else if (ackMode == Session.CLIENT_ACKNOWLEDGE) {
+		} else if (ackMode == Session.CLIENT_ACKNOWLEDGE) {
 			throw new IllegalArgumentException("No support for CLIENT_ACKNOWLEDGE: Only \"Auto-acknowledge\" " +
 					"and \"Dups-ok-acknowledge\" supported in standard JCA 1.5");
-		}
-		else if (bw.isWritableProperty("acknowledgeMode")) {
+		} else if (bw.isWritableProperty("acknowledgeMode")) {
 			bw.setPropertyValue("acknowledgeMode",
 					ackMode == Session.DUPS_OK_ACKNOWLEDGE ? "Dups-ok-acknowledge" : "Auto-acknowledge");
-		}
-		else if (ackMode == Session.DUPS_OK_ACKNOWLEDGE) {
+		} else if (ackMode == Session.DUPS_OK_ACKNOWLEDGE) {
 			// Standard JCA 1.5 "acknowledgeMode" apparently not supported (e.g. WebSphere MQ 6.0.2.1)
 			throw new IllegalArgumentException("Dups-ok-acknowledge not supported by underlying provider");
 		}

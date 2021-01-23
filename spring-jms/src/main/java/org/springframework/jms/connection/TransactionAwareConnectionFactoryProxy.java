@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jms.connection;
 
 import java.lang.reflect.InvocationHandler;
@@ -79,9 +63,9 @@ import org.springframework.util.ClassUtils;
  * as long as no actual JMS 2.0 calls are triggered by the application's setup.
  *
  * @author Juergen Hoeller
- * @since 2.0
  * @see UserCredentialsConnectionFactoryAdapter
  * @see SingleConnectionFactory
+ * @since 2.0
  */
 public class TransactionAwareConnectionFactoryProxy
 		implements ConnectionFactory, QueueConnectionFactory, TopicConnectionFactory {
@@ -100,6 +84,7 @@ public class TransactionAwareConnectionFactoryProxy
 
 	/**
 	 * Create a new TransactionAwareConnectionFactoryProxy.
+	 *
 	 * @param targetConnectionFactory the target ConnectionFactory
 	 */
 	public TransactionAwareConnectionFactoryProxy(ConnectionFactory targetConnectionFactory) {
@@ -224,6 +209,7 @@ public class TransactionAwareConnectionFactoryProxy
 	/**
 	 * Wrap the given Connection with a proxy that delegates every method call to it
 	 * but handles Session lookup in a transaction-aware fashion.
+	 *
 	 * @param target the original Connection to wrap
 	 * @return the wrapped Connection
 	 */
@@ -271,16 +257,14 @@ public class TransactionAwareConnectionFactoryProxy
 				if (session != null) {
 					return getCloseSuppressingSessionProxy(session);
 				}
-			}
-			else if (QueueSession.class == method.getReturnType()) {
+			} else if (QueueSession.class == method.getReturnType()) {
 				QueueSession session = ConnectionFactoryUtils.getTransactionalQueueSession(
 						(QueueConnectionFactory) getTargetConnectionFactory(), (QueueConnection) this.target,
 						isSynchedLocalTransactionAllowed());
 				if (session != null) {
 					return getCloseSuppressingSessionProxy(session);
 				}
-			}
-			else if (TopicSession.class == method.getReturnType()) {
+			} else if (TopicSession.class == method.getReturnType()) {
 				TopicSession session = ConnectionFactoryUtils.getTransactionalTopicSession(
 						(TopicConnectionFactory) getTargetConnectionFactory(), (TopicConnection) this.target,
 						isSynchedLocalTransactionAllowed());
@@ -292,8 +276,7 @@ public class TransactionAwareConnectionFactoryProxy
 			// Invoke method on target Connection.
 			try {
 				return method.invoke(this.target, args);
-			}
-			catch (InvocationTargetException ex) {
+			} catch (InvocationTargetException ex) {
 				throw ex.getTargetException();
 			}
 		}
@@ -351,8 +334,7 @@ public class TransactionAwareConnectionFactoryProxy
 			// Invoke method on target Session.
 			try {
 				return method.invoke(this.target, args);
-			}
-			catch (InvocationTargetException ex) {
+			} catch (InvocationTargetException ex) {
 				throw ex.getTargetException();
 			}
 		}

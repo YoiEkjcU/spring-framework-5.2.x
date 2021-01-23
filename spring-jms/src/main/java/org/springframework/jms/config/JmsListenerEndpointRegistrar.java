@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jms.config;
 
 import java.util.ArrayList;
@@ -33,8 +17,8 @@ import org.springframework.util.Assert;
  *
  * @author Stephane Nicoll
  * @author Juergen Hoeller
- * @since 4.1
  * @see org.springframework.jms.annotation.JmsListenerConfigurer
+ * @since 4.1
  */
 public class JmsListenerEndpointRegistrar implements BeanFactoryAware, InitializingBean {
 
@@ -111,6 +95,7 @@ public class JmsListenerEndpointRegistrar implements BeanFactoryAware, Initializ
 	 * a {@link JmsListenerEndpoint} is registered with a {@code null} container factory.
 	 * Alternatively, the container factory instance can be registered directly:
 	 * see {@link #setContainerFactory(JmsListenerContainerFactory)}.
+	 *
 	 * @see #setBeanFactory
 	 */
 	public void setContainerFactoryBeanName(String containerFactoryBeanName) {
@@ -149,18 +134,15 @@ public class JmsListenerEndpointRegistrar implements BeanFactoryAware, Initializ
 	private JmsListenerContainerFactory<?> resolveContainerFactory(JmsListenerEndpointDescriptor descriptor) {
 		if (descriptor.containerFactory != null) {
 			return descriptor.containerFactory;
-		}
-		else if (this.containerFactory != null) {
+		} else if (this.containerFactory != null) {
 			return this.containerFactory;
-		}
-		else if (this.containerFactoryBeanName != null) {
+		} else if (this.containerFactoryBeanName != null) {
 			Assert.state(this.beanFactory != null, "BeanFactory must be set to obtain container factory by bean name");
 			// Consider changing this if live change of the factory is required...
 			this.containerFactory = this.beanFactory.getBean(
 					this.containerFactoryBeanName, JmsListenerContainerFactory.class);
 			return this.containerFactory;
-		}
-		else {
+		} else {
 			throw new IllegalStateException("Could not resolve the " +
 					JmsListenerContainerFactory.class.getSimpleName() + " to use for [" +
 					descriptor.endpoint + "] no factory was given and no default is set.");
@@ -185,8 +167,7 @@ public class JmsListenerEndpointRegistrar implements BeanFactoryAware, Initializ
 				Assert.state(this.endpointRegistry != null, "No JmsListenerEndpointRegistry set");
 				this.endpointRegistry.registerListenerContainer(descriptor.endpoint,
 						resolveContainerFactory(descriptor), true);
-			}
-			else {
+			} else {
 				this.endpointDescriptors.add(descriptor);
 			}
 		}
@@ -195,6 +176,7 @@ public class JmsListenerEndpointRegistrar implements BeanFactoryAware, Initializ
 	/**
 	 * Register a new {@link JmsListenerEndpoint} using the default
 	 * {@link JmsListenerContainerFactory} to create the underlying container.
+	 *
 	 * @see #setContainerFactory(JmsListenerContainerFactory)
 	 * @see #registerEndpoint(JmsListenerEndpoint, JmsListenerContainerFactory)
 	 */
@@ -211,7 +193,7 @@ public class JmsListenerEndpointRegistrar implements BeanFactoryAware, Initializ
 		public final JmsListenerContainerFactory<?> containerFactory;
 
 		public JmsListenerEndpointDescriptor(JmsListenerEndpoint endpoint,
-				@Nullable JmsListenerContainerFactory<?> containerFactory) {
+											 @Nullable JmsListenerContainerFactory<?> containerFactory) {
 
 			this.endpoint = endpoint;
 			this.containerFactory = containerFactory;

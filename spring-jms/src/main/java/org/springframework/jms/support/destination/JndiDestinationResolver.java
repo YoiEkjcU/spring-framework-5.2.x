@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2016 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jms.support.destination;
 
 import java.util.Map;
@@ -48,11 +32,11 @@ import org.springframework.util.Assert;
  *
  * @author Mark Pollack
  * @author Juergen Hoeller
- * @since 1.1
  * @see #setJndiTemplate
  * @see #setJndiEnvironment
  * @see #setCache
  * @see #setFallbackToDynamicDestination
+ * @since 1.1
  */
 public class JndiDestinationResolver extends JndiLocatorSupport implements CachingDestinationResolver {
 
@@ -82,6 +66,7 @@ public class JndiDestinationResolver extends JndiLocatorSupport implements Cachi
 	 * Set whether this resolver is supposed to create dynamic destinations
 	 * if the destination name is not found in JNDI. Default is "false".
 	 * <p>Turn this flag on to enable transparent fallback to dynamic destinations.
+	 *
 	 * @see #setDynamicDestinationResolver
 	 */
 	public void setFallbackToDynamicDestination(boolean fallbackToDynamicDestination) {
@@ -92,6 +77,7 @@ public class JndiDestinationResolver extends JndiLocatorSupport implements Cachi
 	 * Set the {@link DestinationResolver} to use when falling back to dynamic
 	 * destinations.
 	 * <p>The default is Spring's standard {@link DynamicDestinationResolver}.
+	 *
 	 * @see #setFallbackToDynamicDestination
 	 * @see DynamicDestinationResolver
 	 */
@@ -108,20 +94,17 @@ public class JndiDestinationResolver extends JndiLocatorSupport implements Cachi
 		Destination dest = this.destinationCache.get(destinationName);
 		if (dest != null) {
 			validateDestination(dest, destinationName, pubSubDomain);
-		}
-		else {
+		} else {
 			try {
 				dest = lookup(destinationName, Destination.class);
 				validateDestination(dest, destinationName, pubSubDomain);
-			}
-			catch (NamingException ex) {
+			} catch (NamingException ex) {
 				if (logger.isDebugEnabled()) {
 					logger.debug("Destination [" + destinationName + "] not found in JNDI", ex);
 				}
 				if (this.fallbackToDynamicDestination) {
 					dest = this.dynamicDestinationResolver.resolveDestinationName(session, destinationName, pubSubDomain);
-				}
-				else {
+				} else {
 					throw new DestinationResolutionException(
 							"Destination [" + destinationName + "] not found in JNDI", ex);
 				}
@@ -136,10 +119,11 @@ public class JndiDestinationResolver extends JndiLocatorSupport implements Cachi
 	/**
 	 * Validate the given Destination object, checking whether it matches
 	 * the expected type.
-	 * @param destination the Destination object to validate
+	 *
+	 * @param destination     the Destination object to validate
 	 * @param destinationName the name of the destination
-	 * @param pubSubDomain {@code true} if a Topic is expected,
-	 * {@code false} in case of a Queue
+	 * @param pubSubDomain    {@code true} if a Topic is expected,
+	 *                        {@code false} in case of a Queue
 	 */
 	protected void validateDestination(Destination destination, String destinationName, boolean pubSubDomain) {
 		Class<?> targetClass = Queue.class;

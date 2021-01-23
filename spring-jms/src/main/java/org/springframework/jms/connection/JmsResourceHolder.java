@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jms.connection;
 
 import java.lang.reflect.Method;
@@ -45,9 +29,9 @@ import org.springframework.util.ReflectionUtils;
  * <p>Note: This is an SPI class, not intended to be used by applications.
  *
  * @author Juergen Hoeller
- * @since 1.1
  * @see JmsTransactionManager
  * @see org.springframework.jms.core.JmsTemplate
+ * @since 1.1
  */
 public class JmsResourceHolder extends ResourceHolderSupport {
 
@@ -67,6 +51,7 @@ public class JmsResourceHolder extends ResourceHolderSupport {
 
 	/**
 	 * Create a new JmsResourceHolder that is open for resources to be added.
+	 *
 	 * @see #addConnection
 	 * @see #addSession
 	 */
@@ -75,8 +60,9 @@ public class JmsResourceHolder extends ResourceHolderSupport {
 
 	/**
 	 * Create a new JmsResourceHolder that is open for resources to be added.
+	 *
 	 * @param connectionFactory the JMS ConnectionFactory that this
-	 * resource holder is associated with (may be {@code null})
+	 *                          resource holder is associated with (may be {@code null})
 	 */
 	public JmsResourceHolder(@Nullable ConnectionFactory connectionFactory) {
 		this.connectionFactory = connectionFactory;
@@ -84,6 +70,7 @@ public class JmsResourceHolder extends ResourceHolderSupport {
 
 	/**
 	 * Create a new JmsResourceHolder for the given JMS Session.
+	 *
 	 * @param session the JMS Session
 	 */
 	public JmsResourceHolder(Session session) {
@@ -93,8 +80,9 @@ public class JmsResourceHolder extends ResourceHolderSupport {
 
 	/**
 	 * Create a new JmsResourceHolder for the given JMS resources.
+	 *
 	 * @param connection the JMS Connection
-	 * @param session the JMS Session
+	 * @param session    the JMS Session
 	 */
 	public JmsResourceHolder(Connection connection, Session session) {
 		addConnection(connection);
@@ -104,10 +92,11 @@ public class JmsResourceHolder extends ResourceHolderSupport {
 
 	/**
 	 * Create a new JmsResourceHolder for the given JMS resources.
+	 *
 	 * @param connectionFactory the JMS ConnectionFactory that this
-	 * resource holder is associated with (may be {@code null})
-	 * @param connection the JMS Connection
-	 * @param session the JMS Session
+	 *                          resource holder is associated with (may be {@code null})
+	 * @param connection        the JMS Connection
+	 * @param session           the JMS Session
 	 */
 	public JmsResourceHolder(@Nullable ConnectionFactory connectionFactory, Connection connection, Session session) {
 		this.connectionFactory = connectionFactory;
@@ -120,6 +109,7 @@ public class JmsResourceHolder extends ResourceHolderSupport {
 	/**
 	 * Return whether this resource holder is frozen, i.e. does not
 	 * allow for adding further Connections and Sessions to it.
+	 *
 	 * @see #addConnection
 	 * @see #addSession
 	 */
@@ -231,6 +221,7 @@ public class JmsResourceHolder extends ResourceHolderSupport {
 
 	/**
 	 * Commit all of this resource holder's Sessions.
+	 *
 	 * @throws JMSException if thrown from a Session commit attempt
 	 * @see Session#commit()
 	 */
@@ -238,11 +229,9 @@ public class JmsResourceHolder extends ResourceHolderSupport {
 		for (Session session : this.sessions) {
 			try {
 				session.commit();
-			}
-			catch (TransactionInProgressException ex) {
+			} catch (TransactionInProgressException ex) {
 				// Ignore -> can only happen in case of a JTA transaction.
-			}
-			catch (javax.jms.IllegalStateException ex) {
+			} catch (javax.jms.IllegalStateException ex) {
 				if (this.connectionFactory != null) {
 					try {
 						Method getDataSourceMethod = this.connectionFactory.getClass().getMethod("getDataSource");
@@ -257,13 +246,11 @@ public class JmsResourceHolder extends ResourceHolderSupport {
 								// Check for decorated DataSource a la Spring's DelegatingDataSource
 								Method getTargetDataSourceMethod = ds.getClass().getMethod("getTargetDataSource");
 								ds = ReflectionUtils.invokeMethod(getTargetDataSourceMethod, ds);
-							}
-							catch (NoSuchMethodException nsme) {
+							} catch (NoSuchMethodException nsme) {
 								ds = null;
 							}
 						}
-					}
-					catch (Throwable ex2) {
+					} catch (Throwable ex2) {
 						if (logger.isDebugEnabled()) {
 							logger.debug("No working getDataSource method found on ConnectionFactory: " + ex2);
 						}
@@ -277,14 +264,14 @@ public class JmsResourceHolder extends ResourceHolderSupport {
 
 	/**
 	 * Close all of this resource holder's Sessions and clear its state.
+	 *
 	 * @see Session#close()
 	 */
 	public void closeAll() {
 		for (Session session : this.sessions) {
 			try {
 				session.close();
-			}
-			catch (Throwable ex) {
+			} catch (Throwable ex) {
 				logger.debug("Could not close synchronized JMS Session after transaction", ex);
 			}
 		}

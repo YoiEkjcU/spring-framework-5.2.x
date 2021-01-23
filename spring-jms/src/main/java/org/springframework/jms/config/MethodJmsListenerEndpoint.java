@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jms.config;
 
 import java.lang.reflect.Method;
@@ -93,6 +77,7 @@ public class MethodJmsListenerEndpoint extends AbstractJmsListenerEndpoint imple
 	 * Set the most specific method known for this endpoint's declaration.
 	 * <p>In case of a proxy, this will be the method on the target class
 	 * (if annotated itself, that is, if not just annotated in an interface).
+	 *
 	 * @since 4.2.3
 	 */
 	public void setMostSpecificMethod(@Nullable Method mostSpecificMethod) {
@@ -157,8 +142,7 @@ public class MethodJmsListenerEndpoint extends AbstractJmsListenerEndpoint imple
 		if (StringUtils.hasText(responseDestination)) {
 			if (container.isReplyPubSubDomain()) {
 				messageListener.setDefaultResponseTopicName(responseDestination);
-			}
-			else {
+			} else {
 				messageListener.setDefaultResponseQueueName(responseDestination);
 			}
 		}
@@ -179,6 +163,7 @@ public class MethodJmsListenerEndpoint extends AbstractJmsListenerEndpoint imple
 
 	/**
 	 * Create an empty {@link MessagingMessageListenerAdapter} instance.
+	 *
 	 * @return a new {@code MessagingMessageListenerAdapter} or subclass thereof
 	 */
 	protected MessagingMessageListenerAdapter createMessageListenerInstance() {

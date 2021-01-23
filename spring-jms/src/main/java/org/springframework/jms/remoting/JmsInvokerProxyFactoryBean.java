@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jms.remoting;
 
 import org.springframework.aop.framework.ProxyFactory;
@@ -35,12 +19,12 @@ import org.springframework.util.ClassUtils;
  * target queue (either as {@link javax.jms.Queue} reference or as queue name).
  *
  * @author Juergen Hoeller
- * @since 2.0
  * @see #setConnectionFactory
  * @see #setQueueName
  * @see #setServiceInterface
  * @see org.springframework.jms.remoting.JmsInvokerClientInterceptor
  * @see org.springframework.jms.remoting.JmsInvokerServiceExporter
+ * @since 2.0
  * @deprecated as of 5.3 (phasing out serialization-based remoting)
  */
 @Deprecated
@@ -59,9 +43,10 @@ public class JmsInvokerProxyFactoryBean extends JmsInvokerClientInterceptor
 
 	/**
 	 * Set the interface that the proxy must implement.
+	 *
 	 * @param serviceInterface the interface that the proxy must implement
 	 * @throws IllegalArgumentException if the supplied {@code serviceInterface}
-	 * is not an interface type
+	 *                                  is not an interface type
 	 */
 	public void setServiceInterface(Class<?> serviceInterface) {
 		Assert.notNull(serviceInterface, "'serviceInterface' must not be null");

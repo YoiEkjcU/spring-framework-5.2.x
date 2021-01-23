@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.jms.connection;
 
 import javax.jms.Connection;
@@ -84,10 +68,10 @@ import org.springframework.util.Assert;
  * which has stronger needs for synchronization.
  *
  * @author Juergen Hoeller
- * @since 1.1
  * @see ConnectionFactoryUtils#getTransactionalSession
  * @see TransactionAwareConnectionFactoryProxy
  * @see org.springframework.jms.core.JmsTemplate
+ * @since 1.1
  */
 @SuppressWarnings("serial")
 public class JmsTransactionManager extends AbstractPlatformTransactionManager
@@ -108,6 +92,7 @@ public class JmsTransactionManager extends AbstractPlatformTransactionManager
 	 * be used alongside a datastore-based Spring transaction manager like
 	 * DataSourceTransactionManager, which has stronger needs for synchronization.
 	 * Only one manager is allowed to drive synchronization at any point of time.
+	 *
 	 * @see #setConnectionFactory
 	 * @see #setTransactionSynchronization
 	 */
@@ -117,6 +102,7 @@ public class JmsTransactionManager extends AbstractPlatformTransactionManager
 
 	/**
 	 * Create a new JmsTransactionManager, given a ConnectionFactory.
+	 *
 	 * @param connectionFactory the ConnectionFactory to obtain connections from
 	 */
 	public JmsTransactionManager(ConnectionFactory connectionFactory) {
@@ -135,8 +121,7 @@ public class JmsTransactionManager extends AbstractPlatformTransactionManager
 			// for its underlying target ConnectionFactory, else JMS access code won't see
 			// properly exposed transactions (i.e. transactions for the target ConnectionFactory).
 			this.connectionFactory = ((TransactionAwareConnectionFactoryProxy) cf).getTargetConnectionFactory();
-		}
-		else {
+		} else {
 			this.connectionFactory = cf;
 		}
 	}
@@ -151,6 +136,7 @@ public class JmsTransactionManager extends AbstractPlatformTransactionManager
 
 	/**
 	 * Obtain the ConnectionFactory for actual use.
+	 *
 	 * @return the ConnectionFactory (never {@code null})
 	 * @throws IllegalStateException in case of no ConnectionFactory set
 	 * @since 5.0
@@ -166,9 +152,10 @@ public class JmsTransactionManager extends AbstractPlatformTransactionManager
 	 * Connection and Session on access within a transaction ({@code true}).
 	 * By default, it will eagerly create a JMS Connection and Session at
 	 * transaction begin ({@code false}).
-	 * @since 5.1.6
+	 *
 	 * @see JmsResourceHolder#getConnection()
 	 * @see JmsResourceHolder#getSession()
+	 * @since 5.1.6
 	 */
 	public void setLazyResourceRetrieval(boolean lazyResourceRetrieval) {
 		this.lazyResourceRetrieval = lazyResourceRetrieval;
@@ -218,8 +205,7 @@ public class JmsTransactionManager extends AbstractPlatformTransactionManager
 			JmsResourceHolder resourceHolder;
 			if (this.lazyResourceRetrieval) {
 				resourceHolder = new LazyJmsResourceHolder(connectionFactory);
-			}
-			else {
+			} else {
 				con = createConnection();
 				session = createSession(con);
 				if (logger.isDebugEnabled()) {
@@ -234,21 +220,18 @@ public class JmsTransactionManager extends AbstractPlatformTransactionManager
 			}
 			txObject.setResourceHolder(resourceHolder);
 			TransactionSynchronizationManager.bindResource(connectionFactory, resourceHolder);
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			if (session != null) {
 				try {
 					session.close();
-				}
-				catch (Throwable ex2) {
+				} catch (Throwable ex2) {
 					// ignore
 				}
 			}
 			if (con != null) {
 				try {
 					con.close();
-				}
-				catch (Throwable ex2) {
+				} catch (Throwable ex2) {
 					// ignore
 				}
 			}
@@ -278,11 +261,9 @@ public class JmsTransactionManager extends AbstractPlatformTransactionManager
 					logger.debug("Committing JMS transaction on Session [" + session + "]");
 				}
 				session.commit();
-			}
-			catch (TransactionRolledBackException ex) {
+			} catch (TransactionRolledBackException ex) {
 				throw new UnexpectedRollbackException("JMS transaction rolled back", ex);
-			}
-			catch (JMSException ex) {
+			} catch (JMSException ex) {
 				throw new TransactionSystemException("Could not commit JMS transaction", ex);
 			}
 		}
@@ -298,8 +279,7 @@ public class JmsTransactionManager extends AbstractPlatformTransactionManager
 					logger.debug("Rolling back JMS transaction on Session [" + session + "]");
 				}
 				session.rollback();
-			}
-			catch (JMSException ex) {
+			} catch (JMSException ex) {
 				throw new TransactionSystemException("Could not roll back JMS transaction", ex);
 			}
 		}
@@ -323,6 +303,7 @@ public class JmsTransactionManager extends AbstractPlatformTransactionManager
 	/**
 	 * Create a JMS Connection via this template's ConnectionFactory.
 	 * <p>This implementation uses JMS 1.1 API.
+	 *
 	 * @return the new JMS Connection
 	 * @throws javax.jms.JMSException if thrown by JMS API methods
 	 */
@@ -333,6 +314,7 @@ public class JmsTransactionManager extends AbstractPlatformTransactionManager
 	/**
 	 * Create a JMS Session for the given Connection.
 	 * <p>This implementation uses JMS 1.1 API.
+	 *
 	 * @param con the JMS Connection to create a Session for
 	 * @return the new JMS Session
 	 * @throws javax.jms.JMSException if thrown by JMS API methods
@@ -395,8 +377,7 @@ public class JmsTransactionManager extends AbstractPlatformTransactionManager
 			if (!this.connectionInitialized) {
 				try {
 					addConnection(createConnection());
-				}
-				catch (JMSException ex) {
+				} catch (JMSException ex) {
 					throw new CannotCreateTransactionException(
 							"Failed to lazily initialize JMS Connection for transaction", ex);
 				}
@@ -410,8 +391,7 @@ public class JmsTransactionManager extends AbstractPlatformTransactionManager
 				Assert.state(con != null, "No transactional JMS Connection");
 				try {
 					addSession(createSession(con), con);
-				}
-				catch (JMSException ex) {
+				} catch (JMSException ex) {
 					throw new CannotCreateTransactionException(
 							"Failed to lazily initialize JMS Session for transaction", ex);
 				}
@@ -424,6 +404,7 @@ public class JmsTransactionManager extends AbstractPlatformTransactionManager
 	/**
 	 * JMS transaction object, representing a JmsResourceHolder.
 	 * Used as transaction object by JmsTransactionManager.
+	 *
 	 * @see JmsResourceHolder
 	 */
 	private static class JmsTransactionObject implements SmartTransactionObject {
