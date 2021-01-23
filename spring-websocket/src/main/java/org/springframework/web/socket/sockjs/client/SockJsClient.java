@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket.sockjs.client;
 
 import java.net.URI;
@@ -56,9 +40,9 @@ import org.springframework.web.util.UriComponentsBuilder;
  * the transports it is configured with.
  *
  * @author Rossen Stoyanchev
- * @since 4.1
  * @see <a href="https://github.com/sockjs/sockjs-client">https://github.com/sockjs/sockjs-client</a>
  * @see org.springframework.web.socket.sockjs.client.Transport
+ * @since 4.1
  */
 public class SockJsClient implements WebSocketClient, Lifecycle {
 
@@ -101,6 +85,7 @@ public class SockJsClient implements WebSocketClient, Lifecycle {
 	 * implementation of {@link InfoReceiver}) the instance is used to initialize
 	 * the {@link #setInfoReceiver(InfoReceiver) infoReceiver} property, or
 	 * otherwise is defaulted to {@link RestTemplateXhrTransport}.
+	 *
 	 * @param transports the (non-empty) list of transports to use
 	 */
 	public SockJsClient(List<Transport> transports) {
@@ -130,6 +115,7 @@ public class SockJsClient implements WebSocketClient, Lifecycle {
 	 * <p>By default if this property is not set, all handshake headers are also
 	 * used for other HTTP requests. Set it if you want only a subset of handshake
 	 * headers (e.g. auth headers) to be used for other HTTP requests.
+	 *
 	 * @param httpHeaderNames the HTTP header names
 	 */
 	public void setHttpHeaderNames(@Nullable String... httpHeaderNames) {
@@ -152,6 +138,7 @@ public class SockJsClient implements WebSocketClient, Lifecycle {
 	 * {@link XhrTransport} or an implementation of {@link InfoReceiver} that
 	 * instance would have been used to initialize this property, or otherwise
 	 * it defaults to {@link RestTemplateXhrTransport}.
+	 *
 	 * @param infoReceiver the transport to use for the SockJS "Info" request
 	 */
 	public void setInfoReceiver(InfoReceiver infoReceiver) {
@@ -190,6 +177,7 @@ public class SockJsClient implements WebSocketClient, Lifecycle {
 	 * SockJS "Info" request. The connect timeout task ensures a more timely
 	 * fallback but is otherwise entirely optional.
 	 * <p>By default this is not configured in which case a fallback may take longer.
+	 *
 	 * @param connectTimeoutScheduler the task scheduler to use
 	 */
 	public void setConnectTimeoutScheduler(TaskScheduler connectTimeoutScheduler) {
@@ -259,8 +247,7 @@ public class SockJsClient implements WebSocketClient, Lifecycle {
 			SockJsUrlInfo sockJsUrlInfo = new SockJsUrlInfo(url);
 			ServerInfo serverInfo = getServerInfo(sockJsUrlInfo, getHttpRequestHeaders(headers));
 			createRequest(sockJsUrlInfo, headers, serverInfo).connect(handler, connectFuture);
-		}
-		catch (Exception exception) {
+		} catch (Exception exception) {
 			if (logger.isErrorEnabled()) {
 				logger.error("Initial SockJS \"Info\" request to server failed, url=" + url, exception);
 			}
@@ -273,8 +260,7 @@ public class SockJsClient implements WebSocketClient, Lifecycle {
 	private HttpHeaders getHttpRequestHeaders(@Nullable HttpHeaders webSocketHttpHeaders) {
 		if (getHttpHeaderNames() == null || webSocketHttpHeaders == null) {
 			return webSocketHttpHeaders;
-		}
-		else {
+		} else {
 			HttpHeaders httpHeaders = new HttpHeaders();
 			for (String name : getHttpHeaderNames()) {
 				List<String> values = webSocketHttpHeaders.get(name);
@@ -334,6 +320,7 @@ public class SockJsClient implements WebSocketClient, Lifecycle {
 	 * Return the user to associate with the SockJS session and make available via
 	 * {@link org.springframework.web.socket.WebSocketSession#getPrincipal()}.
 	 * <p>By default this method returns {@code null}.
+	 *
 	 * @return the user to associate with the session (possibly {@code null})
 	 */
 	@Nullable

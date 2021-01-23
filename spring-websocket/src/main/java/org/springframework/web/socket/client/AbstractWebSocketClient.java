@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket.client;
 
 import java.net.URI;
@@ -64,7 +48,7 @@ public abstract class AbstractWebSocketClient implements WebSocketClient {
 
 	@Override
 	public ListenableFuture<WebSocketSession> doHandshake(WebSocketHandler webSocketHandler,
-			String uriTemplate, Object... uriVars) {
+														  String uriTemplate, Object... uriVars) {
 
 		Assert.notNull(uriTemplate, "'uriTemplate' must not be null");
 		URI uri = UriComponentsBuilder.fromUriString(uriTemplate).buildAndExpand(uriVars).encode().toUri();
@@ -73,7 +57,7 @@ public abstract class AbstractWebSocketClient implements WebSocketClient {
 
 	@Override
 	public final ListenableFuture<WebSocketSession> doHandshake(WebSocketHandler webSocketHandler,
-			@Nullable WebSocketHttpHeaders headers, URI uri) {
+																@Nullable WebSocketHttpHeaders headers, URI uri) {
 
 		Assert.notNull(webSocketHandler, "WebSocketHandler must not be null");
 		assertUri(uri);
@@ -110,18 +94,19 @@ public abstract class AbstractWebSocketClient implements WebSocketClient {
 
 	/**
 	 * Perform the actual handshake to establish a connection to the server.
+	 *
 	 * @param webSocketHandler the client-side handler for WebSocket messages
-	 * @param headers the HTTP headers to use for the handshake, with unwanted (forbidden)
-	 * headers filtered out (never {@code null})
-	 * @param uri the target URI for the handshake (never {@code null})
-	 * @param subProtocols requested sub-protocols, or an empty list
-	 * @param extensions requested WebSocket extensions, or an empty list
-	 * @param attributes the attributes to associate with the WebSocketSession, i.e. via
-	 * {@link WebSocketSession#getAttributes()}; currently always an empty map.
+	 * @param headers          the HTTP headers to use for the handshake, with unwanted (forbidden)
+	 *                         headers filtered out (never {@code null})
+	 * @param uri              the target URI for the handshake (never {@code null})
+	 * @param subProtocols     requested sub-protocols, or an empty list
+	 * @param extensions       requested WebSocket extensions, or an empty list
+	 * @param attributes       the attributes to associate with the WebSocketSession, i.e. via
+	 *                         {@link WebSocketSession#getAttributes()}; currently always an empty map.
 	 * @return the established WebSocket session wrapped in a ListenableFuture.
 	 */
 	protected abstract ListenableFuture<WebSocketSession> doHandshakeInternal(WebSocketHandler webSocketHandler,
-			HttpHeaders headers, URI uri, List<String> subProtocols, List<WebSocketExtension> extensions,
-			Map<String, Object> attributes);
+																			  HttpHeaders headers, URI uri, List<String> subProtocols, List<WebSocketExtension> extensions,
+																			  Map<String, Object> attributes);
 
 }

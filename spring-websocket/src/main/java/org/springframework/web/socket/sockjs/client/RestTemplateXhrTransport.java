@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket.sockjs.client;
 
 import java.io.ByteArrayOutputStream;
@@ -98,8 +82,8 @@ public class RestTemplateXhrTransport extends AbstractXhrTransport {
 
 	@Override
 	protected void connectInternal(final TransportRequest transportRequest, final WebSocketHandler handler,
-			final URI receiveUrl, final HttpHeaders handshakeHeaders, final XhrClientSockJsSession session,
-			final SettableListenableFuture<WebSocketSession> connectFuture) {
+								   final URI receiveUrl, final HttpHeaders handshakeHeaders, final XhrClientSockJsSession session,
+								   final SettableListenableFuture<WebSocketSession> connectFuture) {
 
 		getTaskExecutor().execute(() -> {
 			HttpHeaders httpHeaders = transportRequest.getHttpRequestHeaders();
@@ -117,12 +101,10 @@ public class RestTemplateXhrTransport extends AbstractXhrTransport {
 					}
 					getRestTemplate().execute(receiveUrl, HttpMethod.POST, requestCallback, responseExtractor);
 					requestCallback = requestCallbackAfterHandshake;
-				}
-				catch (Exception ex) {
+				} catch (Exception ex) {
 					if (!connectFuture.isDone()) {
 						connectFuture.setException(ex);
-					}
-					else {
+					} else {
 						session.handleTransportError(ex);
 						session.afterTransportClosed(new CloseStatus(1006, ex.getMessage()));
 					}
@@ -186,8 +168,7 @@ public class RestTemplateXhrTransport extends AbstractXhrTransport {
 				if (request instanceof StreamingHttpOutputMessage) {
 					((StreamingHttpOutputMessage) request).setBody(outputStream ->
 							StreamUtils.copy(this.body, SockJsFrame.CHARSET, outputStream));
-				}
-				else {
+				} else {
 					StreamUtils.copy(this.body, SockJsFrame.CHARSET, request.getBody());
 				}
 			}
@@ -244,8 +225,7 @@ public class RestTemplateXhrTransport extends AbstractXhrTransport {
 				}
 				if (b == '\n') {
 					handleFrame(os);
-				}
-				else {
+				} else {
 					os.write(b);
 				}
 			}

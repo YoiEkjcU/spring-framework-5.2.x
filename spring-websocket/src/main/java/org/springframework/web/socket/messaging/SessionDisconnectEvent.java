@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket.messaging;
 
 import java.security.Principal;
@@ -43,27 +27,29 @@ public class SessionDisconnectEvent extends AbstractSubProtocolEvent {
 
 	/**
 	 * Create a new SessionDisconnectEvent.
-	 * @param source the component that published the event (never {@code null})
-	 * @param message the message (never {@code null})
-	 * @param sessionId the disconnect message
+	 *
+	 * @param source      the component that published the event (never {@code null})
+	 * @param message     the message (never {@code null})
+	 * @param sessionId   the disconnect message
 	 * @param closeStatus the status object
 	 */
 	public SessionDisconnectEvent(Object source, Message<byte[]> message, String sessionId,
-			CloseStatus closeStatus) {
+								  CloseStatus closeStatus) {
 
 		this(source, message, sessionId, closeStatus, null);
 	}
 
 	/**
 	 * Create a new SessionDisconnectEvent.
-	 * @param source the component that published the event (never {@code null})
-	 * @param message the message (never {@code null})
-	 * @param sessionId the disconnect message
+	 *
+	 * @param source      the component that published the event (never {@code null})
+	 * @param message     the message (never {@code null})
+	 * @param sessionId   the disconnect message
 	 * @param closeStatus the status object
-	 * @param user the current session user
+	 * @param user        the current session user
 	 */
 	public SessionDisconnectEvent(Object source, Message<byte[]> message, String sessionId,
-			CloseStatus closeStatus, @Nullable Principal user) {
+								  CloseStatus closeStatus, @Nullable Principal user) {
 
 		super(source, message, user);
 		Assert.notNull(sessionId, "Session id must not be null");

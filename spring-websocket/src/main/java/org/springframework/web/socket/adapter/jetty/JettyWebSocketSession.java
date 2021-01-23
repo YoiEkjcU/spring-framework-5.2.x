@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket.adapter.jetty;
 
 import java.io.IOException;
@@ -74,6 +58,7 @@ public class JettyWebSocketSession extends AbstractWebSocketSession<Session> {
 
 	/**
 	 * Create a new {@link JettyWebSocketSession} instance.
+	 *
 	 * @param attributes the attributes from the HTTP handshake to associate with the WebSocket session
 	 */
 	public JettyWebSocketSession(Map<String, Object> attributes) {
@@ -82,10 +67,11 @@ public class JettyWebSocketSession extends AbstractWebSocketSession<Session> {
 
 	/**
 	 * Create a new {@link JettyWebSocketSession} instance associated with the given user.
+	 *
 	 * @param attributes the attributes from the HTTP handshake to associate with the WebSocket
-	 * session; the provided attributes are copied, the original map is not used.
-	 * @param user the user associated with the session; if {@code null} we'll fallback on the
-	 * user available via {@link org.eclipse.jetty.websocket.api.Session#getUpgradeRequest()}
+	 *                   session; the provided attributes are copied, the original map is not used.
+	 * @param user       the user associated with the session; if {@code null} we'll fallback on the
+	 *                   user available via {@link org.eclipse.jetty.websocket.api.Session#getUpgradeRequest()}
 	 */
 	public JettyWebSocketSession(Map<String, Object> attributes, @Nullable Principal user) {
 		super(attributes);
@@ -190,8 +176,7 @@ public class JettyWebSocketSession extends AbstractWebSocketSession<Session> {
 				extensions.add(new WebSocketExtension(jettyExtension.getName(), jettyExtension.getParameters()));
 			}
 			this.extensions = Collections.unmodifiableList(extensions);
-		}
-		else {
+		} else {
 			this.extensions = Collections.emptyList();
 		}
 
@@ -224,8 +209,7 @@ public class JettyWebSocketSession extends AbstractWebSocketSession<Session> {
 	private RemoteEndpoint getRemoteEndpoint() throws IOException {
 		try {
 			return getNativeSession().getRemote();
-		}
-		catch (WebSocketException ex) {
+		} catch (WebSocketException ex) {
 			throw new IOException("Unable to obtain RemoteEndpoint in session " + getId(), ex);
 		}
 	}

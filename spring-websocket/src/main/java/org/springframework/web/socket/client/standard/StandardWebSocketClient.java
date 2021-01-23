@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket.client.standard;
 
 import java.net.InetAddress;
@@ -61,7 +45,7 @@ public class StandardWebSocketClient extends AbstractWebSocketClient {
 
 	private final WebSocketContainer webSocketContainer;
 
-	private final Map<String,Object> userProperties = new HashMap<>();
+	private final Map<String, Object> userProperties = new HashMap<>();
 
 	@Nullable
 	private AsyncListenableTaskExecutor taskExecutor = new SimpleAsyncTaskExecutor();
@@ -128,8 +112,8 @@ public class StandardWebSocketClient extends AbstractWebSocketClient {
 
 	@Override
 	protected ListenableFuture<WebSocketSession> doHandshakeInternal(WebSocketHandler webSocketHandler,
-			HttpHeaders headers, final URI uri, List<String> protocols,
-			List<WebSocketExtension> extensions, Map<String, Object> attributes) {
+																	 HttpHeaders headers, final URI uri, List<String> protocols,
+																	 List<WebSocketExtension> extensions, Map<String, Object> attributes) {
 
 		int port = getPort(uri);
 		InetSocketAddress localAddress = new InetSocketAddress(getLocalHost(), port);
@@ -154,8 +138,7 @@ public class StandardWebSocketClient extends AbstractWebSocketClient {
 
 		if (this.taskExecutor != null) {
 			return this.taskExecutor.submitListenable(connectTask);
-		}
-		else {
+		} else {
 			ListenableFutureTask<WebSocketSession> task = new ListenableFutureTask<>(connectTask);
 			task.run();
 			return task;
@@ -173,8 +156,7 @@ public class StandardWebSocketClient extends AbstractWebSocketClient {
 	private InetAddress getLocalHost() {
 		try {
 			return InetAddress.getLocalHost();
-		}
-		catch (UnknownHostException ex) {
+		} catch (UnknownHostException ex) {
 			return InetAddress.getLoopbackAddress();
 		}
 	}
@@ -203,6 +185,7 @@ public class StandardWebSocketClient extends AbstractWebSocketClient {
 				logger.trace("Handshake request headers: " + requestHeaders);
 			}
 		}
+
 		@Override
 		public void afterResponse(HandshakeResponse response) {
 			if (logger.isTraceEnabled()) {

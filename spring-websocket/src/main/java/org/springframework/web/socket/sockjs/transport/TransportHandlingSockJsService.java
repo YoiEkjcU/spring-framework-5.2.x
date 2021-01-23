@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket.sockjs.transport;
 
 import java.io.IOException;
@@ -86,10 +70,11 @@ public class TransportHandlingSockJsService extends AbstractSockJsService implem
 
 	/**
 	 * Create a TransportHandlingSockJsService with given {@link TransportHandler handler} types.
+	 *
 	 * @param scheduler a task scheduler for heart-beat messages and removing timed-out sessions;
-	 * the provided TaskScheduler should be declared as a Spring bean to ensure it gets
-	 * initialized at start-up and shuts down when the application stops
-	 * @param handlers one or more {@link TransportHandler} implementations to use
+	 *                  the provided TaskScheduler should be declared as a Spring bean to ensure it gets
+	 *                  initialized at start-up and shuts down when the application stops
+	 * @param handlers  one or more {@link TransportHandler} implementations to use
 	 */
 	public TransportHandlingSockJsService(TaskScheduler scheduler, TransportHandler... handlers) {
 		this(scheduler, Arrays.asList(handlers));
@@ -97,18 +82,18 @@ public class TransportHandlingSockJsService extends AbstractSockJsService implem
 
 	/**
 	 * Create a TransportHandlingSockJsService with given {@link TransportHandler handler} types.
+	 *
 	 * @param scheduler a task scheduler for heart-beat messages and removing timed-out sessions;
-	 * the provided TaskScheduler should be declared as a Spring bean to ensure it gets
-	 * initialized at start-up and shuts down when the application stops
-	 * @param handlers one or more {@link TransportHandler} implementations to use
+	 *                  the provided TaskScheduler should be declared as a Spring bean to ensure it gets
+	 *                  initialized at start-up and shuts down when the application stops
+	 * @param handlers  one or more {@link TransportHandler} implementations to use
 	 */
 	public TransportHandlingSockJsService(TaskScheduler scheduler, Collection<TransportHandler> handlers) {
 		super(scheduler);
 
 		if (CollectionUtils.isEmpty(handlers)) {
 			logger.warn("No transport handlers specified for TransportHandlingSockJsService");
-		}
-		else {
+		} else {
 			for (TransportHandler handler : handlers) {
 				handler.initialize(this);
 				this.handlers.put(handler.getTransportType(), handler);
@@ -192,7 +177,7 @@ public class TransportHandlingSockJsService extends AbstractSockJsService implem
 
 	@Override
 	protected void handleRawWebSocketRequest(ServerHttpRequest request, ServerHttpResponse response,
-			WebSocketHandler handler) throws IOException {
+											 WebSocketHandler handler) throws IOException {
 
 		TransportHandler transportHandler = this.handlers.get(TransportType.WEBSOCKET);
 		if (!(transportHandler instanceof HandshakeHandler)) {
@@ -211,14 +196,11 @@ public class TransportHandlingSockJsService extends AbstractSockJsService implem
 			}
 			((HandshakeHandler) transportHandler).doHandshake(request, response, handler, attributes);
 			chain.applyAfterHandshake(request, response, null);
-		}
-		catch (HandshakeFailureException ex) {
+		} catch (HandshakeFailureException ex) {
 			failure = ex;
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			failure = new HandshakeFailureException("Uncaught failure for request " + request.getURI(), ex);
-		}
-		finally {
+		} finally {
 			if (failure != null) {
 				chain.applyAfterHandshake(request, response, failure);
 				throw failure;
@@ -228,7 +210,7 @@ public class TransportHandlingSockJsService extends AbstractSockJsService implem
 
 	@Override
 	protected void handleTransportRequest(ServerHttpRequest request, ServerHttpResponse response,
-			WebSocketHandler handler, String sessionId, String transport) throws SockJsException {
+										  WebSocketHandler handler, String sessionId, String transport) throws SockJsException {
 
 		TransportType transportType = TransportType.fromValue(transport);
 		if (transportType == null) {
@@ -259,11 +241,9 @@ public class TransportHandlingSockJsService extends AbstractSockJsService implem
 						response.setStatusCode(HttpStatus.NO_CONTENT);
 						addCacheHeaders(response);
 					}
-				}
-				else if (transportType.supportsCors()) {
+				} else if (transportType.supportsCors()) {
 					sendMethodNotAllowed(response, supportedMethod, HttpMethod.OPTIONS);
-				}
-				else {
+				} else {
 					sendMethodNotAllowed(response, supportedMethod);
 				}
 				return;
@@ -278,8 +258,7 @@ public class TransportHandlingSockJsService extends AbstractSockJsService implem
 					}
 					SockJsSessionFactory sessionFactory = (SockJsSessionFactory) transportHandler;
 					session = createSockJsSession(sessionId, sessionFactory, handler, attributes);
-				}
-				else {
+				} else {
 					response.setStatusCode(HttpStatus.NOT_FOUND);
 					if (logger.isDebugEnabled()) {
 						logger.debug("Session not found, sessionId=" + sessionId +
@@ -288,8 +267,7 @@ public class TransportHandlingSockJsService extends AbstractSockJsService implem
 					}
 					return;
 				}
-			}
-			else {
+			} else {
 				Principal principal = session.getPrincipal();
 				if (principal != null && !principal.equals(request.getPrincipal())) {
 					logger.debug("The user for the session does not match the user for the request.");
@@ -312,14 +290,11 @@ public class TransportHandlingSockJsService extends AbstractSockJsService implem
 
 			transportHandler.handleRequest(request, response, handler, session);
 			chain.applyAfterHandshake(request, response, null);
-		}
-		catch (SockJsException ex) {
+		} catch (SockJsException ex) {
 			failure = ex;
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			failure = new SockJsException("Uncaught failure for request " + request.getURI(), sessionId, ex);
-		}
-		finally {
+		} finally {
 			if (failure != null) {
 				chain.applyAfterHandshake(request, response, failure);
 				throw failure;
@@ -347,7 +322,7 @@ public class TransportHandlingSockJsService extends AbstractSockJsService implem
 	}
 
 	private SockJsSession createSockJsSession(String sessionId, SockJsSessionFactory sessionFactory,
-			WebSocketHandler handler, Map<String, Object> attributes) {
+											  WebSocketHandler handler, Map<String, Object> attributes) {
 
 		SockJsSession session = this.sessions.get(sessionId);
 		if (session != null) {
@@ -375,8 +350,7 @@ public class TransportHandlingSockJsService extends AbstractSockJsService implem
 							removedIds.add(session.getId());
 							session.close();
 						}
-					}
-					catch (Throwable ex) {
+					} catch (Throwable ex) {
 						// Could be part of normal workflow (e.g. browser tab closed)
 						logger.debug("Failed to close " + session, ex);
 					}

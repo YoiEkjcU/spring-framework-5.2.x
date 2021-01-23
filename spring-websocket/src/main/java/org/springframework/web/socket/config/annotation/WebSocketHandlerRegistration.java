@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket.config.annotation;
 
 import org.springframework.web.socket.WebSocketHandler;
@@ -57,9 +41,9 @@ public interface WebSocketHandlerRegistration {
 	 * (means that all origins are allowed). By default, only same origin requests are
 	 * allowed (empty list).
 	 *
-	 * @since 4.1.2
 	 * @see <a href="https://tools.ietf.org/html/rfc6454">RFC 6454: The Web Origin Concept</a>
 	 * @see <a href="https://github.com/sockjs/sockjs-client#supported-transports-by-browser-html-served-from-http-or-https">SockJS supported transports by browser</a>
+	 * @since 4.1.2
 	 */
 	WebSocketHandlerRegistration setAllowedOrigins(String... origins);
 
@@ -67,7 +51,6 @@ public interface WebSocketHandlerRegistration {
 	 * Enable SockJS fallback options.
 	 */
 	SockJsServiceRegistration withSockJS();
-
 
 
 }

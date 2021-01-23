@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket.config.annotation;
 
 import java.util.ArrayList;
@@ -222,6 +206,7 @@ public class SockJsServiceRegistration {
 
 	/**
 	 * Configure allowed {@code Origin} header values.
+	 *
 	 * @since 4.1.2
 	 */
 	protected SockJsServiceRegistration setAllowedOrigins(String... allowedOrigins) {
@@ -236,6 +221,7 @@ public class SockJsServiceRegistration {
 	 * This option can be used to disable automatic addition of CORS headers for
 	 * SockJS requests.
 	 * <p>The default value is "false".
+	 *
 	 * @since 4.1.2
 	 */
 	public SockJsServiceRegistration setSupressCors(boolean suppressCors) {
@@ -247,6 +233,7 @@ public class SockJsServiceRegistration {
 	 * The codec to use for encoding and decoding SockJS messages.
 	 * <p>By default {@code Jackson2SockJsMessageCodec} is used requiring the
 	 * Jackson library to be present on the classpath.
+	 *
 	 * @param codec the codec to use.
 	 * @since 4.1
 	 */

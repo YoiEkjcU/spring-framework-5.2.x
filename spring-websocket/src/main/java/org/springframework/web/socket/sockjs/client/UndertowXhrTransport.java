@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket.sockjs.client;
 
 import java.io.ByteArrayOutputStream;
@@ -85,8 +69,8 @@ import org.springframework.web.socket.sockjs.frame.SockJsFrame;
  *
  * @author Brian Clozel
  * @author Rossen Stoyanchev
- * @since 4.1.2
  * @see org.xnio.Options
+ * @since 4.1.2
  */
 public class UndertowXhrTransport extends AbstractXhrTransport {
 
@@ -125,6 +109,7 @@ public class UndertowXhrTransport extends AbstractXhrTransport {
 	/**
 	 * Return the {@link org.xnio.XnioWorker} backing the I/O operations
 	 * for Undertow's HTTP client.
+	 *
 	 * @see org.xnio.Xnio
 	 */
 	public XnioWorker getWorker() {
@@ -134,15 +119,15 @@ public class UndertowXhrTransport extends AbstractXhrTransport {
 
 	@Override
 	protected void connectInternal(TransportRequest request, WebSocketHandler handler, URI receiveUrl,
-			HttpHeaders handshakeHeaders, XhrClientSockJsSession session,
-			SettableListenableFuture<WebSocketSession> connectFuture) {
+								   HttpHeaders handshakeHeaders, XhrClientSockJsSession session,
+								   SettableListenableFuture<WebSocketSession> connectFuture) {
 
 		executeReceiveRequest(request, receiveUrl, handshakeHeaders, session, connectFuture);
 	}
 
 	private void executeReceiveRequest(final TransportRequest transportRequest,
-			final URI url, final HttpHeaders headers, final XhrClientSockJsSession session,
-			final SettableListenableFuture<WebSocketSession> connectFuture) {
+									   final URI url, final HttpHeaders headers, final XhrClientSockJsSession session,
+									   final SettableListenableFuture<WebSocketSession> connectFuture) {
 
 		if (logger.isTraceEnabled()) {
 			logger.trace("Starting XHR receive request for " + url);
@@ -179,8 +164,8 @@ public class UndertowXhrTransport extends AbstractXhrTransport {
 	}
 
 	private ClientCallback<ClientExchange> createReceiveCallback(final TransportRequest transportRequest,
-			final URI url, final HttpHeaders headers, final XhrClientSockJsSession sockJsSession,
-			final SettableListenableFuture<WebSocketSession> connectFuture) {
+																 final URI url, final HttpHeaders headers, final XhrClientSockJsSession sockJsSession,
+																 final SettableListenableFuture<WebSocketSession> connectFuture) {
 
 		return new ClientCallback<ClientExchange>() {
 			@Override
@@ -193,8 +178,7 @@ public class UndertowXhrTransport extends AbstractXhrTransport {
 							HttpStatus status = HttpStatus.valueOf(response.getResponseCode());
 							IoUtils.safeClose(result.getConnection());
 							onFailure(new HttpServerErrorException(status, "Unexpected XHR receive status"));
-						}
-						else {
+						} else {
 							SockJsResponseListener listener = new SockJsResponseListener(
 									transportRequest, result.getConnection(), url, headers,
 									sockJsSession, connectFuture);
@@ -210,8 +194,7 @@ public class UndertowXhrTransport extends AbstractXhrTransport {
 								channel.getWriteSetter().set(ChannelListeners.<StreamSinkChannel>flushingChannelListener(null, null));
 								channel.resumeWrites();
 							}
-						}
-						catch (IOException exc) {
+						} catch (IOException exc) {
 							IoUtils.safeClose(result.getConnection());
 							onFailure(exc);
 						}
@@ -236,8 +219,7 @@ public class UndertowXhrTransport extends AbstractXhrTransport {
 				}
 				if (sockJsSession.isDisconnected()) {
 					sockJsSession.afterTransportClosed(null);
-				}
-				else {
+				} else {
 					sockJsSession.handleTransportError(failure);
 					sockJsSession.afterTransportClosed(new CloseStatus(1006, failure.getMessage()));
 				}
@@ -292,22 +274,19 @@ public class UndertowXhrTransport extends AbstractXhrTransport {
 				return (responseBody != null ?
 						new ResponseEntity<>(responseBody, responseHeaders, status) :
 						new ResponseEntity<>(responseHeaders, status));
-			}
-			finally {
+			} finally {
 				IoUtils.safeClose(connection);
 			}
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new SockJsTransportFailureException("Failed to execute request to " + url, ex);
-		}
-		catch (InterruptedException ex) {
+		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
 			throw new SockJsTransportFailureException("Interrupted while processing request to " + url, ex);
 		}
 	}
 
 	private ClientCallback<ClientExchange> createRequestCallback(final @Nullable String body,
-			final List<ClientResponse> responses, final CountDownLatch latch) {
+																 final List<ClientResponse> responses, final CountDownLatch latch) {
 
 		return new ClientCallback<ClientExchange>() {
 			@Override
@@ -322,12 +301,14 @@ public class UndertowXhrTransport extends AbstractXhrTransport {
 								result.getResponse().putAttachment(RESPONSE_BODY, string);
 								latch.countDown();
 							}
+
 							@Override
 							protected void error(IOException ex) {
 								onFailure(latch, ex);
 							}
 						}.setup(result.getResponseChannel());
 					}
+
 					@Override
 					public void failed(IOException ex) {
 						onFailure(latch, ex);
@@ -343,8 +324,7 @@ public class UndertowXhrTransport extends AbstractXhrTransport {
 								.set(ChannelListeners.<StreamSinkChannel>flushingChannelListener(null, null));
 						result.getRequestChannel().resumeWrites();
 					}
-				}
-				catch (IOException ex) {
+				} catch (IOException ex) {
 					onFailure(latch, ex);
 				}
 			}
@@ -379,8 +359,8 @@ public class UndertowXhrTransport extends AbstractXhrTransport {
 		private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
 		public SockJsResponseListener(TransportRequest request, ClientConnection connection, URI url,
-				HttpHeaders headers, XhrClientSockJsSession sockJsSession,
-				SettableListenableFuture<WebSocketSession> connectFuture) {
+									  HttpHeaders headers, XhrClientSockJsSession sockJsSession,
+									  SettableListenableFuture<WebSocketSession> connectFuture) {
 
 			this.request = request;
 			this.connection = connection;
@@ -415,25 +395,21 @@ public class UndertowXhrTransport extends AbstractXhrTransport {
 					buffer.flip();
 					if (r == 0) {
 						return;
-					}
-					else if (r == -1) {
+					} else if (r == -1) {
 						onSuccess();
-					}
-					else {
+					} else {
 						while (buffer.hasRemaining()) {
 							int b = buffer.get();
 							if (b == '\n') {
 								handleFrame();
-							}
-							else {
+							} else {
 								this.outputStream.write(b);
 							}
 						}
 					}
 				}
 				while (r > 0);
-			}
-			catch (IOException exc) {
+			} catch (IOException exc) {
 				onFailure(exc);
 			}
 		}
@@ -467,8 +443,7 @@ public class UndertowXhrTransport extends AbstractXhrTransport {
 			}
 			if (this.session.isDisconnected()) {
 				this.session.afterTransportClosed(null);
-			}
-			else {
+			} else {
 				this.session.handleTransportError(failure);
 				this.session.afterTransportClosed(new CloseStatus(1006, failure.getMessage()));
 			}

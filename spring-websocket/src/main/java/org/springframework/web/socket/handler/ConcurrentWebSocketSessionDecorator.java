@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket.handler;
 
 import java.io.IOException;
@@ -71,8 +55,9 @@ public class ConcurrentWebSocketSessionDecorator extends WebSocketSessionDecorat
 
 	/**
 	 * Basic constructor.
-	 * @param delegate the {@code WebSocketSession} to delegate to
-	 * @param sendTimeLimit the send-time limit (milliseconds)
+	 *
+	 * @param delegate        the {@code WebSocketSession} to delegate to
+	 * @param sendTimeLimit   the send-time limit (milliseconds)
 	 * @param bufferSizeLimit the buffer-size limit (number of bytes)
 	 */
 	public ConcurrentWebSocketSessionDecorator(WebSocketSession delegate, int sendTimeLimit, int bufferSizeLimit) {
@@ -81,11 +66,12 @@ public class ConcurrentWebSocketSessionDecorator extends WebSocketSessionDecorat
 
 	/**
 	 * Constructor that also specifies the overflow strategy to use.
-	 * @param delegate the {@code WebSocketSession} to delegate to
-	 * @param sendTimeLimit the send-time limit (milliseconds)
-	 * @param bufferSizeLimit the buffer-size limit (number of bytes)
+	 *
+	 * @param delegate         the {@code WebSocketSession} to delegate to
+	 * @param sendTimeLimit    the send-time limit (milliseconds)
+	 * @param bufferSizeLimit  the buffer-size limit (number of bytes)
 	 * @param overflowStrategy the overflow strategy to use; by default the
-	 * session is terminated.
+	 *                         session is terminated.
 	 * @since 5.1
 	 */
 	public ConcurrentWebSocketSessionDecorator(
@@ -100,6 +86,7 @@ public class ConcurrentWebSocketSessionDecorator extends WebSocketSessionDecorat
 
 	/**
 	 * Return the configured send-time limit (milliseconds).
+	 *
 	 * @since 4.3.13
 	 */
 	public int getSendTimeLimit() {
@@ -108,6 +95,7 @@ public class ConcurrentWebSocketSessionDecorator extends WebSocketSessionDecorat
 
 	/**
 	 * Return the configured buffer-size limit (number of bytes).
+	 *
 	 * @since 4.3.13
 	 */
 	public int getBufferSizeLimit() {
@@ -144,7 +132,7 @@ public class ConcurrentWebSocketSessionDecorator extends WebSocketSessionDecorat
 			if (!tryFlushMessageBuffer()) {
 				if (logger.isTraceEnabled()) {
 					logger.trace(String.format("Another send already in progress: " +
-							"session id '%s':, \"in-progress\" send time %d (ms), buffer size %d bytes",
+									"session id '%s':, \"in-progress\" send time %d (ms), buffer size %d bytes",
 							getId(), getTimeSinceSendStarted(), getBufferSize()));
 				}
 				checkSessionLimits();
@@ -171,8 +159,7 @@ public class ConcurrentWebSocketSessionDecorator extends WebSocketSessionDecorat
 					getDelegate().sendMessage(message);
 					this.sendStartTime = 0;
 				}
-			}
-			finally {
+			} finally {
 				this.sendStartTime = 0;
 				this.flushLock.unlock();
 			}
@@ -188,8 +175,7 @@ public class ConcurrentWebSocketSessionDecorator extends WebSocketSessionDecorat
 					String format = "Send time %d (ms) for session '%s' exceeded the allowed limit %d";
 					String reason = String.format(format, getTimeSinceSendStarted(), getId(), getSendTimeLimit());
 					limitExceeded(reason);
-				}
-				else if (getBufferSize() > getBufferSizeLimit()) {
+				} else if (getBufferSize() > getBufferSizeLimit()) {
 					switch (this.overflowStrategy) {
 						case TERMINATE:
 							String format = "Buffer size %d bytes for session '%s' exceeds the allowed limit %d";
@@ -215,8 +201,7 @@ public class ConcurrentWebSocketSessionDecorator extends WebSocketSessionDecorat
 							throw new IllegalStateException("Unexpected OverflowStrategy: " + this.overflowStrategy);
 					}
 				}
-			}
-			finally {
+			} finally {
 				this.closeLock.unlock();
 			}
 		}
@@ -237,8 +222,7 @@ public class ConcurrentWebSocketSessionDecorator extends WebSocketSessionDecorat
 			if (!CloseStatus.SESSION_NOT_RELIABLE.equals(status)) {
 				try {
 					checkSessionLimits();
-				}
-				catch (SessionLimitExceededException ex) {
+				} catch (SessionLimitExceededException ex) {
 					// Ignore
 				}
 				if (this.limitExceeded) {
@@ -250,8 +234,7 @@ public class ConcurrentWebSocketSessionDecorator extends WebSocketSessionDecorat
 			}
 			this.closeInProgress = true;
 			super.close(status);
-		}
-		finally {
+		} finally {
 			this.closeLock.unlock();
 		}
 	}
@@ -265,6 +248,7 @@ public class ConcurrentWebSocketSessionDecorator extends WebSocketSessionDecorat
 
 	/**
 	 * Enum for options of what to do when the buffer fills up.
+	 *
 	 * @since 5.1
 	 */
 	public enum OverflowStrategy {

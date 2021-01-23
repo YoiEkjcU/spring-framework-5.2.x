@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket.server.standard;
 
 import java.lang.reflect.Method;
@@ -56,8 +40,7 @@ public class WebSphereRequestUpgradeStrategy extends AbstractStandardUpgradeStra
 			Class<?> type = loader.loadClass("com.ibm.websphere.wsoc.WsWsocServerContainer");
 			upgradeMethod = type.getMethod("doUpgrade", HttpServletRequest.class,
 					HttpServletResponse.class, ServerEndpointConfig.class, Map.class);
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			throw new IllegalStateException("No compatible WebSphere version found", ex);
 		}
 	}
@@ -65,12 +48,12 @@ public class WebSphereRequestUpgradeStrategy extends AbstractStandardUpgradeStra
 
 	@Override
 	public String[] getSupportedVersions() {
-		return new String[] {"13"};
+		return new String[]{"13"};
 	}
 
 	@Override
 	public void upgradeInternal(ServerHttpRequest httpRequest, ServerHttpResponse httpResponse,
-			@Nullable String selectedProtocol, List<Extension> selectedExtensions, Endpoint endpoint)
+								@Nullable String selectedProtocol, List<Extension> selectedExtensions, Endpoint endpoint)
 			throws HandshakeFailureException {
 
 		HttpServletRequest request = getHttpServletRequest(httpRequest);
@@ -78,7 +61,7 @@ public class WebSphereRequestUpgradeStrategy extends AbstractStandardUpgradeStra
 
 		StringBuffer requestUrl = request.getRequestURL();
 		String path = request.getRequestURI();  // shouldn't matter
-		Map<String, String> pathParams = Collections.<String, String> emptyMap();
+		Map<String, String> pathParams = Collections.<String, String>emptyMap();
 
 		ServerEndpointRegistration endpointConfig = new ServerEndpointRegistration(path, endpoint);
 		endpointConfig.setSubprotocols(Collections.singletonList(selectedProtocol));
@@ -87,8 +70,7 @@ public class WebSphereRequestUpgradeStrategy extends AbstractStandardUpgradeStra
 		try {
 			ServerContainer container = getContainer(request);
 			upgradeMethod.invoke(container, request, response, endpointConfig, pathParams);
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			throw new HandshakeFailureException(
 					"Servlet request failed to upgrade to WebSocket for " + requestUrl, ex);
 		}

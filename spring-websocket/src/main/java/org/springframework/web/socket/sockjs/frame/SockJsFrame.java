@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket.sockjs.frame;
 
 import java.nio.charset.Charset;
@@ -53,6 +37,7 @@ public class SockJsFrame {
 
 	/**
 	 * Create a new instance frame with the given frame content.
+	 *
 	 * @param content the content (must be a non-empty and represent a valid SockJS frame)
 	 */
 	public SockJsFrame(String content) {
@@ -60,24 +45,19 @@ public class SockJsFrame {
 		if ("o".equals(content)) {
 			this.type = SockJsFrameType.OPEN;
 			this.content = content;
-		}
-		else if ("h".equals(content)) {
+		} else if ("h".equals(content)) {
 			this.type = SockJsFrameType.HEARTBEAT;
 			this.content = content;
-		}
-		else if (content.charAt(0) == 'a') {
+		} else if (content.charAt(0) == 'a') {
 			this.type = SockJsFrameType.MESSAGE;
 			this.content = (content.length() > 1 ? content : "a[]");
-		}
-		else if (content.charAt(0) == 'm') {
+		} else if (content.charAt(0) == 'm') {
 			this.type = SockJsFrameType.MESSAGE;
 			this.content = (content.length() > 1 ? content : "null");
-		}
-		else if (content.charAt(0) == 'c') {
+		} else if (content.charAt(0) == 'c') {
 			this.type = SockJsFrameType.CLOSE;
 			this.content = (content.length() > 1 ? content : "c[]");
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException("Unexpected SockJS frame type in content \"" + content + "\"");
 		}
 	}
@@ -113,8 +93,7 @@ public class SockJsFrame {
 	public String getFrameData() {
 		if (getType() == SockJsFrameType.OPEN || getType() == SockJsFrameType.HEARTBEAT) {
 			return null;
-		}
-		else {
+		} else {
 			return getContent().substring(1);
 		}
 	}

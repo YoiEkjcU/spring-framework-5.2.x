@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket.messaging;
 
 import java.io.IOException;
@@ -89,12 +73,13 @@ public class WebSocketStompClient extends StompClientSupport implements SmartLif
 	 * Class constructor. Sets {@link #setDefaultHeartbeat} to "0,0" but will
 	 * reset it back to the preferred "10000,10000" when a
 	 * {@link #setTaskScheduler} is configured.
+	 *
 	 * @param webSocketClient the WebSocket client to connect with
 	 */
 	public WebSocketStompClient(WebSocketClient webSocketClient) {
 		Assert.notNull(webSocketClient, "WebSocketClient is required");
 		this.webSocketClient = webSocketClient;
-		setDefaultHeartbeat(new long[] {0, 0});
+		setDefaultHeartbeat(new long[]{0, 0});
 	}
 
 
@@ -113,7 +98,7 @@ public class WebSocketStompClient extends StompClientSupport implements SmartLif
 	@Override
 	public void setTaskScheduler(@Nullable TaskScheduler taskScheduler) {
 		if (!isDefaultHeartbeatEnabled()) {
-			setDefaultHeartbeat(new long[] {10000, 10000});
+			setDefaultHeartbeat(new long[]{10000, 10000});
 		}
 		super.setTaskScheduler(taskScheduler);
 	}
@@ -205,7 +190,8 @@ public class WebSocketStompClient extends StompClientSupport implements SmartLif
 	 * Connect to the given WebSocket URL and notify the given
 	 * {@link org.springframework.messaging.simp.stomp.StompSessionHandler}
 	 * when connected on the STOMP level after the CONNECTED frame is received.
-	 * @param url the url to connect to
+	 *
+	 * @param url     the url to connect to
 	 * @param handler the session handler
 	 * @param uriVars the URI variables to expand into the URL
 	 * @return a ListenableFuture for access to the session when ready for use
@@ -218,14 +204,15 @@ public class WebSocketStompClient extends StompClientSupport implements SmartLif
 	 * An overloaded version of
 	 * {@link #connect(String, StompSessionHandler, Object...)} that also
 	 * accepts {@link WebSocketHttpHeaders} to use for the WebSocket handshake.
-	 * @param url the url to connect to
+	 *
+	 * @param url              the url to connect to
 	 * @param handshakeHeaders the headers for the WebSocket handshake
-	 * @param handler the session handler
-	 * @param uriVariables the URI variables to expand into the URL
+	 * @param handler          the session handler
+	 * @param uriVariables     the URI variables to expand into the URL
 	 * @return a ListenableFuture for access to the session when ready for use
 	 */
 	public ListenableFuture<StompSession> connect(String url, @Nullable WebSocketHttpHeaders handshakeHeaders,
-			StompSessionHandler handler, Object... uriVariables) {
+												  StompSessionHandler handler, Object... uriVariables) {
 
 		return connect(url, handshakeHeaders, null, handler, uriVariables);
 	}
@@ -235,15 +222,16 @@ public class WebSocketStompClient extends StompClientSupport implements SmartLif
 	 * {@link #connect(String, StompSessionHandler, Object...)} that also accepts
 	 * {@link WebSocketHttpHeaders} to use for the WebSocket handshake and
 	 * {@link StompHeaders} for the STOMP CONNECT frame.
-	 * @param url the url to connect to
+	 *
+	 * @param url              the url to connect to
 	 * @param handshakeHeaders headers for the WebSocket handshake
-	 * @param connectHeaders headers for the STOMP CONNECT frame
-	 * @param handler the session handler
-	 * @param uriVariables the URI variables to expand into the URL
+	 * @param connectHeaders   headers for the STOMP CONNECT frame
+	 * @param handler          the session handler
+	 * @param uriVariables     the URI variables to expand into the URL
 	 * @return a ListenableFuture for access to the session when ready for use
 	 */
 	public ListenableFuture<StompSession> connect(String url, @Nullable WebSocketHttpHeaders handshakeHeaders,
-			@Nullable StompHeaders connectHeaders, StompSessionHandler handler, Object... uriVariables) {
+												  @Nullable StompHeaders connectHeaders, StompSessionHandler handler, Object... uriVariables) {
 
 		Assert.notNull(url, "'url' must not be null");
 		URI uri = UriComponentsBuilder.fromUriString(url).buildAndExpand(uriVariables).encode().toUri();
@@ -254,14 +242,15 @@ public class WebSocketStompClient extends StompClientSupport implements SmartLif
 	 * An overloaded version of
 	 * {@link #connect(String, WebSocketHttpHeaders, StompSessionHandler, Object...)}
 	 * that accepts a fully prepared {@link java.net.URI}.
-	 * @param url the url to connect to
+	 *
+	 * @param url              the url to connect to
 	 * @param handshakeHeaders the headers for the WebSocket handshake
-	 * @param connectHeaders headers for the STOMP CONNECT frame
-	 * @param sessionHandler the STOMP session handler
+	 * @param connectHeaders   headers for the STOMP CONNECT frame
+	 * @param sessionHandler   the STOMP session handler
 	 * @return a ListenableFuture for access to the session when ready for use
 	 */
 	public ListenableFuture<StompSession> connect(URI url, @Nullable WebSocketHttpHeaders handshakeHeaders,
-			@Nullable StompHeaders connectHeaders, StompSessionHandler sessionHandler) {
+												  @Nullable StompHeaders connectHeaders, StompSessionHandler sessionHandler) {
 
 		Assert.notNull(url, "'url' must not be null");
 		ConnectionHandlingStompSession session = createSession(connectHeaders, sessionHandler);
@@ -331,8 +320,7 @@ public class WebSocketStompClient extends StompClientSupport implements SmartLif
 			List<Message<byte[]>> messages;
 			try {
 				messages = this.codec.decode(webSocketMessage);
-			}
-			catch (Throwable ex) {
+			} catch (Throwable ex) {
 				this.connectionHandler.handleFailure(ex);
 				return;
 			}
@@ -356,8 +344,7 @@ public class WebSocketStompClient extends StompClientSupport implements SmartLif
 			for (ScheduledFuture<?> task : this.inactivityTasks) {
 				try {
 					task.cancel(true);
-				}
-				catch (Throwable ex) {
+				} catch (Throwable ex) {
 					// Ignore
 				}
 			}
@@ -382,11 +369,9 @@ public class WebSocketStompClient extends StompClientSupport implements SmartLif
 				Assert.state(session != null, "No WebSocketSession available");
 				session.sendMessage(this.codec.encode(message, session.getClass()));
 				future.set(null);
-			}
-			catch (Throwable ex) {
+			} catch (Throwable ex) {
 				future.setException(ex);
-			}
-			finally {
+			} finally {
 				updateLastWriteTime();
 			}
 			return future;
@@ -407,8 +392,7 @@ public class WebSocketStompClient extends StompClientSupport implements SmartLif
 				if (System.currentTimeMillis() - this.lastReadTime > duration) {
 					try {
 						runnable.run();
-					}
-					catch (Throwable ex) {
+					} catch (Throwable ex) {
 						if (logger.isDebugEnabled()) {
 							logger.debug("ReadInactivityTask failure", ex);
 						}
@@ -425,8 +409,7 @@ public class WebSocketStompClient extends StompClientSupport implements SmartLif
 				if (System.currentTimeMillis() - this.lastWriteTime > duration) {
 					try {
 						runnable.run();
-					}
-					catch (Throwable ex) {
+					} catch (Throwable ex) {
 						if (logger.isDebugEnabled()) {
 							logger.debug("WriteInactivityTask failure", ex);
 						}
@@ -441,8 +424,7 @@ public class WebSocketStompClient extends StompClientSupport implements SmartLif
 			if (session != null) {
 				try {
 					session.close();
-				}
-				catch (IOException ex) {
+				} catch (IOException ex) {
 					if (logger.isDebugEnabled()) {
 						logger.debug("Failed to close session: " + session.getId(), ex);
 					}
@@ -472,11 +454,9 @@ public class WebSocketStompClient extends StompClientSupport implements SmartLif
 			ByteBuffer byteBuffer;
 			if (webSocketMessage instanceof TextMessage) {
 				byteBuffer = ByteBuffer.wrap(((TextMessage) webSocketMessage).asBytes());
-			}
-			else if (webSocketMessage instanceof BinaryMessage) {
+			} else if (webSocketMessage instanceof BinaryMessage) {
 				byteBuffer = ((BinaryMessage) webSocketMessage).getPayload();
-			}
-			else {
+			} else {
 				return result;
 			}
 			result = this.bufferingDecoder.decode(byteBuffer);
@@ -496,7 +476,7 @@ public class WebSocketStompClient extends StompClientSupport implements SmartLif
 			byte[] payload = message.getPayload();
 			byte[] bytes = ENCODER.encode(accessor.getMessageHeaders(), payload);
 
-			boolean useBinary = (payload.length > 0  &&
+			boolean useBinary = (payload.length > 0 &&
 					!(SockJsSession.class.isAssignableFrom(sessionType)) &&
 					MimeTypeUtils.APPLICATION_OCTET_STREAM.isCompatibleWith(accessor.getContentType()));
 

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket.server.standard;
 
 import java.util.ArrayList;
@@ -51,8 +35,8 @@ import org.springframework.web.socket.handler.BeanCreatingHandlerProvider;
  *
  * @author Rossen Stoyanchev
  * @author Juergen Hoeller
- * @since 4.0
  * @see ServerEndpointExporter
+ * @since 4.0
  */
 public class ServerEndpointRegistration extends ServerEndpointConfig.Configurator
 		implements ServerEndpointConfig, BeanFactoryAware {
@@ -79,7 +63,8 @@ public class ServerEndpointRegistration extends ServerEndpointConfig.Configurato
 	/**
 	 * Create a new {@link ServerEndpointRegistration} instance from an
 	 * {@code javax.websocket.Endpoint} instance.
-	 * @param path the endpoint path
+	 *
+	 * @param path     the endpoint path
 	 * @param endpoint the endpoint instance
 	 */
 	public ServerEndpointRegistration(String path, Endpoint endpoint) {
@@ -93,7 +78,8 @@ public class ServerEndpointRegistration extends ServerEndpointConfig.Configurato
 	/**
 	 * Create a new {@link ServerEndpointRegistration} instance from an
 	 * {@code javax.websocket.Endpoint} class.
-	 * @param path the endpoint path
+	 *
+	 * @param path          the endpoint path
 	 * @param endpointClass the endpoint class
 	 */
 	public ServerEndpointRegistration(String path, Class<? extends Endpoint> endpointClass) {
@@ -116,8 +102,7 @@ public class ServerEndpointRegistration extends ServerEndpointConfig.Configurato
 	public Class<? extends Endpoint> getEndpointClass() {
 		if (this.endpoint != null) {
 			return this.endpoint.getClass();
-		}
-		else {
+		} else {
 			Assert.state(this.endpointProvider != null, "No endpoint set");
 			return this.endpointProvider.getHandlerType();
 		}
@@ -126,8 +111,7 @@ public class ServerEndpointRegistration extends ServerEndpointConfig.Configurato
 	public Endpoint getEndpoint() {
 		if (this.endpoint != null) {
 			return this.endpoint;
-		}
-		else {
+		} else {
 			Assert.state(this.endpointProvider != null, "No endpoint set");
 			return this.endpointProvider.getHandler();
 		}

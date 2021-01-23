@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket.server.support;
 
 import java.util.Collections;
@@ -53,7 +37,7 @@ public class HandshakeInterceptorChain {
 
 
 	public boolean applyBeforeHandshake(ServerHttpRequest request, ServerHttpResponse response,
-			Map<String, Object> attributes) throws Exception {
+										Map<String, Object> attributes) throws Exception {
 
 		for (int i = 0; i < this.interceptors.size(); i++) {
 			HandshakeInterceptor interceptor = this.interceptors.get(i);
@@ -76,8 +60,7 @@ public class HandshakeInterceptorChain {
 			HandshakeInterceptor interceptor = this.interceptors.get(i);
 			try {
 				interceptor.afterHandshake(request, response, this.wsHandler, failure);
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				if (logger.isWarnEnabled()) {
 					logger.warn(interceptor + " threw exception in afterHandshake: " + ex);
 				}

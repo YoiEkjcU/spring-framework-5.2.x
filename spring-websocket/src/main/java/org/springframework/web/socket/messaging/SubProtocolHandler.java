@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket.messaging;
 
 import java.util.List;
@@ -49,8 +33,9 @@ public interface SubProtocolHandler {
 
 	/**
 	 * Handle the given {@link WebSocketMessage} received from a client.
-	 * @param session the client session
-	 * @param message the client message
+	 *
+	 * @param session       the client session
+	 * @param message       the client message
 	 * @param outputChannel an output channel to send messages to
 	 */
 	void handleMessageFromClient(WebSocketSession session, WebSocketMessage<?> message, MessageChannel outputChannel)
@@ -58,6 +43,7 @@ public interface SubProtocolHandler {
 
 	/**
 	 * Handle the given {@link Message} to the client associated with the given WebSocket session.
+	 *
 	 * @param session the client session
 	 * @param message the client message
 	 */
@@ -65,6 +51,7 @@ public interface SubProtocolHandler {
 
 	/**
 	 * Resolve the session id from the given message or return {@code null}.
+	 *
 	 * @param message the message to resolve the session id from
 	 */
 	@Nullable
@@ -72,15 +59,17 @@ public interface SubProtocolHandler {
 
 	/**
 	 * Invoked after a {@link WebSocketSession} has started.
-	 * @param session the client session
+	 *
+	 * @param session       the client session
 	 * @param outputChannel a channel
 	 */
 	void afterSessionStarted(WebSocketSession session, MessageChannel outputChannel) throws Exception;
 
 	/**
 	 * Invoked after a {@link WebSocketSession} has ended.
-	 * @param session the client session
-	 * @param closeStatus the reason why the session was closed
+	 *
+	 * @param session       the client session
+	 * @param closeStatus   the reason why the session was closed
 	 * @param outputChannel a channel
 	 */
 	void afterSessionEnded(WebSocketSession session, CloseStatus closeStatus, MessageChannel outputChannel)

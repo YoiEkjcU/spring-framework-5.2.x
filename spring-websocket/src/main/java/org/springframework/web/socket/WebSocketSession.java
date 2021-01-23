@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket;
 
 import java.io.Closeable;
@@ -59,6 +43,7 @@ public interface WebSocketSession extends Closeable {
 	 * HandshakeInterceptor}. On the client side the map can be populated via
 	 * {@link org.springframework.web.socket.client.WebSocketClient
 	 * WebSocketClient} handshake methods.
+	 *
 	 * @return a Map with the session attributes (never {@code null})
 	 */
 	Map<String, Object> getAttributes();
@@ -85,6 +70,7 @@ public interface WebSocketSession extends Closeable {
 
 	/**
 	 * Return the negotiated sub-protocol.
+	 *
 	 * @return the protocol identifier, or {@code null} if no protocol
 	 * was specified or negotiated successfully
 	 */
@@ -113,6 +99,7 @@ public interface WebSocketSession extends Closeable {
 
 	/**
 	 * Determine the negotiated extensions.
+	 *
 	 * @return the list of extensions, or an empty list if no extension
 	 * was specified or negotiated successfully
 	 */
@@ -126,6 +113,7 @@ public interface WebSocketSession extends Closeable {
 	 * that, one option is to wrap the {@code WebSocketSession} with the
 	 * {@link org.springframework.web.socket.handler.ConcurrentWebSocketSessionDecorator
 	 * ConcurrentWebSocketSessionDecorator}.
+	 *
 	 * @see org.springframework.web.socket.handler.ConcurrentWebSocketSessionDecorator
 	 */
 	void sendMessage(WebSocketMessage<?> message) throws IOException;

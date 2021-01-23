@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket;
 
 import java.util.ArrayList;
@@ -46,8 +30,8 @@ import org.springframework.util.StringUtils;
  *
  * @author Brian Clozel
  * @author Juergen Hoeller
- * @since 4.0
  * @see <a href="https://tools.ietf.org/html/rfc6455#section-9">WebSocket Protocol Extensions, RFC 6455 - Section 9</a>
+ * @since 4.0
  */
 public class WebSocketExtension {
 
@@ -58,6 +42,7 @@ public class WebSocketExtension {
 
 	/**
 	 * Create a WebSocketExtension with the given name.
+	 *
 	 * @param name the name of the extension
 	 */
 	public WebSocketExtension(String name) {
@@ -66,7 +51,8 @@ public class WebSocketExtension {
 
 	/**
 	 * Create a WebSocketExtension with the given name and parameters.
-	 * @param name the name of the extension
+	 *
+	 * @param name       the name of the extension
 	 * @param parameters the parameters
 	 */
 	public WebSocketExtension(String name, @Nullable Map<String, String> parameters) {
@@ -76,8 +62,7 @@ public class WebSocketExtension {
 			Map<String, String> map = new LinkedCaseInsensitiveMap<>(parameters.size(), Locale.ENGLISH);
 			map.putAll(parameters);
 			this.parameters = Collections.unmodifiableMap(map);
-		}
-		else {
+		} else {
 			this.parameters = Collections.emptyMap();
 		}
 	}
@@ -127,6 +112,7 @@ public class WebSocketExtension {
 	/**
 	 * Parse the given, comma-separated string into a list of {@code WebSocketExtension} objects.
 	 * <p>This method can be used to parse a "Sec-WebSocket-Extension" header.
+	 *
 	 * @param extensions the string to parse
 	 * @return the list of extensions
 	 * @throws IllegalArgumentException if the string cannot be parsed
@@ -139,8 +125,7 @@ public class WebSocketExtension {
 				result.add(parseExtension(token));
 			}
 			return result;
-		}
-		else {
+		} else {
 			return Collections.emptyList();
 		}
 	}

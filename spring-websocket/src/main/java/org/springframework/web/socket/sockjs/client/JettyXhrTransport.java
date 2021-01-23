@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket.sockjs.client;
 
 import java.io.ByteArrayOutputStream;
@@ -83,8 +67,7 @@ public class JettyXhrTransport extends AbstractXhrTransport implements Lifecycle
 			if (!this.httpClient.isRunning()) {
 				this.httpClient.start();
 			}
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			throw new SockJsException("Failed to start JettyXhrTransport", ex);
 		}
 	}
@@ -95,8 +78,7 @@ public class JettyXhrTransport extends AbstractXhrTransport implements Lifecycle
 			if (this.httpClient.isRunning()) {
 				this.httpClient.stop();
 			}
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			throw new SockJsException("Failed to stop JettyXhrTransport", ex);
 		}
 	}
@@ -109,8 +91,8 @@ public class JettyXhrTransport extends AbstractXhrTransport implements Lifecycle
 
 	@Override
 	protected void connectInternal(TransportRequest transportRequest, WebSocketHandler handler,
-			URI url, HttpHeaders handshakeHeaders, XhrClientSockJsSession session,
-			SettableListenableFuture<WebSocketSession> connectFuture) {
+								   URI url, HttpHeaders handshakeHeaders, XhrClientSockJsSession session,
+								   SettableListenableFuture<WebSocketSession> connectFuture) {
 
 		HttpHeaders httpHeaders = transportRequest.getHttpRequestHeaders();
 		SockJsResponseListener listener = new SockJsResponseListener(url, httpHeaders, session, connectFuture);
@@ -137,7 +119,7 @@ public class JettyXhrTransport extends AbstractXhrTransport implements Lifecycle
 	}
 
 	protected ResponseEntity<String> executeRequest(URI url, HttpMethod method,
-			HttpHeaders headers, @Nullable String body) {
+													HttpHeaders headers, @Nullable String body) {
 
 		Request httpRequest = this.httpClient.newRequest(url).method(method);
 		addHttpHeaders(httpRequest, headers);
@@ -147,8 +129,7 @@ public class JettyXhrTransport extends AbstractXhrTransport implements Lifecycle
 		ContentResponse response;
 		try {
 			response = httpRequest.send();
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			throw new SockJsTransportFailureException("Failed to execute request to " + url, ex);
 		}
 		HttpStatus status = HttpStatus.valueOf(response.getStatus());
@@ -199,8 +180,8 @@ public class JettyXhrTransport extends AbstractXhrTransport implements Lifecycle
 
 		private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-		public SockJsResponseListener(URI url, HttpHeaders headers,	XhrClientSockJsSession sockJsSession,
-				SettableListenableFuture<WebSocketSession> connectFuture) {
+		public SockJsResponseListener(URI url, HttpHeaders headers, XhrClientSockJsSession sockJsSession,
+									  SettableListenableFuture<WebSocketSession> connectFuture) {
 
 			this.transportUrl = url;
 			this.receiveHeaders = headers;
@@ -240,8 +221,7 @@ public class JettyXhrTransport extends AbstractXhrTransport implements Lifecycle
 				int b = buffer.get();
 				if (b == '\n') {
 					handleFrame();
-				}
-				else {
+				} else {
 					this.outputStream.write(b);
 				}
 			}
@@ -276,8 +256,7 @@ public class JettyXhrTransport extends AbstractXhrTransport implements Lifecycle
 			}
 			if (this.sockJsSession.isDisconnected()) {
 				this.sockJsSession.afterTransportClosed(null);
-			}
-			else {
+			} else {
 				this.sockJsSession.handleTransportError(failure);
 				this.sockJsSession.afterTransportClosed(new CloseStatus(1006, failure.getMessage()));
 			}

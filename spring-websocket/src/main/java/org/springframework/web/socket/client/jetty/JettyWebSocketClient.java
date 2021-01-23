@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket.client.jetty;
 
 import java.net.URI;
@@ -106,8 +90,7 @@ public class JettyWebSocketClient extends AbstractWebSocketClient implements Lif
 	public void start() {
 		try {
 			this.client.start();
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			throw new IllegalStateException("Failed to start Jetty WebSocketClient", ex);
 		}
 	}
@@ -116,8 +99,7 @@ public class JettyWebSocketClient extends AbstractWebSocketClient implements Lif
 	public void stop() {
 		try {
 			this.client.stop();
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			logger.error("Failed to stop Jetty WebSocketClient", ex);
 		}
 	}
@@ -130,7 +112,7 @@ public class JettyWebSocketClient extends AbstractWebSocketClient implements Lif
 
 	@Override
 	public ListenableFuture<WebSocketSession> doHandshake(WebSocketHandler webSocketHandler,
-			String uriTemplate, Object... uriVars) {
+														  String uriTemplate, Object... uriVars) {
 
 		UriComponents uriComponents = UriComponentsBuilder.fromUriString(uriTemplate).buildAndExpand(uriVars).encode();
 		return doHandshake(webSocketHandler, null, uriComponents.toUri());
@@ -138,8 +120,8 @@ public class JettyWebSocketClient extends AbstractWebSocketClient implements Lif
 
 	@Override
 	public ListenableFuture<WebSocketSession> doHandshakeInternal(WebSocketHandler wsHandler,
-			HttpHeaders headers, final URI uri, List<String> protocols,
-			List<WebSocketExtension> extensions,  Map<String, Object> attributes) {
+																  HttpHeaders headers, final URI uri, List<String> protocols,
+																  List<WebSocketExtension> extensions, Map<String, Object> attributes) {
 
 		final ClientUpgradeRequest request = new ClientUpgradeRequest();
 		request.setSubProtocols(protocols);
@@ -162,8 +144,7 @@ public class JettyWebSocketClient extends AbstractWebSocketClient implements Lif
 
 		if (this.taskExecutor != null) {
 			return this.taskExecutor.submitListenable(connectTask);
-		}
-		else {
+		} else {
 			ListenableFutureTask<WebSocketSession> task = new ListenableFutureTask<>(connectTask);
 			task.run();
 			return task;

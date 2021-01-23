@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket.sockjs.transport.handler;
 
 import java.io.IOException;
@@ -53,7 +37,7 @@ public abstract class AbstractHttpSendingTransportHandler extends AbstractTransp
 
 	@Override
 	public final void handleRequest(ServerHttpRequest request, ServerHttpResponse response,
-			WebSocketHandler wsHandler, SockJsSession wsSession) throws SockJsException {
+									WebSocketHandler wsHandler, SockJsSession wsSession) throws SockJsException {
 
 		AbstractHttpSockJsSession sockJsSession = (AbstractHttpSockJsSession) wsSession;
 
@@ -67,41 +51,36 @@ public abstract class AbstractHttpSendingTransportHandler extends AbstractTransp
 	}
 
 	protected void handleRequestInternal(ServerHttpRequest request, ServerHttpResponse response,
-			AbstractHttpSockJsSession sockJsSession) throws SockJsException {
+										 AbstractHttpSockJsSession sockJsSession) throws SockJsException {
 
 		if (sockJsSession.isNew()) {
 			if (logger.isDebugEnabled()) {
 				logger.debug(request.getMethod() + " " + request.getURI());
 			}
 			sockJsSession.handleInitialRequest(request, response, getFrameFormat(request));
-		}
-		else if (sockJsSession.isClosed()) {
+		} else if (sockJsSession.isClosed()) {
 			if (logger.isDebugEnabled()) {
 				logger.debug("Connection already closed (but not removed yet) for " + sockJsSession);
 			}
 			SockJsFrame frame = SockJsFrame.closeFrameGoAway();
 			try {
 				response.getBody().write(frame.getContentBytes());
-			}
-			catch (IOException ex) {
+			} catch (IOException ex) {
 				throw new SockJsException("Failed to send " + frame, sockJsSession.getId(), ex);
 			}
-		}
-		else if (!sockJsSession.isActive()) {
+		} else if (!sockJsSession.isActive()) {
 			if (logger.isTraceEnabled()) {
 				logger.trace("Starting " + getTransportType() + " async request.");
 			}
 			sockJsSession.handleSuccessiveRequest(request, response, getFrameFormat(request));
-		}
-		else {
+		} else {
 			if (logger.isDebugEnabled()) {
 				logger.debug("Another " + getTransportType() + " connection still open for " + sockJsSession);
 			}
 			String formattedFrame = getFrameFormat(request).format(SockJsFrame.closeFrameAnotherConnectionOpen());
 			try {
 				response.getBody().write(formattedFrame.getBytes(SockJsFrame.CHARSET));
-			}
-			catch (IOException ex) {
+			} catch (IOException ex) {
 				throw new SockJsException("Failed to send " + formattedFrame, sockJsSession.getId(), ex);
 			}
 		}

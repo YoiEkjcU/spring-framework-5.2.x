@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket.messaging;
 
 import java.security.Principal;
@@ -61,6 +45,7 @@ public class DefaultSimpUserRegistry implements SimpUserRegistry, SmartApplicati
 	/**
 	 * Specify the order value for this registry.
 	 * <p>Default is {@link Ordered#LOWEST_PRECEDENCE}.
+	 *
 	 * @since 5.0.8
 	 */
 	public void setOrder(int order) {
@@ -101,8 +86,7 @@ public class DefaultSimpUserRegistry implements SimpUserRegistry, SmartApplicati
 					session.addSubscription(id, destination);
 				}
 			}
-		}
-		else if (event instanceof SessionConnectedEvent) {
+		} else if (event instanceof SessionConnectedEvent) {
 			Principal user = subProtocolEvent.getUser();
 			if (user == null) {
 				return;
@@ -121,8 +105,7 @@ public class DefaultSimpUserRegistry implements SimpUserRegistry, SmartApplicati
 				simpUser.addSession(session);
 				this.sessions.put(sessionId, session);
 			}
-		}
-		else if (event instanceof SessionDisconnectEvent) {
+		} else if (event instanceof SessionDisconnectEvent) {
 			synchronized (this.sessionLock) {
 				LocalSimpSession session = this.sessions.remove(sessionId);
 				if (session != null) {
@@ -133,8 +116,7 @@ public class DefaultSimpUserRegistry implements SimpUserRegistry, SmartApplicati
 					}
 				}
 			}
-		}
-		else if (event instanceof SessionUnsubscribeEvent) {
+		} else if (event instanceof SessionUnsubscribeEvent) {
 			LocalSimpSession session = this.sessions.get(sessionId);
 			if (session != null) {
 				String subscriptionId = accessor.getSubscriptionId();

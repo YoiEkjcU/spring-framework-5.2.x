@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.socket.sockjs.transport.handler;
 
 import java.util.Map;
@@ -117,14 +101,13 @@ public class WebSocketTransportHandler extends AbstractTransportHandler
 
 	@Override
 	public void handleRequest(ServerHttpRequest request, ServerHttpResponse response,
-			WebSocketHandler wsHandler, SockJsSession wsSession) throws SockJsException {
+							  WebSocketHandler wsHandler, SockJsSession wsSession) throws SockJsException {
 
 		WebSocketServerSockJsSession sockJsSession = (WebSocketServerSockJsSession) wsSession;
 		try {
 			wsHandler = new SockJsWebSocketHandler(getServiceConfig(), wsHandler, sockJsSession);
 			this.handshakeHandler.doHandshake(request, response, wsHandler, sockJsSession.getAttributes());
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			sockJsSession.tryCloseWithSockJsTransportError(ex, CloseStatus.SERVER_ERROR);
 			throw new SockJsTransportFailureException("WebSocket handshake failure", wsSession.getId(), ex);
 		}
@@ -132,7 +115,7 @@ public class WebSocketTransportHandler extends AbstractTransportHandler
 
 	@Override
 	public boolean doHandshake(ServerHttpRequest request, ServerHttpResponse response,
-			WebSocketHandler handler, Map<String, Object> attributes) throws HandshakeFailureException {
+							   WebSocketHandler handler, Map<String, Object> attributes) throws HandshakeFailureException {
 
 		return this.handshakeHandler.doHandshake(request, response, handler, attributes);
 	}
