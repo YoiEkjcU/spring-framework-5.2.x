@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.oxm.support;
 
 import java.io.IOException;
@@ -48,8 +32,8 @@ import org.springframework.util.Assert;
  * {@code UnsupportedOperationException}s.
  *
  * @author Arjen Poutsma
- * @since 3.0
  * @see javax.xml.transform.Transformer
+ * @since 3.0
  */
 public class MarshallingSource extends SAXSource {
 
@@ -60,8 +44,9 @@ public class MarshallingSource extends SAXSource {
 
 	/**
 	 * Create a new {@code MarshallingSource} with the given marshaller and content.
+	 *
 	 * @param marshaller the marshaller to use
-	 * @param content the object to be marshalled
+	 * @param content    the object to be marshalled
 	 */
 	public MarshallingSource(Marshaller marshaller, Object content) {
 		super(new MarshallingXMLReader(marshaller, content), new InputSource());
@@ -195,8 +180,7 @@ public class MarshallingSource extends SAXSource {
 		public Object getProperty(String name) throws SAXNotRecognizedException {
 			if ("http://xml.org/sax/properties/lexical-handler".equals(name)) {
 				return this.lexicalHandler;
-			}
-			else {
+			} else {
 				throw new SAXNotRecognizedException(name);
 			}
 		}
@@ -205,8 +189,7 @@ public class MarshallingSource extends SAXSource {
 		public void setProperty(String name, Object value) throws SAXNotRecognizedException {
 			if ("http://xml.org/sax/properties/lexical-handler".equals(name)) {
 				this.lexicalHandler = (LexicalHandler) value;
-			}
-			else {
+			} else {
 				throw new SAXNotRecognizedException(name);
 			}
 		}
@@ -226,14 +209,12 @@ public class MarshallingSource extends SAXSource {
 			result.setLexicalHandler(getLexicalHandler());
 			try {
 				this.marshaller.marshal(this.content, result);
-			}
-			catch (IOException ex) {
+			} catch (IOException ex) {
 				SAXParseException saxException = new SAXParseException(ex.getMessage(), null, null, -1, -1, ex);
 				ErrorHandler errorHandler = getErrorHandler();
 				if (errorHandler != null) {
 					errorHandler.fatalError(saxException);
-				}
-				else {
+				} else {
 					throw saxException;
 				}
 			}

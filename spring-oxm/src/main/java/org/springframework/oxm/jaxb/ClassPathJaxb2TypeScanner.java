@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.oxm.jaxb;
 
 import java.io.IOException;
@@ -46,14 +30,14 @@ import org.springframework.util.ClassUtils;
  * @author Juergen Hoeller
  * @author David Harrigan
  * @author Biju Kunjummen
- * @since 3.1.1
  * @see #scanPackages()
+ * @since 3.1.1
  */
 class ClassPathJaxb2TypeScanner {
 
 	private static final String RESOURCE_PATTERN = "/**/*.class";
 
-	private static final TypeFilter[] JAXB2_TYPE_FILTERS = new TypeFilter[] {
+	private static final TypeFilter[] JAXB2_TYPE_FILTERS = new TypeFilter[]{
 			new AnnotationTypeFilter(XmlRootElement.class, false),
 			new AnnotationTypeFilter(XmlType.class, false),
 			new AnnotationTypeFilter(XmlSeeAlso.class, false),
@@ -75,6 +59,7 @@ class ClassPathJaxb2TypeScanner {
 
 	/**
 	 * Scan the packages for classes marked with JAXB2 annotations.
+	 *
 	 * @throws UncategorizedMappingException in case of errors
 	 */
 	public Class<?>[] scanPackages() throws UncategorizedMappingException {
@@ -96,18 +81,16 @@ class ClassPathJaxb2TypeScanner {
 				}
 			}
 			return ClassUtils.toClassArray(jaxb2Classes);
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new UncategorizedMappingException("Failed to scan classpath for unlisted classes", ex);
-		}
-		catch (ClassNotFoundException ex) {
+		} catch (ClassNotFoundException ex) {
 			throw new UncategorizedMappingException("Failed to load annotated classes from classpath", ex);
 		}
 	}
 
 	protected boolean isJaxb2Class(MetadataReader reader, MetadataReaderFactory factory) throws IOException {
 		for (TypeFilter filter : JAXB2_TYPE_FILTERS) {
-			if (filter.match(reader, factory) && !reader.getClassMetadata().isInterface() ) {
+			if (filter.match(reader, factory) && !reader.getClassMetadata().isInterface()) {
 				return true;
 			}
 		}
