@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.apache.commons.logging;
 
 /**
@@ -53,6 +37,7 @@ public abstract class LogFactory {
 
 	/**
 	 * Convenience method to return a named logger.
+	 *
 	 * @param clazz containing Class from which a log name will be derived
 	 */
 	public static Log getLog(Class<?> clazz) {
@@ -61,6 +46,7 @@ public abstract class LogFactory {
 
 	/**
 	 * Convenience method to return a named logger.
+	 *
 	 * @param name logical name of the <code>Log</code> instance to be returned
 	 */
 	public static Log getLog(String name) {
@@ -71,18 +57,21 @@ public abstract class LogFactory {
 	/**
 	 * This method only exists for compatibility with unusual Commons Logging API
 	 * usage like e.g. {@code LogFactory.getFactory().getInstance(Class/String)}.
+	 *
 	 * @see #getInstance(Class)
 	 * @see #getInstance(String)
 	 * @deprecated in favor of {@link #getLog(Class)}/{@link #getLog(String)}
 	 */
 	@Deprecated
 	public static LogFactory getFactory() {
-		return new LogFactory() {};
+		return new LogFactory() {
+		};
 	}
 
 	/**
 	 * Convenience method to return a named logger.
 	 * <p>This variant just dispatches straight to {@link #getLog(Class)}.
+	 *
 	 * @param clazz containing Class from which a log name will be derived
 	 * @deprecated in favor of {@link #getLog(Class)}
 	 */
@@ -94,6 +83,7 @@ public abstract class LogFactory {
 	/**
 	 * Convenience method to return a named logger.
 	 * <p>This variant just dispatches straight to {@link #getLog(String)}.
+	 *
 	 * @param name logical name of the <code>Log</code> instance to be returned
 	 * @deprecated in favor of {@link #getLog(String)}
 	 */
