@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.ui.freemarker;
 
 import java.io.IOException;
@@ -34,9 +18,9 @@ import org.springframework.lang.Nullable;
  * be resolved to a {@link java.io.File}.
  *
  * @author Juergen Hoeller
- * @since 14.03.2004
  * @see FreeMarkerConfigurationFactory#setTemplateLoaderPath
  * @see freemarker.template.Configuration#setDirectoryForTemplateLoading
+ * @since 14.03.2004
  */
 public class SpringTemplateLoader implements TemplateLoader {
 
@@ -49,7 +33,8 @@ public class SpringTemplateLoader implements TemplateLoader {
 
 	/**
 	 * Create a new SpringTemplateLoader.
-	 * @param resourceLoader the Spring ResourceLoader to use
+	 *
+	 * @param resourceLoader     the Spring ResourceLoader to use
 	 * @param templateLoaderPath the template loader path to use
 	 */
 	public SpringTemplateLoader(ResourceLoader resourceLoader, String templateLoaderPath) {
@@ -80,8 +65,7 @@ public class SpringTemplateLoader implements TemplateLoader {
 		Resource resource = (Resource) templateSource;
 		try {
 			return new InputStreamReader(resource.getInputStream(), encoding);
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			if (logger.isDebugEnabled()) {
 				logger.debug("Could not find FreeMarker template: " + resource);
 			}
@@ -94,8 +78,7 @@ public class SpringTemplateLoader implements TemplateLoader {
 		Resource resource = (Resource) templateSource;
 		try {
 			return resource.lastModified();
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			if (logger.isDebugEnabled()) {
 				logger.debug("Could not obtain last-modified timestamp for FreeMarker template in " +
 						resource + ": " + ex);

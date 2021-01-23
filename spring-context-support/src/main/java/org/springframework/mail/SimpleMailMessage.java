@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.mail;
 
 import java.io.Serializable;
@@ -34,12 +18,12 @@ import org.springframework.util.StringUtils;
  *
  * @author Dmitriy Kopylenko
  * @author Juergen Hoeller
- * @since 10.09.2003
  * @see MailSender
  * @see org.springframework.mail.javamail.JavaMailSender
  * @see org.springframework.mail.javamail.MimeMessagePreparator
  * @see org.springframework.mail.javamail.MimeMessageHelper
  * @see org.springframework.mail.javamail.MimeMailMessage
+ * @since 10.09.2003
  */
 @SuppressWarnings("serial")
 public class SimpleMailMessage implements MailMessage, Serializable {
@@ -114,7 +98,7 @@ public class SimpleMailMessage implements MailMessage, Serializable {
 
 	@Override
 	public void setTo(String to) {
-		this.to = new String[] {to};
+		this.to = new String[]{to};
 	}
 
 	@Override
@@ -129,7 +113,7 @@ public class SimpleMailMessage implements MailMessage, Serializable {
 
 	@Override
 	public void setCc(String cc) {
-		this.cc = new String[] {cc};
+		this.cc = new String[]{cc};
 	}
 
 	@Override
@@ -144,7 +128,7 @@ public class SimpleMailMessage implements MailMessage, Serializable {
 
 	@Override
 	public void setBcc(String bcc) {
-		this.bcc = new String[] {bcc};
+		this.bcc = new String[]{bcc};
 	}
 
 	@Override
@@ -190,6 +174,7 @@ public class SimpleMailMessage implements MailMessage, Serializable {
 
 	/**
 	 * Copy the contents of this message to the given target message.
+	 *
 	 * @param target the {@code MailMessage} to copy to
 	 */
 	public void copyTo(MailMessage target) {

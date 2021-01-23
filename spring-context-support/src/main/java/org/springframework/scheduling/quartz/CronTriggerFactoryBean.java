@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.scheduling.quartz;
 
 import java.text.ParseException;
@@ -48,17 +32,19 @@ import org.springframework.util.Assert;
  * instead of registering the JobDetail separately.
  *
  * @author Juergen Hoeller
- * @since 3.1
  * @see #setName
  * @see #setGroup
  * @see #setStartDelay
  * @see #setJobDetail
  * @see SchedulerFactoryBean#setTriggers
  * @see SchedulerFactoryBean#setJobDetails
+ * @since 3.1
  */
 public class CronTriggerFactoryBean implements FactoryBean<CronTrigger>, BeanNameAware, InitializingBean {
 
-	/** Constants for the CronTrigger class. */
+	/**
+	 * Constants for the CronTrigger class.
+	 */
 	private static final Constants constants = new Constants(CronTrigger.class);
 
 
@@ -124,6 +110,7 @@ public class CronTriggerFactoryBean implements FactoryBean<CronTrigger>, BeanNam
 
 	/**
 	 * Set the trigger's JobDataMap.
+	 *
 	 * @see #setJobDataAsMap
 	 */
 	public void setJobDataMap(JobDataMap jobDataMap) {
@@ -141,8 +128,9 @@ public class CronTriggerFactoryBean implements FactoryBean<CronTrigger>, BeanNam
 	 * Register objects in the JobDataMap via a given Map.
 	 * <p>These objects will be available to this Trigger only,
 	 * in contrast to objects in the JobDetail's data map.
+	 *
 	 * @param jobDataAsMap a Map with String keys and any objects as values
-	 * (for example Spring-managed beans)
+	 *                     (for example Spring-managed beans)
 	 */
 	public void setJobDataAsMap(Map<String, ?> jobDataAsMap) {
 		this.jobDataMap.putAll(jobDataAsMap);
@@ -206,6 +194,7 @@ public class CronTriggerFactoryBean implements FactoryBean<CronTrigger>, BeanNam
 	 * Set the misfire instruction via the name of the corresponding
 	 * constant in the {@link org.quartz.CronTrigger} class.
 	 * Default is {@code MISFIRE_INSTRUCTION_SMART_POLICY}.
+	 *
 	 * @see org.quartz.CronTrigger#MISFIRE_INSTRUCTION_FIRE_ONCE_NOW
 	 * @see org.quartz.CronTrigger#MISFIRE_INSTRUCTION_DO_NOTHING
 	 * @see org.quartz.Trigger#MISFIRE_INSTRUCTION_SMART_POLICY

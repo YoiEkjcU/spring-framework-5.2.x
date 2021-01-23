@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.scheduling.quartz;
 
 import java.util.Date;
@@ -46,17 +30,19 @@ import org.springframework.util.Assert;
  * instead of registering the JobDetail separately.
  *
  * @author Juergen Hoeller
- * @since 3.1
  * @see #setName
  * @see #setGroup
  * @see #setStartDelay
  * @see #setJobDetail
  * @see SchedulerFactoryBean#setTriggers
  * @see SchedulerFactoryBean#setJobDetails
+ * @since 3.1
  */
 public class SimpleTriggerFactoryBean implements FactoryBean<SimpleTrigger>, BeanNameAware, InitializingBean {
 
-	/** Constants for the SimpleTrigger class. */
+	/**
+	 * Constants for the SimpleTrigger class.
+	 */
 	private static final Constants constants = new Constants(SimpleTrigger.class);
 
 
@@ -117,6 +103,7 @@ public class SimpleTriggerFactoryBean implements FactoryBean<SimpleTrigger>, Bea
 
 	/**
 	 * Set the trigger's JobDataMap.
+	 *
 	 * @see #setJobDataAsMap
 	 */
 	public void setJobDataMap(JobDataMap jobDataMap) {
@@ -134,8 +121,9 @@ public class SimpleTriggerFactoryBean implements FactoryBean<SimpleTrigger>, Bea
 	 * Register objects in the JobDataMap via a given Map.
 	 * <p>These objects will be available to this Trigger only,
 	 * in contrast to objects in the JobDetail's data map.
+	 *
 	 * @param jobDataAsMap a Map with String keys and any objects as values
-	 * (for example Spring-managed beans)
+	 *                     (for example Spring-managed beans)
 	 */
 	public void setJobDataAsMap(Map<String, ?> jobDataAsMap) {
 		this.jobDataMap.putAll(jobDataAsMap);
@@ -154,6 +142,7 @@ public class SimpleTriggerFactoryBean implements FactoryBean<SimpleTrigger>, Bea
 	 * Set the start delay in milliseconds.
 	 * <p>The start delay is added to the current system time (when the bean starts)
 	 * to control the start time of the trigger.
+	 *
 	 * @see #setStartTime
 	 */
 	public void setStartDelay(long startDelay) {
@@ -194,6 +183,7 @@ public class SimpleTriggerFactoryBean implements FactoryBean<SimpleTrigger>, Bea
 	 * Set the misfire instruction via the name of the corresponding
 	 * constant in the {@link org.quartz.SimpleTrigger} class.
 	 * Default is {@code MISFIRE_INSTRUCTION_SMART_POLICY}.
+	 *
 	 * @see org.quartz.SimpleTrigger#MISFIRE_INSTRUCTION_FIRE_NOW
 	 * @see org.quartz.SimpleTrigger#MISFIRE_INSTRUCTION_RESCHEDULE_NEXT_WITH_EXISTING_COUNT
 	 * @see org.quartz.SimpleTrigger#MISFIRE_INSTRUCTION_RESCHEDULE_NEXT_WITH_REMAINING_COUNT

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.cache.caffeine;
 
 import java.util.concurrent.Callable;
@@ -34,8 +18,8 @@ import org.springframework.util.Assert;
  * @author Ben Manes
  * @author Juergen Hoeller
  * @author Stephane Nicoll
- * @since 4.3
  * @see CaffeineCacheManager
+ * @since 4.3
  */
 public class CaffeineCache extends AbstractValueAdaptingCache {
 
@@ -47,7 +31,8 @@ public class CaffeineCache extends AbstractValueAdaptingCache {
 	/**
 	 * Create a {@link CaffeineCache} instance with the specified name and the
 	 * given internal {@link com.github.benmanes.caffeine.cache.Cache} to use.
-	 * @param name the name of the cache
+	 *
+	 * @param name  the name of the cache
 	 * @param cache the backing Caffeine Cache instance
 	 */
 	public CaffeineCache(String name, com.github.benmanes.caffeine.cache.Cache<Object, Object> cache) {
@@ -57,13 +42,14 @@ public class CaffeineCache extends AbstractValueAdaptingCache {
 	/**
 	 * Create a {@link CaffeineCache} instance with the specified name and the
 	 * given internal {@link com.github.benmanes.caffeine.cache.Cache} to use.
-	 * @param name the name of the cache
-	 * @param cache the backing Caffeine Cache instance
+	 *
+	 * @param name            the name of the cache
+	 * @param cache           the backing Caffeine Cache instance
 	 * @param allowNullValues whether to accept and convert {@code null}
-	 * values for this cache
+	 *                        values for this cache
 	 */
 	public CaffeineCache(String name, com.github.benmanes.caffeine.cache.Cache<Object, Object> cache,
-			boolean allowNullValues) {
+						 boolean allowNullValues) {
 
 		super(allowNullValues);
 		Assert.notNull(name, "Name must not be null");
@@ -166,8 +152,7 @@ public class CaffeineCache extends AbstractValueAdaptingCache {
 		public Object apply(Object o) {
 			try {
 				return toStoreValue(this.valueLoader.call());
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				throw new ValueRetrievalException(o, this.valueLoader, ex);
 			}
 		}

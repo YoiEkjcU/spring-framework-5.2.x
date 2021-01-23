@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.scheduling.quartz;
 
 import java.util.ArrayList;
@@ -106,10 +90,11 @@ public abstract class SchedulerAccessor implements ResourceLoaderAware {
 	 * "job_scheduling_data_1_5" XSD or better. Can be specified to automatically
 	 * register jobs that are defined in such a file, possibly in addition
 	 * to jobs defined directly on this SchedulerFactoryBean.
+	 *
 	 * @see org.quartz.xml.XMLSchedulingDataProcessor
 	 */
 	public void setJobSchedulingDataLocation(String jobSchedulingDataLocation) {
-		this.jobSchedulingDataLocations = new String[] {jobSchedulingDataLocation};
+		this.jobSchedulingDataLocations = new String[]{jobSchedulingDataLocation};
 	}
 
 	/**
@@ -117,6 +102,7 @@ public abstract class SchedulerAccessor implements ResourceLoaderAware {
 	 * "job_scheduling_data_1_5" XSD or better. Can be specified to automatically
 	 * register jobs that are defined in such files, possibly in addition
 	 * to jobs defined directly on this SchedulerFactoryBean.
+	 *
 	 * @see org.quartz.xml.XMLSchedulingDataProcessor
 	 */
 	public void setJobSchedulingDataLocations(String... jobSchedulingDataLocations) {
@@ -129,6 +115,7 @@ public abstract class SchedulerAccessor implements ResourceLoaderAware {
 	 * <p>This is not necessary when a Trigger determines the JobDetail
 	 * itself: In this case, the JobDetail will be implicitly registered
 	 * in combination with the Trigger.
+	 *
 	 * @see #setTriggers
 	 * @see org.quartz.JobDetail
 	 */
@@ -141,8 +128,9 @@ public abstract class SchedulerAccessor implements ResourceLoaderAware {
 	/**
 	 * Register a list of Quartz Calendar objects with the Scheduler
 	 * that this FactoryBean creates, to be referenced by Triggers.
+	 *
 	 * @param calendars a Map with calendar names as keys as Calendar
-	 * objects as values
+	 *                  objects as values
 	 * @see org.quartz.Calendar
 	 */
 	public void setCalendars(Map<String, Calendar> calendars) {
@@ -156,6 +144,7 @@ public abstract class SchedulerAccessor implements ResourceLoaderAware {
 	 * the job will be automatically registered with the Scheduler.
 	 * Else, the respective JobDetail needs to be registered via the
 	 * "jobDetails" property of this FactoryBean.
+	 *
 	 * @see #setJobDetails
 	 * @see org.quartz.JobDetail
 	 */
@@ -225,8 +214,7 @@ public abstract class SchedulerAccessor implements ResourceLoaderAware {
 				for (JobDetail jobDetail : this.jobDetails) {
 					addJobToScheduler(jobDetail);
 				}
-			}
-			else {
+			} else {
 				// Create empty list for easier checks when registering triggers.
 				this.jobDetails = new LinkedList<>();
 			}
@@ -245,14 +233,11 @@ public abstract class SchedulerAccessor implements ResourceLoaderAware {
 					addTriggerToScheduler(trigger);
 				}
 			}
-		}
-
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			if (transactionStatus != null) {
 				try {
 					this.transactionManager.rollback(transactionStatus);
-				}
-				catch (TransactionException tex) {
+				} catch (TransactionException tex) {
 					logger.error("Job registration exception overridden by rollback exception", ex);
 					throw tex;
 				}
@@ -274,6 +259,7 @@ public abstract class SchedulerAccessor implements ResourceLoaderAware {
 	/**
 	 * Add the given job to the Scheduler, if it doesn't already exist.
 	 * Overwrites the job in any case if "overwriteExistingJobs" is set.
+	 *
 	 * @param jobDetail the job to add
 	 * @return {@code true} if the job was actually added,
 	 * {@code false} if it already existed before
@@ -283,8 +269,7 @@ public abstract class SchedulerAccessor implements ResourceLoaderAware {
 		if (this.overwriteExistingJobs || getScheduler().getJobDetail(jobDetail.getKey()) == null) {
 			getScheduler().addJob(jobDetail, true);
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
@@ -292,6 +277,7 @@ public abstract class SchedulerAccessor implements ResourceLoaderAware {
 	/**
 	 * Add the given trigger to the Scheduler, if it doesn't already exist.
 	 * Overwrites the trigger in any case if "overwriteExistingJobs" is set.
+	 *
 	 * @param trigger the trigger to add
 	 * @return {@code true} if the trigger was actually added,
 	 * {@code false} if it already existed before
@@ -312,26 +298,22 @@ public abstract class SchedulerAccessor implements ResourceLoaderAware {
 			}
 			try {
 				getScheduler().rescheduleJob(trigger.getKey(), trigger);
-			}
-			catch (ObjectAlreadyExistsException ex) {
+			} catch (ObjectAlreadyExistsException ex) {
 				if (logger.isDebugEnabled()) {
 					logger.debug("Unexpectedly encountered existing trigger on rescheduling, assumably due to " +
 							"cluster race condition: " + ex.getMessage() + " - can safely be ignored");
 				}
 			}
-		}
-		else {
+		} else {
 			try {
 				if (jobDetail != null && this.jobDetails != null && !this.jobDetails.contains(jobDetail) &&
 						(this.overwriteExistingJobs || getScheduler().getJobDetail(jobDetail.getKey()) == null)) {
 					getScheduler().scheduleJob(jobDetail, trigger);
 					this.jobDetails.add(jobDetail);
-				}
-				else {
+				} else {
 					getScheduler().scheduleJob(trigger);
 				}
-			}
-			catch (ObjectAlreadyExistsException ex) {
+			} catch (ObjectAlreadyExistsException ex) {
 				if (logger.isDebugEnabled()) {
 					logger.debug("Unexpectedly encountered existing trigger on job scheduling, assumably due to " +
 							"cluster race condition: " + ex.getMessage() + " - can safely be ignored");

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.cache.jcache.interceptor;
 
 import javax.cache.annotation.CacheResult;
@@ -65,8 +49,7 @@ class CacheResultInterceptor extends AbstractKeyCacheInterceptor<CacheResultOper
 			Object invocationResult = invoker.invoke();
 			doPut(cache, cacheKey, invocationResult);
 			return invocationResult;
-		}
-		catch (CacheOperationInvoker.ThrowableWrapper ex) {
+		} catch (CacheOperationInvoker.ThrowableWrapper ex) {
 			Throwable original = ex.getOriginal();
 			cacheException(exceptionCache, operation.getExceptionTypeFilter(), cacheKey, original);
 			throw ex;
@@ -114,8 +97,9 @@ class CacheResultInterceptor extends AbstractKeyCacheInterceptor<CacheResultOper
 	 * the original exception is returned. If no common ancestor can be found, returns
 	 * the original exception.
 	 * <p>Used to make sure that a cached exception has a valid invocation context.
-	 * @param exception the exception to merge with the current call stack
-	 * @param className the class name of the common ancestor
+	 *
+	 * @param exception  the exception to merge with the current call stack
+	 * @param className  the class name of the common ancestor
 	 * @param methodName the method name of the common ancestor
 	 * @return a clone exception with a rewritten call stack composed of the current call
 	 * stack up to (included) the common ancestor specified by the {@code className} and
@@ -151,8 +135,7 @@ class CacheResultInterceptor extends AbstractKeyCacheInterceptor<CacheResultOper
 	private static <T extends Throwable> T cloneException(T exception) {
 		try {
 			return (T) SerializationUtils.deserialize(SerializationUtils.serialize(exception));
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			return null;  // exception parameter cannot be cloned
 		}
 	}

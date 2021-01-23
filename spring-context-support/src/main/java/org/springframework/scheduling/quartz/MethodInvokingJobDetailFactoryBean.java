@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.scheduling.quartz;
 
 import java.lang.reflect.InvocationTargetException;
@@ -69,11 +53,11 @@ import org.springframework.util.MethodInvoker;
  *
  * @author Juergen Hoeller
  * @author Alef Arendsen
- * @since 18.02.2004
  * @see #setTargetBeanName
  * @see #setTargetObject
  * @see #setTargetMethod
  * @see #setConcurrent
+ * @since 18.02.2004
  */
 public class MethodInvokingJobDetailFactoryBean extends ArgumentConvertingMethodInvoker
 		implements FactoryBean<JobDetail>, BeanNameAware, BeanClassLoaderAware, BeanFactoryAware, InitializingBean {
@@ -112,6 +96,7 @@ public class MethodInvokingJobDetailFactoryBean extends ArgumentConvertingMethod
 	/**
 	 * Set the group of the job.
 	 * <p>Default is the default group of the Scheduler.
+	 *
 	 * @see org.quartz.Scheduler#DEFAULT_GROUP
 	 */
 	public void setGroup(String group) {
@@ -189,6 +174,7 @@ public class MethodInvokingJobDetailFactoryBean extends ArgumentConvertingMethod
 	/**
 	 * Callback for post-processing the JobDetail to be exposed by this FactoryBean.
 	 * <p>The default implementation is empty. Can be overridden in subclasses.
+	 *
 	 * @param jobDetail the JobDetail prepared by this FactoryBean
 	 */
 	protected void postProcessJobDetail(JobDetail jobDetail) {
@@ -265,18 +251,15 @@ public class MethodInvokingJobDetailFactoryBean extends ArgumentConvertingMethod
 			Assert.state(this.methodInvoker != null, "No MethodInvoker set");
 			try {
 				context.setResult(this.methodInvoker.invoke());
-			}
-			catch (InvocationTargetException ex) {
+			} catch (InvocationTargetException ex) {
 				if (ex.getTargetException() instanceof JobExecutionException) {
 					// -> JobExecutionException, to be logged at info level by Quartz
 					throw (JobExecutionException) ex.getTargetException();
-				}
-				else {
+				} else {
 					// -> "unhandled exception", to be logged at error level by Quartz
 					throw new JobMethodInvocationFailedException(this.methodInvoker, ex.getTargetException());
 				}
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				// -> "unhandled exception", to be logged at error level by Quartz
 				throw new JobMethodInvocationFailedException(this.methodInvoker, ex);
 			}

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.scheduling.commonj;
 
 import java.util.LinkedList;
@@ -48,10 +32,10 @@ import org.springframework.lang.Nullable;
  * instantiates a new Job for each execution.
  *
  * @author Juergen Hoeller
- * @since 2.0
  * @see ScheduledTimerListener
  * @see commonj.timers.TimerManager
  * @see commonj.timers.TimerListener
+ * @since 2.0
  * @deprecated as of 5.1, in favor of EE 7's
  * {@link org.springframework.scheduling.concurrent.DefaultManagedTaskScheduler}
  */
@@ -69,6 +53,7 @@ public class TimerManagerFactoryBean extends TimerManagerAccessor
 	 * Register a list of ScheduledTimerListener objects with the TimerManager
 	 * that this FactoryBean creates. Depending on each ScheduledTimerListener's settings,
 	 * it will be registered via one of TimerManager's schedule methods.
+	 *
 	 * @see commonj.timers.TimerManager#schedule(commonj.timers.TimerListener, long)
 	 * @see commonj.timers.TimerManager#schedule(commonj.timers.TimerListener, long, long)
 	 * @see commonj.timers.TimerManager#scheduleAtFixedRate(commonj.timers.TimerListener, long, long)
@@ -92,13 +77,11 @@ public class TimerManagerFactoryBean extends TimerManagerAccessor
 				Timer timer;
 				if (scheduledTask.isOneTimeTask()) {
 					timer = timerManager.schedule(scheduledTask.getTimerListener(), scheduledTask.getDelay());
-				}
-				else {
+				} else {
 					if (scheduledTask.isFixedRate()) {
 						timer = timerManager.scheduleAtFixedRate(
 								scheduledTask.getTimerListener(), scheduledTask.getDelay(), scheduledTask.getPeriod());
-					}
-					else {
+					} else {
 						timer = timerManager.schedule(
 								scheduledTask.getTimerListener(), scheduledTask.getDelay(), scheduledTask.getPeriod());
 					}
@@ -138,6 +121,7 @@ public class TimerManagerFactoryBean extends TimerManagerAccessor
 	/**
 	 * Cancels all statically registered Timers on shutdown,
 	 * and stops the underlying TimerManager (if not shared).
+	 *
 	 * @see commonj.timers.Timer#cancel()
 	 * @see commonj.timers.TimerManager#stop()
 	 */
@@ -147,8 +131,7 @@ public class TimerManagerFactoryBean extends TimerManagerAccessor
 		for (Timer timer : this.timers) {
 			try {
 				timer.cancel();
-			}
-			catch (Throwable ex) {
+			} catch (Throwable ex) {
 				logger.debug("Could not cancel CommonJ Timer", ex);
 			}
 		}

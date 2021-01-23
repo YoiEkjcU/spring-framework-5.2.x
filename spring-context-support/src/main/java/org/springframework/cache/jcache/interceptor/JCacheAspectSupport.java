@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.cache.jcache.interceptor;
 
 import java.lang.annotation.Annotation;
@@ -44,10 +28,10 @@ import org.springframework.util.Assert;
  * <p>A cache aspect is serializable if its {@code JCacheOperationSource} is serializable.
  *
  * @author Stephane Nicoll
- * @since 4.1
  * @see org.springframework.cache.interceptor.CacheAspectSupport
  * @see KeyGeneratorAdapter
  * @see CacheResolverAdapter
+ * @since 4.1
  */
 public class JCacheAspectSupport extends AbstractCacheInvoker implements InitializingBean {
 
@@ -135,23 +119,19 @@ public class JCacheAspectSupport extends AbstractCacheInvoker implements Initial
 			Assert.state(this.cacheResultInterceptor != null, "No CacheResultInterceptor");
 			return this.cacheResultInterceptor.invoke(
 					(CacheOperationInvocationContext<CacheResultOperation>) context, adapter);
-		}
-		else if (operation instanceof CachePutOperation) {
+		} else if (operation instanceof CachePutOperation) {
 			Assert.state(this.cachePutInterceptor != null, "No CachePutInterceptor");
 			return this.cachePutInterceptor.invoke(
 					(CacheOperationInvocationContext<CachePutOperation>) context, adapter);
-		}
-		else if (operation instanceof CacheRemoveOperation) {
+		} else if (operation instanceof CacheRemoveOperation) {
 			Assert.state(this.cacheRemoveEntryInterceptor != null, "No CacheRemoveEntryInterceptor");
 			return this.cacheRemoveEntryInterceptor.invoke(
 					(CacheOperationInvocationContext<CacheRemoveOperation>) context, adapter);
-		}
-		else if (operation instanceof CacheRemoveAllOperation) {
+		} else if (operation instanceof CacheRemoveAllOperation) {
 			Assert.state(this.cacheRemoveAllInterceptor != null, "No CacheRemoveAllInterceptor");
 			return this.cacheRemoveAllInterceptor.invoke(
 					(CacheOperationInvocationContext<CacheRemoveAllOperation>) context, adapter);
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException("Cannot handle " + operation);
 		}
 	}
@@ -161,6 +141,7 @@ public class JCacheAspectSupport extends AbstractCacheInvoker implements Initial
 	 * the result of the invocation. If an exception occurs it will be wrapped in
 	 * a {@code ThrowableWrapper}: the exception can be handled or modified but it
 	 * <em>must</em> be wrapped in a {@code ThrowableWrapper} as well.
+	 *
 	 * @param invoker the invoker handling the operation being cached
 	 * @return the result of the invocation
 	 * @see CacheOperationInvoker#invoke()

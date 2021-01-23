@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.scheduling.quartz;
 
 import java.sql.Connection;
@@ -54,11 +38,11 @@ import org.springframework.lang.Nullable;
  * as they assume to get proper locks etc.
  *
  * @author Juergen Hoeller
- * @since 1.1
  * @see SchedulerFactoryBean#setDataSource
  * @see SchedulerFactoryBean#setNonTransactionalDataSource
  * @see org.springframework.jdbc.datasource.DataSourceUtils#doGetConnection
  * @see org.springframework.jdbc.datasource.DataSourceUtils#releaseConnection
+ * @since 1.1
  */
 @SuppressWarnings("unchecked")  // due to a warning in Quartz 2.2's JobStoreCMT
 public class LocalDataSourceJobStore extends JobStoreCMT {
@@ -66,6 +50,7 @@ public class LocalDataSourceJobStore extends JobStoreCMT {
 	/**
 	 * Name used for the transactional ConnectionProvider for Quartz.
 	 * This provider will delegate to the local Spring-managed DataSource.
+	 *
 	 * @see org.quartz.utils.DBConnectionManager#addConnectionProvider
 	 * @see SchedulerFactoryBean#setDataSource
 	 */
@@ -74,6 +59,7 @@ public class LocalDataSourceJobStore extends JobStoreCMT {
 	/**
 	 * Name used for the non-transactional ConnectionProvider for Quartz.
 	 * This provider will delegate to the local Spring-managed DataSource.
+	 *
 	 * @see org.quartz.utils.DBConnectionManager#addConnectionProvider
 	 * @see SchedulerFactoryBean#setDataSource
 	 */
@@ -106,10 +92,12 @@ public class LocalDataSourceJobStore extends JobStoreCMT {
 						// Return a transactional Connection, if any.
 						return DataSourceUtils.doGetConnection(dataSource);
 					}
+
 					@Override
 					public void shutdown() {
 						// Do nothing - a Spring-managed DataSource has its own lifecycle.
 					}
+
 					@Override
 					public void initialize() {
 						// Do nothing - a Spring-managed DataSource has its own lifecycle.
@@ -134,10 +122,12 @@ public class LocalDataSourceJobStore extends JobStoreCMT {
 						// Always return a non-transactional Connection.
 						return nonTxDataSourceToUse.getConnection();
 					}
+
 					@Override
 					public void shutdown() {
 						// Do nothing - a Spring-managed DataSource has its own lifecycle.
 					}
+
 					@Override
 					public void initialize() {
 						// Do nothing - a Spring-managed DataSource has its own lifecycle.
@@ -153,8 +143,7 @@ public class LocalDataSourceJobStore extends JobStoreCMT {
 				setUseDBLocks(false);
 				setLockHandler(new SimpleSemaphore());
 			}
-		}
-		catch (MetaDataAccessException ex) {
+		} catch (MetaDataAccessException ex) {
 			logWarnIfNonZero(1, "Could not detect database type. Assuming locks can be taken.");
 		}
 

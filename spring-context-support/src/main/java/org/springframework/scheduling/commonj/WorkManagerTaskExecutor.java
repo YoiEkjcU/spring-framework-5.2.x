@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.scheduling.commonj;
 
 import java.util.Collection;
@@ -87,6 +71,7 @@ public class WorkManagerTaskExecutor extends JndiLocatorSupport
 	/**
 	 * Specify the CommonJ WorkManager to delegate to.
 	 * <p>Alternatively, you can also specify the JNDI name of the target WorkManager.
+	 *
 	 * @see #setWorkManagerName
 	 */
 	public void setWorkManager(WorkManager workManager) {
@@ -97,6 +82,7 @@ public class WorkManagerTaskExecutor extends JndiLocatorSupport
 	 * Set the JNDI name of the CommonJ WorkManager.
 	 * <p>This can either be a fully qualified JNDI name, or the JNDI name relative
 	 * to the current environment naming context if "resourceRef" is set to "true".
+	 *
 	 * @see #setWorkManager
 	 * @see #setResourceRef
 	 */
@@ -126,6 +112,7 @@ public class WorkManagerTaskExecutor extends JndiLocatorSupport
 	 * In case of {@code #submit} calls, the exposed {@code Runnable} will be a
 	 * {@code FutureTask} which does not propagate any exceptions; you might
 	 * have to cast it and call {@code Future#get} to evaluate exceptions.
+	 *
 	 * @since 4.3
 	 */
 	public void setTaskDecorator(TaskDecorator taskDecorator) {
@@ -158,15 +145,12 @@ public class WorkManagerTaskExecutor extends JndiLocatorSupport
 		try {
 			if (this.workListener != null) {
 				obtainWorkManager().schedule(work, this.workListener);
-			}
-			else {
+			} else {
 				obtainWorkManager().schedule(work);
 			}
-		}
-		catch (WorkRejectedException ex) {
+		} catch (WorkRejectedException ex) {
 			throw new TaskRejectedException("CommonJ WorkManager did not accept task: " + task, ex);
-		}
-		catch (WorkException ex) {
+		} catch (WorkException ex) {
 			throw new SchedulingException("Could not schedule task on CommonJ WorkManager", ex);
 		}
 	}

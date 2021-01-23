@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2014 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.cache.ehcache;
 
 import java.io.IOException;
@@ -47,6 +31,7 @@ public abstract class EhCacheManagerUtils {
 	 * <p>The CacheManager will be configured from "ehcache.xml" in the root of the class path
 	 * (that is, default EhCache initialization - as defined in the EhCache docs - will apply).
 	 * If no configuration file can be found, a fail-safe fallback configuration will be used.
+	 *
 	 * @return the new EhCache CacheManager
 	 * @throws CacheException in case of configuration parsing failure
 	 */
@@ -59,6 +44,7 @@ public abstract class EhCacheManagerUtils {
 	 * <p>The CacheManager will be configured from "ehcache.xml" in the root of the class path
 	 * (that is, default EhCache initialization - as defined in the EhCache docs - will apply).
 	 * If no configuration file can be found, a fail-safe fallback configuration will be used.
+	 *
 	 * @param name the desired name of the cache manager
 	 * @return the new EhCache CacheManager
 	 * @throws CacheException in case of configuration parsing failure
@@ -71,6 +57,7 @@ public abstract class EhCacheManagerUtils {
 
 	/**
 	 * Build an EhCache {@link CacheManager} from the given configuration resource.
+	 *
 	 * @param configLocation the location of the configuration file (as a Spring resource)
 	 * @return the new EhCache CacheManager
 	 * @throws CacheException in case of configuration parsing failure
@@ -81,7 +68,8 @@ public abstract class EhCacheManagerUtils {
 
 	/**
 	 * Build an EhCache {@link CacheManager} from the given configuration resource.
-	 * @param name the desired name of the cache manager
+	 *
+	 * @param name           the desired name of the cache manager
 	 * @param configLocation the location of the configuration file (as a Spring resource)
 	 * @return the new EhCache CacheManager
 	 * @throws CacheException in case of configuration parsing failure
@@ -95,6 +83,7 @@ public abstract class EhCacheManagerUtils {
 	/**
 	 * Parse EhCache configuration from the given resource, for further use with
 	 * custom {@link CacheManager} creation.
+	 *
 	 * @param configLocation the location of the configuration file (as a Spring resource)
 	 * @return the EhCache Configuration handle
 	 * @throws CacheException in case of configuration parsing failure
@@ -106,16 +95,13 @@ public abstract class EhCacheManagerUtils {
 		try {
 			is = configLocation.getInputStream();
 			return ConfigurationFactory.parseConfiguration(is);
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new CacheException("Failed to parse EhCache configuration resource", ex);
-		}
-		finally {
+		} finally {
 			if (is != null) {
 				try {
 					is.close();
-				}
-				catch (IOException ex) {
+				} catch (IOException ex) {
 					// ignore
 				}
 			}

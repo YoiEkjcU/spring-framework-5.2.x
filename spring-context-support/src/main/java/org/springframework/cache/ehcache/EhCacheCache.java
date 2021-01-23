@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.cache.ehcache;
 
 import java.util.concurrent.Callable;
@@ -33,8 +17,8 @@ import org.springframework.util.Assert;
  * @author Costin Leau
  * @author Juergen Hoeller
  * @author Stephane Nicoll
- * @since 3.1
  * @see EhCacheCacheManager
+ * @since 3.1
  */
 public class EhCacheCache implements Cache {
 
@@ -43,6 +27,7 @@ public class EhCacheCache implements Cache {
 
 	/**
 	 * Create an {@link EhCacheCache} instance.
+	 *
 	 * @param ehcache the backing Ehcache instance
 	 */
 	public EhCacheCache(Ehcache ehcache) {
@@ -93,19 +78,16 @@ public class EhCacheCache implements Cache {
 		Element element = lookup(key);
 		if (element != null) {
 			return (T) element.getObjectValue();
-		}
-		else {
+		} else {
 			this.cache.acquireWriteLockOnKey(key);
 			try {
 				element = lookup(key);  // one more attempt with the write lock
 				if (element != null) {
 					return (T) element.getObjectValue();
-				}
-				else {
+				} else {
 					return loadValue(key, valueLoader);
 				}
-			}
-			finally {
+			} finally {
 				this.cache.releaseWriteLockOnKey(key);
 			}
 		}
@@ -115,8 +97,7 @@ public class EhCacheCache implements Cache {
 		T value;
 		try {
 			value = valueLoader.call();
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			throw new ValueRetrievalException(key, valueLoader, ex);
 		}
 		put(key, value);
