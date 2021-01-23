@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.util.concurrent;
 
 import java.util.concurrent.CompletableFuture;
@@ -26,10 +10,10 @@ import java.util.concurrent.TimeoutException;
  * Adapts a {@link CompletableFuture} or {@link CompletionStage} into a
  * Spring {@link ListenableFuture}.
  *
+ * @param <T> the result type returned by this Future's {@code get} method
  * @author Sebastien Deleuze
  * @author Juergen Hoeller
  * @since 4.2
- * @param <T> the result type returned by this Future's {@code get} method
  */
 public class CompletableToListenableFutureAdapter<T> implements ListenableFuture<T> {
 
@@ -40,6 +24,7 @@ public class CompletableToListenableFutureAdapter<T> implements ListenableFuture
 
 	/**
 	 * Create a new adapter for the given {@link CompletionStage}.
+	 *
 	 * @since 4.3.7
 	 */
 	public CompletableToListenableFutureAdapter(CompletionStage<T> completionStage) {
@@ -54,8 +39,7 @@ public class CompletableToListenableFutureAdapter<T> implements ListenableFuture
 		this.completableFuture.whenComplete((result, ex) -> {
 			if (ex != null) {
 				this.callbacks.failure(ex);
-			}
-			else {
+			} else {
 				this.callbacks.success(result);
 			}
 		});

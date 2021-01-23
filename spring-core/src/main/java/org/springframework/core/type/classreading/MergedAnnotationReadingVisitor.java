@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core.type.classreading;
 
 import java.lang.annotation.Annotation;
@@ -37,9 +21,9 @@ import org.springframework.util.ClassUtils;
  * {@link AnnotationVisitor} that can be used to construct a
  * {@link MergedAnnotation}.
  *
+ * @param <A> the annotation type
  * @author Phillip Webb
  * @since 5.2
- * @param <A> the annotation type
  */
 class MergedAnnotationReadingVisitor<A extends Annotation> extends AnnotationVisitor {
 
@@ -57,7 +41,7 @@ class MergedAnnotationReadingVisitor<A extends Annotation> extends AnnotationVis
 
 
 	public MergedAnnotationReadingVisitor(@Nullable ClassLoader classLoader, @Nullable Object source,
-			Class<A> annotationType, Consumer<MergedAnnotation<A>> consumer) {
+										  Class<A> annotationType, Consumer<MergedAnnotation<A>> consumer) {
 
 		super(SpringAsmInfo.ASM_VERSION);
 		this.classLoader = classLoader;
@@ -121,8 +105,8 @@ class MergedAnnotationReadingVisitor<A extends Annotation> extends AnnotationVis
 	@SuppressWarnings("unchecked")
 	@Nullable
 	static <A extends Annotation> AnnotationVisitor get(@Nullable ClassLoader classLoader,
-			@Nullable Supplier<Object> sourceSupplier, String descriptor, boolean visible,
-			Consumer<MergedAnnotation<A>> consumer) {
+														@Nullable Supplier<Object> sourceSupplier, String descriptor, boolean visible,
+														Consumer<MergedAnnotation<A>> consumer) {
 
 		if (!visible) {
 			return null;
@@ -137,8 +121,7 @@ class MergedAnnotationReadingVisitor<A extends Annotation> extends AnnotationVis
 		try {
 			Class<A> annotationType = (Class<A>) ClassUtils.forName(typeName, classLoader);
 			return new MergedAnnotationReadingVisitor<>(classLoader, source, annotationType, consumer);
-		}
-		catch (ClassNotFoundException | LinkageError ex) {
+		} catch (ClassNotFoundException | LinkageError ex) {
 			return null;
 		}
 	}

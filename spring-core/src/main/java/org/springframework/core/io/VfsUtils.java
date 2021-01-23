@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core.io;
 
 import java.io.File;
@@ -90,8 +74,7 @@ public abstract class VfsUtils {
 
 			Class<?> visitorAttributesClass = loader.loadClass(VFS3_PKG + "VisitorAttributes");
 			VISITOR_ATTRIBUTES_FIELD_RECURSE = visitorAttributesClass.getField("RECURSE");
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			throw new IllegalStateException("Could not detect JBoss VFS infrastructure", ex);
 		}
 	}
@@ -99,15 +82,13 @@ public abstract class VfsUtils {
 	protected static Object invokeVfsMethod(Method method, @Nullable Object target, Object... args) throws IOException {
 		try {
 			return method.invoke(target, args);
-		}
-		catch (InvocationTargetException ex) {
+		} catch (InvocationTargetException ex) {
 			Throwable targetEx = ex.getTargetException();
 			if (targetEx instanceof IOException) {
 				throw (IOException) targetEx;
 			}
 			ReflectionUtils.handleInvocationTargetException(ex);
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			ReflectionUtils.handleReflectionException(ex);
 		}
 
@@ -117,8 +98,7 @@ public abstract class VfsUtils {
 	static boolean exists(Object vfsResource) {
 		try {
 			return (Boolean) invokeVfsMethod(VIRTUAL_FILE_METHOD_EXISTS, vfsResource);
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			return false;
 		}
 	}
@@ -126,8 +106,7 @@ public abstract class VfsUtils {
 	static boolean isReadable(Object vfsResource) {
 		try {
 			return (Long) invokeVfsMethod(VIRTUAL_FILE_METHOD_GET_SIZE, vfsResource) > 0;
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			return false;
 		}
 	}
@@ -155,8 +134,7 @@ public abstract class VfsUtils {
 	static String getName(Object vfsResource) {
 		try {
 			return (String) invokeVfsMethod(VIRTUAL_FILE_METHOD_GET_NAME, vfsResource);
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new IllegalStateException("Cannot get resource name", ex);
 		}
 	}

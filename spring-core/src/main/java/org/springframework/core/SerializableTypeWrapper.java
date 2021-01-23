@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core;
 
 import java.io.IOException;
@@ -62,6 +46,7 @@ final class SerializableTypeWrapper {
 	/**
 	 * Whether this environment lives within a native image.
 	 * Exposed as a private static field rather than in a {@code NativeImageDetector.inNativeImage()} static method due to https://github.com/oracle/graal/issues/2594.
+	 *
 	 * @see <a href="https://github.com/oracle/graal/blob/master/sdk/src/org.graalvm.nativeimage/src/org/graalvm/nativeimage/ImageInfo.java">ImageInfo.java</a>
 	 */
 	private static final boolean IN_NATIVE_IMAGE = (System.getProperty("org.graalvm.nativeimage.imagecode") != null);
@@ -92,6 +77,7 @@ final class SerializableTypeWrapper {
 
 	/**
 	 * Unwrap the given type, effectively returning the original non-serializable type.
+	 *
 	 * @param type the type to unwrap
 	 * @return the original non-serializable type
 	 */
@@ -130,7 +116,7 @@ final class SerializableTypeWrapper {
 		for (Class<?> type : SUPPORTED_SERIALIZABLE_TYPES) {
 			if (type.isInstance(providedType)) {
 				ClassLoader classLoader = provider.getClass().getClassLoader();
-				Class<?>[] interfaces = new Class<?>[] {type, SerializableTypeProxy.class, Serializable.class};
+				Class<?>[] interfaces = new Class<?>[]{type, SerializableTypeProxy.class, Serializable.class};
 				InvocationHandler handler = new TypeProxyInvocationHandler(provider);
 				cached = (Type) Proxy.newProxyInstance(classLoader, interfaces, handler);
 				cache.put(providedType, cached);
@@ -209,8 +195,7 @@ final class SerializableTypeWrapper {
 
 			if (Type.class == method.getReturnType() && ObjectUtils.isEmpty(args)) {
 				return forTypeProvider(new MethodInvokeTypeProvider(this.provider, method, -1));
-			}
-			else if (Type[].class == method.getReturnType() && ObjectUtils.isEmpty(args)) {
+			} else if (Type[].class == method.getReturnType() && ObjectUtils.isEmpty(args)) {
 				Type[] result = new Type[((Type[]) method.invoke(this.provider.getType())).length];
 				for (int i = 0; i < result.length; i++) {
 					result[i] = forTypeProvider(new MethodInvokeTypeProvider(this.provider, method, i));
@@ -220,8 +205,7 @@ final class SerializableTypeWrapper {
 
 			try {
 				return method.invoke(this.provider.getType(), args);
-			}
-			catch (InvocationTargetException ex) {
+			} catch (InvocationTargetException ex) {
 				throw ex.getTargetException();
 			}
 		}
@@ -260,8 +244,7 @@ final class SerializableTypeWrapper {
 			inputStream.defaultReadObject();
 			try {
 				this.field = this.declaringClass.getDeclaredField(this.fieldName);
-			}
-			catch (Throwable ex) {
+			} catch (Throwable ex) {
 				throw new IllegalStateException("Could not find original class structure", ex);
 			}
 		}
@@ -309,13 +292,11 @@ final class SerializableTypeWrapper {
 				if (this.methodName != null) {
 					this.methodParameter = new MethodParameter(
 							this.declaringClass.getDeclaredMethod(this.methodName, this.parameterTypes), this.parameterIndex);
-				}
-				else {
+				} else {
 					this.methodParameter = new MethodParameter(
 							this.declaringClass.getDeclaredConstructor(this.parameterTypes), this.parameterIndex);
 				}
-			}
-			catch (Throwable ex) {
+			} catch (Throwable ex) {
 				throw new IllegalStateException("Could not find original class structure", ex);
 			}
 		}

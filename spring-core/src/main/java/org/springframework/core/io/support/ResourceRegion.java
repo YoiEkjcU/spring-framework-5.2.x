@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core.io.support;
 
 import org.springframework.core.io.Resource;
@@ -39,9 +23,10 @@ public class ResourceRegion {
 	 * Create a new {@code ResourceRegion} from a given {@link Resource}.
 	 * This region of a resource is represented by a start {@code position}
 	 * and a byte {@code count} within the given {@code Resource}.
+	 *
 	 * @param resource a Resource
 	 * @param position the start position of the region in that resource
-	 * @param count the byte count of the region in that resource
+	 * @param count    the byte count of the region in that resource
 	 */
 	public ResourceRegion(Resource resource, long position, long count) {
 		Assert.notNull(resource, "Resource must not be null");

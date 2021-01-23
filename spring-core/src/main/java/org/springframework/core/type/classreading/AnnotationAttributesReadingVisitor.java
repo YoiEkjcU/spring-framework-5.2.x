@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core.type.classreading;
 
 import java.lang.annotation.Annotation;
@@ -54,8 +38,8 @@ final class AnnotationAttributesReadingVisitor extends RecursiveAnnotationAttrib
 
 
 	public AnnotationAttributesReadingVisitor(String annotationType,
-			MultiValueMap<String, AnnotationAttributes> attributesMap, Map<String, Set<String>> metaAnnotationMap,
-			@Nullable ClassLoader classLoader) {
+											  MultiValueMap<String, AnnotationAttributes> attributesMap, Map<String, Set<String>> metaAnnotationMap,
+											  @Nullable ClassLoader classLoader) {
 
 		super(annotationType, new AnnotationAttributes(annotationType, classLoader), classLoader);
 		this.attributesMap = attributesMap;
@@ -72,8 +56,7 @@ final class AnnotationAttributesReadingVisitor extends RecursiveAnnotationAttrib
 			List<AnnotationAttributes> attributeList = this.attributesMap.get(this.annotationType);
 			if (attributeList == null) {
 				this.attributesMap.add(this.annotationType, this.attributes);
-			}
-			else {
+			} else {
 				attributeList.add(0, this.attributes);
 			}
 			if (!AnnotationUtils.isInJavaLangAnnotationPackage(annotationClass.getName())) {
@@ -92,8 +75,7 @@ final class AnnotationAttributesReadingVisitor extends RecursiveAnnotationAttrib
 							this.metaAnnotationMap.put(annotationClass.getName(), metaAnnotationTypeNames);
 						}
 					}
-				}
-				catch (Throwable ex) {
+				} catch (Throwable ex) {
 					if (logger.isDebugEnabled()) {
 						logger.debug("Failed to introspect meta-annotations on " + annotationClass + ": " + ex);
 					}
@@ -117,8 +99,7 @@ final class AnnotationAttributesReadingVisitor extends RecursiveAnnotationAttrib
 				for (Annotation metaMetaAnnotation : annotationType.getAnnotations()) {
 					recursivelyCollectMetaAnnotations(visited, metaMetaAnnotation);
 				}
-			}
-			catch (Throwable ex) {
+			} catch (Throwable ex) {
 				if (logger.isDebugEnabled()) {
 					logger.debug("Failed to introspect meta-annotations on " + annotation + ": " + ex);
 				}

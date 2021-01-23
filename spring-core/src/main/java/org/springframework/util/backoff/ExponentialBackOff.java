@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.util.backoff;
 
 import org.springframework.util.Assert;
@@ -86,6 +70,7 @@ public class ExponentialBackOff implements BackOff {
 
 	/**
 	 * Create an instance with the default settings.
+	 *
 	 * @see #DEFAULT_INITIAL_INTERVAL
 	 * @see #DEFAULT_MULTIPLIER
 	 * @see #DEFAULT_MAX_INTERVAL
@@ -96,8 +81,9 @@ public class ExponentialBackOff implements BackOff {
 
 	/**
 	 * Create an instance with the supplied settings.
+	 *
 	 * @param initialInterval the initial interval in milliseconds
-	 * @param multiplier the multiplier (should be greater than or equal to 1)
+	 * @param multiplier      the multiplier (should be greater than or equal to 1)
 	 */
 	public ExponentialBackOff(long initialInterval, double multiplier) {
 		checkMultiplier(multiplier);
@@ -172,7 +158,7 @@ public class ExponentialBackOff implements BackOff {
 
 	private void checkMultiplier(double multiplier) {
 		Assert.isTrue(multiplier >= 1, () -> "Invalid multiplier '" + multiplier + "'. Should be greater than " +
-					"or equal to 1. A multiplier of 1 is equivalent to a fixed interval.");
+				"or equal to 1. A multiplier of 1 is equivalent to a fixed interval.");
 	}
 
 
@@ -197,12 +183,10 @@ public class ExponentialBackOff implements BackOff {
 			long maxInterval = getMaxInterval();
 			if (this.currentInterval >= maxInterval) {
 				return maxInterval;
-			}
-			else if (this.currentInterval < 0) {
+			} else if (this.currentInterval < 0) {
 				long initialInterval = getInitialInterval();
 				this.currentInterval = Math.min(initialInterval, maxInterval);
-			}
-			else {
+			} else {
 				this.currentInterval = multiplyInterval(maxInterval);
 			}
 			return this.currentInterval;

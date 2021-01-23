@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.util;
 
 import java.util.Comparator;
@@ -30,13 +14,14 @@ import org.springframework.lang.Nullable;
  * handler patterns.
  *
  * @author Rossen Stoyanchev
- * @since 5.2
  * @see PathMatcher
+ * @since 5.2
  */
 public interface RouteMatcher {
 
 	/**
 	 * Return a parsed representation of the given route.
+	 *
 	 * @param routeValue the route to parse
 	 * @return the parsed representation of the route
 	 */
@@ -46,6 +31,7 @@ public interface RouteMatcher {
 	 * Whether the given {@code route} contains pattern syntax which requires
 	 * the {@link #match(String, Route)} method, or if it is a regular String
 	 * that could be compared directly to others.
+	 *
 	 * @param route the route to check
 	 * @return {@code true} if the given {@code route} represents a pattern
 	 */
@@ -53,6 +39,7 @@ public interface RouteMatcher {
 
 	/**
 	 * Combines two patterns into a single pattern.
+	 *
 	 * @param pattern1 the first pattern
 	 * @param pattern2 the second pattern
 	 * @return the combination of the two patterns
@@ -62,16 +49,18 @@ public interface RouteMatcher {
 
 	/**
 	 * Match the given route against the given pattern.
+	 *
 	 * @param pattern the pattern to try to match
-	 * @param route the route to test against
+	 * @param route   the route to test against
 	 * @return {@code true} if there is a match, {@code false} otherwise
 	 */
 	boolean match(String pattern, Route route);
 
 	/**
 	 * Match the pattern to the route and extract template variables.
+	 *
 	 * @param pattern the pattern, possibly containing templates variables
-	 * @param route the route to extract template variables from
+	 * @param route   the route to extract template variables from
 	 * @return a map with template variables and values
 	 */
 	@Nullable
@@ -81,6 +70,7 @@ public interface RouteMatcher {
 	 * Given a route, return a {@link Comparator} suitable for sorting patterns
 	 * in order of explicitness for that route, so that more specific patterns
 	 * come before more generic ones.
+	 *
 	 * @param route the full path to use for comparison
 	 * @return a comparator capable of sorting patterns in order of explicitness
 	 */
@@ -89,7 +79,7 @@ public interface RouteMatcher {
 
 	/**
 	 * A parsed representation of a route.
- 	 */
+	 */
 	interface Route {
 
 		/**

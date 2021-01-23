@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.util.concurrent;
 
 import java.util.LinkedList;
@@ -28,11 +12,11 @@ import org.springframework.util.Assert;
  *
  * <p>Inspired by {@code com.google.common.util.concurrent.ExecutionList}.
  *
+ * @param <T> the callback result type
  * @author Arjen Poutsma
  * @author Sebastien Deleuze
  * @author Rossen Stoyanchev
  * @since 4.0
- * @param <T> the callback result type
  */
 public class ListenableFutureCallbackRegistry<T> {
 
@@ -50,6 +34,7 @@ public class ListenableFutureCallbackRegistry<T> {
 
 	/**
 	 * Add the given callback to this registry.
+	 *
 	 * @param callback the callback to add
 	 */
 	public void addCallback(ListenableFutureCallback<? super T> callback) {
@@ -74,8 +59,7 @@ public class ListenableFutureCallbackRegistry<T> {
 	private void notifySuccess(SuccessCallback<? super T> callback) {
 		try {
 			callback.onSuccess((T) this.result);
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			// Ignore
 		}
 	}
@@ -84,14 +68,14 @@ public class ListenableFutureCallbackRegistry<T> {
 		Assert.state(this.result instanceof Throwable, "No Throwable result for failure state");
 		try {
 			callback.onFailure((Throwable) this.result);
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			// Ignore
 		}
 	}
 
 	/**
 	 * Add the given success callback to this registry.
+	 *
 	 * @param callback the success callback to add
 	 * @since 4.1
 	 */
@@ -111,6 +95,7 @@ public class ListenableFutureCallbackRegistry<T> {
 
 	/**
 	 * Add the given failure callback to this registry.
+	 *
 	 * @param callback the failure callback to add
 	 * @since 4.1
 	 */
@@ -131,6 +116,7 @@ public class ListenableFutureCallbackRegistry<T> {
 	/**
 	 * Trigger a {@link ListenableFutureCallback#onSuccess(Object)} call on all
 	 * added callbacks with the given result.
+	 *
 	 * @param result the result to trigger the callbacks with
 	 */
 	public void success(@Nullable T result) {
@@ -147,6 +133,7 @@ public class ListenableFutureCallbackRegistry<T> {
 	/**
 	 * Trigger a {@link ListenableFutureCallback#onFailure(Throwable)} call on all
 	 * added callbacks with the given {@code Throwable}.
+	 *
 	 * @param ex the exception to trigger the callbacks with
 	 */
 	public void failure(Throwable ex) {

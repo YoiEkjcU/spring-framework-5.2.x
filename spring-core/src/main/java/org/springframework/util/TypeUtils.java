@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.util;
 
 import java.lang.reflect.GenericArrayType;
@@ -37,6 +21,7 @@ public abstract class TypeUtils {
 	/**
 	 * Check if the right-hand side type may be assigned to the left-hand side
 	 * type following the Java generics rules.
+	 *
 	 * @param lhsType the target type
 	 * @param rhsType the value type that should be assigned to the target type
 	 * @return true if rhs is assignable to lhs
@@ -65,8 +50,7 @@ public abstract class TypeUtils {
 				if (rhsRaw instanceof Class) {
 					return ClassUtils.isAssignable(lhsClass, (Class<?>) rhsRaw);
 				}
-			}
-			else if (lhsClass.isArray() && rhsType instanceof GenericArrayType) {
+			} else if (lhsClass.isArray() && rhsType instanceof GenericArrayType) {
 				Type rhsComponent = ((GenericArrayType) rhsType).getGenericComponentType();
 
 				return isAssignable(lhsClass.getComponentType(), rhsComponent);
@@ -81,8 +65,7 @@ public abstract class TypeUtils {
 				if (lhsRaw instanceof Class) {
 					return ClassUtils.isAssignable((Class<?>) lhsRaw, (Class<?>) rhsType);
 				}
-			}
-			else if (rhsType instanceof ParameterizedType) {
+			} else if (rhsType instanceof ParameterizedType) {
 				return isAssignable((ParameterizedType) lhsType, (ParameterizedType) rhsType);
 			}
 		}
@@ -96,8 +79,7 @@ public abstract class TypeUtils {
 				if (rhsClass.isArray()) {
 					return isAssignable(lhsComponent, rhsClass.getComponentType());
 				}
-			}
-			else if (rhsType instanceof GenericArrayType) {
+			} else if (rhsType instanceof GenericArrayType) {
 				Type rhsComponent = ((GenericArrayType) rhsType).getGenericComponentType();
 
 				return isAssignable(lhsComponent, rhsComponent);
@@ -141,14 +123,14 @@ public abstract class TypeUtils {
 
 		// supply the implicit upper bound if none are specified
 		if (lUpperBounds.length == 0) {
-			lUpperBounds = new Type[] { Object.class };
+			lUpperBounds = new Type[]{Object.class};
 		}
 
 		Type[] lLowerBounds = lhsType.getLowerBounds();
 
 		// supply the implicit lower bound if none are specified
 		if (lLowerBounds.length == 0) {
-			lLowerBounds = new Type[] { null };
+			lLowerBounds = new Type[]{null};
 		}
 
 		if (rhsType instanceof WildcardType) {
@@ -159,13 +141,13 @@ public abstract class TypeUtils {
 			Type[] rUpperBounds = rhsWcType.getUpperBounds();
 
 			if (rUpperBounds.length == 0) {
-				rUpperBounds = new Type[] { Object.class };
+				rUpperBounds = new Type[]{Object.class};
 			}
 
 			Type[] rLowerBounds = rhsWcType.getLowerBounds();
 
 			if (rLowerBounds.length == 0) {
-				rLowerBounds = new Type[] { null };
+				rLowerBounds = new Type[]{null};
 			}
 
 			for (Type lBound : lUpperBounds) {
@@ -195,8 +177,7 @@ public abstract class TypeUtils {
 					}
 				}
 			}
-		}
-		else {
+		} else {
 			for (Type lBound : lUpperBounds) {
 				if (!isAssignableBound(lBound, rhsType)) {
 					return false;

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core.convert.support;
 
 import java.lang.reflect.Constructor;
@@ -60,8 +44,8 @@ import org.springframework.util.ReflectionUtils;
  * @author Keith Donald
  * @author Juergen Hoeller
  * @author Sam Brannen
- * @since 3.0
  * @see FallbackObjectToStringConverter
+ * @since 3.0
  */
 final class ObjectToObjectConverter implements ConditionalGenericConverter {
 
@@ -97,21 +81,17 @@ final class ObjectToObjectConverter implements ConditionalGenericConverter {
 				ReflectionUtils.makeAccessible(method);
 				if (!Modifier.isStatic(method.getModifiers())) {
 					return method.invoke(source);
-				}
-				else {
+				} else {
 					return method.invoke(null, source);
 				}
-			}
-			else if (member instanceof Constructor) {
+			} else if (member instanceof Constructor) {
 				Constructor<?> ctor = (Constructor<?>) member;
 				ReflectionUtils.makeAccessible(ctor);
 				return ctor.newInstance(source);
 			}
-		}
-		catch (InvocationTargetException ex) {
+		} catch (InvocationTargetException ex) {
 			throw new ConversionFailedException(sourceType, targetType, source, ex.getTargetException());
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			throw new ConversionFailedException(sourceType, targetType, source, ex);
 		}
 
@@ -119,10 +99,9 @@ final class ObjectToObjectConverter implements ConditionalGenericConverter {
 		// No toInteger() method exists on java.lang.Number, and no static valueOf/of/from(java.lang.Number)
 		// method or Integer(java.lang.Number) constructor exists on java.lang.Integer.
 		throw new IllegalStateException(String.format("No to%3$s() method exists on %1$s, " +
-				"and no static valueOf/of/from(%1$s) method or %3$s(%1$s) constructor exists on %2$s.",
+						"and no static valueOf/of/from(%1$s) method or %3$s(%1$s) constructor exists on %2$s.",
 				sourceClass.getName(), targetClass.getName(), targetClass.getSimpleName()));
 	}
-
 
 
 	static boolean hasConversionMethodOrConstructor(Class<?> targetClass, Class<?> sourceClass) {
@@ -157,12 +136,10 @@ final class ObjectToObjectConverter implements ConditionalGenericConverter {
 			return (!Modifier.isStatic(method.getModifiers()) ?
 					ClassUtils.isAssignable(method.getDeclaringClass(), sourceClass) :
 					method.getParameterTypes()[0] == sourceClass);
-		}
-		else if (member instanceof Constructor) {
+		} else if (member instanceof Constructor) {
 			Constructor<?> ctor = (Constructor<?>) member;
 			return (ctor.getParameterTypes()[0] == sourceClass);
-		}
-		else {
+		} else {
 			return false;
 		}
 	}

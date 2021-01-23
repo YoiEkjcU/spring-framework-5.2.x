@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core.convert;
 
 import java.lang.annotation.Annotation;
@@ -41,9 +25,9 @@ import org.springframework.util.StringUtils;
  *
  * @author Keith Donald
  * @author Phillip Webb
- * @since 3.1
  * @see TypeDescriptor#TypeDescriptor(Property)
  * @see TypeDescriptor#nested(Property, int)
+ * @since 3.1
  */
 public final class Property {
 
@@ -139,8 +123,7 @@ public final class Property {
 			int index = this.readMethod.getName().indexOf("get");
 			if (index != -1) {
 				index += 3;
-			}
-			else {
+			} else {
 				index = this.readMethod.getName().indexOf("is");
 				if (index == -1) {
 					throw new IllegalArgumentException("Not a getter method");
@@ -148,16 +131,14 @@ public final class Property {
 				index += 2;
 			}
 			return StringUtils.uncapitalize(this.readMethod.getName().substring(index));
-		}
-		else if (this.writeMethod != null) {
+		} else if (this.writeMethod != null) {
 			int index = this.writeMethod.getName().indexOf("set");
 			if (index == -1) {
 				throw new IllegalArgumentException("Not a setter method");
 			}
 			index += 3;
 			return StringUtils.uncapitalize(this.writeMethod.getName().substring(index));
-		}
-		else {
+		} else {
 			throw new IllegalStateException("Property is neither readable nor writeable");
 		}
 	}
@@ -245,11 +226,9 @@ public final class Property {
 	private Class<?> declaringClass() {
 		if (getReadMethod() != null) {
 			return getReadMethod().getDeclaringClass();
-		}
-		else if (getWriteMethod() != null) {
+		} else if (getWriteMethod() != null) {
 			return getWriteMethod().getDeclaringClass();
-		}
-		else {
+		} else {
 			return null;
 		}
 	}

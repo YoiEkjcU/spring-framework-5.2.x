@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.util.xml;
 
 import java.util.ArrayList;
@@ -51,6 +35,7 @@ class StaxEventHandler extends AbstractStaxHandler {
 	/**
 	 * Construct a new instance of the {@code StaxEventContentHandler} that writes to the
 	 * given {@code XMLEventWriter}. A default {@code XMLEventFactory} will be created.
+	 *
 	 * @param eventWriter the writer to write events to
 	 */
 	public StaxEventHandler(XMLEventWriter eventWriter) {
@@ -61,8 +46,9 @@ class StaxEventHandler extends AbstractStaxHandler {
 	/**
 	 * Construct a new instance of the {@code StaxEventContentHandler} that uses the given
 	 * event factory to create events and writes to the given {@code XMLEventConsumer}.
+	 *
 	 * @param eventWriter the writer to write events to
-	 * @param factory the factory used to create events
+	 * @param factory     the factory used to create events
 	 */
 	public StaxEventHandler(XMLEventWriter eventWriter, XMLEventFactory factory) {
 		this.eventFactory = factory;
@@ -89,7 +75,7 @@ class StaxEventHandler extends AbstractStaxHandler {
 
 	@Override
 	protected void startElementInternal(QName name, Attributes atts,
-			Map<String, String> namespaceMapping) throws XMLStreamException {
+										Map<String, String> namespaceMapping) throws XMLStreamException {
 
 		List<Attribute> attributes = getAttributes(atts);
 		List<Namespace> namespaces = getNamespaces(namespaceMapping);

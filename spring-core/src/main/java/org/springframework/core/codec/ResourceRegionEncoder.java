@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core.codec;
 
 import java.io.IOException;
@@ -77,8 +61,8 @@ public class ResourceRegionEncoder extends AbstractEncoder<ResourceRegion> {
 
 	@Override
 	public Flux<DataBuffer> encode(Publisher<? extends ResourceRegion> input,
-			DataBufferFactory bufferFactory, ResolvableType elementType, @Nullable MimeType mimeType,
-			@Nullable Map<String, Object> hints) {
+								   DataBufferFactory bufferFactory, ResolvableType elementType, @Nullable MimeType mimeType,
+								   @Nullable Map<String, Object> hints) {
 
 		Assert.notNull(input, "'inputStream' must not be null");
 		Assert.notNull(bufferFactory, "'bufferFactory' must not be null");
@@ -93,8 +77,7 @@ public class ResourceRegionEncoder extends AbstractEncoder<ResourceRegion> {
 						}
 						return writeResourceRegion(region, bufferFactory, hints);
 					});
-		}
-		else {
+		} else {
 			final String boundaryString = Hints.getRequiredHint(hints, BOUNDARY_STRING_HINT);
 			byte[] startBoundary = toAsciiBytes("\r\n--" + boundaryString + "\r\n");
 			byte[] contentType = mimeType != null ? toAsciiBytes("Content-Type: " + mimeType + "\r\n") : new byte[0];
@@ -149,14 +132,14 @@ public class ResourceRegionEncoder extends AbstractEncoder<ResourceRegion> {
 		if (contentLength.isPresent()) {
 			long length = contentLength.getAsLong();
 			return toAsciiBytes("Content-Range: bytes " + start + '-' + end + '/' + length + "\r\n\r\n");
-		}
-		else {
+		} else {
 			return toAsciiBytes("Content-Range: bytes " + start + '-' + end + "\r\n\r\n");
 		}
 	}
 
 	/**
 	 * Determine, if possible, the contentLength of the given resource without reading it.
+	 *
 	 * @param resource the resource instance
 	 * @return the contentLength of the resource
 	 */
@@ -166,8 +149,7 @@ public class ResourceRegionEncoder extends AbstractEncoder<ResourceRegion> {
 		if (InputStreamResource.class != resource.getClass()) {
 			try {
 				return OptionalLong.of(resource.contentLength());
-			}
-			catch (IOException ignored) {
+			} catch (IOException ignored) {
 			}
 		}
 		return OptionalLong.empty();

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core.task;
 
 import java.io.Serializable;
@@ -41,11 +25,11 @@ import org.springframework.util.concurrent.ListenableFutureTask;
  * executing a large number of short-lived tasks.
  *
  * @author Juergen Hoeller
- * @since 2.0
  * @see #setConcurrencyLimit
  * @see SyncTaskExecutor
  * @see org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
  * @see org.springframework.scheduling.commonj.WorkManagerTaskExecutor
+ * @since 2.0
  */
 @SuppressWarnings("serial")
 public class SimpleAsyncTaskExecutor extends CustomizableThreadCreator
@@ -53,18 +37,22 @@ public class SimpleAsyncTaskExecutor extends CustomizableThreadCreator
 
 	/**
 	 * Permit any number of concurrent invocations: that is, don't throttle concurrency.
+	 *
 	 * @see ConcurrencyThrottleSupport#UNBOUNDED_CONCURRENCY
 	 */
 	public static final int UNBOUNDED_CONCURRENCY = ConcurrencyThrottleSupport.UNBOUNDED_CONCURRENCY;
 
 	/**
 	 * Switch concurrency 'off': that is, don't allow any concurrent invocations.
+	 *
 	 * @see ConcurrencyThrottleSupport#NO_CONCURRENCY
 	 */
 	public static final int NO_CONCURRENCY = ConcurrencyThrottleSupport.NO_CONCURRENCY;
 
 
-	/** Internal concurrency throttle used by this executor. */
+	/**
+	 * Internal concurrency throttle used by this executor.
+	 */
 	private final ConcurrencyThrottleAdapter concurrencyThrottle = new ConcurrencyThrottleAdapter();
 
 	@Nullable
@@ -83,6 +71,7 @@ public class SimpleAsyncTaskExecutor extends CustomizableThreadCreator
 
 	/**
 	 * Create a new SimpleAsyncTaskExecutor with the given thread name prefix.
+	 *
 	 * @param threadNamePrefix the prefix to use for the names of newly created threads
 	 */
 	public SimpleAsyncTaskExecutor(String threadNamePrefix) {
@@ -91,6 +80,7 @@ public class SimpleAsyncTaskExecutor extends CustomizableThreadCreator
 
 	/**
 	 * Create a new SimpleAsyncTaskExecutor with the given external thread factory.
+	 *
 	 * @param threadFactory the factory to use for creating new Threads
 	 */
 	public SimpleAsyncTaskExecutor(ThreadFactory threadFactory) {
@@ -103,6 +93,7 @@ public class SimpleAsyncTaskExecutor extends CustomizableThreadCreator
 	 * instead of relying on the local properties of this executor.
 	 * <p>You may specify an inner ThreadFactory bean or also a ThreadFactory reference
 	 * obtained from JNDI (on a Java EE 6 server) or some other lookup mechanism.
+	 *
 	 * @see #setThreadNamePrefix
 	 * @see #setThreadPriority
 	 */
@@ -131,6 +122,7 @@ public class SimpleAsyncTaskExecutor extends CustomizableThreadCreator
 	 * In case of {@code #submit} calls, the exposed {@code Runnable} will be a
 	 * {@code FutureTask} which does not propagate any exceptions; you might
 	 * have to cast it and call {@code Future#get} to evaluate exceptions.
+	 *
 	 * @since 4.3
 	 */
 	public final void setTaskDecorator(TaskDecorator taskDecorator) {
@@ -145,6 +137,7 @@ public class SimpleAsyncTaskExecutor extends CustomizableThreadCreator
 	 * NOTE: Do not switch between -1 and any concrete limit at runtime,
 	 * as this will lead to inconsistent concurrency counts: A limit
 	 * of -1 effectively turns off concurrency counting completely.
+	 *
 	 * @see #UNBOUNDED_CONCURRENCY
 	 */
 	public void setConcurrencyLimit(int concurrencyLimit) {
@@ -160,6 +153,7 @@ public class SimpleAsyncTaskExecutor extends CustomizableThreadCreator
 
 	/**
 	 * Return whether this throttle is currently active.
+	 *
 	 * @return {@code true} if the concurrency limit for this instance is active
 	 * @see #getConcurrencyLimit()
 	 * @see #setConcurrencyLimit
@@ -172,6 +166,7 @@ public class SimpleAsyncTaskExecutor extends CustomizableThreadCreator
 	/**
 	 * Executes the given task, within a concurrency throttle
 	 * if configured (through the superclass's settings).
+	 *
 	 * @see #doExecute(Runnable)
 	 */
 	@Override
@@ -185,6 +180,7 @@ public class SimpleAsyncTaskExecutor extends CustomizableThreadCreator
 	 * <p>Executes urgent tasks (with 'immediate' timeout) directly,
 	 * bypassing the concurrency throttle (if active). All other
 	 * tasks are subject to throttling.
+	 *
 	 * @see #TIMEOUT_IMMEDIATE
 	 * @see #doExecute(Runnable)
 	 */
@@ -195,8 +191,7 @@ public class SimpleAsyncTaskExecutor extends CustomizableThreadCreator
 		if (isThrottleActive() && startTimeout > TIMEOUT_IMMEDIATE) {
 			this.concurrencyThrottle.beforeAccess();
 			doExecute(new ConcurrencyThrottlingRunnable(taskToUse));
-		}
-		else {
+		} else {
 			doExecute(taskToUse);
 		}
 	}
@@ -232,6 +227,7 @@ public class SimpleAsyncTaskExecutor extends CustomizableThreadCreator
 	/**
 	 * Template method for the actual execution of a task.
 	 * <p>The default implementation creates a new Thread and starts it.
+	 *
 	 * @param task the Runnable to execute
 	 * @see #setThreadFactory
 	 * @see #createThread
@@ -278,8 +274,7 @@ public class SimpleAsyncTaskExecutor extends CustomizableThreadCreator
 		public void run() {
 			try {
 				this.target.run();
-			}
-			finally {
+			} finally {
 				concurrencyThrottle.afterAccess();
 			}
 		}

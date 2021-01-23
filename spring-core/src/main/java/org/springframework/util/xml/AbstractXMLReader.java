@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.util.xml;
 
 import org.xml.sax.ContentHandler;
@@ -33,11 +17,11 @@ import org.springframework.lang.Nullable;
  *
  * @author Arjen Poutsma
  * @author Juergen Hoeller
- * @since 3.0
  * @see #setContentHandler(org.xml.sax.ContentHandler)
  * @see #setDTDHandler(org.xml.sax.DTDHandler)
  * @see #setEntityResolver(org.xml.sax.EntityResolver)
  * @see #setErrorHandler(org.xml.sax.ErrorHandler)
+ * @since 3.0
  */
 abstract class AbstractXMLReader implements XMLReader {
 
@@ -116,8 +100,7 @@ abstract class AbstractXMLReader implements XMLReader {
 	public boolean getFeature(String name) throws SAXNotRecognizedException, SAXNotSupportedException {
 		if (name.startsWith("http://xml.org/sax/features/")) {
 			return false;
-		}
-		else {
+		} else {
 			throw new SAXNotRecognizedException(name);
 		}
 	}
@@ -133,8 +116,7 @@ abstract class AbstractXMLReader implements XMLReader {
 			if (value) {
 				throw new SAXNotSupportedException(name);
 			}
-		}
-		else {
+		} else {
 			throw new SAXNotRecognizedException(name);
 		}
 	}
@@ -148,8 +130,7 @@ abstract class AbstractXMLReader implements XMLReader {
 	public Object getProperty(String name) throws SAXNotRecognizedException, SAXNotSupportedException {
 		if ("http://xml.org/sax/properties/lexical-handler".equals(name)) {
 			return this.lexicalHandler;
-		}
-		else {
+		} else {
 			throw new SAXNotRecognizedException(name);
 		}
 	}
@@ -162,8 +143,7 @@ abstract class AbstractXMLReader implements XMLReader {
 	public void setProperty(String name, Object value) throws SAXNotRecognizedException, SAXNotSupportedException {
 		if ("http://xml.org/sax/properties/lexical-handler".equals(name)) {
 			this.lexicalHandler = (LexicalHandler) value;
-		}
-		else {
+		} else {
 			throw new SAXNotRecognizedException(name);
 		}
 	}

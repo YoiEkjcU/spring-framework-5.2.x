@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2015 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core.type;
 
 /**
@@ -24,10 +8,10 @@ package org.springframework.core.type;
  * @author Mark Pollack
  * @author Chris Beams
  * @author Phillip Webb
- * @since 3.0
  * @see StandardMethodMetadata
  * @see AnnotationMetadata#getAnnotatedMethods
  * @see AnnotatedTypeMetadata
+ * @since 3.0
  */
 public interface MethodMetadata extends AnnotatedTypeMetadata {
 
@@ -43,6 +27,7 @@ public interface MethodMetadata extends AnnotatedTypeMetadata {
 
 	/**
 	 * Return the fully-qualified name of this method's declared return type.
+	 *
 	 * @since 4.2
 	 */
 	String getReturnTypeName();
@@ -51,6 +36,7 @@ public interface MethodMetadata extends AnnotatedTypeMetadata {
 	 * Return whether the underlying method is effectively abstract:
 	 * i.e. marked as abstract on a class or declared as a regular,
 	 * non-default method in an interface.
+	 *
 	 * @since 4.2
 	 */
 	boolean isAbstract();

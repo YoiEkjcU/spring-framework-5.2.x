@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core.log;
 
 import java.util.function.Supplier;
@@ -28,7 +12,6 @@ import org.springframework.util.Assert;
  * format string ({@link String#format}) in its {@link #toString()}.
  *
  * @author Juergen Hoeller
- * @since 5.2
  * @see #of(Supplier)
  * @see #format(String, Object)
  * @see #format(String, Object...)
@@ -38,6 +21,7 @@ import org.springframework.util.Assert;
  * @see org.apache.commons.logging.Log#info(Object)
  * @see org.apache.commons.logging.Log#debug(Object)
  * @see org.apache.commons.logging.Log#trace(Object)
+ * @since 5.2
  */
 public abstract class LogMessage implements CharSequence {
 
@@ -77,6 +61,7 @@ public abstract class LogMessage implements CharSequence {
 
 	/**
 	 * Build a lazily resolving message from the given supplier.
+	 *
 	 * @param supplier the supplier (typically bound to a Java 8 lambda expression)
 	 * @see #toString()
 	 */
@@ -86,8 +71,9 @@ public abstract class LogMessage implements CharSequence {
 
 	/**
 	 * Build a lazily formatted message from the given format string and argument.
+	 *
 	 * @param format the format string (following {@link String#format} rules)
-	 * @param arg1 the argument
+	 * @param arg1   the argument
 	 * @see String#format(String, Object...)
 	 */
 	public static LogMessage format(String format, Object arg1) {
@@ -96,9 +82,10 @@ public abstract class LogMessage implements CharSequence {
 
 	/**
 	 * Build a lazily formatted message from the given format string and arguments.
+	 *
 	 * @param format the format string (following {@link String#format} rules)
-	 * @param arg1 the first argument
-	 * @param arg2 the second argument
+	 * @param arg1   the first argument
+	 * @param arg2   the second argument
 	 * @see String#format(String, Object...)
 	 */
 	public static LogMessage format(String format, Object arg1, Object arg2) {
@@ -107,10 +94,11 @@ public abstract class LogMessage implements CharSequence {
 
 	/**
 	 * Build a lazily formatted message from the given format string and arguments.
+	 *
 	 * @param format the format string (following {@link String#format} rules)
-	 * @param arg1 the first argument
-	 * @param arg2 the second argument
-	 * @param arg3 the third argument
+	 * @param arg1   the first argument
+	 * @param arg2   the second argument
+	 * @param arg3   the third argument
 	 * @see String#format(String, Object...)
 	 */
 	public static LogMessage format(String format, Object arg1, Object arg2, Object arg3) {
@@ -119,11 +107,12 @@ public abstract class LogMessage implements CharSequence {
 
 	/**
 	 * Build a lazily formatted message from the given format string and arguments.
+	 *
 	 * @param format the format string (following {@link String#format} rules)
-	 * @param arg1 the first argument
-	 * @param arg2 the second argument
-	 * @param arg3 the third argument
-	 * @param arg4 the fourth argument
+	 * @param arg1   the first argument
+	 * @param arg2   the second argument
+	 * @param arg3   the third argument
+	 * @param arg4   the fourth argument
 	 * @see String#format(String, Object...)
 	 */
 	public static LogMessage format(String format, Object arg1, Object arg2, Object arg3, Object arg4) {
@@ -132,8 +121,9 @@ public abstract class LogMessage implements CharSequence {
 
 	/**
 	 * Build a lazily formatted message from the given format string and varargs.
+	 *
 	 * @param format the format string (following {@link String#format} rules)
-	 * @param args the varargs array (costly, prefer individual arguments)
+	 * @param args   the varargs array (costly, prefer individual arguments)
 	 * @see String#format(String, Object...)
 	 */
 	public static LogMessage format(String format, Object... args) {

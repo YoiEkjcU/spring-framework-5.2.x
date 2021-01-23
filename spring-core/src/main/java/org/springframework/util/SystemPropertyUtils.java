@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.util;
 
 import org.springframework.lang.Nullable;
@@ -28,20 +12,26 @@ import org.springframework.lang.Nullable;
  * @author Juergen Hoeller
  * @author Rob Harrop
  * @author Dave Syer
- * @since 1.2.5
  * @see #PLACEHOLDER_PREFIX
  * @see #PLACEHOLDER_SUFFIX
  * @see System#getProperty(String)
+ * @since 1.2.5
  */
 public abstract class SystemPropertyUtils {
 
-	/** Prefix for system property placeholders: "${". */
+	/**
+	 * Prefix for system property placeholders: "${".
+	 */
 	public static final String PLACEHOLDER_PREFIX = "${";
 
-	/** Suffix for system property placeholders: "}". */
+	/**
+	 * Suffix for system property placeholders: "}".
+	 */
 	public static final String PLACEHOLDER_SUFFIX = "}";
 
-	/** Value separator for system property placeholders: ":". */
+	/**
+	 * Value separator for system property placeholders: ":".
+	 */
 	public static final String VALUE_SEPARATOR = ":";
 
 
@@ -55,6 +45,7 @@ public abstract class SystemPropertyUtils {
 	/**
 	 * Resolve {@code ${...}} placeholders in the given text, replacing them with
 	 * corresponding system property values.
+	 *
 	 * @param text the String to resolve
 	 * @return the resolved String
 	 * @throws IllegalArgumentException if there is an unresolvable placeholder
@@ -69,7 +60,8 @@ public abstract class SystemPropertyUtils {
 	 * Resolve {@code ${...}} placeholders in the given text, replacing them with
 	 * corresponding system property values. Unresolvable placeholders with no default
 	 * value are ignored and passed through unchanged if the flag is set to {@code true}.
-	 * @param text the String to resolve
+	 *
+	 * @param text                           the String to resolve
 	 * @param ignoreUnresolvablePlaceholders whether unresolved placeholders are to be ignored
 	 * @return the resolved String
 	 * @throws IllegalArgumentException if there is an unresolvable placeholder
@@ -108,8 +100,7 @@ public abstract class SystemPropertyUtils {
 					propVal = System.getenv(placeholderName);
 				}
 				return propVal;
-			}
-			catch (Throwable ex) {
+			} catch (Throwable ex) {
 				System.err.println("Could not resolve placeholder '" + placeholderName + "' in [" +
 						this.text + "] as system property: " + ex);
 				return null;

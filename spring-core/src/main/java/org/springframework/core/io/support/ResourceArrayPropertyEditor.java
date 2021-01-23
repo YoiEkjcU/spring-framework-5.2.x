@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core.io.support;
 
 import java.beans.PropertyEditorSupport;
@@ -49,10 +33,10 @@ import org.springframework.util.Assert;
  *
  * @author Juergen Hoeller
  * @author Chris Beams
- * @since 1.1.2
  * @see org.springframework.core.io.Resource
  * @see ResourcePatternResolver
  * @see PathMatchingResourcePatternResolver
+ * @since 1.1.2
  */
 public class ResourceArrayPropertyEditor extends PropertyEditorSupport {
 
@@ -69,6 +53,7 @@ public class ResourceArrayPropertyEditor extends PropertyEditorSupport {
 	/**
 	 * Create a new ResourceArrayPropertyEditor with a default
 	 * {@link PathMatchingResourcePatternResolver} and {@link StandardEnvironment}.
+	 *
 	 * @see PathMatchingResourcePatternResolver
 	 * @see Environment
 	 */
@@ -79,8 +64,9 @@ public class ResourceArrayPropertyEditor extends PropertyEditorSupport {
 	/**
 	 * Create a new ResourceArrayPropertyEditor with the given {@link ResourcePatternResolver}
 	 * and {@link PropertyResolver} (typically an {@link Environment}).
+	 *
 	 * @param resourcePatternResolver the ResourcePatternResolver to use
-	 * @param propertyResolver the PropertyResolver to use
+	 * @param propertyResolver        the PropertyResolver to use
 	 */
 	public ResourceArrayPropertyEditor(
 			ResourcePatternResolver resourcePatternResolver, @Nullable PropertyResolver propertyResolver) {
@@ -91,13 +77,14 @@ public class ResourceArrayPropertyEditor extends PropertyEditorSupport {
 	/**
 	 * Create a new ResourceArrayPropertyEditor with the given {@link ResourcePatternResolver}
 	 * and {@link PropertyResolver} (typically an {@link Environment}).
-	 * @param resourcePatternResolver the ResourcePatternResolver to use
-	 * @param propertyResolver the PropertyResolver to use
+	 *
+	 * @param resourcePatternResolver        the ResourcePatternResolver to use
+	 * @param propertyResolver               the PropertyResolver to use
 	 * @param ignoreUnresolvablePlaceholders whether to ignore unresolvable placeholders
-	 * if no corresponding system property could be found
+	 *                                       if no corresponding system property could be found
 	 */
 	public ResourceArrayPropertyEditor(ResourcePatternResolver resourcePatternResolver,
-			@Nullable PropertyResolver propertyResolver, boolean ignoreUnresolvablePlaceholders) {
+									   @Nullable PropertyResolver propertyResolver, boolean ignoreUnresolvablePlaceholders) {
 
 		Assert.notNull(resourcePatternResolver, "ResourcePatternResolver must not be null");
 		this.resourcePatternResolver = resourcePatternResolver;
@@ -114,8 +101,7 @@ public class ResourceArrayPropertyEditor extends PropertyEditorSupport {
 		String pattern = resolvePath(text).trim();
 		try {
 			setValue(this.resourcePatternResolver.getResources(pattern));
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new IllegalArgumentException(
 					"Could not resolve resource location pattern [" + pattern + "]: " + ex.getMessage());
 		}
@@ -142,30 +128,25 @@ public class ResourceArrayPropertyEditor extends PropertyEditorSupport {
 								merged.add(resource);
 							}
 						}
-					}
-					catch (IOException ex) {
+					} catch (IOException ex) {
 						// ignore - might be an unresolved placeholder or non-existing base directory
 						if (logger.isDebugEnabled()) {
 							logger.debug("Could not retrieve resources for pattern '" + pattern + "'", ex);
 						}
 					}
-				}
-				else if (element instanceof Resource) {
+				} else if (element instanceof Resource) {
 					// A Resource object: add it to the result.
 					Resource resource = (Resource) element;
 					if (!merged.contains(resource)) {
 						merged.add(resource);
 					}
-				}
-				else {
+				} else {
 					throw new IllegalArgumentException("Cannot convert element [" + element + "] to [" +
 							Resource.class.getName() + "]: only location String and Resource object supported");
 				}
 			}
 			super.setValue(merged.toArray(new Resource[0]));
-		}
-
-		else {
+		} else {
 			// An arbitrary value: probably a String or a Resource array.
 			// setAsText will be called for a String; a Resource array will be used as-is.
 			super.setValue(value);
@@ -175,6 +156,7 @@ public class ResourceArrayPropertyEditor extends PropertyEditorSupport {
 	/**
 	 * Resolve the given path, replacing placeholders with
 	 * corresponding system property values if necessary.
+	 *
 	 * @param path the original file path
 	 * @return the resolved file path
 	 * @see PropertyResolver#resolvePlaceholders

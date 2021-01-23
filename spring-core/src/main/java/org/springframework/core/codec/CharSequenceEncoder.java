@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core.codec;
 
 import java.nio.charset.Charset;
@@ -41,8 +25,8 @@ import org.springframework.util.MimeTypeUtils;
  * @author Sebastien Deleuze
  * @author Arjen Poutsma
  * @author Rossen Stoyanchev
- * @since 5.0
  * @see StringDecoder
+ * @since 5.0
  */
 public final class CharSequenceEncoder extends AbstractEncoder<CharSequence> {
 
@@ -68,8 +52,8 @@ public final class CharSequenceEncoder extends AbstractEncoder<CharSequence> {
 
 	@Override
 	public Flux<DataBuffer> encode(Publisher<? extends CharSequence> inputStream,
-			DataBufferFactory bufferFactory, ResolvableType elementType,
-			@Nullable MimeType mimeType, @Nullable Map<String, Object> hints) {
+								   DataBufferFactory bufferFactory, ResolvableType elementType,
+								   @Nullable MimeType mimeType, @Nullable Map<String, Object> hints) {
 
 		return Flux.from(inputStream).map(charSequence ->
 				encodeValue(charSequence, bufferFactory, elementType, mimeType, hints));
@@ -77,7 +61,7 @@ public final class CharSequenceEncoder extends AbstractEncoder<CharSequence> {
 
 	@Override
 	public DataBuffer encodeValue(CharSequence charSequence, DataBufferFactory bufferFactory,
-			ResolvableType valueType, @Nullable MimeType mimeType, @Nullable Map<String, Object> hints) {
+								  ResolvableType valueType, @Nullable MimeType mimeType, @Nullable Map<String, Object> hints) {
 
 		if (!Hints.isLoggingSuppressed(hints)) {
 			LogFormatUtils.traceDebug(logger, traceOn -> {
@@ -92,11 +76,9 @@ public final class CharSequenceEncoder extends AbstractEncoder<CharSequence> {
 		try {
 			dataBuffer.write(charSequence, charset);
 			release = false;
-		}
-		catch (CoderMalfunctionError ex) {
+		} catch (CoderMalfunctionError ex) {
 			throw new EncodingException("String encoding error: " + ex.getMessage(), ex);
-		}
-		finally {
+		} finally {
 			if (release) {
 				DataBufferUtils.release(dataBuffer);
 			}
@@ -114,8 +96,7 @@ public final class CharSequenceEncoder extends AbstractEncoder<CharSequence> {
 	private Charset getCharset(@Nullable MimeType mimeType) {
 		if (mimeType != null && mimeType.getCharset() != null) {
 			return mimeType.getCharset();
-		}
-		else {
+		} else {
 			return DEFAULT_CHARSET;
 		}
 	}

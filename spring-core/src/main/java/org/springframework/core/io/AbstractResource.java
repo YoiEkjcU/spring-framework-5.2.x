@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core.io;
 
 import java.io.File;
@@ -58,8 +42,7 @@ public abstract class AbstractResource implements Resource {
 		if (isFile()) {
 			try {
 				return getFile().exists();
-			}
-			catch (IOException ex) {
+			} catch (IOException ex) {
 				Log logger = LogFactory.getLog(getClass());
 				if (logger.isDebugEnabled()) {
 					logger.debug("Could not retrieve File for existence check of " + getDescription(), ex);
@@ -70,8 +53,7 @@ public abstract class AbstractResource implements Resource {
 		try {
 			getInputStream().close();
 			return true;
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			Log logger = LogFactory.getLog(getClass());
 			if (logger.isDebugEnabled()) {
 				logger.debug("Could not retrieve InputStream for existence check of " + getDescription(), ex);
@@ -123,8 +105,7 @@ public abstract class AbstractResource implements Resource {
 		URL url = getURL();
 		try {
 			return ResourceUtils.toURI(url);
-		}
-		catch (URISyntaxException ex) {
+		} catch (URISyntaxException ex) {
 			throw new NestedIOException("Invalid URI [" + url + "]", ex);
 		}
 	}
@@ -155,6 +136,7 @@ public abstract class AbstractResource implements Resource {
 	 * recommend overriding this method with a more optimal implementation, e.g.
 	 * checking File length, or possibly simply returning -1 if the stream can
 	 * only be read once.
+	 *
 	 * @see #getInputStream()
 	 */
 	@Override
@@ -168,12 +150,10 @@ public abstract class AbstractResource implements Resource {
 				size += read;
 			}
 			return size;
-		}
-		finally {
+		} finally {
 			try {
 				is.close();
-			}
-			catch (IOException ex) {
+			} catch (IOException ex) {
 				Log logger = LogFactory.getLog(getClass());
 				if (logger.isDebugEnabled()) {
 					logger.debug("Could not close content-length InputStream for " + getDescription(), ex);
@@ -185,6 +165,7 @@ public abstract class AbstractResource implements Resource {
 	/**
 	 * This implementation checks the timestamp of the underlying File,
 	 * if available.
+	 *
 	 * @see #getFileForLastModifiedCheck()
 	 */
 	@Override
@@ -201,10 +182,11 @@ public abstract class AbstractResource implements Resource {
 	/**
 	 * Determine the File to use for timestamp checking.
 	 * <p>The default implementation delegates to {@link #getFile()}.
+	 *
 	 * @return the File to use for timestamp checking (never {@code null})
 	 * @throws FileNotFoundException if the resource cannot be resolved as
-	 * an absolute file path, i.e. is not available in a file system
-	 * @throws IOException in case of general resolution/reading failures
+	 *                               an absolute file path, i.e. is not available in a file system
+	 * @throws IOException           in case of general resolution/reading failures
 	 */
 	protected File getFileForLastModifiedCheck() throws IOException {
 		return getFile();
@@ -232,6 +214,7 @@ public abstract class AbstractResource implements Resource {
 
 	/**
 	 * This implementation compares description strings.
+	 *
 	 * @see #getDescription()
 	 */
 	@Override
@@ -242,6 +225,7 @@ public abstract class AbstractResource implements Resource {
 
 	/**
 	 * This implementation returns the description's hash code.
+	 *
 	 * @see #getDescription()
 	 */
 	@Override
@@ -251,6 +235,7 @@ public abstract class AbstractResource implements Resource {
 
 	/**
 	 * This implementation returns the description of this resource.
+	 *
 	 * @see #getDescription()
 	 */
 	@Override

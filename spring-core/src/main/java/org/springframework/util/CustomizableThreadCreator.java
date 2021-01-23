@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.util;
 
 import java.io.Serializable;
@@ -29,8 +13,8 @@ import org.springframework.lang.Nullable;
  * {@link org.springframework.scheduling.concurrent.CustomizableThreadFactory}.
  *
  * @author Juergen Hoeller
- * @since 2.0.3
  * @see org.springframework.scheduling.concurrent.CustomizableThreadFactory
+ * @since 2.0.3
  */
 @SuppressWarnings("serial")
 public class CustomizableThreadCreator implements Serializable {
@@ -56,6 +40,7 @@ public class CustomizableThreadCreator implements Serializable {
 
 	/**
 	 * Create a new CustomizableThreadCreator with the given thread name prefix.
+	 *
 	 * @param threadNamePrefix the prefix to use for the names of newly created threads
 	 */
 	public CustomizableThreadCreator(@Nullable String threadNamePrefix) {
@@ -82,6 +67,7 @@ public class CustomizableThreadCreator implements Serializable {
 	/**
 	 * Set the priority of the threads that this factory creates.
 	 * Default is 5.
+	 *
 	 * @see java.lang.Thread#NORM_PRIORITY
 	 */
 	public void setThreadPriority(int threadPriority) {
@@ -103,6 +89,7 @@ public class CustomizableThreadCreator implements Serializable {
 	 * execution.
 	 * <p>Specify "true" for eager shutdown of threads which still actively execute
 	 * a {@link Runnable} at the time that the application itself shuts down.
+	 *
 	 * @see java.lang.Thread#setDaemon
 	 */
 	public void setDaemon(boolean daemon) {
@@ -118,6 +105,7 @@ public class CustomizableThreadCreator implements Serializable {
 
 	/**
 	 * Specify the name of the thread group that threads should be created in.
+	 *
 	 * @see #setThreadGroup
 	 */
 	public void setThreadGroupName(String name) {
@@ -126,6 +114,7 @@ public class CustomizableThreadCreator implements Serializable {
 
 	/**
 	 * Specify the thread group that threads should be created in.
+	 *
 	 * @see #setThreadGroupName
 	 */
 	public void setThreadGroup(@Nullable ThreadGroup threadGroup) {
@@ -146,6 +135,7 @@ public class CustomizableThreadCreator implements Serializable {
 	 * Template method for the creation of a new {@link Thread}.
 	 * <p>The default implementation creates a new Thread for the given
 	 * {@link Runnable}, applying an appropriate thread name.
+	 *
 	 * @param runnable the Runnable to execute
 	 * @see #nextThreadName()
 	 */
@@ -160,6 +150,7 @@ public class CustomizableThreadCreator implements Serializable {
 	 * Return the thread name to use for a newly created {@link Thread}.
 	 * <p>The default implementation returns the specified thread name prefix
 	 * with an increasing thread count appended: e.g. "SimpleAsyncTaskExecutor-0".
+	 *
 	 * @see #getThreadNamePrefix()
 	 */
 	protected String nextThreadName() {
@@ -168,6 +159,7 @@ public class CustomizableThreadCreator implements Serializable {
 
 	/**
 	 * Build the default thread name prefix for this factory.
+	 *
 	 * @return the default thread name prefix (never {@code null})
 	 */
 	protected String getDefaultThreadNamePrefix() {

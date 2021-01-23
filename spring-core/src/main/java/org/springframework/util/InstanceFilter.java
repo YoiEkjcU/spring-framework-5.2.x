@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.util;
 
 import java.util.Collection;
@@ -28,9 +12,9 @@ import org.springframework.lang.Nullable;
  * <p>Subclasses may want to override {@link #match(Object, Object)} to provide
  * a custom matching algorithm.
  *
+ * @param <T> the instance type
  * @author Stephane Nicoll
  * @since 4.1
- * @param <T> the instance type
  */
 public class InstanceFilter<T> {
 
@@ -49,13 +33,14 @@ public class InstanceFilter<T> {
 	 * another if it is equals according to {@link Object#equals(Object)}
 	 * <p>If both collections are empty, {@code matchIfEmpty} defines if
 	 * an element matches or not.
-	 * @param includes the collection of includes
-	 * @param excludes the collection of excludes
+	 *
+	 * @param includes     the collection of includes
+	 * @param excludes     the collection of excludes
 	 * @param matchIfEmpty the matching result if both the includes and the excludes
-	 * collections are empty
+	 *                     collections are empty
 	 */
 	public InstanceFilter(@Nullable Collection<? extends T> includes,
-			@Nullable Collection<? extends T> excludes, boolean matchIfEmpty) {
+						  @Nullable Collection<? extends T> excludes, boolean matchIfEmpty) {
 
 		this.includes = (includes != null ? includes : Collections.emptyList());
 		this.excludes = (excludes != null ? excludes : Collections.emptyList());
@@ -89,7 +74,8 @@ public class InstanceFilter<T> {
 	/**
 	 * Determine if the specified {@code instance} is equal to the
 	 * specified {@code candidate}.
-	 * @param instance the instance to handle
+	 *
+	 * @param instance  the instance to handle
 	 * @param candidate a candidate defined by this filter
 	 * @return {@code true} if the instance matches the candidate
 	 */
@@ -100,7 +86,8 @@ public class InstanceFilter<T> {
 	/**
 	 * Determine if the specified {@code instance} matches one of the candidates.
 	 * <p>If the candidates collection is {@code null}, returns {@code false}.
-	 * @param instance the instance to check
+	 *
+	 * @param instance   the instance to check
 	 * @param candidates a list of candidates
 	 * @return {@code true} if the instance match or the candidates collection is null
 	 */

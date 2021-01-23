@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core.annotation;
 
 import java.lang.annotation.Annotation;
@@ -44,7 +28,8 @@ public abstract class MergedAnnotationPredicates {
 	 * Create a new {@link Predicate} that evaluates to {@code true} if the name of the
 	 * {@linkplain MergedAnnotation#getType() merged annotation type} is contained in
 	 * the specified array.
-	 * @param <A> the annotation type
+	 *
+	 * @param <A>       the annotation type
 	 * @param typeNames the names that should be matched
 	 * @return a {@link Predicate} to test the annotation type
 	 */
@@ -56,7 +41,8 @@ public abstract class MergedAnnotationPredicates {
 	 * Create a new {@link Predicate} that evaluates to {@code true} if the
 	 * {@linkplain MergedAnnotation#getType() merged annotation type} is contained in
 	 * the specified array.
-	 * @param <A> the annotation type
+	 *
+	 * @param <A>   the annotation type
 	 * @param types the types that should be matched
 	 * @return a {@link Predicate} to test the annotation type
 	 */
@@ -68,7 +54,8 @@ public abstract class MergedAnnotationPredicates {
 	 * Create a new {@link Predicate} that evaluates to {@code true} if the
 	 * {@linkplain MergedAnnotation#getType() merged annotation type} is contained in
 	 * the specified collection.
-	 * @param <A> the annotation type
+	 *
+	 * @param <A>   the annotation type
 	 * @param types the type names or classes that should be matched
 	 * @return a {@link Predicate} to test the annotation type
 	 */
@@ -88,6 +75,7 @@ public abstract class MergedAnnotationPredicates {
 	 * value changes, the predicate always returns {@code false}. For example,
 	 * if you have a set of annotations with distances {@code [1, 1, 2, 1]} then
 	 * only the first two will match.
+	 *
 	 * @param valueExtractor function used to extract the value to check
 	 * @return a {@link Predicate} that matches the first run of the extracted
 	 * values
@@ -103,8 +91,9 @@ public abstract class MergedAnnotationPredicates {
 	 * annotations that are unique based on the extracted key. For example
 	 * {@code MergedAnnotationPredicates.unique(MergedAnnotation::getType)} will
 	 * match the first time a unique type is encountered.
+	 *
 	 * @param keyExtractor function used to extract the key used to test for
-	 * uniqueness
+	 *                     uniqueness
 	 * @return a {@link Predicate} that matches a unique annotation based on the
 	 * extracted key
 	 */

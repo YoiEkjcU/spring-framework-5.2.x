@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core;
 
 import java.io.Serializable;
@@ -37,7 +21,9 @@ import org.springframework.util.StringUtils;
 @SuppressWarnings("serial")
 public abstract class AttributeAccessorSupport implements AttributeAccessor, Serializable {
 
-	/** Map with String keys and Object values. */
+	/**
+	 * Map with String keys and Object values.
+	 */
 	private final Map<String, Object> attributes = new LinkedHashMap<>();
 
 
@@ -46,8 +32,7 @@ public abstract class AttributeAccessorSupport implements AttributeAccessor, Ser
 		Assert.notNull(name, "Name must not be null");
 		if (value != null) {
 			this.attributes.put(name, value);
-		}
-		else {
+		} else {
 			removeAttribute(name);
 		}
 	}
@@ -80,6 +65,7 @@ public abstract class AttributeAccessorSupport implements AttributeAccessor, Ser
 
 	/**
 	 * Copy the attributes from the supplied AttributeAccessor to this accessor.
+	 *
 	 * @param source the AttributeAccessor to copy from
 	 */
 	protected void copyAttributesFrom(AttributeAccessor source) {

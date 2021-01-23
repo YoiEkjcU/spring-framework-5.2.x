@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core.io.buffer;
 
 import java.nio.ByteBuffer;
@@ -32,9 +16,9 @@ import org.springframework.util.Assert;
  *
  * @author Arjen Poutsma
  * @author Juergen Hoeller
- * @since 5.0
  * @see io.netty.buffer.PooledByteBufAllocator
  * @see io.netty.buffer.UnpooledByteBufAllocator
+ * @since 5.0
  */
 public class NettyDataBufferFactory implements DataBufferFactory {
 
@@ -43,6 +27,7 @@ public class NettyDataBufferFactory implements DataBufferFactory {
 
 	/**
 	 * Create a new {@code NettyDataBufferFactory} based on the given factory.
+	 *
 	 * @param byteBufAllocator the factory to use
 	 * @see io.netty.buffer.PooledByteBufAllocator
 	 * @see io.netty.buffer.UnpooledByteBufAllocator
@@ -86,6 +71,7 @@ public class NettyDataBufferFactory implements DataBufferFactory {
 
 	/**
 	 * Wrap the given Netty {@link ByteBuf} in a {@code NettyDataBuffer}.
+	 *
 	 * @param byteBuf the Netty byte buffer to wrap
 	 * @return the wrapped buffer
 	 */
@@ -118,14 +104,14 @@ public class NettyDataBufferFactory implements DataBufferFactory {
 	 * <p>Returns the {@linkplain NettyDataBuffer#getNativeBuffer() native buffer}
 	 * if {@code buffer} is a {@link NettyDataBuffer}; returns
 	 * {@link Unpooled#wrappedBuffer(ByteBuffer)} otherwise.
+	 *
 	 * @param buffer the {@code DataBuffer} to return a {@code ByteBuf} for
 	 * @return the netty {@code ByteBuf}
 	 */
 	public static ByteBuf toByteBuf(DataBuffer buffer) {
 		if (buffer instanceof NettyDataBuffer) {
 			return ((NettyDataBuffer) buffer).getNativeBuffer();
-		}
-		else {
+		} else {
 			return Unpooled.wrappedBuffer(buffer.asByteBuffer());
 		}
 	}

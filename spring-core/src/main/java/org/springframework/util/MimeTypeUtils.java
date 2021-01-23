@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.util;
 
 import java.nio.charset.StandardCharsets;
@@ -50,7 +34,7 @@ import org.springframework.lang.Nullable;
 public abstract class MimeTypeUtils {
 
 	private static final byte[] BOUNDARY_CHARS =
-			new byte[] {'-', '_', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g',
+			new byte[]{'-', '_', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g',
 					'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A',
 					'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
 					'V', 'W', 'X', 'Y', 'Z'};
@@ -72,7 +56,7 @@ public abstract class MimeTypeUtils {
 
 	/**
 	 * Public constant mime type for {@code application/json}.
-	 * */
+	 */
 	public static final MimeType APPLICATION_JSON;
 
 	/**
@@ -82,7 +66,7 @@ public abstract class MimeTypeUtils {
 
 	/**
 	 * Public constant mime type for {@code application/octet-stream}.
-	 *  */
+	 */
 	public static final MimeType APPLICATION_OCTET_STREAM;
 
 	/**
@@ -132,7 +116,7 @@ public abstract class MimeTypeUtils {
 
 	/**
 	 * Public constant mime type for {@code text/html}.
-	 *  */
+	 */
 	public static final MimeType TEXT_HTML;
 
 	/**
@@ -142,7 +126,7 @@ public abstract class MimeTypeUtils {
 
 	/**
 	 * Public constant mime type for {@code text/plain}.
-	 *  */
+	 */
 	public static final MimeType TEXT_PLAIN;
 
 	/**
@@ -152,7 +136,7 @@ public abstract class MimeTypeUtils {
 
 	/**
 	 * Public constant mime type for {@code text/xml}.
-	 *  */
+	 */
 	public static final MimeType TEXT_XML;
 
 	/**
@@ -185,6 +169,7 @@ public abstract class MimeTypeUtils {
 	/**
 	 * Parse the given String into a single {@code MimeType}.
 	 * Recently parsed {@code MimeType} are cached for further retrieval.
+	 *
 	 * @param mimeType the string to parse
 	 * @return the mime type
 	 * @throws InvalidMimeTypeException if the string cannot be parsed
@@ -234,8 +219,7 @@ public abstract class MimeTypeUtils {
 					if (!quoted) {
 						break;
 					}
-				}
-				else if (ch == '"') {
+				} else if (ch == '"') {
 					quoted = !quoted;
 				}
 				nextIndex++;
@@ -258,17 +242,16 @@ public abstract class MimeTypeUtils {
 
 		try {
 			return new MimeType(type, subtype, parameters);
-		}
-		catch (UnsupportedCharsetException ex) {
+		} catch (UnsupportedCharsetException ex) {
 			throw new InvalidMimeTypeException(mimeType, "unsupported charset '" + ex.getCharsetName() + "'");
-		}
-		catch (IllegalArgumentException ex) {
+		} catch (IllegalArgumentException ex) {
 			throw new InvalidMimeTypeException(mimeType, ex.getMessage());
 		}
 	}
 
 	/**
 	 * Parse the comma-separated string into a list of {@code MimeType} objects.
+	 *
 	 * @param mimeTypes the string to parse
 	 * @return the list of mime types
 	 * @throws InvalidMimeTypeException if the string cannot be parsed
@@ -287,6 +270,7 @@ public abstract class MimeTypeUtils {
 	 * Tokenize the given comma-separated string of {@code MimeType} objects
 	 * into a {@code List<String>}. Unlike simple tokenization by ",", this
 	 * method takes into account quoted parameters.
+	 *
 	 * @param mimeTypes the string to tokenize
 	 * @return the list of tokens
 	 * @since 5.1.3
@@ -322,13 +306,14 @@ public abstract class MimeTypeUtils {
 
 	/**
 	 * Return a string representation of the given list of {@code MimeType} objects.
+	 *
 	 * @param mimeTypes the string to parse
 	 * @return the list of mime types
 	 * @throws IllegalArgumentException if the String cannot be parsed
 	 */
 	public static String toString(Collection<? extends MimeType> mimeTypes) {
 		StringBuilder builder = new StringBuilder();
-		for (Iterator<? extends MimeType> iterator = mimeTypes.iterator(); iterator.hasNext();) {
+		for (Iterator<? extends MimeType> iterator = mimeTypes.iterator(); iterator.hasNext(); ) {
 			MimeType mimeType = iterator.next();
 			mimeType.appendTo(builder);
 			if (iterator.hasNext()) {
@@ -358,6 +343,7 @@ public abstract class MimeTypeUtils {
 	 * <blockquote>audio/basic;level=1 &lt; audio/basic</blockquote>
 	 * <blockquote>audio/basic == text/html</blockquote> <blockquote>audio/basic ==
 	 * audio/wave</blockquote>
+	 *
 	 * @param mimeTypes the list of mime types to be sorted
 	 * @see <a href="https://tools.ietf.org/html/rfc7231#section-5.3.2">HTTP 1.1: Semantics
 	 * and Content, section 5.3.2</a>
@@ -413,6 +399,7 @@ public abstract class MimeTypeUtils {
 	 * <p>This implementation is backed by a {@code ConcurrentHashMap} for storing
 	 * the cached values and a {@code ConcurrentLinkedQueue} for ordering the keys
 	 * and choosing the least recently used key when the cache is at full capacity.
+	 *
 	 * @param <K> the type of the key used for caching
 	 * @param <V> the type of the cached values
 	 */
@@ -450,8 +437,7 @@ public abstract class MimeTypeUtils {
 						this.queue.offer(key);
 					}
 					return cached;
-				}
-				finally {
+				} finally {
 					this.lock.readLock().unlock();
 				}
 			}
@@ -459,7 +445,7 @@ public abstract class MimeTypeUtils {
 			try {
 				// Retrying in case of concurrent reads on the same key
 				cached = this.cache.get(key);
-				if (cached  != null) {
+				if (cached != null) {
 					if (this.queue.removeLastOccurrence(key)) {
 						this.queue.offer(key);
 					}
@@ -479,8 +465,7 @@ public abstract class MimeTypeUtils {
 				this.cache.put(key, value);
 				this.size = cacheSize + 1;
 				return value;
-			}
-			finally {
+			} finally {
 				this.lock.writeLock().unlock();
 			}
 		}

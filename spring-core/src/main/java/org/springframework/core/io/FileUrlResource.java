@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core.io;
 
 import java.io.File;
@@ -53,6 +37,7 @@ public class FileUrlResource extends UrlResource implements WritableResource {
 	 * Create a new {@code FileUrlResource} based on the given URL object.
 	 * <p>Note that this does not enforce "file" as URL protocol. If a protocol
 	 * is known to be resolvable to a file, it is acceptable for this purpose.
+	 *
 	 * @param url a URL
 	 * @see ResourceUtils#isFileURL(URL)
 	 * @see #getFile()
@@ -65,6 +50,7 @@ public class FileUrlResource extends UrlResource implements WritableResource {
 	 * Create a new {@code FileUrlResource} based on the given file location,
 	 * using the URL protocol "file".
 	 * <p>The given parts will automatically get encoded if necessary.
+	 *
 	 * @param location the location (i.e. the file path within that protocol)
 	 * @throws MalformedURLException if the given URL specification is not valid
 	 * @see UrlResource#UrlResource(String, String)
@@ -94,12 +80,10 @@ public class FileUrlResource extends UrlResource implements WritableResource {
 				// Proceed with file system resolution
 				File file = getFile();
 				return (file.canWrite() && !file.isDirectory());
-			}
-			else {
+			} else {
 				return true;
 			}
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			return false;
 		}
 	}

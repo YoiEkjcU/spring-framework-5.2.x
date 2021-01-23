@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.util;
 
 import java.io.Serializable;
@@ -41,10 +25,10 @@ import org.springframework.lang.Nullable;
  *
  * <p>Does <i>not</i> support {@code null} keys.
  *
+ * @param <V> the value type
  * @author Juergen Hoeller
  * @author Phillip Webb
  * @since 3.0
- * @param <V> the value type
  */
 @SuppressWarnings("serial")
 public class LinkedCaseInsensitiveMap<V> implements Map<String, V>, Serializable, Cloneable {
@@ -68,6 +52,7 @@ public class LinkedCaseInsensitiveMap<V> implements Map<String, V>, Serializable
 	/**
 	 * Create a new LinkedCaseInsensitiveMap that stores case-insensitive keys
 	 * according to the default Locale (by default in lower case).
+	 *
 	 * @see #convertKey(String)
 	 */
 	public LinkedCaseInsensitiveMap() {
@@ -77,6 +62,7 @@ public class LinkedCaseInsensitiveMap<V> implements Map<String, V>, Serializable
 	/**
 	 * Create a new LinkedCaseInsensitiveMap that stores case-insensitive keys
 	 * according to the given Locale (by default in lower case).
+	 *
 	 * @param locale the Locale to use for case-insensitive key conversion
 	 * @see #convertKey(String)
 	 */
@@ -88,6 +74,7 @@ public class LinkedCaseInsensitiveMap<V> implements Map<String, V>, Serializable
 	 * Create a new LinkedCaseInsensitiveMap that wraps a {@link LinkedHashMap}
 	 * with the given initial capacity and stores case-insensitive keys
 	 * according to the default Locale (by default in lower case).
+	 *
 	 * @param initialCapacity the initial capacity
 	 * @see #convertKey(String)
 	 */
@@ -99,8 +86,9 @@ public class LinkedCaseInsensitiveMap<V> implements Map<String, V>, Serializable
 	 * Create a new LinkedCaseInsensitiveMap that wraps a {@link LinkedHashMap}
 	 * with the given initial capacity and stores case-insensitive keys
 	 * according to the given Locale (by default in lower case).
+	 *
 	 * @param initialCapacity the initial capacity
-	 * @param locale the Locale to use for case-insensitive key conversion
+	 * @param locale          the Locale to use for case-insensitive key conversion
 	 * @see #convertKey(String)
 	 */
 	public LinkedCaseInsensitiveMap(int initialCapacity, @Nullable Locale locale) {
@@ -109,6 +97,7 @@ public class LinkedCaseInsensitiveMap<V> implements Map<String, V>, Serializable
 			public boolean containsKey(Object key) {
 				return LinkedCaseInsensitiveMap.this.containsKey(key);
 			}
+
 			@Override
 			protected boolean removeEldestEntry(Map.Entry<String, V> eldest) {
 				boolean doRemove = LinkedCaseInsensitiveMap.this.removeEldestEntry(eldest);
@@ -293,9 +282,10 @@ public class LinkedCaseInsensitiveMap<V> implements Map<String, V>, Serializable
 	/**
 	 * Return the locale used by this {@code LinkedCaseInsensitiveMap}.
 	 * Used for case-insensitive key conversion.
-	 * @since 4.3.10
+	 *
 	 * @see #LinkedCaseInsensitiveMap(Locale)
 	 * @see #convertKey(String)
+	 * @since 4.3.10
 	 */
 	public Locale getLocale() {
 		return this.locale;
@@ -305,6 +295,7 @@ public class LinkedCaseInsensitiveMap<V> implements Map<String, V>, Serializable
 	 * Convert the given key to a case-insensitive key.
 	 * <p>The default implementation converts the key
 	 * to lower-case according to this Map's Locale.
+	 *
 	 * @param key the user-specified key
 	 * @return the key to use for storing
 	 * @see String#toLowerCase(Locale)
@@ -315,6 +306,7 @@ public class LinkedCaseInsensitiveMap<V> implements Map<String, V>, Serializable
 
 	/**
 	 * Determine whether this map should remove the given eldest entry.
+	 *
 	 * @param eldest the candidate entry
 	 * @return {@code true} for removing it, {@code false} for keeping it
 	 * @see LinkedHashMap#removeEldestEntry

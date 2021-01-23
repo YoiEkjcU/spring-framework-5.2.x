@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core;
 
 import java.util.function.Supplier;
@@ -43,13 +27,13 @@ public final class ReactiveTypeDescriptor {
 
 
 	private ReactiveTypeDescriptor(Class<?> reactiveType, boolean multiValue, boolean noValue,
-			@Nullable Supplier<?> emptySupplier) {
+								   @Nullable Supplier<?> emptySupplier) {
 
 		this(reactiveType, multiValue, noValue, emptySupplier, true);
 	}
 
 	private ReactiveTypeDescriptor(Class<?> reactiveType, boolean multiValue, boolean noValue,
-			@Nullable Supplier<?> emptySupplier, boolean deferred) {
+								   @Nullable Supplier<?> emptySupplier, boolean deferred) {
 
 		Assert.notNull(reactiveType, "'reactiveType' must not be null");
 		this.reactiveType = reactiveType;
@@ -105,6 +89,7 @@ public final class ReactiveTypeDescriptor {
 	 * Whether the underlying operation is deferred and needs to be started
 	 * explicitly, e.g. via subscribing (or similar), or whether it is triggered
 	 * without the consumer having any control.
+	 *
 	 * @since 5.2.7
 	 */
 	public boolean isDeferred() {
@@ -131,7 +116,8 @@ public final class ReactiveTypeDescriptor {
 
 	/**
 	 * Descriptor for a reactive type that can produce 0..N values.
-	 * @param type the reactive type
+	 *
+	 * @param type          the reactive type
 	 * @param emptySupplier a supplier of an empty-value instance of the reactive type
 	 */
 	public static ReactiveTypeDescriptor multiValue(Class<?> type, Supplier<?> emptySupplier) {
@@ -140,7 +126,8 @@ public final class ReactiveTypeDescriptor {
 
 	/**
 	 * Descriptor for a reactive type that can produce 0..1 values.
-	 * @param type the reactive type
+	 *
+	 * @param type          the reactive type
 	 * @param emptySupplier a supplier of an empty-value instance of the reactive type
 	 */
 	public static ReactiveTypeDescriptor singleOptionalValue(Class<?> type, Supplier<?> emptySupplier) {
@@ -149,6 +136,7 @@ public final class ReactiveTypeDescriptor {
 
 	/**
 	 * Descriptor for a reactive type that must produce 1 value to complete.
+	 *
 	 * @param type the reactive type
 	 */
 	public static ReactiveTypeDescriptor singleRequiredValue(Class<?> type) {
@@ -157,7 +145,8 @@ public final class ReactiveTypeDescriptor {
 
 	/**
 	 * Descriptor for a reactive type that does not produce any values.
-	 * @param type the reactive type
+	 *
+	 * @param type          the reactive type
 	 * @param emptySupplier a supplier of an empty-value instance of the reactive type
 	 */
 	public static ReactiveTypeDescriptor noValue(Class<?> type, Supplier<?> emptySupplier) {
@@ -167,7 +156,8 @@ public final class ReactiveTypeDescriptor {
 	/**
 	 * The same as {@link #singleOptionalValue(Class, Supplier)} but for a
 	 * non-deferred, async type such as {@link java.util.concurrent.CompletableFuture}.
-	 * @param type the reactive type
+	 *
+	 * @param type          the reactive type
 	 * @param emptySupplier a supplier of an empty-value instance of the reactive type
 	 * @since 5.2.7
 	 */

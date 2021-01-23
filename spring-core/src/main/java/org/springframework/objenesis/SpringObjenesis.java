@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2016 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.objenesis;
 
 import org.springframework.core.SpringProperties;
@@ -28,9 +12,9 @@ import org.springframework.util.ConcurrentReferenceHashMap;
  * and allowing for selective use of the cache.
  *
  * @author Juergen Hoeller
- * @since 4.2
  * @see #isWorthTrying()
  * @see #newInstance(Class, boolean)
+ * @since 4.2
  */
 public class SpringObjenesis implements Objenesis {
 
@@ -63,6 +47,7 @@ public class SpringObjenesis implements Objenesis {
 	/**
 	 * Create a new {@code SpringObjenesis} instance with the
 	 * given standard instantiator strategy.
+	 *
 	 * @param strategy the instantiator strategy to use
 	 */
 	public SpringObjenesis(InstantiatorStrategy strategy) {
@@ -88,10 +73,11 @@ public class SpringObjenesis implements Objenesis {
 
 	/**
 	 * Create a new instance of the given class via Objenesis.
-	 * @param clazz the class to create an instance of
+	 *
+	 * @param clazz    the class to create an instance of
 	 * @param useCache whether to use the instantiator cache
-	 * (typically {@code true} but can be set to {@code false}
-	 * e.g. for reloadable classes)
+	 *                 (typically {@code true} but can be set to {@code false}
+	 *                 e.g. for reloadable classes)
 	 * @return the new instance (never {@code null})
 	 * @throws ObjenesisException if instance creation failed
 	 */
@@ -127,8 +113,7 @@ public class SpringObjenesis implements Objenesis {
 				this.worthTrying = Boolean.TRUE;
 			}
 			return instantiator;
-		}
-		catch (ObjenesisException ex) {
+		} catch (ObjenesisException ex) {
 			if (currentWorthTrying == null) {
 				Throwable cause = ex.getCause();
 				if (cause instanceof ClassNotFoundException || cause instanceof IllegalAccessException) {
@@ -139,8 +124,7 @@ public class SpringObjenesis implements Objenesis {
 				}
 			}
 			throw ex;
-		}
-		catch (NoClassDefFoundError err) {
+		} catch (NoClassDefFoundError err) {
 			// Happening on the production version of Google App Engine, coming out of the
 			// restricted "sun.reflect.ReflectionFactory" class...
 			if (currentWorthTrying == null) {

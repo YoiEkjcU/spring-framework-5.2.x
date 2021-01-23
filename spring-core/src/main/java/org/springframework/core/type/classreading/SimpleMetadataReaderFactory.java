@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core.type.classreading;
 
 import java.io.FileNotFoundException;
@@ -46,8 +30,9 @@ public class SimpleMetadataReaderFactory implements MetadataReaderFactory {
 
 	/**
 	 * Create a new SimpleMetadataReaderFactory for the given resource loader.
+	 *
 	 * @param resourceLoader the Spring ResourceLoader to use
-	 * (also determines the ClassLoader to use)
+	 *                       (also determines the ClassLoader to use)
 	 */
 	public SimpleMetadataReaderFactory(@Nullable ResourceLoader resourceLoader) {
 		this.resourceLoader = (resourceLoader != null ? resourceLoader : new DefaultResourceLoader());
@@ -55,6 +40,7 @@ public class SimpleMetadataReaderFactory implements MetadataReaderFactory {
 
 	/**
 	 * Create a new SimpleMetadataReaderFactory for the given class loader.
+	 *
 	 * @param classLoader the ClassLoader to use
 	 */
 	public SimpleMetadataReaderFactory(@Nullable ClassLoader classLoader) {
@@ -79,8 +65,7 @@ public class SimpleMetadataReaderFactory implements MetadataReaderFactory {
 					ClassUtils.convertClassNameToResourcePath(className) + ClassUtils.CLASS_FILE_SUFFIX;
 			Resource resource = this.resourceLoader.getResource(resourcePath);
 			return getMetadataReader(resource);
-		}
-		catch (FileNotFoundException ex) {
+		} catch (FileNotFoundException ex) {
 			// Maybe an inner class name using the dot name syntax? Need to use the dollar syntax here...
 			// ClassUtils.forName has an equivalent check for resolution into Class references later on.
 			int lastDotIndex = className.lastIndexOf('.');

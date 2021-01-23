@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core.style;
 
 import java.lang.reflect.Method;
@@ -54,30 +38,22 @@ public class DefaultValueStyler implements ValueStyler {
 	public String style(@Nullable Object value) {
 		if (value == null) {
 			return NULL;
-		}
-		else if (value instanceof String) {
+		} else if (value instanceof String) {
 			return "\'" + value + "\'";
-		}
-		else if (value instanceof Class) {
+		} else if (value instanceof Class) {
 			return ClassUtils.getShortName((Class<?>) value);
-		}
-		else if (value instanceof Method) {
+		} else if (value instanceof Method) {
 			Method method = (Method) value;
 			return method.getName() + "@" + ClassUtils.getShortName(method.getDeclaringClass());
-		}
-		else if (value instanceof Map) {
+		} else if (value instanceof Map) {
 			return style((Map<?, ?>) value);
-		}
-		else if (value instanceof Map.Entry) {
-			return style((Map.Entry<? ,?>) value);
-		}
-		else if (value instanceof Collection) {
+		} else if (value instanceof Map.Entry) {
+			return style((Map.Entry<?, ?>) value);
+		} else if (value instanceof Collection) {
 			return style((Collection<?>) value);
-		}
-		else if (value.getClass().isArray()) {
+		} else if (value.getClass().isArray()) {
 			return styleArray(ObjectUtils.toObjectArray(value));
-		}
-		else {
+		} else {
 			return String.valueOf(value);
 		}
 	}
@@ -115,11 +91,9 @@ public class DefaultValueStyler implements ValueStyler {
 	private String getCollectionTypeString(Collection<?> value) {
 		if (value instanceof List) {
 			return LIST;
-		}
-		else if (value instanceof Set) {
+		} else if (value instanceof Set) {
 			return SET;
-		}
-		else {
+		} else {
 			return COLLECTION;
 		}
 	}

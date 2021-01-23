@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core.io;
 
 import java.io.File;
@@ -37,8 +21,8 @@ import org.springframework.util.Assert;
  * @author Juergen Hoeller
  * @author Costin Leau
  * @author Sam Brannen
- * @since 3.0
  * @see org.jboss.vfs.VirtualFile
+ * @since 3.0
  */
 public class VfsResource extends AbstractResource {
 
@@ -47,8 +31,9 @@ public class VfsResource extends AbstractResource {
 
 	/**
 	 * Create a new {@code VfsResource} wrapping the given resource handle.
+	 *
 	 * @param resource a {@code org.jboss.vfs.VirtualFile} instance
-	 * (untyped in order to avoid a static dependency on the VFS API)
+	 *                 (untyped in order to avoid a static dependency on the VFS API)
 	 */
 	public VfsResource(Object resource) {
 		Assert.notNull(resource, "VirtualFile must not be null");
@@ -75,8 +60,7 @@ public class VfsResource extends AbstractResource {
 	public URL getURL() throws IOException {
 		try {
 			return VfsUtils.getURL(this.resource);
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			throw new NestedIOException("Failed to obtain URL for file " + this.resource, ex);
 		}
 	}
@@ -85,8 +69,7 @@ public class VfsResource extends AbstractResource {
 	public URI getURI() throws IOException {
 		try {
 			return VfsUtils.getURI(this.resource);
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			throw new NestedIOException("Failed to obtain URI for " + this.resource, ex);
 		}
 	}
@@ -111,8 +94,7 @@ public class VfsResource extends AbstractResource {
 		if (!relativePath.startsWith(".") && relativePath.contains("/")) {
 			try {
 				return new VfsResource(VfsUtils.getChild(this.resource, relativePath));
-			}
-			catch (IOException ex) {
+			} catch (IOException ex) {
 				// fall back to getRelative
 			}
 		}

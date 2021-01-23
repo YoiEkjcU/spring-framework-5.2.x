@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core;
 
 import java.lang.reflect.Method;
@@ -61,6 +45,7 @@ public final class BridgeMethodResolver {
 	 * <p>It is safe to call this method passing in a non-bridge {@link Method} instance.
 	 * In such a case, the supplied {@link Method} instance is returned directly to the caller.
 	 * Callers are <strong>not</strong> required to check for bridging before calling this method.
+	 *
 	 * @param bridgeMethod the method to introspect
 	 * @return the original method (either the bridged method or the passed-in method
 	 * if no more specific one could be found)
@@ -105,8 +90,9 @@ public final class BridgeMethodResolver {
 
 	/**
 	 * Searches for the bridged method in the given candidates.
+	 *
 	 * @param candidateMethods the List of candidate Methods
-	 * @param bridgeMethod the bridge method
+	 * @param bridgeMethod     the bridge method
 	 * @return the bridged method, or {@code null} if none found
 	 */
 	@Nullable
@@ -119,8 +105,7 @@ public final class BridgeMethodResolver {
 		for (Method candidateMethod : candidateMethods) {
 			if (isBridgeMethodFor(bridgeMethod, candidateMethod, bridgeMethod.getDeclaringClass())) {
 				return candidateMethod;
-			}
-			else if (previousMethod != null) {
+			} else if (previousMethod != null) {
 				sameSig = sameSig &&
 						Arrays.equals(candidateMethod.getGenericParameterTypes(), previousMethod.getGenericParameterTypes());
 			}
@@ -173,6 +158,7 @@ public final class BridgeMethodResolver {
 	/**
 	 * Searches for the generic {@link Method} declaration whose erased signature
 	 * matches that of the supplied bridge method.
+	 *
 	 * @throws IllegalStateException if the generic declaration cannot be found
 	 */
 	@Nullable
@@ -197,8 +183,7 @@ public final class BridgeMethodResolver {
 			Method method = searchForMatch(ifc, bridgeMethod);
 			if (method != null && !method.isBridge()) {
 				return method;
-			}
-			else {
+			} else {
 				method = searchInterfaces(ifc.getInterfaces(), bridgeMethod);
 				if (method != null) {
 					return method;
@@ -217,8 +202,7 @@ public final class BridgeMethodResolver {
 	private static Method searchForMatch(Class<?> type, Method bridgeMethod) {
 		try {
 			return type.getDeclaredMethod(bridgeMethod.getName(), bridgeMethod.getParameterTypes());
-		}
-		catch (NoSuchMethodException ex) {
+		} catch (NoSuchMethodException ex) {
 			return null;
 		}
 	}
@@ -228,6 +212,7 @@ public final class BridgeMethodResolver {
 	 * the parameter and return types are the same, it is a 'visibility' bridge method
 	 * introduced in Java 6 to fix https://bugs.java.com/view_bug.do?bug_id=6342411.
 	 * See also https://stas-blogspot.blogspot.com/2010/03/java-bridge-methods-explained.html
+	 *
 	 * @return whether signatures match as described
 	 */
 	public static boolean isVisibilityBridgeMethodPair(Method bridgeMethod, Method bridgedMethod) {

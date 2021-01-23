@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.util;
 
 import java.io.Serializable;
@@ -38,10 +22,10 @@ import org.springframework.lang.Nullable;
  *
  * <p>Inspired by {@code LazyList} from Commons Collections.
  *
+ * @param <E> the element type
  * @author Rob Harrop
  * @author Juergen Hoeller
  * @since 2.0
- * @param <E> the element type
  */
 @SuppressWarnings("serial")
 public class AutoPopulatingList<E> implements List<E>, Serializable {
@@ -145,8 +129,7 @@ public class AutoPopulatingList<E> implements List<E>, Serializable {
 				element = this.elementFactory.createElement(index);
 				this.backingList.set(index, element);
 			}
-		}
-		else {
+		} else {
 			for (int x = backingListSize; x < index; x++) {
 				this.backingList.add(null);
 			}
@@ -254,9 +237,10 @@ public class AutoPopulatingList<E> implements List<E>, Serializable {
 
 		/**
 		 * Create the element for the supplied index.
+		 *
 		 * @return the element object
 		 * @throws ElementInstantiationException if the instantiation process failed
-		 * (any exception thrown by a target constructor should be propagated as-is)
+		 *                                       (any exception thrown by a target constructor should be propagated as-is)
 		 */
 		E createElement(int index) throws ElementInstantiationException;
 	}
@@ -296,20 +280,16 @@ public class AutoPopulatingList<E> implements List<E>, Serializable {
 		public E createElement(int index) {
 			try {
 				return ReflectionUtils.accessibleConstructor(this.elementClass).newInstance();
-			}
-			catch (NoSuchMethodException ex) {
+			} catch (NoSuchMethodException ex) {
 				throw new ElementInstantiationException(
 						"No default constructor on element class: " + this.elementClass.getName(), ex);
-			}
-			catch (InstantiationException ex) {
+			} catch (InstantiationException ex) {
 				throw new ElementInstantiationException(
 						"Unable to instantiate element class: " + this.elementClass.getName(), ex);
-			}
-			catch (IllegalAccessException ex) {
+			} catch (IllegalAccessException ex) {
 				throw new ElementInstantiationException(
 						"Could not access element constructor: " + this.elementClass.getName(), ex);
-			}
-			catch (InvocationTargetException ex) {
+			} catch (InvocationTargetException ex) {
 				throw new ElementInstantiationException(
 						"Failed to invoke element constructor: " + this.elementClass.getName(), ex.getTargetException());
 			}

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2015 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.util;
 
 import java.io.ByteArrayOutputStream;
@@ -34,9 +18,9 @@ import java.io.ByteArrayOutputStream;
  *
  * @author Brian Clozel
  * @author Juergen Hoeller
- * @since 4.0.3
  * @see #resize
  * @see FastByteArrayOutputStream
+ * @since 4.0.3
  */
 public class ResizableByteArrayOutputStream extends ByteArrayOutputStream {
 
@@ -54,6 +38,7 @@ public class ResizableByteArrayOutputStream extends ByteArrayOutputStream {
 	/**
 	 * Create a new <code>ResizableByteArrayOutputStream</code>
 	 * with the specified initial capacity.
+	 *
 	 * @param initialCapacity the initial buffer size in bytes
 	 */
 	public ResizableByteArrayOutputStream(int initialCapacity) {
@@ -63,9 +48,10 @@ public class ResizableByteArrayOutputStream extends ByteArrayOutputStream {
 
 	/**
 	 * Resize the internal buffer size to a specified capacity.
+	 *
 	 * @param targetCapacity the desired size of the buffer
 	 * @throws IllegalArgumentException if the given capacity is smaller than
-	 * the actual size of the content stored in the buffer already
+	 *                                  the actual size of the content stored in the buffer already
 	 * @see ResizableByteArrayOutputStream#size()
 	 */
 	public synchronized void resize(int targetCapacity) {
@@ -77,6 +63,7 @@ public class ResizableByteArrayOutputStream extends ByteArrayOutputStream {
 
 	/**
 	 * Grow the internal buffer size.
+	 *
 	 * @param additionalCapacity the number of bytes to add to the current buffer size
 	 * @see ResizableByteArrayOutputStream#size()
 	 */

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core.annotation;
 
 import java.lang.annotation.Annotation;
@@ -28,10 +12,10 @@ import org.springframework.util.Assert;
 /**
  * Abstract base class for {@link MergedAnnotation} implementations.
  *
+ * @param <A> the annotation type
  * @author Phillip Webb
  * @author Juergen Hoeller
  * @since 5.2
- * @param <A> the annotation type
  */
 abstract class AbstractMergedAnnotation<A extends Annotation> implements MergedAnnotation<A> {
 
@@ -224,13 +208,14 @@ abstract class AbstractMergedAnnotation<A extends Annotation> implements MergedA
 
 	/**
 	 * Get the underlying attribute value.
+	 *
 	 * @param attributeName the attribute name
-	 * @param type the type to return (see {@link MergedAnnotation} class
-	 * documentation for details)
+	 * @param type          the type to return (see {@link MergedAnnotation} class
+	 *                      documentation for details)
 	 * @return the attribute value or {@code null} if the value is not found and
 	 * is not required
 	 * @throws IllegalArgumentException if the source type is not compatible
-	 * @throws NoSuchElementException if the value is required but not found
+	 * @throws NoSuchElementException   if the value is required but not found
 	 */
 	@Nullable
 	protected abstract <T> T getAttributeValue(String attributeName, Class<T> type);

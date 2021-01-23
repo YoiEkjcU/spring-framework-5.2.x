@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.util.unit;
 
 import java.util.regex.Matcher;
@@ -45,8 +29,8 @@ import org.springframework.util.StringUtils;
  *
  * @author Stephane Nicoll
  * @author Sam Brannen
- * @since 5.1
  * @see DataUnit
+ * @since 5.1
  */
 public final class DataSize implements Comparable<DataSize> {
 
@@ -86,6 +70,7 @@ public final class DataSize implements Comparable<DataSize> {
 
 	/**
 	 * Obtain a {@link DataSize} representing the specified number of bytes.
+	 *
 	 * @param bytes the number of bytes, positive or negative
 	 * @return a {@link DataSize}
 	 */
@@ -95,6 +80,7 @@ public final class DataSize implements Comparable<DataSize> {
 
 	/**
 	 * Obtain a {@link DataSize} representing the specified number of kilobytes.
+	 *
 	 * @param kilobytes the number of kilobytes, positive or negative
 	 * @return a {@link DataSize}
 	 */
@@ -104,6 +90,7 @@ public final class DataSize implements Comparable<DataSize> {
 
 	/**
 	 * Obtain a {@link DataSize} representing the specified number of megabytes.
+	 *
 	 * @param megabytes the number of megabytes, positive or negative
 	 * @return a {@link DataSize}
 	 */
@@ -113,6 +100,7 @@ public final class DataSize implements Comparable<DataSize> {
 
 	/**
 	 * Obtain a {@link DataSize} representing the specified number of gigabytes.
+	 *
 	 * @param gigabytes the number of gigabytes, positive or negative
 	 * @return a {@link DataSize}
 	 */
@@ -122,6 +110,7 @@ public final class DataSize implements Comparable<DataSize> {
 
 	/**
 	 * Obtain a {@link DataSize} representing the specified number of terabytes.
+	 *
 	 * @param terabytes the number of terabytes, positive or negative
 	 * @return a {@link DataSize}
 	 */
@@ -131,8 +120,9 @@ public final class DataSize implements Comparable<DataSize> {
 
 	/**
 	 * Obtain a {@link DataSize} representing an amount in the specified {@link DataUnit}.
+	 *
 	 * @param amount the amount of the size, measured in terms of the unit,
-	 * positive or negative
+	 *               positive or negative
 	 * @return a corresponding {@link DataSize}
 	 */
 	public static DataSize of(long amount, DataUnit unit) {
@@ -150,6 +140,7 @@ public final class DataSize implements Comparable<DataSize> {
 	 * "5MB"  -- parses as "5 megabytes"
 	 * "20"   -- parses as "20 bytes"
 	 * </pre>
+	 *
 	 * @param text the text to parse
 	 * @return the parsed {@link DataSize}
 	 * @see #parse(CharSequence, DataUnit)
@@ -171,6 +162,7 @@ public final class DataSize implements Comparable<DataSize> {
 	 * "5MB"  -- parses as "5 megabytes"
 	 * "20"   -- parses as "20 kilobytes" (where the {@code defaultUnit} is {@link DataUnit#KILOBYTES})
 	 * </pre>
+	 *
 	 * @param text the text to parse
 	 * @return the parsed {@link DataSize}
 	 */
@@ -182,8 +174,7 @@ public final class DataSize implements Comparable<DataSize> {
 			DataUnit unit = determineDataUnit(matcher.group(2), defaultUnit);
 			long amount = Long.parseLong(matcher.group(1));
 			return DataSize.of(amount, unit);
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			throw new IllegalArgumentException("'" + text + "' is not a valid data size", ex);
 		}
 	}
@@ -195,6 +186,7 @@ public final class DataSize implements Comparable<DataSize> {
 
 	/**
 	 * Checks if this size is negative, excluding zero.
+	 *
 	 * @return true if this size has a size less than zero bytes
 	 */
 	public boolean isNegative() {
@@ -203,6 +195,7 @@ public final class DataSize implements Comparable<DataSize> {
 
 	/**
 	 * Return the number of bytes in this instance.
+	 *
 	 * @return the number of bytes
 	 */
 	public long toBytes() {
@@ -211,6 +204,7 @@ public final class DataSize implements Comparable<DataSize> {
 
 	/**
 	 * Return the number of kilobytes in this instance.
+	 *
 	 * @return the number of kilobytes
 	 */
 	public long toKilobytes() {
@@ -219,6 +213,7 @@ public final class DataSize implements Comparable<DataSize> {
 
 	/**
 	 * Return the number of megabytes in this instance.
+	 *
 	 * @return the number of megabytes
 	 */
 	public long toMegabytes() {
@@ -227,6 +222,7 @@ public final class DataSize implements Comparable<DataSize> {
 
 	/**
 	 * Return the number of gigabytes in this instance.
+	 *
 	 * @return the number of gigabytes
 	 */
 	public long toGigabytes() {
@@ -235,6 +231,7 @@ public final class DataSize implements Comparable<DataSize> {
 
 	/**
 	 * Return the number of terabytes in this instance.
+	 *
 	 * @return the number of terabytes
 	 */
 	public long toTerabytes() {

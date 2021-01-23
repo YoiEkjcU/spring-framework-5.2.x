@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.util.comparator;
 
 import java.util.Comparator;
@@ -31,10 +15,10 @@ import org.springframework.util.Assert;
  * value of {@code 0}. Consider combining with {@link Comparator#thenComparing(Comparator)}
  * if additional sorting is required.
  *
- * @author Phillip Webb
- * @since 3.2
  * @param <T> the type of objects that may be compared by this comparator
+ * @author Phillip Webb
  * @see Comparator#thenComparing(Comparator)
+ * @since 3.2
  */
 public class InstanceComparator<T> implements Comparator<T> {
 
@@ -43,8 +27,9 @@ public class InstanceComparator<T> implements Comparator<T> {
 
 	/**
 	 * Create a new {@link InstanceComparator} instance.
+	 *
 	 * @param instanceOrder the ordered list of classes that should be used when comparing
-	 * objects. Classes earlier in the list will be given a higher priority.
+	 *                      objects. Classes earlier in the list will be given a higher priority.
 	 */
 	public InstanceComparator(Class<?>... instanceOrder) {
 		Assert.notNull(instanceOrder, "'instanceOrder' array must not be null");

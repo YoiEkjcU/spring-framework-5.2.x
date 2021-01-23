@@ -1,19 +1,3 @@
-/*
- * Copyright 2003,2004 The Apache Software Foundation
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.cglib.core;
 
 import java.lang.reflect.Method;
@@ -52,6 +36,7 @@ import org.springframework.cglib.core.internal.CustomizerRegistry;
  * <b>Note:</b>
  * <code>hashCode</code> equality between two keys <code>key1</code> and <code>key2</code> is only guaranteed if
  * <code>key1.equals(key2)</code> <i>and</i> the keys were produced by the same factory.
+ *
  * @version $Id: KeyFactory.java,v 1.26 2006/03/05 02:43:19 herbyderby Exp $
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
@@ -112,6 +97,7 @@ abstract public class KeyFactory {
 				e.invoke_virtual(Constants.TYPE_CLASS, GET_NAME);
 			}
 		}
+
 		public Type getOutType(int index, Type type) {
 			if (type.equals(Constants.TYPE_CLASS)) {
 				return Constants.TYPE_STRING;
@@ -165,7 +151,7 @@ abstract public class KeyFactory {
 	}
 
 	public static KeyFactory create(ClassLoader loader, Class keyInterface, KeyFactoryCustomizer customizer,
-			List<KeyFactoryCustomizer> next) {
+									List<KeyFactoryCustomizer> next) {
 		Generator gen = new Generator();
 		gen.setInterface(keyInterface);
 		// SPRING PATCH BEGIN

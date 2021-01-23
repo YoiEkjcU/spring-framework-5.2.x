@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core;
 
 import java.util.ArrayList;
@@ -37,6 +21,7 @@ public class ExceptionDepthComparator implements Comparator<Class<? extends Thro
 
 	/**
 	 * Create a new ExceptionDepthComparator for the given exception.
+	 *
 	 * @param exception the target exception to compare to when sorting by depth
 	 */
 	public ExceptionDepthComparator(Throwable exception) {
@@ -46,6 +31,7 @@ public class ExceptionDepthComparator implements Comparator<Class<? extends Thro
 
 	/**
 	 * Create a new ExceptionDepthComparator for the given exception type.
+	 *
 	 * @param exceptionType the target exception type to compare to when sorting by depth
 	 */
 	public ExceptionDepthComparator(Class<? extends Throwable> exceptionType) {
@@ -76,7 +62,8 @@ public class ExceptionDepthComparator implements Comparator<Class<? extends Thro
 
 	/**
 	 * Obtain the closest match from the given exception types for the given target exception.
-	 * @param exceptionTypes the collection of exception types
+	 *
+	 * @param exceptionTypes  the collection of exception types
 	 * @param targetException the target exception to find a match for
 	 * @return the closest matching exception type from the given collection
 	 */

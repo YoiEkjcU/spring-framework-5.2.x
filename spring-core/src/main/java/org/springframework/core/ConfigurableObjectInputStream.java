@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2016 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.core;
 
 import java.io.IOException;
@@ -43,7 +27,8 @@ public class ConfigurableObjectInputStream extends ObjectInputStream {
 
 	/**
 	 * Create a new ConfigurableObjectInputStream for the given InputStream and ClassLoader.
-	 * @param in the InputStream to read from
+	 *
+	 * @param in          the InputStream to read from
 	 * @param classLoader the ClassLoader to use for loading local classes
 	 * @see java.io.ObjectInputStream#ObjectInputStream(java.io.InputStream)
 	 */
@@ -53,10 +38,11 @@ public class ConfigurableObjectInputStream extends ObjectInputStream {
 
 	/**
 	 * Create a new ConfigurableObjectInputStream for the given InputStream and ClassLoader.
-	 * @param in the InputStream to read from
-	 * @param classLoader the ClassLoader to use for loading local classes
+	 *
+	 * @param in                 the InputStream to read from
+	 * @param classLoader        the ClassLoader to use for loading local classes
 	 * @param acceptProxyClasses whether to accept deserialization of proxy classes
-	 * (may be deactivated as a security measure)
+	 *                           (may be deactivated as a security measure)
 	 * @see java.io.ObjectInputStream#ObjectInputStream(java.io.InputStream)
 	 */
 	public ConfigurableObjectInputStream(
@@ -74,13 +60,11 @@ public class ConfigurableObjectInputStream extends ObjectInputStream {
 			if (this.classLoader != null) {
 				// Use the specified ClassLoader to resolve local classes.
 				return ClassUtils.forName(classDesc.getName(), this.classLoader);
-			}
-			else {
+			} else {
 				// Use the default ClassLoader...
 				return super.resolveClass(classDesc);
 			}
-		}
-		catch (ClassNotFoundException ex) {
+		} catch (ClassNotFoundException ex) {
 			return resolveFallbackIfPossible(classDesc.getName(), ex);
 		}
 	}
@@ -96,24 +80,20 @@ public class ConfigurableObjectInputStream extends ObjectInputStream {
 			for (int i = 0; i < interfaces.length; i++) {
 				try {
 					resolvedInterfaces[i] = ClassUtils.forName(interfaces[i], this.classLoader);
-				}
-				catch (ClassNotFoundException ex) {
+				} catch (ClassNotFoundException ex) {
 					resolvedInterfaces[i] = resolveFallbackIfPossible(interfaces[i], ex);
 				}
 			}
 			try {
 				return ClassUtils.createCompositeInterface(resolvedInterfaces, this.classLoader);
-			}
-			catch (IllegalArgumentException ex) {
+			} catch (IllegalArgumentException ex) {
 				throw new ClassNotFoundException(null, ex);
 			}
-		}
-		else {
+		} else {
 			// Use ObjectInputStream's default ClassLoader...
 			try {
 				return super.resolveProxyClass(interfaces);
-			}
-			catch (ClassNotFoundException ex) {
+			} catch (ClassNotFoundException ex) {
 				Class<?>[] resolvedInterfaces = new Class<?>[interfaces.length];
 				for (int i = 0; i < interfaces.length; i++) {
 					resolvedInterfaces[i] = resolveFallbackIfPossible(interfaces[i], ex);
@@ -128,12 +108,13 @@ public class ConfigurableObjectInputStream extends ObjectInputStream {
 	 * Resolve the given class name against a fallback class loader.
 	 * <p>The default implementation simply rethrows the original exception,
 	 * since there is no fallback available.
+	 *
 	 * @param className the class name to resolve
-	 * @param ex the original exception thrown when attempting to load the class
+	 * @param ex        the original exception thrown when attempting to load the class
 	 * @return the newly resolved class (never {@code null})
 	 */
 	protected Class<?> resolveFallbackIfPossible(String className, ClassNotFoundException ex)
-			throws IOException, ClassNotFoundException{
+			throws IOException, ClassNotFoundException {
 
 		throw ex;
 	}

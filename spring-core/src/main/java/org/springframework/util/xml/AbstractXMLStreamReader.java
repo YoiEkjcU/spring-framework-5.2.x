@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.util.xml;
 
 import javax.xml.namespace.QName;
@@ -42,19 +26,15 @@ abstract class AbstractXMLStreamReader implements XMLStreamReader {
 			if (eventType == XMLStreamConstants.CHARACTERS || eventType == XMLStreamConstants.CDATA ||
 					eventType == XMLStreamConstants.SPACE || eventType == XMLStreamConstants.ENTITY_REFERENCE) {
 				builder.append(getText());
-			}
-			else if (eventType == XMLStreamConstants.PROCESSING_INSTRUCTION ||
+			} else if (eventType == XMLStreamConstants.PROCESSING_INSTRUCTION ||
 					eventType == XMLStreamConstants.COMMENT) {
 				// skipping
-			}
-			else if (eventType == XMLStreamConstants.END_DOCUMENT) {
+			} else if (eventType == XMLStreamConstants.END_DOCUMENT) {
 				throw new XMLStreamException("Unexpected end of document when reading element text content",
 						getLocation());
-			}
-			else if (eventType == XMLStreamConstants.START_ELEMENT) {
+			} else if (eventType == XMLStreamConstants.START_ELEMENT) {
 				throw new XMLStreamException("Element text content may not contain START_ELEMENT", getLocation());
-			}
-			else {
+			} else {
 				throw new XMLStreamException("Unexpected event type " + eventType, getLocation());
 			}
 			eventType = next();
@@ -82,8 +62,7 @@ abstract class AbstractXMLStreamReader implements XMLStreamReader {
 		int eventType = getEventType();
 		if (eventType == XMLStreamConstants.START_ELEMENT || eventType == XMLStreamConstants.END_ELEMENT) {
 			return getName().getNamespaceURI();
-		}
-		else {
+		} else {
 			throw new IllegalStateException("Parser must be on START_ELEMENT or END_ELEMENT state");
 		}
 	}
@@ -106,8 +85,7 @@ abstract class AbstractXMLStreamReader implements XMLStreamReader {
 		int eventType = getEventType();
 		if (eventType == XMLStreamConstants.START_ELEMENT || eventType == XMLStreamConstants.END_ELEMENT) {
 			return getName().getPrefix();
-		}
-		else {
+		} else {
 			throw new IllegalStateException("Parser must be on START_ELEMENT or END_ELEMENT state");
 		}
 	}
