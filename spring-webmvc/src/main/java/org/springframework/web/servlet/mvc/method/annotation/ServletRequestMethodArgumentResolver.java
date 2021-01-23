@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.mvc.method.annotation;
 
 import java.io.IOException;
@@ -73,8 +57,7 @@ public class ServletRequestMethodArgumentResolver implements HandlerMethodArgume
 		try {
 			pushBuilder = ClassUtils.forName("javax.servlet.http.PushBuilder",
 					ServletRequestMethodArgumentResolver.class.getClassLoader());
-		}
-		catch (ClassNotFoundException ex) {
+		} catch (ClassNotFoundException ex) {
 			// Servlet 4.0 PushBuilder not found - not supported for injection
 			pushBuilder = null;
 		}
@@ -100,7 +83,7 @@ public class ServletRequestMethodArgumentResolver implements HandlerMethodArgume
 
 	@Override
 	public Object resolveArgument(MethodParameter parameter, @Nullable ModelAndViewContainer mavContainer,
-			NativeWebRequest webRequest, @Nullable WebDataBinderFactory binderFactory) throws Exception {
+								  NativeWebRequest webRequest, @Nullable WebDataBinderFactory binderFactory) throws Exception {
 
 		Class<?> paramType = parameter.getParameterType();
 
@@ -140,45 +123,37 @@ public class ServletRequestMethodArgumentResolver implements HandlerMethodArgume
 						"Current session is not of type [" + paramType.getName() + "]: " + session);
 			}
 			return session;
-		}
-		else if (pushBuilder != null && pushBuilder.isAssignableFrom(paramType)) {
+		} else if (pushBuilder != null && pushBuilder.isAssignableFrom(paramType)) {
 			return PushBuilderDelegate.resolvePushBuilder(request, paramType);
-		}
-		else if (InputStream.class.isAssignableFrom(paramType)) {
+		} else if (InputStream.class.isAssignableFrom(paramType)) {
 			InputStream inputStream = request.getInputStream();
 			if (inputStream != null && !paramType.isInstance(inputStream)) {
 				throw new IllegalStateException(
 						"Request input stream is not of type [" + paramType.getName() + "]: " + inputStream);
 			}
 			return inputStream;
-		}
-		else if (Reader.class.isAssignableFrom(paramType)) {
+		} else if (Reader.class.isAssignableFrom(paramType)) {
 			Reader reader = request.getReader();
 			if (reader != null && !paramType.isInstance(reader)) {
 				throw new IllegalStateException(
 						"Request body reader is not of type [" + paramType.getName() + "]: " + reader);
 			}
 			return reader;
-		}
-		else if (Principal.class.isAssignableFrom(paramType)) {
+		} else if (Principal.class.isAssignableFrom(paramType)) {
 			Principal userPrincipal = request.getUserPrincipal();
 			if (userPrincipal != null && !paramType.isInstance(userPrincipal)) {
 				throw new IllegalStateException(
 						"Current user principal is not of type [" + paramType.getName() + "]: " + userPrincipal);
 			}
 			return userPrincipal;
-		}
-		else if (HttpMethod.class == paramType) {
+		} else if (HttpMethod.class == paramType) {
 			return HttpMethod.resolve(request.getMethod());
-		}
-		else if (Locale.class == paramType) {
+		} else if (Locale.class == paramType) {
 			return RequestContextUtils.getLocale(request);
-		}
-		else if (TimeZone.class == paramType) {
+		} else if (TimeZone.class == paramType) {
 			TimeZone timeZone = RequestContextUtils.getTimeZone(request);
 			return (timeZone != null ? timeZone : TimeZone.getDefault());
-		}
-		else if (ZoneId.class == paramType) {
+		} else if (ZoneId.class == paramType) {
 			TimeZone timeZone = RequestContextUtils.getTimeZone(request);
 			return (timeZone != null ? timeZone.toZoneId() : ZoneId.systemDefault());
 		}

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.support;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,18 +34,20 @@ public class ServletUriComponentsBuilder extends UriComponentsBuilder {
 
 	/**
 	 * Default constructor. Protected to prevent direct instantiation.
+	 *
 	 * @see #fromContextPath(HttpServletRequest)
 	 * @see #fromServletMapping(HttpServletRequest)
 	 * @see #fromRequest(HttpServletRequest)
 	 * @see #fromCurrentContextPath()
 	 * @see #fromCurrentServletMapping()
- 	 * @see #fromCurrentRequest()
+	 * @see #fromCurrentRequest()
 	 */
 	protected ServletUriComponentsBuilder() {
 	}
 
 	/**
 	 * Create a deep copy of the given ServletUriComponentsBuilder.
+	 *
 	 * @param other the other builder to copy from
 	 */
 	protected ServletUriComponentsBuilder(ServletUriComponentsBuilder other) {
@@ -198,6 +184,7 @@ public class ServletUriComponentsBuilder extends UriComponentsBuilder {
 	 * String uri = builder.path("/pages/1.{ext}").buildAndExpand(ext).toUriString();
 	 * assertEquals("http://www.foo.example/rest/books/6/pages/1.json", result);
 	 * </pre>
+	 *
 	 * @return the removed path extension for possible re-use, or {@code null}
 	 * @since 4.0
 	 */

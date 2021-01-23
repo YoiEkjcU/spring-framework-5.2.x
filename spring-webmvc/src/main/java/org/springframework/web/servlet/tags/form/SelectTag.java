@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.tags.form;
 
 import java.util.Collection;
@@ -236,8 +220,8 @@ import org.springframework.web.servlet.support.BindStatus;
  *
  * @author Rob Harrop
  * @author Juergen Hoeller
- * @since 2.0
  * @see OptionTag
+ * @since 2.0
  */
 @SuppressWarnings("serial")
 public class SelectTag extends AbstractHtmlInputElementTag {
@@ -305,6 +289,7 @@ public class SelectTag extends AbstractHtmlInputElementTag {
 	 * <p>Required when wishing to render '{@code option}' tags from
 	 * an array, {@link Collection} or {@link Map}.
 	 * <p>Typically a runtime expression.
+	 *
 	 * @param items the items that comprise the options of this selection
 	 */
 	public void setItems(@Nullable Object items) {
@@ -432,8 +417,7 @@ public class SelectTag extends AbstractHtmlInputElementTag {
 			tagWriter.endTag(true);
 			writeHiddenTagIfNecessary(tagWriter);
 			return SKIP_BODY;
-		}
-		else {
+		} else {
 			// Using nested <form:option/> tags, so just expose the value in the PageContext...
 			tagWriter.forceBlock();
 			this.tagWriter = tagWriter;
@@ -476,8 +460,7 @@ public class SelectTag extends AbstractHtmlInputElementTag {
 		Class<?> valueType = bindStatus.getValueType();
 		if (valueType != null && typeRequiresMultiple(valueType)) {
 			return true;
-		}
-		else if (bindStatus.getEditor() != null) {
+		} else if (bindStatus.getEditor() != null) {
 			Object editorValue = bindStatus.getEditor().getValue();
 			if (editorValue != null && typeRequiresMultiple(editorValue.getClass())) {
 				return true;

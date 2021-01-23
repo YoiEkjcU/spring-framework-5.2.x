@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.view.script;
 
 import java.nio.charset.Charset;
@@ -46,8 +30,8 @@ import org.springframework.lang.Nullable;
  * Nashorn, by setting the {@link #setSharedEngine sharedEngine} property to {@code false}.
  *
  * @author Sebastien Deleuze
- * @since 4.2
  * @see ScriptTemplateView
+ * @since 4.2
  */
 public class ScriptTemplateConfigurer implements ScriptTemplateConfig {
 
@@ -104,6 +88,7 @@ public class ScriptTemplateConfigurer implements ScriptTemplateConfig {
 	 * the script engine with this setter, but with {@link #setEngineName(String)}
 	 * or {@link #setEngineSupplier(Supplier)} since it implies multiple lazy
 	 * instantiations of the script engine.
+	 *
 	 * @see #setEngineName(String)
 	 * @see #setEngineSupplier(Supplier)
 	 */
@@ -122,9 +107,10 @@ public class ScriptTemplateConfigurer implements ScriptTemplateConfig {
 	 * {@link #setSharedEngine(Boolean)} set to {@code false}.
 	 * If {@code renderFunction} is specified, the script engine must implement {@code Invocable}.
 	 * You must either define {@code engineSupplier}, {@code engine} or {@code engineName}.
-	 * @since 5.2
+	 *
 	 * @see #setEngine(ScriptEngine)
 	 * @see #setEngineName(String)
+	 * @since 5.2
 	 */
 	public void setEngineSupplier(@Nullable Supplier<ScriptEngine> engineSupplier) {
 		this.engineSupplier = engineSupplier;
@@ -140,6 +126,7 @@ public class ScriptTemplateConfigurer implements ScriptTemplateConfig {
 	 * Set the engine name that will be used to instantiate the {@link ScriptEngine}.
 	 * If {@code renderFunction} is specified, the script engine must implement {@code Invocable}.
 	 * You must define {@code engine} or {@code engineName}, not both.
+	 *
 	 * @see #setEngine(ScriptEngine)
 	 * @see #setEngineSupplier(Supplier)
 	 */
@@ -162,6 +149,7 @@ public class ScriptTemplateConfigurer implements ScriptTemplateConfig {
 	 * {@link #setEngineName(String)} or {@link #setEngineSupplier(Supplier)}.
 	 * Using {@link #setEngine(ScriptEngine)} is not possible because multiple instances
 	 * of the script engine need to be created lazily (one per thread).
+	 *
 	 * @see <a href="https://docs.oracle.com/javase/8/docs/api/javax/script/ScriptEngineFactory.html#getParameter-java.lang.String-">THREADING ScriptEngine parameter</a>
 	 */
 	public void setSharedEngine(@Nullable Boolean sharedEngine) {
@@ -182,6 +170,7 @@ public class ScriptTemplateConfigurer implements ScriptTemplateConfig {
 	 * and a custom "render.js" file, you should call
 	 * {@code configurer.setScripts("/META-INF/resources/webjars/library/version/library.js",
 	 * "com/myproject/script/render.js");}.
+	 *
 	 * @see #setResourceLoaderPath
 	 * @see <a href="https://www.webjars.org">WebJars</a>
 	 */
@@ -219,6 +208,7 @@ public class ScriptTemplateConfigurer implements ScriptTemplateConfig {
 	 * <li>{@code Map model}: the view model</li>
 	 * <li>{@code RenderingContext context}: the rendering context (since 5.0)</li>
 	 * </ol>
+	 *
 	 * @see RenderingContext
 	 */
 	public void setRenderFunction(@Nullable String renderFunction) {
@@ -234,6 +224,7 @@ public class ScriptTemplateConfigurer implements ScriptTemplateConfig {
 	/**
 	 * Set the content type to use for the response.
 	 * ({@code text/html} by default).
+	 *
 	 * @since 4.2.1
 	 */
 	public void setContentType(@Nullable String contentType) {
@@ -242,6 +233,7 @@ public class ScriptTemplateConfigurer implements ScriptTemplateConfig {
 
 	/**
 	 * Return the content type to use for the response.
+	 *
 	 * @since 4.2.1
 	 */
 	@Override

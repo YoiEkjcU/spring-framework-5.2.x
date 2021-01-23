@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.config.annotation;
 
 import java.util.ArrayList;
@@ -50,6 +34,7 @@ public class ViewControllerRegistry {
 
 	/**
 	 * Class constructor with {@link ApplicationContext}.
+	 *
 	 * @since 4.3.12
 	 */
 	public ViewControllerRegistry(@Nullable ApplicationContext applicationContext) {
@@ -86,6 +71,7 @@ public class ViewControllerRegistry {
 	 * {@link PathPattern} more tailored for web usage and more efficient.
 	 * <p>By default the redirect URL is expected to be relative to the current
 	 * ServletContext, i.e. as relative to the web application root.
+	 *
 	 * @since 4.1
 	 */
 	public RedirectViewControllerRegistration addRedirectViewController(String urlPath, String redirectUrl) {
@@ -102,6 +88,7 @@ public class ViewControllerRegistry {
 	 * are {@link PathMatchConfigurer#setPatternParser enabled} or
 	 * {@link AntPathMatcher} otherwise. The syntax is largely the same with
 	 * {@link PathPattern} more tailored for web usage and more efficient.
+	 *
 	 * @since 4.1
 	 */
 	public void addStatusController(String urlPath, HttpStatus statusCode) {
@@ -126,6 +113,7 @@ public class ViewControllerRegistry {
 	/**
 	 * Return the {@code HandlerMapping} that contains the registered view
 	 * controller mappings, or {@code null} for no registrations.
+	 *
 	 * @since 4.3.12
 	 */
 	@Nullable

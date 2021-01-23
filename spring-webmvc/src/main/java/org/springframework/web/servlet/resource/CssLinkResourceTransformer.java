@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.resource;
 
 import java.io.IOException;
@@ -130,7 +114,9 @@ public class CssLinkResourceTransformer extends ResourceTransformerSupport {
 	 */
 	protected abstract static class AbstractLinkParser implements LinkParser {
 
-		/** Return the keyword to use to search for links, e.g. "@import", "url(" */
+		/**
+		 * Return the keyword to use to search for links, e.g. "@import", "url("
+		 */
 		protected abstract String getKeyword();
 
 		@Override
@@ -147,11 +133,9 @@ public class CssLinkResourceTransformer extends ResourceTransformerSupport {
 				}
 				if (content.charAt(position) == '\'') {
 					position = extractLink(position, "'", content, result);
-				}
-				else if (content.charAt(position) == '"') {
+				} else if (content.charAt(position) == '"') {
 					position = extractLink(position, "\"", content, result);
-				}
-				else {
+				} else {
 					position = extractLink(position, content, result);
 				}
 			}
@@ -183,8 +167,7 @@ public class CssLinkResourceTransformer extends ResourceTransformerSupport {
 		protected int extractLink(int index, String content, SortedSet<ContentChunkInfo> linksToAdd) {
 			if (content.startsWith("url(", index)) {
 				// Ignore: UrlFunctionLinkParser will handle it.
-			}
-			else if (logger.isTraceEnabled()) {
+			} else if (logger.isTraceEnabled()) {
 				logger.trace("Unexpected syntax for @import link at index " + index);
 			}
 			return index;

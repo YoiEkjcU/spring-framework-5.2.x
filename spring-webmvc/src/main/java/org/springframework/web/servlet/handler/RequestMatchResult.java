@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.handler;
 
 import java.util.Map;
@@ -53,8 +37,9 @@ public class RequestMatchResult {
 
 	/**
 	 * Create an instance with the matched {@code PathPattern}.
+	 *
 	 * @param pathPattern the pattern that was matched
-	 * @param lookupPath the mapping path
+	 * @param lookupPath  the mapping path
 	 * @since 5.3
 	 */
 	public RequestMatchResult(PathPattern pathPattern, PathContainer lookupPath) {
@@ -72,8 +57,9 @@ public class RequestMatchResult {
 
 	/**
 	 * Create an instance with the matched String pattern.
-	 * @param pattern the pattern that was matched, possibly with a '/' appended
-	 * @param lookupPath the mapping path
+	 *
+	 * @param pattern     the pattern that was matched, possibly with a '/' appended
+	 * @param lookupPath  the mapping path
 	 * @param pathMatcher the PathMatcher instance used for the match
 	 */
 	public RequestMatchResult(String pattern, String lookupPath, PathMatcher pathMatcher) {
@@ -92,6 +78,7 @@ public class RequestMatchResult {
 	/**
 	 * Extract URI template variables from the matching pattern as defined in
 	 * {@link PathMatcher#extractUriTemplateVariables}.
+	 *
 	 * @return a map with URI template variables
 	 */
 	@SuppressWarnings("ConstantConditions")

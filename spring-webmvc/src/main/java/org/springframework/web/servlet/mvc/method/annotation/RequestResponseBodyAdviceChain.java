@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.mvc.method.annotation;
 
 import java.io.IOException;
@@ -85,7 +69,7 @@ class RequestResponseBodyAdviceChain implements RequestBodyAdvice, ResponseBodyA
 
 	@Override
 	public HttpInputMessage beforeBodyRead(HttpInputMessage request, MethodParameter parameter,
-			Type targetType, Class<? extends HttpMessageConverter<?>> converterType) throws IOException {
+										   Type targetType, Class<? extends HttpMessageConverter<?>> converterType) throws IOException {
 
 		for (RequestBodyAdvice advice : getMatchingAdvice(parameter, RequestBodyAdvice.class)) {
 			if (advice.supports(parameter, targetType, converterType)) {
@@ -97,7 +81,7 @@ class RequestResponseBodyAdviceChain implements RequestBodyAdvice, ResponseBodyA
 
 	@Override
 	public Object afterBodyRead(Object body, HttpInputMessage inputMessage, MethodParameter parameter,
-			Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
+								Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
 
 		for (RequestBodyAdvice advice : getMatchingAdvice(parameter, RequestBodyAdvice.class)) {
 			if (advice.supports(parameter, targetType, converterType)) {
@@ -110,8 +94,8 @@ class RequestResponseBodyAdviceChain implements RequestBodyAdvice, ResponseBodyA
 	@Override
 	@Nullable
 	public Object beforeBodyWrite(@Nullable Object body, MethodParameter returnType, MediaType contentType,
-			Class<? extends HttpMessageConverter<?>> converterType,
-			ServerHttpRequest request, ServerHttpResponse response) {
+								  Class<? extends HttpMessageConverter<?>> converterType,
+								  ServerHttpRequest request, ServerHttpResponse response) {
 
 		return processBody(body, returnType, contentType, converterType, request, response);
 	}
@@ -119,7 +103,7 @@ class RequestResponseBodyAdviceChain implements RequestBodyAdvice, ResponseBodyA
 	@Override
 	@Nullable
 	public Object handleEmptyBody(@Nullable Object body, HttpInputMessage inputMessage, MethodParameter parameter,
-			Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
+								  Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
 
 		for (RequestBodyAdvice advice : getMatchingAdvice(parameter, RequestBodyAdvice.class)) {
 			if (advice.supports(parameter, targetType, converterType)) {
@@ -133,8 +117,8 @@ class RequestResponseBodyAdviceChain implements RequestBodyAdvice, ResponseBodyA
 	@SuppressWarnings("unchecked")
 	@Nullable
 	private <T> Object processBody(@Nullable Object body, MethodParameter returnType, MediaType contentType,
-			Class<? extends HttpMessageConverter<?>> converterType,
-			ServerHttpRequest request, ServerHttpResponse response) {
+								   Class<? extends HttpMessageConverter<?>> converterType,
+								   ServerHttpRequest request, ServerHttpResponse response) {
 
 		for (ResponseBodyAdvice<?> advice : getMatchingAdvice(returnType, ResponseBodyAdvice.class)) {
 			if (advice.supports(returnType, converterType)) {
@@ -170,11 +154,9 @@ class RequestResponseBodyAdviceChain implements RequestBodyAdvice, ResponseBodyA
 	private List<Object> getAdvice(Class<?> adviceType) {
 		if (RequestBodyAdvice.class == adviceType) {
 			return this.requestBodyAdvice;
-		}
-		else if (ResponseBodyAdvice.class == adviceType) {
+		} else if (ResponseBodyAdvice.class == adviceType) {
 			return this.responseBodyAdvice;
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException("Unexpected adviceType: " + adviceType);
 		}
 	}

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.resource;
 
 import java.util.List;
@@ -40,9 +24,9 @@ import org.springframework.lang.Nullable;
  * on the classpath and is automatically registered if that library is present.
  *
  * @author Brian Clozel
- * @since 4.2
  * @see org.springframework.web.servlet.config.annotation.ResourceChainRegistration
  * @see <a href="https://www.webjars.org">webjars.org</a>
+ * @since 4.2
  */
 public class WebJarsResourceResolver extends AbstractResourceResolver {
 
@@ -64,6 +48,7 @@ public class WebJarsResourceResolver extends AbstractResourceResolver {
 	/**
 	 * Create a {@code WebJarsResourceResolver} with a custom {@code WebJarAssetLocator} instance,
 	 * e.g. with a custom index.
+	 *
 	 * @since 4.3
 	 */
 	public WebJarsResourceResolver(WebJarAssetLocator webJarAssetLocator) {
@@ -73,7 +58,7 @@ public class WebJarsResourceResolver extends AbstractResourceResolver {
 
 	@Override
 	protected Resource resolveResourceInternal(@Nullable HttpServletRequest request, String requestPath,
-			List<? extends Resource> locations, ResourceResolverChain chain) {
+											   List<? extends Resource> locations, ResourceResolverChain chain) {
 
 		Resource resolved = chain.resolveResource(request, requestPath, locations);
 		if (resolved == null) {
@@ -87,7 +72,7 @@ public class WebJarsResourceResolver extends AbstractResourceResolver {
 
 	@Override
 	protected String resolveUrlPathInternal(String resourceUrlPath,
-			List<? extends Resource> locations, ResourceResolverChain chain) {
+											List<? extends Resource> locations, ResourceResolverChain chain) {
 
 		String path = chain.resolveUrlPath(resourceUrlPath, locations);
 		if (path == null) {

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.tags.form;
 
 import java.io.IOException;
@@ -53,6 +37,7 @@ public class TagWriter {
 	/**
 	 * Create a new instance of the {@link TagWriter} class that writes to
 	 * the supplied {@link PageContext}.
+	 *
 	 * @param pageContext the JSP PageContext to obtain the {@link Writer} from
 	 */
 	public TagWriter(PageContext pageContext) {
@@ -63,6 +48,7 @@ public class TagWriter {
 	/**
 	 * Create a new instance of the {@link TagWriter} class that writes to
 	 * the supplied {@link Writer}.
+	 *
 	 * @param writer the {@link Writer} to write tag content to
 	 */
 	public TagWriter(Writer writer) {
@@ -74,6 +60,7 @@ public class TagWriter {
 	/**
 	 * Start a new tag with the supplied name. Leaves the tag open so
 	 * that attributes, inner text or nested tags can be written into it.
+	 *
 	 * @see #endTag()
 	 */
 	public void startTag(String tagName) throws JspException {
@@ -88,6 +75,7 @@ public class TagWriter {
 	 * Write an HTML attribute with the specified name and value.
 	 * <p>Be sure to write all attributes <strong>before</strong> writing
 	 * any inner text or nested tags.
+	 *
 	 * @throws IllegalStateException if the opening tag is closed
 	 */
 	public void writeAttribute(String attributeName, String attributeValue) throws JspException {
@@ -101,6 +89,7 @@ public class TagWriter {
 	/**
 	 * Write an HTML attribute if the supplied value is not {@code null}
 	 * or zero length.
+	 *
 	 * @see #writeAttribute(String, String)
 	 */
 	public void writeOptionalAttributeValue(String attributeName, @Nullable String attributeValue) throws JspException {
@@ -112,6 +101,7 @@ public class TagWriter {
 	/**
 	 * Close the current opening tag (if necessary) and appends the
 	 * supplied value as inner text.
+	 *
 	 * @throws IllegalStateException if no tag is open
 	 */
 	public void appendValue(String value) throws JspException {
@@ -149,8 +139,9 @@ public class TagWriter {
 	 * Close the current tag, allowing to enforce a full closing tag.
 	 * <p>Correctly writes an empty tag if no inner text or nested tags
 	 * have been written.
+	 *
 	 * @param enforceClosingTag whether a full closing tag should be
-	 * rendered in any case, even in case of a non-block tag
+	 *                          rendered in any case, even in case of a non-block tag
 	 */
 	public void endTag(boolean enforceClosingTag) throws JspException {
 		if (!inTag()) {
@@ -161,8 +152,7 @@ public class TagWriter {
 			// Opening tag still needs to be closed...
 			if (enforceClosingTag) {
 				this.writer.append(">");
-			}
-			else {
+			} else {
 				this.writer.append("/>");
 				renderClosingTag = false;
 			}
@@ -251,8 +241,7 @@ public class TagWriter {
 			try {
 				getWriterToUse().write(String.valueOf(value));
 				return this;
-			}
-			catch (IOException ex) {
+			} catch (IOException ex) {
 				throw new JspException("Unable to write to JspWriter", ex);
 			}
 		}

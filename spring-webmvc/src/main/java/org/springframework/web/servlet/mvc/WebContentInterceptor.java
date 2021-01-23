@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.mvc;
 
 import java.util.Enumeration;
@@ -67,9 +51,9 @@ import org.springframework.web.util.pattern.PathPatternParser;
  * @author Juergen Hoeller
  * @author Brian Clozel
  * @author Rossen Stoyanchev
- * @since 27.11.2003
  * @see PathMatcher
  * @see AntPathMatcher
+ * @since 27.11.2003
  */
 public class WebContentInterceptor extends WebContentGenerator implements HandlerInterceptor {
 
@@ -94,6 +78,7 @@ public class WebContentInterceptor extends WebContentGenerator implements Handle
 
 	/**
 	 * Constructor with a {@link PathPatternParser} to parse patterns with.
+	 *
 	 * @since 5.3
 	 */
 	public WebContentInterceptor(PathPatternParser parser) {
@@ -103,11 +88,11 @@ public class WebContentInterceptor extends WebContentGenerator implements Handle
 		this.patternParser = parser;
 	}
 
-
 	/**
 	 * Shortcut to the
 	 * {@link org.springframework.web.util.UrlPathHelper#setAlwaysUseFullPath
 	 * same property} on the configured {@code UrlPathHelper}.
+	 *
 	 * @deprecated as of 5.3, the path is resolved externally and obtained with
 	 * {@link ServletRequestPathUtils#getCachedPathValue(ServletRequest)}
 	 */
@@ -119,6 +104,7 @@ public class WebContentInterceptor extends WebContentGenerator implements Handle
 	 * Shortcut to the
 	 * {@link org.springframework.web.util.UrlPathHelper#setUrlDecode
 	 * same property} on the configured {@code UrlPathHelper}.
+	 *
 	 * @deprecated as of 5.3, the path is resolved externally and obtained with
 	 * {@link ServletRequestPathUtils#getCachedPathValue(ServletRequest)}
 	 */
@@ -128,6 +114,7 @@ public class WebContentInterceptor extends WebContentGenerator implements Handle
 
 	/**
 	 * Set the UrlPathHelper to use for resolution of lookup paths.
+	 *
 	 * @deprecated as of 5.3, the path is resolved externally and obtained with
 	 * {@link ServletRequestPathUtils#getCachedPathValue(ServletRequest)}
 	 */
@@ -145,6 +132,7 @@ public class WebContentInterceptor extends WebContentGenerator implements Handle
 	 * String pattern matching even when a
 	 * {@link ServletRequestPathUtils#parseAndCache parsed} {@code RequestPath}
 	 * is available.
+	 *
 	 * @see #addCacheMapping
 	 * @see #setCacheMappings
 	 * @see org.springframework.util.AntPathMatcher
@@ -165,8 +153,9 @@ public class WebContentInterceptor extends WebContentGenerator implements Handle
 	 * <p><b>NOTE:</b> Path patterns are not supposed to overlap. If a request
 	 * matches several mappings, it is effectively undefined which one will apply
 	 * (due to the lack of key ordering in {@code java.util.Properties}).
+	 *
 	 * @param cacheMappings a mapping between URL paths (as keys) and
-	 * cache seconds (as values, need to be integer-parsable)
+	 *                      cache seconds (as values, need to be integer-parsable)
 	 * @see #setCacheSeconds
 	 */
 	public void setCacheMappings(Properties cacheMappings) {
@@ -191,10 +180,11 @@ public class WebContentInterceptor extends WebContentGenerator implements Handle
 	 * <p><b>NOTE:</b> Path patterns are not supposed to overlap. If a request
 	 * matches several mappings, it is effectively undefined which one will apply
 	 * (due to the lack of key ordering in the underlying {@code java.util.HashMap}).
+	 *
 	 * @param cacheControl the {@code CacheControl} to use
-	 * @param paths the URL paths that will map to the given {@code CacheControl}
-	 * @since 4.2
+	 * @param paths        the URL paths that will map to the given {@code CacheControl}
 	 * @see #setCacheSeconds
+	 * @since 4.2
 	 */
 	public void addCacheMapping(CacheControl cacheControl, String... paths) {
 		for (String path : paths) {
@@ -246,6 +236,7 @@ public class WebContentInterceptor extends WebContentGenerator implements Handle
 	 * Find a {@link org.springframework.http.CacheControl} instance for the
 	 * given parsed {@link PathContainer path}. This is used when the
 	 * {@code HandlerMapping} uses parsed {@code PathPatterns}.
+	 *
 	 * @param path the path to match to
 	 * @return the matched {@code CacheControl}, or {@code null} if no match
 	 * @since 5.3
@@ -264,6 +255,7 @@ public class WebContentInterceptor extends WebContentGenerator implements Handle
 	 * Find a {@link org.springframework.http.CacheControl} instance for the
 	 * given String lookupPath. This is used when the {@code HandlerMapping}
 	 * relies on String pattern matching with {@link PathMatcher}.
+	 *
 	 * @param lookupPath the path to match to
 	 * @return the matched {@code CacheControl}, or {@code null} if no match
 	 */
@@ -280,6 +272,7 @@ public class WebContentInterceptor extends WebContentGenerator implements Handle
 	/**
 	 * Find a cacheSeconds value for the given parsed {@link PathContainer path}.
 	 * This is used when the {@code HandlerMapping} uses parsed {@code PathPatterns}.
+	 *
 	 * @param path the path to match to
 	 * @return the matched cacheSeconds, or {@code null} if there is no match
 	 * @since 5.3
@@ -298,6 +291,7 @@ public class WebContentInterceptor extends WebContentGenerator implements Handle
 	 * Find a cacheSeconds instance for the given String lookupPath.
 	 * This is used when the {@code HandlerMapping} relies on String pattern
 	 * matching with {@link PathMatcher}.
+	 *
 	 * @param lookupPath the path to match to
 	 * @return the matched cacheSeconds, or {@code null} if there is no match
 	 */
@@ -316,7 +310,7 @@ public class WebContentInterceptor extends WebContentGenerator implements Handle
 	 */
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-			@Nullable ModelAndView modelAndView) throws Exception {
+						   @Nullable ModelAndView modelAndView) throws Exception {
 	}
 
 	/**
@@ -324,7 +318,7 @@ public class WebContentInterceptor extends WebContentGenerator implements Handle
 	 */
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
-			@Nullable Exception ex) throws Exception {
+								@Nullable Exception ex) throws Exception {
 	}
 
 }

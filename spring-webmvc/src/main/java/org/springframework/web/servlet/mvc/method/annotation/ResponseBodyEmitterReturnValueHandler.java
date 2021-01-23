@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.mvc.method.annotation;
 
 import java.io.IOException;
@@ -80,14 +64,15 @@ public class ResponseBodyEmitterReturnValueHandler implements HandlerMethodRetur
 
 	/**
 	 * Complete constructor with pluggable "reactive" type support.
+	 *
 	 * @param messageConverters converters to write emitted objects with
-	 * @param registry for reactive return value type support
-	 * @param executor for blocking I/O writes of items emitted from reactive types
-	 * @param manager for detecting streaming media types
+	 * @param registry          for reactive return value type support
+	 * @param executor          for blocking I/O writes of items emitted from reactive types
+	 * @param manager           for detecting streaming media types
 	 * @since 5.0
 	 */
 	public ResponseBodyEmitterReturnValueHandler(List<HttpMessageConverter<?>> messageConverters,
-			ReactiveAdapterRegistry registry, TaskExecutor executor, ContentNegotiationManager manager) {
+												 ReactiveAdapterRegistry registry, TaskExecutor executor, ContentNegotiationManager manager) {
 
 		Assert.notEmpty(messageConverters, "HttpMessageConverter List must not be empty");
 		this.sseMessageConverters = initSseConverters(messageConverters);
@@ -120,7 +105,7 @@ public class ResponseBodyEmitterReturnValueHandler implements HandlerMethodRetur
 	@Override
 	@SuppressWarnings("resource")
 	public void handleReturnValue(@Nullable Object returnValue, MethodParameter returnType,
-			ModelAndViewContainer mavContainer, NativeWebRequest webRequest) throws Exception {
+								  ModelAndViewContainer mavContainer, NativeWebRequest webRequest) throws Exception {
 
 		if (returnValue == null) {
 			mavContainer.setRequestHandled(true);
@@ -150,8 +135,7 @@ public class ResponseBodyEmitterReturnValueHandler implements HandlerMethodRetur
 		ResponseBodyEmitter emitter;
 		if (returnValue instanceof ResponseBodyEmitter) {
 			emitter = (ResponseBodyEmitter) returnValue;
-		}
-		else {
+		} else {
 			emitter = this.reactiveHandler.handleValue(returnValue, returnType, mavContainer, webRequest);
 			if (emitter == null) {
 				// Not streaming: write headers without committing response..
@@ -216,8 +200,7 @@ public class ResponseBodyEmitterReturnValueHandler implements HandlerMethodRetur
 			try {
 				this.outputMessage.flush();
 				this.deferredResult.setResult(null);
-			}
-			catch (IOException ex) {
+			} catch (IOException ex) {
 				this.deferredResult.setErrorResult(ex);
 			}
 		}

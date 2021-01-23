@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.support;
 
 import java.util.Locale;
@@ -35,8 +19,8 @@ import org.springframework.lang.Nullable;
  * scope, in addition to the fallback locale strategy provided by the base class.
  *
  * @author Juergen Hoeller
- * @since 1.1.4
  * @see #getFallbackLocale
+ * @since 1.1.4
  */
 public class JspAwareRequestContext extends RequestContext {
 
@@ -46,6 +30,7 @@ public class JspAwareRequestContext extends RequestContext {
 	/**
 	 * Create a new JspAwareRequestContext for the given page context,
 	 * using the request attributes for Errors retrieval.
+	 *
 	 * @param pageContext current JSP page context
 	 */
 	public JspAwareRequestContext(PageContext pageContext) {
@@ -55,9 +40,10 @@ public class JspAwareRequestContext extends RequestContext {
 	/**
 	 * Create a new JspAwareRequestContext for the given page context,
 	 * using the given model attributes for Errors retrieval.
+	 *
 	 * @param pageContext current JSP page context
-	 * @param model the model attributes for the current view
-	 * (can be {@code null}, using the request attributes for Errors retrieval)
+	 * @param model       the model attributes for the current view
+	 *                    (can be {@code null}, using the request attributes for Errors retrieval)
 	 */
 	public JspAwareRequestContext(PageContext pageContext, @Nullable Map<String, Object> model) {
 		super((HttpServletRequest) pageContext.getRequest(), (HttpServletResponse) pageContext.getResponse(),

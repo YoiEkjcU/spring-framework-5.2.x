@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.mvc.condition;
 
 import java.util.ArrayList;
@@ -69,6 +53,7 @@ public final class ProducesRequestCondition extends AbstractRequestCondition<Pro
 	/**
 	 * Creates a new instance from "produces" expressions. If 0 expressions
 	 * are provided in total, this condition will match to any request.
+	 *
 	 * @param produces expressions with syntax defined by {@link RequestMapping#produces()}
 	 */
 	public ProducesRequestCondition(String... produces) {
@@ -80,8 +65,9 @@ public final class ProducesRequestCondition extends AbstractRequestCondition<Pro
 	 * expressions where the header name is not 'Accept' or have no header value
 	 * defined are ignored. If 0 expressions are provided in total, this condition
 	 * will match to any request.
+	 *
 	 * @param produces expressions with syntax defined by {@link RequestMapping#produces()}
-	 * @param headers expressions with syntax defined by {@link RequestMapping#headers()}
+	 * @param headers  expressions with syntax defined by {@link RequestMapping#headers()}
 	 */
 	public ProducesRequestCondition(String[] produces, @Nullable String[] headers) {
 		this(produces, headers, null);
@@ -90,12 +76,13 @@ public final class ProducesRequestCondition extends AbstractRequestCondition<Pro
 	/**
 	 * Same as {@link #ProducesRequestCondition(String[], String[])} but also
 	 * accepting a {@link ContentNegotiationManager}.
+	 *
 	 * @param produces expressions with syntax defined by {@link RequestMapping#produces()}
-	 * @param headers expressions with syntax defined by {@link RequestMapping#headers()}
-	 * @param manager used to determine requested media types
+	 * @param headers  expressions with syntax defined by {@link RequestMapping#headers()}
+	 * @param manager  used to determine requested media types
 	 */
 	public ProducesRequestCondition(String[] produces, @Nullable String[] headers,
-			@Nullable ContentNegotiationManager manager) {
+									@Nullable ContentNegotiationManager manager) {
 
 		this.expressions = parseExpressions(produces, headers);
 		if (this.expressions.size() > 1) {
@@ -189,6 +176,7 @@ public final class ProducesRequestCondition extends AbstractRequestCondition<Pro
 	 * request 'Content-Type' header and returns an instance that is guaranteed
 	 * to contain matching expressions only. The match is performed via
 	 * {@link MediaType#isCompatibleWith(MediaType)}.
+	 *
 	 * @param request the current request
 	 * @return the same instance if there are no expressions;
 	 * or a new condition with matching expressions;
@@ -206,18 +194,15 @@ public final class ProducesRequestCondition extends AbstractRequestCondition<Pro
 		List<MediaType> acceptedMediaTypes;
 		try {
 			acceptedMediaTypes = getAcceptedMediaTypes(request);
-		}
-		catch (HttpMediaTypeException ex) {
+		} catch (HttpMediaTypeException ex) {
 			return null;
 		}
 		List<ProduceMediaTypeExpression> result = getMatchingExpressions(acceptedMediaTypes);
 		if (!CollectionUtils.isEmpty(result)) {
 			return new ProducesRequestCondition(result, this);
-		}
-		else if (MediaType.ALL.isPresentIn(acceptedMediaTypes)) {
+		} else if (MediaType.ALL.isPresentIn(acceptedMediaTypes)) {
 			return EMPTY_CONDITION;
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
@@ -270,8 +255,7 @@ public final class ProducesRequestCondition extends AbstractRequestCondition<Pro
 				}
 			}
 			return 0;
-		}
-		catch (HttpMediaTypeNotAcceptableException ex) {
+		} catch (HttpMediaTypeNotAcceptableException ex) {
 			// should never happen
 			throw new IllegalStateException("Cannot compare without having any requested media types", ex);
 		}
@@ -310,13 +294,12 @@ public final class ProducesRequestCondition extends AbstractRequestCondition<Pro
 	}
 
 	private int compareMatchingMediaTypes(ProducesRequestCondition condition1, int index1,
-			ProducesRequestCondition condition2, int index2) {
+										  ProducesRequestCondition condition2, int index2) {
 
 		int result = 0;
 		if (index1 != index2) {
 			result = index2 - index1;
-		}
-		else if (index1 != -1) {
+		} else if (index1 != -1) {
 			ProduceMediaTypeExpression expr1 = condition1.getExpressionsToCompare().get(index1);
 			ProduceMediaTypeExpression expr2 = condition2.getExpressionsToCompare().get(index2);
 			result = expr1.compareTo(expr2);
@@ -337,6 +320,7 @@ public final class ProducesRequestCondition extends AbstractRequestCondition<Pro
 	/**
 	 * Use this to clear {@link #MEDIA_TYPES_ATTRIBUTE} that contains the parsed,
 	 * requested media types.
+	 *
 	 * @param request the current request
 	 * @since 5.2
 	 */

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.config;
 
 import java.util.LinkedHashMap;
@@ -81,6 +65,7 @@ public abstract class MvcNamespaceUtils {
 	/**
 	 * Adds an alias to an existing well-known name or registers a new instance of a {@link UrlPathHelper}
 	 * under that well-known name, unless already registered.
+	 *
 	 * @return a RuntimeBeanReference to this {@link UrlPathHelper} instance
 	 */
 	public static RuntimeBeanReference registerUrlPathHelper(
@@ -91,8 +76,7 @@ public abstract class MvcNamespaceUtils {
 				parserContext.getRegistry().removeAlias(URL_PATH_HELPER_BEAN_NAME);
 			}
 			parserContext.getRegistry().registerAlias(urlPathHelperRef.getBeanName(), URL_PATH_HELPER_BEAN_NAME);
-		}
-		else if (!parserContext.getRegistry().isAlias(URL_PATH_HELPER_BEAN_NAME) &&
+		} else if (!parserContext.getRegistry().isAlias(URL_PATH_HELPER_BEAN_NAME) &&
 				!parserContext.getRegistry().containsBeanDefinition(URL_PATH_HELPER_BEAN_NAME)) {
 			RootBeanDefinition urlPathHelperDef = new RootBeanDefinition(UrlPathHelper.class);
 			urlPathHelperDef.setSource(source);
@@ -106,18 +90,18 @@ public abstract class MvcNamespaceUtils {
 	/**
 	 * Adds an alias to an existing well-known name or registers a new instance of a {@link PathMatcher}
 	 * under that well-known name, unless already registered.
+	 *
 	 * @return a RuntimeBeanReference to this {@link PathMatcher} instance
 	 */
 	public static RuntimeBeanReference registerPathMatcher(@Nullable RuntimeBeanReference pathMatcherRef,
-			ParserContext parserContext, @Nullable Object source) {
+														   ParserContext parserContext, @Nullable Object source) {
 
 		if (pathMatcherRef != null) {
 			if (parserContext.getRegistry().isAlias(PATH_MATCHER_BEAN_NAME)) {
 				parserContext.getRegistry().removeAlias(PATH_MATCHER_BEAN_NAME);
 			}
 			parserContext.getRegistry().registerAlias(pathMatcherRef.getBeanName(), PATH_MATCHER_BEAN_NAME);
-		}
-		else if (!parserContext.getRegistry().isAlias(PATH_MATCHER_BEAN_NAME) &&
+		} else if (!parserContext.getRegistry().isAlias(PATH_MATCHER_BEAN_NAME) &&
 				!parserContext.getRegistry().containsBeanDefinition(PATH_MATCHER_BEAN_NAME)) {
 			RootBeanDefinition pathMatcherDef = new RootBeanDefinition(AntPathMatcher.class);
 			pathMatcherDef.setSource(source);
@@ -137,7 +121,7 @@ public abstract class MvcNamespaceUtils {
 			RootBeanDefinition mappingDef = new RootBeanDefinition(BeanNameUrlHandlerMapping.class);
 			mappingDef.setSource(source);
 			mappingDef.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
-			mappingDef.getPropertyValues().add("order", 2);	// consistent with WebMvcConfigurationSupport
+			mappingDef.getPropertyValues().add("order", 2);    // consistent with WebMvcConfigurationSupport
 			RuntimeBeanReference corsRef = MvcNamespaceUtils.registerCorsConfigurations(null, context, source);
 			mappingDef.getPropertyValues().add("corsConfigurations", corsRef);
 			context.getRegistry().registerBeanDefinition(BEAN_NAME_URL_HANDLER_MAPPING_BEAN_NAME, mappingDef);
@@ -177,6 +161,7 @@ public abstract class MvcNamespaceUtils {
 	 * Registers a {@code Map<String, CorsConfiguration>} (mapped {@code CorsConfiguration}s)
 	 * under a well-known name unless already registered. The bean definition may be updated
 	 * if a non-null CORS configuration is provided.
+	 *
 	 * @return a RuntimeBeanReference to this {@code Map<String, CorsConfiguration>} instance
 	 */
 	public static RuntimeBeanReference registerCorsConfigurations(
@@ -192,8 +177,7 @@ public abstract class MvcNamespaceUtils {
 			}
 			context.getReaderContext().getRegistry().registerBeanDefinition(CORS_CONFIGURATION_BEAN_NAME, corsDef);
 			context.registerComponent(new BeanComponentDefinition(corsDef, CORS_CONFIGURATION_BEAN_NAME));
-		}
-		else if (corsConfigurations != null) {
+		} else if (corsConfigurations != null) {
 			BeanDefinition corsDef = context.getRegistry().getBeanDefinition(CORS_CONFIGURATION_BEAN_NAME);
 			corsDef.getConstructorArgumentValues().addIndexedArgumentValue(0, corsConfigurations);
 		}
@@ -274,6 +258,7 @@ public abstract class MvcNamespaceUtils {
 	/**
 	 * Find the {@code ContentNegotiationManager} bean created by or registered
 	 * with the {@code annotation-driven} element.
+	 *
 	 * @return a bean definition, bean reference, or {@code null} if none defined
 	 */
 	@Nullable

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.view.tiles3;
 
 import java.util.Locale;
@@ -77,6 +61,7 @@ public class TilesView extends AbstractUrlBasedView {
 
 	/**
 	 * Whether to expose JSTL attributes. By default set to {@code true}.
+	 *
 	 * @see JstlUtils#exposeLocalizationContext(RequestContext)
 	 */
 	protected void setExposeJstlAttributes(boolean exposeJstlAttributes) {
@@ -87,8 +72,9 @@ public class TilesView extends AbstractUrlBasedView {
 	 * Specify whether to always include the view rather than forward to it.
 	 * <p>Default is "false". Switch this flag on to enforce the use of a
 	 * Servlet include, even if a forward would be possible.
-	 * @since 4.1.2
+	 *
 	 * @see TilesViewResolver#setAlwaysInclude
+	 * @since 4.1.2
 	 */
 	public void setAlwaysInclude(boolean alwaysInclude) {
 		this.alwaysInclude = alwaysInclude;
@@ -131,7 +117,7 @@ public class TilesView extends AbstractUrlBasedView {
 
 	@Override
 	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+										   HttpServletResponse response) throws Exception {
 
 		Assert.state(this.renderer != null, "No Renderer set");
 
@@ -150,7 +136,8 @@ public class TilesView extends AbstractUrlBasedView {
 	/**
 	 * Create a Tiles {@link Request}.
 	 * <p>This implementation creates a {@link ServletRequest}.
-	 * @param request the current request
+	 *
+	 * @param request  the current request
 	 * @param response the current response
 	 * @return the Tiles request
 	 */

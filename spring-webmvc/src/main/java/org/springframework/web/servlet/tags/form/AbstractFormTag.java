@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.tags.form;
 
 import java.beans.PropertyEditor;
@@ -57,6 +41,7 @@ public abstract class AbstractFormTag extends HtmlEscapingAwareTag {
 	 * and then the {@link ObjectUtils#getDisplayString String representation} is written as the
 	 * attribute value. If the resultant {@code String} representation is {@code null}
 	 * or empty, no attribute is written.
+	 *
 	 * @see TagWriter#writeOptionalAttributeValue(String, String)
 	 */
 	protected final void writeOptionalAttribute(TagWriter tagWriter, String attributeName, @Nullable String value)
@@ -80,6 +65,7 @@ public abstract class AbstractFormTag extends HtmlEscapingAwareTag {
 	/**
 	 * Provide a simple template method that calls {@link #createTagWriter()} and passes
 	 * the created {@link TagWriter} to the {@link #writeTagContent(TagWriter)} method.
+	 *
 	 * @return the value returned by {@link #writeTagContent(TagWriter)}
 	 */
 	@Override
@@ -117,6 +103,7 @@ public abstract class AbstractFormTag extends HtmlEscapingAwareTag {
 
 	/**
 	 * Subclasses should implement this method to perform tag content rendering.
+	 *
 	 * @return valid tag render instruction as per {@link javax.servlet.jsp.tagext.Tag#doStartTag()}.
 	 */
 	protected abstract int writeTagContent(TagWriter tagWriter) throws JspException;

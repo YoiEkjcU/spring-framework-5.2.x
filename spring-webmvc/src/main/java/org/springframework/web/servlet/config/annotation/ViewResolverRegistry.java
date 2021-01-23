@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.config.annotation;
 
 import java.util.ArrayList;
@@ -71,6 +55,7 @@ public class ViewResolverRegistry {
 
 	/**
 	 * Class constructor with {@link ContentNegotiationManager} and {@link ApplicationContext}.
+	 *
 	 * @since 4.3.12
 	 */
 	public ViewResolverRegistry(
@@ -94,6 +79,7 @@ public class ViewResolverRegistry {
 	 * media types requested by the client (e.g. in the Accept header).
 	 * <p>If invoked multiple times the provided default views will be added to
 	 * any other default views that may have been configured already.
+	 *
 	 * @see ContentNegotiatingViewResolver#setDefaultViews
 	 */
 	public void enableContentNegotiation(View... defaultViews) {
@@ -106,6 +92,7 @@ public class ViewResolverRegistry {
 	 * media types requested by the client (e.g. in the Accept header).
 	 * <p>If invoked multiple times the provided default views will be added to
 	 * any other default views that may have been configured already.
+	 *
 	 * @see ContentNegotiatingViewResolver#setDefaultViews
 	 */
 	public void enableContentNegotiation(boolean useNotAcceptableStatus, View... defaultViews) {
@@ -124,8 +111,7 @@ public class ViewResolverRegistry {
 				views.addAll(Arrays.asList(defaultViews));
 				this.contentNegotiatingResolver.setDefaultViews(views);
 			}
-		}
-		else {
+		} else {
 			this.contentNegotiatingResolver = new ContentNegotiatingViewResolver();
 			this.contentNegotiatingResolver.setDefaultViews(Arrays.asList(defaultViews));
 			this.contentNegotiatingResolver.setViewResolvers(this.viewResolvers);
@@ -217,6 +203,7 @@ public class ViewResolverRegistry {
 
 	/**
 	 * Register a script template view resolver with an empty default view name prefix and suffix.
+	 *
 	 * @since 4.2
 	 */
 	public UrlBasedViewResolverRegistration scriptTemplate() {
@@ -250,7 +237,7 @@ public class ViewResolverRegistry {
 		if (viewResolver instanceof ContentNegotiatingViewResolver) {
 			throw new BeanInitializationException(
 					"addViewResolver cannot be used to configure a ContentNegotiatingViewResolver. " +
-					"Please use the method enableContentNegotiation instead.");
+							"Please use the method enableContentNegotiation instead.");
 		}
 		this.viewResolvers.add(viewResolver);
 	}
@@ -285,8 +272,7 @@ public class ViewResolverRegistry {
 	protected List<ViewResolver> getViewResolvers() {
 		if (this.contentNegotiatingResolver != null) {
 			return Collections.<ViewResolver>singletonList(this.contentNegotiatingResolver);
-		}
-		else {
+		} else {
 			return this.viewResolvers;
 		}
 	}

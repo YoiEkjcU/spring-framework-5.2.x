@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.tags;
 
 import javax.servlet.jsp.JspException;
@@ -48,9 +32,9 @@ import org.springframework.lang.Nullable;
  * </table>
  *
  * @author Nicholas Williams
- * @since 4.0
  * @see MessageTag
  * @see ThemeTag
+ * @since 4.0
  */
 @SuppressWarnings("serial")
 public class ArgumentTag extends BodyTagSupport {
@@ -64,6 +48,7 @@ public class ArgumentTag extends BodyTagSupport {
 	/**
 	 * Set the value of the argument (optional).
 	 * If not set, the tag's body content will get evaluated.
+	 *
 	 * @param value the parameter value
 	 */
 	public void setValue(Object value) {
@@ -77,8 +62,7 @@ public class ArgumentTag extends BodyTagSupport {
 		Object argument = null;
 		if (this.valueSet) {
 			argument = this.value;
-		}
-		else if (getBodyContent() != null) {
+		} else if (getBodyContent() != null) {
 			// Get the value from the tag body
 			argument = getBodyContent().getString().trim();
 		}

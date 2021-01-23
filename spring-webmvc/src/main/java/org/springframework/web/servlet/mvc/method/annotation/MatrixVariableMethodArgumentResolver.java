@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.mvc.method.annotation;
 
 import java.util.ArrayList;
@@ -92,8 +76,7 @@ public class MatrixVariableMethodArgumentResolver extends AbstractNamedValueMeth
 			if (pathParameters.containsKey(pathVar)) {
 				paramValues = pathParameters.get(pathVar).get(name);
 			}
-		}
-		else {
+		} else {
 			boolean found = false;
 			paramValues = new ArrayList<>();
 			for (MultiValueMap<String, String> params : pathParameters.values()) {
@@ -102,7 +85,7 @@ public class MatrixVariableMethodArgumentResolver extends AbstractNamedValueMeth
 						String paramType = parameter.getNestedParameterType().getName();
 						throw new ServletRequestBindingException(
 								"Found more than one match for URI path parameter '" + name +
-								"' for parameter type [" + paramType + "]. Use 'pathVar' attribute to disambiguate.");
+										"' for parameter type [" + paramType + "]. Use 'pathVar' attribute to disambiguate.");
 					}
 					paramValues.addAll(params.get(name));
 					found = true;
@@ -112,11 +95,9 @@ public class MatrixVariableMethodArgumentResolver extends AbstractNamedValueMeth
 
 		if (CollectionUtils.isEmpty(paramValues)) {
 			return null;
-		}
-		else if (paramValues.size() == 1) {
+		} else if (paramValues.size() == 1) {
 			return paramValues.get(0);
-		}
-		else {
+		} else {
 			return paramValues;
 		}
 	}

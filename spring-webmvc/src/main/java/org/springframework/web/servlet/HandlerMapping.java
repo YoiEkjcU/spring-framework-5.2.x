@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet;
 
 import javax.servlet.ServletRequest;
@@ -59,6 +43,7 @@ public interface HandlerMapping {
 	/**
 	 * Name of the {@link HttpServletRequest} attribute that contains the mapped
 	 * handler for the best matching pattern.
+	 *
 	 * @since 4.3.21
 	 */
 	String BEST_MATCHING_HANDLER_ATTRIBUTE = HandlerMapping.class.getName() + ".bestMatchingHandler";
@@ -68,6 +53,7 @@ public interface HandlerMapping {
 	 * used to look up the matching handler, which depending on the configured
 	 * {@link org.springframework.web.util.UrlPathHelper} could be the full path
 	 * or without the context path, decoded or not, etc.
+	 *
 	 * @since 5.2
 	 * @deprecated as of 5.3 in favor of
 	 * {@link org.springframework.web.util.UrlPathHelper#PATH_ATTRIBUTE} and
@@ -146,6 +132,7 @@ public interface HandlerMapping {
 	 * {@link org.springframework.web.util.ServletRequestPathUtils#getParsedRequestPath
 	 * access} in {@code HandlerMapping}s, {@code HandlerInterceptor}s, and
 	 * other components.
+	 *
 	 * @since 5.3
 	 */
 	default boolean usesPathPatterns() {
@@ -162,6 +149,7 @@ public interface HandlerMapping {
 	 * <p>Returns {@code null} if no match was found. This is not an error.
 	 * The DispatcherServlet will query all registered HandlerMapping beans to find
 	 * a match, and only decide there is an error if none can find a handler.
+	 *
 	 * @param request current HTTP request
 	 * @return a HandlerExecutionChain instance containing handler object and
 	 * any interceptors, or {@code null} if no mapping found

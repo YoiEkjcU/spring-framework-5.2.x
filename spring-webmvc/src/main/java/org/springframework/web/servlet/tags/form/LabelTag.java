@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.tags.form;
 
 import javax.servlet.jsp.JspException;
@@ -222,6 +206,7 @@ public class LabelTag extends AbstractHtmlElementTag {
 	/**
 	 * Writes the opening '{@code label}' tag and forces a block tag so
 	 * that body content is written correctly.
+	 *
 	 * @return {@link javax.servlet.jsp.tagext.Tag#EVAL_BODY_INCLUDE}
 	 */
 	@Override
@@ -238,6 +223,7 @@ public class LabelTag extends AbstractHtmlElementTag {
 	 * Overrides {@code #getName()} to always return {@code null},
 	 * because the '{@code name}' attribute is not supported by the
 	 * '{@code label}' tag.
+	 *
 	 * @return the value for the HTML '{@code name}' attribute
 	 */
 	@Override
@@ -250,14 +236,14 @@ public class LabelTag extends AbstractHtmlElementTag {
 	/**
 	 * Determine the '{@code for}' attribute value for this tag,
 	 * autogenerating one if none specified.
+	 *
 	 * @see #getFor()
 	 * @see #autogenerateFor()
 	 */
 	protected String resolveFor() throws JspException {
 		if (StringUtils.hasText(this.forId)) {
 			return getDisplayString(evaluate(FOR_ATTRIBUTE, this.forId));
-		}
-		else {
+		} else {
 			return autogenerateFor();
 		}
 	}

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.mvc.method.annotation;
 
 import java.util.concurrent.CompletionException;
@@ -49,7 +33,7 @@ public class DeferredResultMethodReturnValueHandler implements HandlerMethodRetu
 
 	@Override
 	public void handleReturnValue(@Nullable Object returnValue, MethodParameter returnType,
-			ModelAndViewContainer mavContainer, NativeWebRequest webRequest) throws Exception {
+								  ModelAndViewContainer mavContainer, NativeWebRequest webRequest) throws Exception {
 
 		if (returnValue == null) {
 			mavContainer.setRequestHandled(true);
@@ -60,14 +44,11 @@ public class DeferredResultMethodReturnValueHandler implements HandlerMethodRetu
 
 		if (returnValue instanceof DeferredResult) {
 			result = (DeferredResult<?>) returnValue;
-		}
-		else if (returnValue instanceof ListenableFuture) {
+		} else if (returnValue instanceof ListenableFuture) {
 			result = adaptListenableFuture((ListenableFuture<?>) returnValue);
-		}
-		else if (returnValue instanceof CompletionStage) {
+		} else if (returnValue instanceof CompletionStage) {
 			result = adaptCompletionStage((CompletionStage<?>) returnValue);
-		}
-		else {
+		} else {
 			// Should not happen...
 			throw new IllegalStateException("Unexpected return value type: " + returnValue);
 		}
@@ -82,6 +63,7 @@ public class DeferredResultMethodReturnValueHandler implements HandlerMethodRetu
 			public void onSuccess(@Nullable Object value) {
 				result.setResult(value);
 			}
+
 			@Override
 			public void onFailure(Throwable ex) {
 				result.setErrorResult(ex);
@@ -98,8 +80,7 @@ public class DeferredResultMethodReturnValueHandler implements HandlerMethodRetu
 					ex = ex.getCause();
 				}
 				result.setErrorResult(ex);
-			}
-			else {
+			} else {
 				result.setResult(value);
 			}
 			return null;

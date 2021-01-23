@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.config.annotation;
 
 import java.util.ArrayList;
@@ -58,6 +42,7 @@ public class AsyncSupportConfigurer {
 	 * <p>By default only a {@link SimpleAsyncTaskExecutor} is used. However when
 	 * using the above two use cases, it's recommended to configure an executor
 	 * backed by a thread pool such as {@link ThreadPoolTaskExecutor}.
+	 *
 	 * @param taskExecutor the task executor instance to use by default
 	 */
 	public AsyncSupportConfigurer setTaskExecutor(AsyncTaskExecutor taskExecutor) {
@@ -72,6 +57,7 @@ public class AsyncSupportConfigurer {
 	 * for further processing of the concurrently produced result.
 	 * <p>If this value is not set, the default timeout of the underlying
 	 * implementation is used.
+	 *
 	 * @param timeout the timeout value in milliseconds
 	 */
 	public AsyncSupportConfigurer setDefaultTimeout(long timeout) {
@@ -83,6 +69,7 @@ public class AsyncSupportConfigurer {
 	 * Configure lifecycle interceptors with callbacks around concurrent request
 	 * execution that starts when a controller returns a
 	 * {@link java.util.concurrent.Callable}.
+	 *
 	 * @param interceptors the interceptors to register
 	 */
 	public AsyncSupportConfigurer registerCallableInterceptors(CallableProcessingInterceptor... interceptors) {
@@ -93,6 +80,7 @@ public class AsyncSupportConfigurer {
 	/**
 	 * Configure lifecycle interceptors with callbacks around concurrent request
 	 * execution that starts when a controller returns a {@link DeferredResult}.
+	 *
 	 * @param interceptors the interceptors to register
 	 */
 	public AsyncSupportConfigurer registerDeferredResultInterceptors(

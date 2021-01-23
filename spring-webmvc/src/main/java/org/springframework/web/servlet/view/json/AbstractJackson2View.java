@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.view.json;
 
 import java.io.ByteArrayOutputStream;
@@ -155,7 +139,7 @@ public abstract class AbstractJackson2View extends AbstractView {
 
 	@Override
 	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+										   HttpServletResponse response) throws Exception {
 
 		ByteArrayOutputStream temporaryStream = null;
 		OutputStream stream;
@@ -163,8 +147,7 @@ public abstract class AbstractJackson2View extends AbstractView {
 		if (this.updateContentLength) {
 			temporaryStream = createTemporaryOutputStream();
 			stream = temporaryStream;
-		}
-		else {
+		} else {
 			stream = response.getOutputStream();
 		}
 
@@ -178,7 +161,8 @@ public abstract class AbstractJackson2View extends AbstractView {
 
 	/**
 	 * Filter and optionally wrap the model in {@link MappingJacksonValue} container.
-	 * @param model the model, as passed on to {@link #renderMergedOutputModel}
+	 *
+	 * @param model   the model, as passed on to {@link #renderMergedOutputModel}
 	 * @param request current HTTP request
 	 * @return the wrapped or unwrapped value to be rendered
 	 */
@@ -201,6 +185,7 @@ public abstract class AbstractJackson2View extends AbstractView {
 
 	/**
 	 * Write the actual JSON content to the stream.
+	 *
 	 * @param stream the output stream to use
 	 * @param object the value to be rendered, as returned from {@link #filterModel}
 	 * @throws IOException if writing failed
@@ -241,6 +226,7 @@ public abstract class AbstractJackson2View extends AbstractView {
 	/**
 	 * Filter out undesired attributes from the given model.
 	 * The return value can be either another {@link Map} or a single value object.
+	 *
 	 * @param model the model, as passed on to {@link #renderMergedOutputModel}
 	 * @return the value to be rendered
 	 */
@@ -248,16 +234,18 @@ public abstract class AbstractJackson2View extends AbstractView {
 
 	/**
 	 * Write a prefix before the main content.
+	 *
 	 * @param generator the generator to use for writing content.
-	 * @param object the object to write to the output message.
+	 * @param object    the object to write to the output message.
 	 */
 	protected void writePrefix(JsonGenerator generator, Object object) throws IOException {
 	}
 
 	/**
 	 * Write a suffix after the main content.
+	 *
 	 * @param generator the generator to use for writing content.
-	 * @param object the object to write to the output message.
+	 * @param object    the object to write to the output message.
 	 */
 	protected void writeSuffix(JsonGenerator generator, Object object) throws IOException {
 	}

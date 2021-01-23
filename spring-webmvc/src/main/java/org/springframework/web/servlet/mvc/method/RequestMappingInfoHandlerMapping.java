@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.mvc.method;
 
 import java.lang.reflect.Method;
@@ -70,8 +54,7 @@ public abstract class RequestMappingInfoHandlerMapping extends AbstractHandlerMe
 	static {
 		try {
 			HTTP_OPTIONS_HANDLE_METHOD = HttpOptionsHandler.class.getMethod("handle");
-		}
-		catch (NoSuchMethodException ex) {
+		} catch (NoSuchMethodException ex) {
 			// Should never happen
 			throw new IllegalStateException("Failed to retrieve internal handler method for HTTP OPTIONS", ex);
 		}
@@ -101,6 +84,7 @@ public abstract class RequestMappingInfoHandlerMapping extends AbstractHandlerMe
 	 * Check if the given RequestMappingInfo matches the current request and
 	 * return a (potentially new) instance with conditions that match the
 	 * current request -- for example with a subset of URL patterns.
+	 *
 	 * @return an info in case of a match; or {@code null} otherwise.
 	 */
 	@Override
@@ -121,14 +105,14 @@ public abstract class RequestMappingInfoHandlerMapping extends AbstractHandlerMe
 		request.removeAttribute(PRODUCIBLE_MEDIA_TYPES_ATTRIBUTE);
 		try {
 			return super.getHandlerInternal(request);
-		}
-		finally {
+		} finally {
 			ProducesRequestCondition.clearMediaTypesAttribute(request);
 		}
 	}
 
 	/**
 	 * Expose URI template variables, matrix variables, and producible media types in the request.
+	 *
 	 * @see HandlerMapping#URI_TEMPLATE_VARIABLES_ATTRIBUTE
 	 * @see HandlerMapping#MATRIX_VARIABLES_ATTRIBUTE
 	 * @see HandlerMapping#PRODUCIBLE_MEDIA_TYPES_ATTRIBUTE
@@ -140,8 +124,7 @@ public abstract class RequestMappingInfoHandlerMapping extends AbstractHandlerMe
 		RequestCondition<?> condition = info.getActivePatternsCondition();
 		if (condition instanceof PathPatternsRequestCondition) {
 			extractMatchDetails((PathPatternsRequestCondition) condition, lookupPath, request);
-		}
-		else {
+		} else {
 			extractMatchDetails((PatternsRequestCondition) condition, lookupPath, request);
 		}
 
@@ -159,8 +142,7 @@ public abstract class RequestMappingInfoHandlerMapping extends AbstractHandlerMe
 		if (condition.isEmptyPathMapping()) {
 			bestPattern = condition.getFirstPattern();
 			uriVariables = Collections.emptyMap();
-		}
-		else {
+		} else {
 			PathContainer path = ServletRequestPathUtils.getParsedRequestPath(request).pathWithinApplication();
 			bestPattern = condition.getFirstPattern();
 			PathPattern.PathMatchInfo result = bestPattern.matchAndExtract(path);
@@ -181,8 +163,7 @@ public abstract class RequestMappingInfoHandlerMapping extends AbstractHandlerMe
 		if (condition.isEmptyPathMapping()) {
 			bestPattern = lookupPath;
 			uriVariables = Collections.emptyMap();
-		}
-		else {
+		} else {
 			bestPattern = condition.getPatterns().iterator().next();
 			uriVariables = getPathMatcher().extractUriTemplateVariables(bestPattern, lookupPath);
 			if (!getUrlPathHelper().shouldRemoveSemicolonContent()) {
@@ -213,8 +194,7 @@ public abstract class RequestMappingInfoHandlerMapping extends AbstractHandlerMe
 			String matrixVariables;
 			if (semicolonIndex == -1 || semicolonIndex == 0 || equalsIndex < semicolonIndex) {
 				matrixVariables = uriVarValue;
-			}
-			else {
+			} else {
 				matrixVariables = uriVarValue.substring(semicolonIndex + 1);
 			}
 
@@ -227,10 +207,11 @@ public abstract class RequestMappingInfoHandlerMapping extends AbstractHandlerMe
 	/**
 	 * Iterate all RequestMappingInfo's once again, look if any match by URL at
 	 * least and raise exceptions according to what doesn't match.
+	 *
 	 * @throws HttpRequestMethodNotSupportedException if there are matches by URL
-	 * but not by HTTP method
-	 * @throws HttpMediaTypeNotAcceptableException if there are matches by URL
-	 * but not by consumable/producible media types
+	 *                                                but not by HTTP method
+	 * @throws HttpMediaTypeNotAcceptableException    if there are matches by URL
+	 *                                                but not by consumable/producible media types
 	 */
 	@Override
 	protected HandlerMethod handleNoMatch(
@@ -256,8 +237,7 @@ public abstract class RequestMappingInfoHandlerMapping extends AbstractHandlerMe
 			if (StringUtils.hasLength(request.getContentType())) {
 				try {
 					contentType = MediaType.parseMediaType(request.getContentType());
-				}
-				catch (InvalidMediaTypeException ex) {
+				} catch (InvalidMediaTypeException ex) {
 					throw new HttpMediaTypeNotSupportedException(ex.getMessage());
 				}
 			}
@@ -429,7 +409,8 @@ public abstract class RequestMappingInfoHandlerMapping extends AbstractHandlerMe
 
 			/**
 			 * Create a new {@link PartialMatch} instance.
-			 * @param info the RequestMappingInfo that matches the URL path.
+			 *
+			 * @param info    the RequestMappingInfo that matches the URL path.
 			 * @param request the current request
 			 */
 			public PartialMatch(RequestMappingInfo info, HttpServletRequest request) {
@@ -487,8 +468,7 @@ public abstract class RequestMappingInfoHandlerMapping extends AbstractHandlerMe
 						result.add(method);
 					}
 				}
-			}
-			else {
+			} else {
 				for (String method : declaredMethods) {
 					HttpMethod httpMethod = HttpMethod.valueOf(method);
 					result.add(httpMethod);

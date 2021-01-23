@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet;
 
 import java.util.ArrayList;
@@ -35,8 +19,8 @@ import org.springframework.util.CollectionUtils;
  * Returned by HandlerMapping's {@link HandlerMapping#getHandler} method.
  *
  * @author Juergen Hoeller
- * @since 20.06.2003
  * @see HandlerInterceptor
+ * @since 20.06.2003
  */
 public class HandlerExecutionChain {
 
@@ -51,6 +35,7 @@ public class HandlerExecutionChain {
 
 	/**
 	 * Create a new HandlerExecutionChain.
+	 *
 	 * @param handler the handler object to execute
 	 */
 	public HandlerExecutionChain(Object handler) {
@@ -59,9 +44,10 @@ public class HandlerExecutionChain {
 
 	/**
 	 * Create a new HandlerExecutionChain.
-	 * @param handler the handler object to execute
+	 *
+	 * @param handler      the handler object to execute
 	 * @param interceptors the array of interceptors to apply
-	 * (in the given order) before the handler itself executes
+	 *                     (in the given order) before the handler itself executes
 	 */
 	public HandlerExecutionChain(Object handler, @Nullable HandlerInterceptor... interceptors) {
 		this(handler, (interceptors != null ? Arrays.asList(interceptors) : Collections.emptyList()));
@@ -69,9 +55,10 @@ public class HandlerExecutionChain {
 
 	/**
 	 * Create a new HandlerExecutionChain.
-	 * @param handler the handler object to execute
+	 *
+	 * @param handler         the handler object to execute
 	 * @param interceptorList the list of interceptors to apply
-	 * (in the given order) before the handler itself executes
+	 *                        (in the given order) before the handler itself executes
 	 * @since 5.3
 	 */
 	public HandlerExecutionChain(Object handler, List<HandlerInterceptor> interceptorList) {
@@ -79,8 +66,7 @@ public class HandlerExecutionChain {
 			HandlerExecutionChain originalChain = (HandlerExecutionChain) handler;
 			this.handler = originalChain.getHandler();
 			this.interceptorList.addAll(originalChain.interceptorList);
-		}
-		else {
+		} else {
 			this.handler = handler;
 		}
 		this.interceptorList.addAll(interceptorList);
@@ -103,6 +89,7 @@ public class HandlerExecutionChain {
 
 	/**
 	 * Add the given interceptor at the specified index of this chain.
+	 *
 	 * @since 5.2
 	 */
 	public void addInterceptor(int index, HandlerInterceptor interceptor) {
@@ -118,6 +105,7 @@ public class HandlerExecutionChain {
 
 	/**
 	 * Return the array of interceptors to apply (in the given order).
+	 *
 	 * @return the array of HandlerInterceptors instances (may be {@code null})
 	 */
 	@Nullable
@@ -127,6 +115,7 @@ public class HandlerExecutionChain {
 
 	/**
 	 * Return the list of interceptors to apply (in the given order).
+	 *
 	 * @return the list of HandlerInterceptors instances (potentially empty)
 	 * @since 5.3
 	 */
@@ -138,6 +127,7 @@ public class HandlerExecutionChain {
 
 	/**
 	 * Apply preHandle methods of registered interceptors.
+	 *
 	 * @return {@code true} if the execution chain should proceed with the
 	 * next interceptor or the handler itself. Else, DispatcherServlet assumes
 	 * that this interceptor has already dealt with the response itself.
@@ -176,8 +166,7 @@ public class HandlerExecutionChain {
 			HandlerInterceptor interceptor = this.interceptorList.get(i);
 			try {
 				interceptor.afterCompletion(request, response, this.handler, ex);
-			}
-			catch (Throwable ex2) {
+			} catch (Throwable ex2) {
 				logger.error("HandlerInterceptor.afterCompletion threw exception", ex2);
 			}
 		}
@@ -193,8 +182,7 @@ public class HandlerExecutionChain {
 				try {
 					AsyncHandlerInterceptor asyncInterceptor = (AsyncHandlerInterceptor) interceptor;
 					asyncInterceptor.afterConcurrentHandlingStarted(request, response, this.handler);
-				}
-				catch (Throwable ex) {
+				} catch (Throwable ex) {
 					if (logger.isErrorEnabled()) {
 						logger.error("Interceptor [" + interceptor + "] failed in afterConcurrentHandlingStarted", ex);
 					}

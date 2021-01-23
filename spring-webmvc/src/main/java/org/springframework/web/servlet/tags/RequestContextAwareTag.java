@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.tags;
 
 import javax.servlet.jsp.JspException;
@@ -58,7 +42,9 @@ public abstract class RequestContextAwareTag extends TagSupport implements TryCa
 			"org.springframework.web.servlet.tags.REQUEST_CONTEXT";
 
 
-	/** Logger available to subclasses. */
+	/**
+	 * Logger available to subclasses.
+	 */
 	protected final Log logger = LogFactory.getLog(getClass());
 
 
@@ -69,6 +55,7 @@ public abstract class RequestContextAwareTag extends TagSupport implements TryCa
 	/**
 	 * Create and expose the current RequestContext.
 	 * Delegates to {@link #doStartTagInternal()} for actual work.
+	 *
 	 * @see #REQUEST_CONTEXT_PAGE_ATTRIBUTE
 	 * @see org.springframework.web.servlet.support.JspAwareRequestContext
 	 */
@@ -81,12 +68,10 @@ public abstract class RequestContextAwareTag extends TagSupport implements TryCa
 				this.pageContext.setAttribute(REQUEST_CONTEXT_PAGE_ATTRIBUTE, this.requestContext);
 			}
 			return doStartTagInternal();
-		}
-		catch (JspException | RuntimeException ex) {
+		} catch (JspException | RuntimeException ex) {
 			logger.error(ex.getMessage(), ex);
 			throw ex;
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			logger.error(ex.getMessage(), ex);
 			throw new JspTagException(ex.getMessage());
 		}
@@ -102,9 +87,10 @@ public abstract class RequestContextAwareTag extends TagSupport implements TryCa
 
 	/**
 	 * Called by doStartTag to perform the actual work.
+	 *
 	 * @return same as TagSupport.doStartTag
 	 * @throws Exception any exception, any checked one other than
-	 * a JspException gets wrapped in a JspException by doStartTag
+	 *                   a JspException gets wrapped in a JspException by doStartTag
 	 * @see javax.servlet.jsp.tagext.TagSupport#doStartTag
 	 */
 	protected abstract int doStartTagInternal() throws Exception;

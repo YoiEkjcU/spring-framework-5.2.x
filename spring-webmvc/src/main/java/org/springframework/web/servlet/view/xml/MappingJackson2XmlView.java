@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.view.xml;
 
 import java.util.Map;
@@ -41,8 +25,8 @@ import org.springframework.web.servlet.view.json.AbstractJackson2View;
  * <p>Compatible with Jackson 2.6 and higher, as of Spring 4.3.
  *
  * @author Sebastien Deleuze
- * @since 4.1
  * @see org.springframework.web.servlet.view.json.MappingJackson2JsonView
+ * @since 4.1
  */
 public class MappingJackson2XmlView extends AbstractJackson2View {
 
@@ -68,6 +52,7 @@ public class MappingJackson2XmlView extends AbstractJackson2View {
 	/**
 	 * Construct a new {@code MappingJackson2XmlView} using the provided {@link XmlMapper}
 	 * and setting the content type to {@code application/xml}.
+	 *
 	 * @since 4.2.1
 	 */
 	public MappingJackson2XmlView(XmlMapper xmlMapper) {
@@ -89,8 +74,7 @@ public class MappingJackson2XmlView extends AbstractJackson2View {
 				throw new IllegalStateException(
 						"Model contains no object with key [" + this.modelKey + "]");
 			}
-		}
-		else {
+		} else {
 			for (Map.Entry<String, Object> entry : model.entrySet()) {
 				if (!(entry.getValue() instanceof BindingResult) && !entry.getKey().equals(JsonView.class.getName())) {
 					if (value != null) {

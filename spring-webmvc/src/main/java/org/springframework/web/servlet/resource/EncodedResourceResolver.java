@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.resource;
 
 import java.io.File;
@@ -82,6 +66,7 @@ public class EncodedResourceResolver extends AbstractResourceResolver {
 	 * customizations to the same list in {@link CachingResourceResolver} to
 	 * ensure encoded variants of a resource are cached under separate keys.
 	 * <p>By default this property is set to {@literal ["br", "gzip"]}.
+	 *
 	 * @param codings one or more supported content codings
 	 */
 	public void setContentCodings(List<String> codings) {
@@ -102,6 +87,7 @@ public class EncodedResourceResolver extends AbstractResourceResolver {
 	 * will be prepended in front of the extension value if not present.
 	 * <p>By default this is configured with {@literal ["br" -> ".br"]} and
 	 * {@literal ["gzip" -> ".gz"]}.
+	 *
 	 * @param extensions the extensions to use.
 	 * @see #registerExtension(String, String)
 	 */
@@ -118,7 +104,8 @@ public class EncodedResourceResolver extends AbstractResourceResolver {
 
 	/**
 	 * Java config friendly alternative to {@link #setExtensions(Map)}.
-	 * @param coding the content coding
+	 *
+	 * @param coding    the content coding
 	 * @param extension the associated file extension
 	 */
 	public void registerExtension(String coding, String extension) {
@@ -128,7 +115,7 @@ public class EncodedResourceResolver extends AbstractResourceResolver {
 
 	@Override
 	protected Resource resolveResourceInternal(@Nullable HttpServletRequest request, String requestPath,
-			List<? extends Resource> locations, ResourceResolverChain chain) {
+											   List<? extends Resource> locations, ResourceResolverChain chain) {
 
 		Resource resource = chain.resolveResource(request, requestPath, locations);
 		if (resource == null || request == null) {
@@ -148,8 +135,7 @@ public class EncodedResourceResolver extends AbstractResourceResolver {
 					if (encoded.exists()) {
 						return encoded;
 					}
-				}
-				catch (IOException ex) {
+				} catch (IOException ex) {
 					if (logger.isTraceEnabled()) {
 						logger.trace("No " + coding + " resource for [" + resource.getFilename() + "]", ex);
 					}
@@ -176,7 +162,7 @@ public class EncodedResourceResolver extends AbstractResourceResolver {
 
 	@Override
 	protected String resolveUrlPathInternal(String resourceUrlPath,
-			List<? extends Resource> locations, ResourceResolverChain chain) {
+											List<? extends Resource> locations, ResourceResolverChain chain) {
 
 		return chain.resolveUrlPath(resourceUrlPath, locations);
 	}
@@ -271,8 +257,7 @@ public class EncodedResourceResolver extends AbstractResourceResolver {
 			HttpHeaders headers;
 			if (this.original instanceof HttpResource) {
 				headers = ((HttpResource) this.original).getResponseHeaders();
-			}
-			else {
+			} else {
 				headers = new HttpHeaders();
 			}
 			headers.add(HttpHeaders.CONTENT_ENCODING, this.coding);

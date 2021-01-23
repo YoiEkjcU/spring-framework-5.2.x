@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.config.annotation;
 
 import java.util.ArrayList;
@@ -57,8 +41,8 @@ import org.springframework.web.util.pattern.PathPattern;
  * period for served resources.
  *
  * @author Rossen Stoyanchev
- * @since 3.1
  * @see DefaultServletHandlerConfigurer
+ * @since 3.1
  */
 public class ResourceHandlerRegistry {
 
@@ -79,8 +63,9 @@ public class ResourceHandlerRegistry {
 
 	/**
 	 * Create a new resource handler registry for the given application context.
+	 *
 	 * @param applicationContext the Spring application context
-	 * @param servletContext the corresponding Servlet context
+	 * @param servletContext     the corresponding Servlet context
 	 */
 	public ResourceHandlerRegistry(ApplicationContext applicationContext, ServletContext servletContext) {
 		this(applicationContext, servletContext, null);
@@ -88,13 +73,14 @@ public class ResourceHandlerRegistry {
 
 	/**
 	 * Create a new resource handler registry for the given application context.
-	 * @param applicationContext the Spring application context
-	 * @param servletContext the corresponding Servlet context
+	 *
+	 * @param applicationContext        the Spring application context
+	 * @param servletContext            the corresponding Servlet context
 	 * @param contentNegotiationManager the content negotiation manager to use
 	 * @since 4.3
 	 */
 	public ResourceHandlerRegistry(ApplicationContext applicationContext, ServletContext servletContext,
-			@Nullable ContentNegotiationManager contentNegotiationManager) {
+								   @Nullable ContentNegotiationManager contentNegotiationManager) {
 
 		this(applicationContext, servletContext, contentNegotiationManager, null);
 	}
@@ -103,10 +89,11 @@ public class ResourceHandlerRegistry {
 	 * A variant of
 	 * {@link #ResourceHandlerRegistry(ApplicationContext, ServletContext, ContentNegotiationManager)}
 	 * that also accepts the {@link UrlPathHelper} used for mapping requests to static resources.
+	 *
 	 * @since 4.3.13
 	 */
 	public ResourceHandlerRegistry(ApplicationContext applicationContext, ServletContext servletContext,
-			@Nullable ContentNegotiationManager contentNegotiationManager, @Nullable UrlPathHelper pathHelper) {
+								   @Nullable ContentNegotiationManager contentNegotiationManager, @Nullable UrlPathHelper pathHelper) {
 
 		Assert.notNull(applicationContext, "ApplicationContext is required");
 		this.applicationContext = applicationContext;
@@ -179,8 +166,7 @@ public class ResourceHandlerRegistry {
 				handler.setApplicationContext(this.applicationContext);
 				try {
 					handler.afterPropertiesSet();
-				}
-				catch (Throwable ex) {
+				} catch (Throwable ex) {
 					throw new BeanInitializationException("Failed to init ResourceHttpRequestHandler", ex);
 				}
 				urlMap.put(pathPattern, handler);

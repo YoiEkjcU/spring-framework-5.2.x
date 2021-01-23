@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.mvc.method.annotation;
 
 import java.util.List;
@@ -81,7 +65,7 @@ public class RequestPartMethodArgumentResolver extends AbstractMessageConverterM
 	 * {@code ResponseBodyAdvice}.
 	 */
 	public RequestPartMethodArgumentResolver(List<HttpMessageConverter<?>> messageConverters,
-			List<Object> requestResponseBodyAdvice) {
+											 List<Object> requestResponseBodyAdvice) {
 
 		super(messageConverters, requestResponseBodyAdvice);
 	}
@@ -101,8 +85,7 @@ public class RequestPartMethodArgumentResolver extends AbstractMessageConverterM
 	public boolean supportsParameter(MethodParameter parameter) {
 		if (parameter.hasParameterAnnotation(RequestPart.class)) {
 			return true;
-		}
-		else {
+		} else {
 			if (parameter.hasParameterAnnotation(RequestParam.class)) {
 				return false;
 			}
@@ -113,7 +96,7 @@ public class RequestPartMethodArgumentResolver extends AbstractMessageConverterM
 	@Override
 	@Nullable
 	public Object resolveArgument(MethodParameter parameter, @Nullable ModelAndViewContainer mavContainer,
-			NativeWebRequest request, @Nullable WebDataBinderFactory binderFactory) throws Exception {
+								  NativeWebRequest request, @Nullable WebDataBinderFactory binderFactory) throws Exception {
 
 		HttpServletRequest servletRequest = request.getNativeRequest(HttpServletRequest.class);
 		Assert.state(servletRequest != null, "No HttpServletRequest");
@@ -128,8 +111,7 @@ public class RequestPartMethodArgumentResolver extends AbstractMessageConverterM
 		Object mpArg = MultipartResolutionDelegate.resolveMultipartArgument(name, parameter, servletRequest);
 		if (mpArg != MultipartResolutionDelegate.UNRESOLVABLE) {
 			arg = mpArg;
-		}
-		else {
+		} else {
 			try {
 				HttpInputMessage inputMessage = new RequestPartServletServerHttpRequest(servletRequest, name);
 				arg = readWithMessageConverters(inputMessage, parameter, parameter.getNestedGenericParameterType());
@@ -145,8 +127,7 @@ public class RequestPartMethodArgumentResolver extends AbstractMessageConverterM
 						mavContainer.addAttribute(BindingResult.MODEL_KEY_PREFIX + name, binder.getBindingResult());
 					}
 				}
-			}
-			catch (MissingServletRequestPartException | MultipartException ex) {
+			} catch (MissingServletRequestPartException | MultipartException ex) {
 				if (isRequired) {
 					throw ex;
 				}
@@ -156,8 +137,7 @@ public class RequestPartMethodArgumentResolver extends AbstractMessageConverterM
 		if (arg == null && isRequired) {
 			if (!MultipartResolutionDelegate.isMultipartRequest(servletRequest)) {
 				throw new MultipartException("Current request is not a multipart request");
-			}
-			else {
+			} else {
 				throw new MissingServletRequestPartException(name);
 			}
 		}

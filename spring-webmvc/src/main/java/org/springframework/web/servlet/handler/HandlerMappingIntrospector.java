@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.handler;
 
 import java.io.IOException;
@@ -93,6 +77,7 @@ public class HandlerMappingIntrospector
 	 * Constructor that detects the configured {@code HandlerMapping}s in the
 	 * given {@code ApplicationContext} or falls back on
 	 * "DispatcherServlet.properties" like the {@code DispatcherServlet}.
+	 *
 	 * @deprecated as of 4.3.12, in favor of {@link #setApplicationContext}
 	 */
 	@Deprecated
@@ -130,6 +115,7 @@ public class HandlerMappingIntrospector
 	 * request-matching criteria.
 	 * <p>If the matching HandlerMapping is not an instance of
 	 * {@link MatchableHandlerMapping}, an IllegalStateException is raised.
+	 *
 	 * @param request the current request
 	 * @return the resolved matcher, or {@code null}
 	 * @throws Exception if any of the HandlerMapping's raise an exception
@@ -162,8 +148,7 @@ public class HandlerMappingIntrospector
 			HandlerExecutionChain handler = null;
 			try {
 				handler = handlerMapping.getHandler(wrapper);
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				// Ignore
 			}
 			if (handler == null) {
@@ -199,8 +184,7 @@ public class HandlerMappingIntrospector
 		try {
 			Resource resource = new ClassPathResource(path, DispatcherServlet.class);
 			props = PropertiesLoaderUtils.loadProperties(resource);
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			throw new IllegalStateException("Could not load '" + path + "': " + ex.getMessage());
 		}
 		String value = props.getProperty(HandlerMapping.class.getName());
@@ -211,8 +195,7 @@ public class HandlerMappingIntrospector
 				Class<?> clazz = ClassUtils.forName(name, DispatcherServlet.class.getClassLoader());
 				Object mapping = applicationContext.getAutowireCapableBeanFactory().createBean(clazz);
 				result.add((HandlerMapping) mapping);
-			}
-			catch (ClassNotFoundException ex) {
+			} catch (ClassNotFoundException ex) {
 				throw new IllegalStateException("Could not find default HandlerMapping [" + name + "]");
 			}
 		}

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.mvc.method.annotation;
 
 import org.springframework.core.MethodParameter;
@@ -33,16 +17,17 @@ import org.springframework.lang.Nullable;
  * or more likely annotated with {@code @ControllerAdvice} in which case they
  * will be auto-detected by both.
  *
+ * @param <T> the body type
  * @author Rossen Stoyanchev
  * @since 4.1
- * @param <T> the body type
  */
 public interface ResponseBodyAdvice<T> {
 
 	/**
 	 * Whether this component supports the given controller method return type
 	 * and the selected {@code HttpMessageConverter} type.
-	 * @param returnType the return type
+	 *
+	 * @param returnType    the return type
 	 * @param converterType the selected converter type
 	 * @return {@code true} if {@link #beforeBodyWrite} should be invoked;
 	 * {@code false} otherwise
@@ -52,17 +37,18 @@ public interface ResponseBodyAdvice<T> {
 	/**
 	 * Invoked after an {@code HttpMessageConverter} is selected and just before
 	 * its write method is invoked.
-	 * @param body the body to be written
-	 * @param returnType the return type of the controller method
-	 * @param selectedContentType the content type selected through content negotiation
+	 *
+	 * @param body                  the body to be written
+	 * @param returnType            the return type of the controller method
+	 * @param selectedContentType   the content type selected through content negotiation
 	 * @param selectedConverterType the converter type selected to write to the response
-	 * @param request the current request
-	 * @param response the current response
+	 * @param request               the current request
+	 * @param response              the current response
 	 * @return the body that was passed in or a modified (possibly new) instance
 	 */
 	@Nullable
 	T beforeBodyWrite(@Nullable T body, MethodParameter returnType, MediaType selectedContentType,
-			Class<? extends HttpMessageConverter<?>> selectedConverterType,
-			ServerHttpRequest request, ServerHttpResponse response);
+					  Class<? extends HttpMessageConverter<?>> selectedConverterType,
+					  ServerHttpRequest request, ServerHttpResponse response);
 
 }

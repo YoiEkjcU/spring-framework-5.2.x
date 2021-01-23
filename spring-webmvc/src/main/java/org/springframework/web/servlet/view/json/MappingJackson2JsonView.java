@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.view.json;
 
 import java.io.IOException;
@@ -81,6 +65,7 @@ public class MappingJackson2JsonView extends AbstractJackson2View {
 	/**
 	 * Construct a new {@code MappingJackson2JsonView} using the provided
 	 * {@link ObjectMapper} and setting the content type to {@code application/json}.
+	 *
 	 * @since 4.2.1
 	 */
 	public MappingJackson2JsonView(ObjectMapper objectMapper) {
@@ -91,6 +76,7 @@ public class MappingJackson2JsonView extends AbstractJackson2View {
 	/**
 	 * Specify a custom prefix to use for this view's JSON output.
 	 * Default is none.
+	 *
 	 * @see #setPrefixJson
 	 */
 	public void setJsonPrefix(String jsonPrefix) {
@@ -103,6 +89,7 @@ public class MappingJackson2JsonView extends AbstractJackson2View {
 	 * <p>Prefixing the JSON string in this manner is used to help prevent JSON Hijacking.
 	 * The prefix renders the string syntactically invalid as a script so that it cannot be hijacked.
 	 * This prefix should be stripped before parsing the string as JSON.
+	 *
 	 * @see #setJsonPrefix
 	 */
 	public void setPrefixJson(boolean prefixJson) {
@@ -150,6 +137,7 @@ public class MappingJackson2JsonView extends AbstractJackson2View {
 	 * The return value can be either another {@link Map} or a single value object.
 	 * <p>The default implementation removes {@link BindingResult} instances and entries
 	 * not included in the {@link #setModelKeys modelKeys} property.
+	 *
 	 * @param model the model, as passed on to {@link #renderMergedOutputModel}
 	 * @return the value to be rendered
 	 */

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.function;
 
 import java.util.function.BiFunction;
@@ -25,11 +9,11 @@ import org.springframework.util.Assert;
 /**
  * Represents a function that filters a {@linkplain HandlerFunction handler function}.
  *
- * @author Arjen Poutsma
- * @since 5.2
  * @param <T> the type of the {@linkplain HandlerFunction handler function} to filter
  * @param <R> the type of the response of the function
+ * @author Arjen Poutsma
  * @see RouterFunction#filter(HandlerFilterFunction)
+ * @since 5.2
  */
 @FunctionalInterface
 public interface HandlerFilterFunction<T extends ServerResponse, R extends ServerResponse> {
@@ -39,8 +23,9 @@ public interface HandlerFilterFunction<T extends ServerResponse, R extends Serve
 	 * {@linkplain HandlerFunction handler function} represents the next entity in the chain,
 	 * and can be {@linkplain HandlerFunction#handle(ServerRequest) invoked} in order to
 	 * proceed to this entity, or not invoked to block the chain.
+	 *
 	 * @param request the request
-	 * @param next the next handler or filter function in the chain
+	 * @param next    the next handler or filter function in the chain
 	 * @return the filtered response
 	 */
 	R filter(ServerRequest request, HandlerFunction<T> next) throws Exception;
@@ -48,6 +33,7 @@ public interface HandlerFilterFunction<T extends ServerResponse, R extends Serve
 	/**
 	 * Return a composed filter function that first applies this filter, and then applies the
 	 * {@code after} filter.
+	 *
 	 * @param after the filter to apply after this filter is applied
 	 * @return a composed filter that first applies this function and then applies the
 	 * {@code after} function
@@ -62,6 +48,7 @@ public interface HandlerFilterFunction<T extends ServerResponse, R extends Serve
 
 	/**
 	 * Apply this filter to the given handler function, resulting in a filtered handler function.
+	 *
 	 * @param handler the handler function to filter
 	 * @return the filtered handler function
 	 */
@@ -73,6 +60,7 @@ public interface HandlerFilterFunction<T extends ServerResponse, R extends Serve
 	/**
 	 * Adapt the given request processor function to a filter function that only operates
 	 * on the {@code ServerRequest}.
+	 *
 	 * @param requestProcessor the request processor
 	 * @return the filter adaptation of the request processor
 	 */
@@ -86,6 +74,7 @@ public interface HandlerFilterFunction<T extends ServerResponse, R extends Serve
 	/**
 	 * Adapt the given response processor function to a filter function that only operates
 	 * on the {@code ServerResponse}.
+	 *
 	 * @param responseProcessor the response processor
 	 * @return the filter adaptation of the request processor
 	 */
@@ -99,7 +88,8 @@ public interface HandlerFilterFunction<T extends ServerResponse, R extends Serve
 	/**
 	 * Adapt the given predicate and response provider function to a filter function that returns
 	 * a {@code ServerResponse} on a given exception.
-	 * @param predicate the predicate to match an exception
+	 *
+	 * @param predicate    the predicate to match an exception
 	 * @param errorHandler the response provider
 	 * @return the filter adaption of the error handler
 	 */
@@ -117,12 +107,10 @@ public interface HandlerFilterFunction<T extends ServerResponse, R extends Serve
 							.addErrorHandler(predicate, errorHandler);
 				}
 				return t;
-			}
-			catch (Throwable throwable) {
+			} catch (Throwable throwable) {
 				if (predicate.test(throwable)) {
 					return errorHandler.apply(throwable, request);
-				}
-				else {
+				} else {
 					throw throwable;
 				}
 			}

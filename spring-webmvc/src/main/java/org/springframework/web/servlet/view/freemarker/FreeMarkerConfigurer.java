@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.view.freemarker;
 
 import java.io.IOException;
@@ -44,7 +28,7 @@ import org.springframework.web.context.ServletContextAware;
  * &lt;bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer"&gt;
  *   &lt;property name="templateLoaderPath"&gt;&lt;value&gt;/WEB-INF/freemarker/&lt;/value>&lt;/property&gt;
  * &lt;/bean&gt;</pre>
- *
+ * <p>
  * This bean must be included in the application context of any application
  * using Spring's FreeMarkerView for web MVC. It exists purely to configure FreeMarker.
  * It is not meant to be referenced by application components but just internally
@@ -64,18 +48,18 @@ import org.springframework.web.context.ServletContextAware;
  * &lt;#import "/spring.ftl" as spring/&gt;
  * &lt;@spring.bind "person.age"/&gt;
  * age is ${spring.status.value}</pre>
- *
+ * <p>
  * Note: Spring's FreeMarker support requires FreeMarker 2.3 or higher.
  *
  * @author Darren Davison
  * @author Rob Harrop
- * @since 03.03.2004
  * @see #setConfigLocation
  * @see #setFreemarkerSettings
  * @see #setTemplateLoaderPath
  * @see #setConfiguration
  * @see org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean
  * @see FreeMarkerView
+ * @since 03.03.2004
  */
 public class FreeMarkerConfigurer extends FreeMarkerConfigurationFactory
 		implements FreeMarkerConfig, InitializingBean, ResourceLoaderAware, ServletContextAware {
@@ -92,6 +76,7 @@ public class FreeMarkerConfigurer extends FreeMarkerConfigurationFactory
 	 * shared one for web and email usage, set up via FreeMarkerConfigurationFactoryBean.
 	 * If this is not set, FreeMarkerConfigurationFactory's properties (inherited by
 	 * this class) have to be specified.
+	 *
 	 * @see org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean
 	 */
 	public void setConfiguration(Configuration configuration) {
@@ -111,6 +96,7 @@ public class FreeMarkerConfigurer extends FreeMarkerConfigurationFactory
 	 * Initialize FreeMarkerConfigurationFactory's Configuration
 	 * if not overridden by a preconfigured FreeMarker Configuration.
 	 * <p>Sets up a ClassTemplateLoader to use for loading Spring macros.
+	 *
 	 * @see #createConfiguration
 	 * @see #setConfiguration
 	 */

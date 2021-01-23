@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.i18n;
 
 import java.util.Locale;
@@ -54,9 +38,9 @@ import org.springframework.web.util.WebUtils;
  * against the current {@code HttpServletRequest}.
  *
  * @author Juergen Hoeller
- * @since 27.02.2003
  * @see #setDefaultLocale
  * @see #setDefaultTimeZone
+ * @since 27.02.2003
  */
 public class SessionLocaleResolver extends AbstractLocaleContextResolver {
 
@@ -65,6 +49,7 @@ public class SessionLocaleResolver extends AbstractLocaleContextResolver {
 	 * Only used internally by this implementation.
 	 * <p>Use {@code RequestContext(Utils).getLocale()}
 	 * to retrieve the current locale in controllers or views.
+	 *
 	 * @see org.springframework.web.servlet.support.RequestContext#getLocale
 	 * @see org.springframework.web.servlet.support.RequestContextUtils#getLocale
 	 */
@@ -75,6 +60,7 @@ public class SessionLocaleResolver extends AbstractLocaleContextResolver {
 	 * Only used internally by this implementation.
 	 * <p>Use {@code RequestContext(Utils).getTimeZone()}
 	 * to retrieve the current time zone in controllers or views.
+	 *
 	 * @see org.springframework.web.servlet.support.RequestContext#getTimeZone
 	 * @see org.springframework.web.servlet.support.RequestContextUtils#getTimeZone
 	 */
@@ -90,6 +76,7 @@ public class SessionLocaleResolver extends AbstractLocaleContextResolver {
 	 * Specify the name of the corresponding attribute in the {@code HttpSession},
 	 * holding the current {@link Locale} value.
 	 * <p>The default is an internal {@link #LOCALE_SESSION_ATTRIBUTE_NAME}.
+	 *
 	 * @since 4.3.8
 	 */
 	public void setLocaleAttributeName(String localeAttributeName) {
@@ -100,6 +87,7 @@ public class SessionLocaleResolver extends AbstractLocaleContextResolver {
 	 * Specify the name of the corresponding attribute in the {@code HttpSession},
 	 * holding the current {@link TimeZone} value.
 	 * <p>The default is an internal {@link #TIME_ZONE_SESSION_ATTRIBUTE_NAME}.
+	 *
 	 * @since 4.3.8
 	 */
 	public void setTimeZoneAttributeName(String timeZoneAttributeName) {
@@ -127,6 +115,7 @@ public class SessionLocaleResolver extends AbstractLocaleContextResolver {
 				}
 				return locale;
 			}
+
 			@Override
 			@Nullable
 			public TimeZone getTimeZone() {
@@ -141,7 +130,7 @@ public class SessionLocaleResolver extends AbstractLocaleContextResolver {
 
 	@Override
 	public void setLocaleContext(HttpServletRequest request, @Nullable HttpServletResponse response,
-			@Nullable LocaleContext localeContext) {
+								 @Nullable LocaleContext localeContext) {
 
 		Locale locale = null;
 		TimeZone timeZone = null;
@@ -161,6 +150,7 @@ public class SessionLocaleResolver extends AbstractLocaleContextResolver {
 	 * Called if no Locale session attribute has been found.
 	 * <p>The default implementation returns the specified default locale,
 	 * if any, else falls back to the request's accept-header locale.
+	 *
 	 * @param request the request to resolve the locale for
 	 * @return the default locale (never {@code null})
 	 * @see #setDefaultLocale
@@ -179,6 +169,7 @@ public class SessionLocaleResolver extends AbstractLocaleContextResolver {
 	 * Called if no TimeZone session attribute has been found.
 	 * <p>The default implementation returns the specified default time zone,
 	 * if any, or {@code null} otherwise.
+	 *
 	 * @param request the request to resolve the time zone for
 	 * @return the default time zone (or {@code null} if none defined)
 	 * @see #setDefaultTimeZone

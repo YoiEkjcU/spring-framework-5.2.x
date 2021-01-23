@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.function;
 
 import java.io.IOException;
@@ -54,6 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Default {@link ServerResponse.BodyBuilder} implementation.
+ *
  * @author Arjen Poutsma
  * @since 5.2
  */
@@ -231,7 +216,7 @@ class DefaultServerResponseBuilder implements ServerResponse.BodyBuilder {
 	 */
 	abstract static class AbstractServerResponse implements ServerResponse {
 
-		private static final Set<HttpMethod> SAFE_METHODS =	EnumSet.of(HttpMethod.GET, HttpMethod.HEAD);
+		private static final Set<HttpMethod> SAFE_METHODS = EnumSet.of(HttpMethod.GET, HttpMethod.HEAD);
 
 		final int statusCode;
 
@@ -252,7 +237,7 @@ class DefaultServerResponseBuilder implements ServerResponse.BodyBuilder {
 		}
 
 		protected <T extends ServerResponse> void addErrorHandler(Predicate<Throwable> predicate,
-				BiFunction<Throwable, ServerRequest, T> errorHandler) {
+																  BiFunction<Throwable, ServerRequest, T> errorHandler) {
 
 			Assert.notNull(predicate, "Predicate must not be null");
 			Assert.notNull(errorHandler, "ErrorHandler must not be null");
@@ -282,7 +267,7 @@ class DefaultServerResponseBuilder implements ServerResponse.BodyBuilder {
 
 		@Override
 		public ModelAndView writeTo(HttpServletRequest request, HttpServletResponse response,
-				Context context) throws ServletException, IOException {
+									Context context) throws ServletException, IOException {
 
 			try {
 				writeStatusAndHeaders(response);
@@ -293,12 +278,10 @@ class DefaultServerResponseBuilder implements ServerResponse.BodyBuilder {
 				if (SAFE_METHODS.contains(httpMethod) &&
 						servletWebRequest.checkNotModified(headers().getETag(), lastModified)) {
 					return null;
-				}
-				else {
+				} else {
 					return writeToInternal(request, response, context);
 				}
-			}
-			catch (Throwable throwable) {
+			} catch (Throwable throwable) {
 				return handleError(throwable, request, response, context);
 			}
 		}
@@ -335,12 +318,12 @@ class DefaultServerResponseBuilder implements ServerResponse.BodyBuilder {
 
 		@Nullable
 		protected abstract ModelAndView writeToInternal(HttpServletRequest request,
-				HttpServletResponse response, Context context)
-		throws ServletException, IOException;
+														HttpServletResponse response, Context context)
+				throws ServletException, IOException;
 
 		@Nullable
 		protected ModelAndView handleError(Throwable t, HttpServletRequest servletRequest,
-				HttpServletResponse servletResponse, Context context) {
+										   HttpServletResponse servletResponse, Context context) {
 
 			return this.errorHandlers.stream()
 					.filter(errorHandler -> errorHandler.test(t))
@@ -352,11 +335,9 @@ class DefaultServerResponseBuilder implements ServerResponse.BodyBuilder {
 						ServerResponse serverResponse = errorHandler.handle(t, serverRequest);
 						try {
 							return serverResponse.writeTo(servletRequest, servletResponse, context);
-						}
-						catch (ServletException ex) {
+						} catch (ServletException ex) {
 							throw new RuntimeException(ex);
-						}
-						catch (IOException ex) {
+						} catch (IOException ex) {
 							throw new UncheckedIOException(ex);
 						}
 					})
@@ -372,7 +353,7 @@ class DefaultServerResponseBuilder implements ServerResponse.BodyBuilder {
 					responseProvider;
 
 			public ErrorHandler(Predicate<Throwable> predicate,
-					BiFunction<Throwable, ServerRequest, T> responseProvider) {
+								BiFunction<Throwable, ServerRequest, T> responseProvider) {
 				Assert.notNull(predicate, "Predicate must not be null");
 				Assert.notNull(responseProvider, "ResponseProvider must not be null");
 				this.predicate = predicate;
@@ -398,8 +379,8 @@ class DefaultServerResponseBuilder implements ServerResponse.BodyBuilder {
 
 
 		public WriterFunctionResponse(int statusCode, HttpHeaders headers,
-				MultiValueMap<String, Cookie> cookies,
-				BiFunction<HttpServletRequest, HttpServletResponse, ModelAndView> writeFunction) {
+									  MultiValueMap<String, Cookie> cookies,
+									  BiFunction<HttpServletRequest, HttpServletResponse, ModelAndView> writeFunction) {
 			super(statusCode, headers, cookies);
 			Assert.notNull(writeFunction, "WriteFunction must not be null");
 			this.writeFunction = writeFunction;
@@ -407,13 +388,10 @@ class DefaultServerResponseBuilder implements ServerResponse.BodyBuilder {
 
 		@Override
 		protected ModelAndView writeToInternal(HttpServletRequest request,
-				HttpServletResponse response, Context context) {
+											   HttpServletResponse response, Context context) {
 			return this.writeFunction.apply(request, response);
 		}
 	}
-
-
-
 
 
 }

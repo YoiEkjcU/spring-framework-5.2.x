@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.mvc;
 
 import java.util.Map;
@@ -55,7 +39,9 @@ public class UrlFilenameViewController extends AbstractUrlViewController {
 
 	private String suffix = "";
 
-	/** Request URL path String to view name String. */
+	/**
+	 * Request URL path String to view name String.
+	 */
 	private final Map<String, String> viewNameCache = new ConcurrentHashMap<>(256);
 
 
@@ -93,6 +79,7 @@ public class UrlFilenameViewController extends AbstractUrlViewController {
 	/**
 	 * Returns view name based on the URL filename,
 	 * with prefix/suffix applied when appropriate.
+	 *
 	 * @see #extractViewNameFromUrlPath
 	 * @see #setPrefix
 	 * @see #setSuffix
@@ -106,6 +93,7 @@ public class UrlFilenameViewController extends AbstractUrlViewController {
 	/**
 	 * Extract a URL path from the given request,
 	 * suitable for view name extraction.
+	 *
 	 * @param request current HTTP request
 	 * @return the URL to use for view name extraction
 	 */
@@ -120,6 +108,7 @@ public class UrlFilenameViewController extends AbstractUrlViewController {
 	/**
 	 * Returns view name based on the URL filename,
 	 * with prefix/suffix applied when appropriate.
+	 *
 	 * @param uri the request URI; for example {@code "/index.html"}
 	 * @return the extracted URI filename; for example {@code "index"}
 	 * @see #extractViewNameFromUrlPath
@@ -131,6 +120,7 @@ public class UrlFilenameViewController extends AbstractUrlViewController {
 
 	/**
 	 * Extract the URL filename from the given request URI.
+	 *
 	 * @param uri the request URI; for example {@code "/index.html"}
 	 * @return the extracted URI filename; for example {@code "index"}
 	 */
@@ -147,6 +137,7 @@ public class UrlFilenameViewController extends AbstractUrlViewController {
 	 * <p>The default implementation simply applies prefix and suffix.
 	 * This can be overridden, for example, to manipulate upper case
 	 * / lower case, etc.
+	 *
 	 * @param viewName the original view name, as indicated by the URL path
 	 * @return the full view name to use
 	 * @see #getPrefix()

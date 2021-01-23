@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.support;
 
 import java.util.Collections;
@@ -113,8 +97,7 @@ public abstract class AbstractFlashMapManager implements FlashMapManager {
 						updateFlashMaps(allFlashMaps, request, response);
 					}
 				}
-			}
-			else {
+			} else {
 				allFlashMaps.removeAll(mapsToRemove);
 				updateFlashMaps(allFlashMaps, request, response);
 			}
@@ -138,6 +121,7 @@ public abstract class AbstractFlashMapManager implements FlashMapManager {
 
 	/**
 	 * Return a FlashMap contained in the given list that matches the request.
+	 *
 	 * @return a matching FlashMap or {@code null}
 	 */
 	@Nullable
@@ -210,8 +194,7 @@ public abstract class AbstractFlashMapManager implements FlashMapManager {
 				allFlashMaps.add(flashMap);
 				updateFlashMaps(allFlashMaps, request, response);
 			}
-		}
-		else {
+		} else {
 			List<FlashMap> allFlashMaps = retrieveFlashMaps(request);
 			allFlashMaps = (allFlashMaps != null ? allFlashMaps : new LinkedList<>());
 			allFlashMaps.add(flashMap);
@@ -234,6 +217,7 @@ public abstract class AbstractFlashMapManager implements FlashMapManager {
 
 	/**
 	 * Retrieve saved FlashMap instances from the underlying storage.
+	 *
 	 * @param request the current request
 	 * @return a List with FlashMap instances, or {@code null} if none found
 	 */
@@ -242,9 +226,10 @@ public abstract class AbstractFlashMapManager implements FlashMapManager {
 
 	/**
 	 * Update the FlashMap instances in the underlying storage.
+	 *
 	 * @param flashMaps a (potentially empty) list of FlashMap instances to save
-	 * @param request the current request
-	 * @param response the current response
+	 * @param request   the current request
+	 * @param response  the current response
 	 */
 	protected abstract void updateFlashMaps(
 			List<FlashMap> flashMaps, HttpServletRequest request, HttpServletResponse response);
@@ -255,6 +240,7 @@ public abstract class AbstractFlashMapManager implements FlashMapManager {
 	 * <p>The default implementation returns a shared static mutex.
 	 * Subclasses are encouraged to return a more specific mutex, or
 	 * {@code null} to indicate that no synchronization is necessary.
+	 *
 	 * @param request the current request
 	 * @return the mutex to use (may be {@code null} if none applicable)
 	 * @since 4.0.3

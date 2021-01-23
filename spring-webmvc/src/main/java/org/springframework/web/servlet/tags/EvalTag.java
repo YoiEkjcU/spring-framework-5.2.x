@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.tags;
 
 import java.io.IOException;
@@ -170,8 +154,7 @@ public class EvalTag extends HtmlEscapingAwareTag {
 		if (this.var != null) {
 			Object result = (this.expression != null ? this.expression.getValue(evaluationContext) : null);
 			this.pageContext.setAttribute(this.var, result, this.scope);
-		}
-		else {
+		} else {
 			try {
 				String result = (this.expression != null ?
 						this.expression.getValue(evaluationContext, String.class) : null);
@@ -179,8 +162,7 @@ public class EvalTag extends HtmlEscapingAwareTag {
 				result = htmlEscape(result);
 				result = (this.javaScriptEscape ? JavaScriptUtils.javaScriptEscape(result) : result);
 				this.pageContext.getOut().print(result);
-			}
-			catch (IOException ex) {
+			} catch (IOException ex) {
 				throw new JspException(ex);
 			}
 		}
@@ -257,8 +239,7 @@ public class EvalTag extends HtmlEscapingAwareTag {
 			}
 			try {
 				return this.variableResolver.resolveVariable(name);
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				throw new AccessException(
 						"Unexpected exception occurred accessing '" + name + "' as an implicit variable", ex);
 			}

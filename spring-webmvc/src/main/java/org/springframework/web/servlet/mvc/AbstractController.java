@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.mvc;
 
 import javax.servlet.http.HttpServletRequest;
@@ -108,9 +92,10 @@ public abstract class AbstractController extends WebContentGenerator implements 
 
 	/**
 	 * Create a new AbstractController.
+	 *
 	 * @param restrictDefaultSupportedMethods {@code true} if this
-	 * controller should support HTTP methods GET, HEAD and POST by default,
-	 * or {@code false} if it should be unrestricted
+	 *                                        controller should support HTTP methods GET, HEAD and POST by default,
+	 *                                        or {@code false} if it should be unrestricted
 	 * @since 4.3
 	 */
 	public AbstractController(boolean restrictDefaultSupportedMethods) {
@@ -133,6 +118,7 @@ public abstract class AbstractController extends WebContentGenerator implements 
 	 * as well, since it will always be the same object reference for the
 	 * same active logical session. However, this is not guaranteed across
 	 * different servlet containers; the only 100% safe way is a session mutex.
+	 *
 	 * @see AbstractController#handleRequestInternal
 	 * @see org.springframework.web.util.HttpSessionMutexListener
 	 * @see org.springframework.web.util.WebUtils#getSessionMutex(javax.servlet.http.HttpSession)
@@ -180,6 +166,7 @@ public abstract class AbstractController extends WebContentGenerator implements 
 	/**
 	 * Template method. Subclasses must implement this.
 	 * The contract is the same as for {@code handleRequest}.
+	 *
 	 * @see #handleRequest
 	 */
 	@Nullable

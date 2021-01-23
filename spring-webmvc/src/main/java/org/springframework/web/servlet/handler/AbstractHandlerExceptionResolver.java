@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.handler;
 
 import java.util.Set;
@@ -47,7 +31,9 @@ public abstract class AbstractHandlerExceptionResolver implements HandlerExcepti
 	private static final String HEADER_CACHE_CONTROL = "Cache-Control";
 
 
-	/** Logger available to subclasses. */
+	/**
+	 * Logger available to subclasses.
+	 */
 	protected final Log logger = LogFactory.getLog(getClass());
 
 	private int order = Ordered.LOWEST_PRECEDENCE;
@@ -107,6 +93,7 @@ public abstract class AbstractHandlerExceptionResolver implements HandlerExcepti
 	 * {@link org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver}
 	 * can change that default. Specify this setting to activate warn logging into a specific
 	 * category. Alternatively, override the {@link #logException} method for custom logging.
+	 *
 	 * @see org.apache.commons.logging.LogFactory#getLog(String)
 	 * @see java.util.logging.Logger#getLogger(String)
 	 */
@@ -148,8 +135,7 @@ public abstract class AbstractHandlerExceptionResolver implements HandlerExcepti
 				logException(ex, request);
 			}
 			return result;
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
@@ -159,9 +145,10 @@ public abstract class AbstractHandlerExceptionResolver implements HandlerExcepti
 	 * <p>The default implementation checks against the configured
 	 * {@linkplain #setMappedHandlers handlers} and
 	 * {@linkplain #setMappedHandlerClasses handler classes}, if any.
+	 *
 	 * @param request current HTTP request
 	 * @param handler the executed handler, or {@code null} if none chosen
-	 * at the time of the exception (for example, if multipart resolution failed)
+	 *                at the time of the exception (for example, if multipart resolution failed)
 	 * @return whether this resolved should proceed with resolving the exception
 	 * for the given request and handler
 	 * @see #setMappedHandlers
@@ -186,6 +173,7 @@ public abstract class AbstractHandlerExceptionResolver implements HandlerExcepti
 	/**
 	 * Whether there are any handler mappings registered via
 	 * {@link #setMappedHandlers(Set)} or {@link #setMappedHandlerClasses(Class[])}.
+	 *
 	 * @since 5.3
 	 */
 	protected boolean hasHandlerMappings() {
@@ -196,7 +184,8 @@ public abstract class AbstractHandlerExceptionResolver implements HandlerExcepti
 	 * Log the given exception at warn level, provided that warn logging has been
 	 * activated through the {@link #setWarnLogCategory "warnLogCategory"} property.
 	 * <p>Calls {@link #buildLogMessage} in order to determine the concrete message to log.
-	 * @param ex the exception that got thrown during handler execution
+	 *
+	 * @param ex      the exception that got thrown during handler execution
 	 * @param request current HTTP request (useful for obtaining metadata)
 	 * @see #setWarnLogCategory
 	 * @see #buildLogMessage
@@ -210,7 +199,8 @@ public abstract class AbstractHandlerExceptionResolver implements HandlerExcepti
 
 	/**
 	 * Build a log message for the given exception, occurred during processing the given request.
-	 * @param ex the exception that got thrown during handler execution
+	 *
+	 * @param ex      the exception that got thrown during handler execution
 	 * @param request current HTTP request (useful for obtaining metadata)
 	 * @return the log message to use
 	 */
@@ -223,7 +213,8 @@ public abstract class AbstractHandlerExceptionResolver implements HandlerExcepti
 	 * <p>The default implementation prevents the response from being cached,
 	 * if the {@link #setPreventResponseCaching "preventResponseCaching"} property
 	 * has been set to "true".
-	 * @param ex the exception that got thrown during handler execution
+	 *
+	 * @param ex       the exception that got thrown during handler execution
 	 * @param response current HTTP response
 	 * @see #preventCaching
 	 */
@@ -236,6 +227,7 @@ public abstract class AbstractHandlerExceptionResolver implements HandlerExcepti
 	/**
 	 * Prevents the response from being cached, through setting corresponding
 	 * HTTP {@code Cache-Control: no-store} header.
+	 *
 	 * @param response current HTTP response
 	 */
 	protected void preventCaching(HttpServletResponse response) {
@@ -250,11 +242,12 @@ public abstract class AbstractHandlerExceptionResolver implements HandlerExcepti
 	 * Note that this template method will be invoked <i>after</i> checking whether this
 	 * resolved applies ("mappedHandlers" etc), so an implementation may simply proceed
 	 * with its actual exception handling.
-	 * @param request current HTTP request
+	 *
+	 * @param request  current HTTP request
 	 * @param response current HTTP response
-	 * @param handler the executed handler, or {@code null} if none chosen at the time
-	 * of the exception (for example, if multipart resolution failed)
-	 * @param ex the exception that got thrown during handler execution
+	 * @param handler  the executed handler, or {@code null} if none chosen at the time
+	 *                 of the exception (for example, if multipart resolution failed)
+	 * @param ex       the exception that got thrown during handler execution
 	 * @return a corresponding {@code ModelAndView} to forward to,
 	 * or {@code null} for default processing in the resolution chain
 	 */

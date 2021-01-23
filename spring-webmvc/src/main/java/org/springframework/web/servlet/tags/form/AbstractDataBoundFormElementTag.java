@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.tags.form;
 
 import java.beans.PropertyEditor;
@@ -116,6 +100,7 @@ public abstract class AbstractDataBoundFormElementTag extends AbstractFormTag im
 	 * to call the {@code super} method.
 	 * <p>Concrete sub-classes should call this method when/if they want
 	 * to render default attributes.
+	 *
 	 * @param tagWriter the {@link TagWriter} to which any attributes are to be written
 	 */
 	protected void writeDefaultAttributes(TagWriter tagWriter) throws JspException {
@@ -126,6 +111,7 @@ public abstract class AbstractDataBoundFormElementTag extends AbstractFormTag im
 	/**
 	 * Determine the '{@code id}' attribute value for this tag,
 	 * autogenerating one if none specified.
+	 *
 	 * @see #getId()
 	 * @see #autogenerateId()
 	 */
@@ -157,6 +143,7 @@ public abstract class AbstractDataBoundFormElementTag extends AbstractFormTag im
 	 * For the most part this is desirable as it links with the server-side
 	 * expectation for data binding. However, some subclasses may wish to change
 	 * the value of the '{@code name}' attribute without changing the bind path.
+	 *
 	 * @return the value for the HTML '{@code name}' attribute
 	 */
 	@Nullable
@@ -192,6 +179,7 @@ public abstract class AbstractDataBoundFormElementTag extends AbstractFormTag im
 	/**
 	 * Build the property path for this tag, including the nested path
 	 * but <i>not</i> prefixed with the name of the form attribute.
+	 *
 	 * @see #getNestedPath()
 	 * @see #getPath()
 	 */
@@ -202,6 +190,7 @@ public abstract class AbstractDataBoundFormElementTag extends AbstractFormTag im
 
 	/**
 	 * Get the bound value.
+	 *
 	 * @see #getBindStatus()
 	 */
 	@Nullable

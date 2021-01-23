@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.resource;
 
 import java.util.ArrayList;
@@ -73,6 +57,7 @@ public class ResourceUrlProvider implements ApplicationListener<ContextRefreshed
 
 	/**
 	 * Return the configured {@code UrlPathHelper}.
+	 *
 	 * @since 4.2.8
 	 */
 	public UrlPathHelper getUrlPathHelper() {
@@ -160,7 +145,8 @@ public class ResourceUrlProvider implements ApplicationListener<ContextRefreshed
 	 * A variation on {@link #getForLookupPath(String)} that accepts a full request
 	 * URL path (i.e. including context and servlet path) and returns the full request
 	 * URL path to expose for public use.
-	 * @param request the current request
+	 *
+	 * @param request    the current request
 	 * @param requestUrl the request URL path to resolve
 	 * @return the resolved public URL path, or {@code null} if unresolved
 	 */
@@ -210,6 +196,7 @@ public class ResourceUrlProvider implements ApplicationListener<ContextRefreshed
 	 * request mapping purposes, i.e. excluding context and servlet path portions.
 	 * <p>If several handler mappings match, the handler used will be the one
 	 * configured with the most specific pattern.
+	 *
 	 * @param lookupPath the lookup path to check
 	 * @return the resolved public URL path, or {@code null} if unresolved
 	 */

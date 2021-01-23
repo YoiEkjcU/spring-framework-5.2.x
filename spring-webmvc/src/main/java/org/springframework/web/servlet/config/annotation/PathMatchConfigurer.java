@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.config.annotation;
 
 import java.util.LinkedHashMap;
@@ -77,6 +61,7 @@ public class PathMatchConfigurer {
 	 * {@link #setUrlPathHelper(UrlPathHelper)} and
 	 * {@link #setPathMatcher(PathMatcher)}.
 	 * <p>By default this is not enabled.
+	 *
 	 * @param patternParser the parser to pre-parse patterns with
 	 * @since 5.3
 	 */
@@ -102,7 +87,8 @@ public class PathMatchConfigurer {
 	 * {@code Predicate}. The prefix for the first matching predicate is used.
 	 * <p>Consider using {@link org.springframework.web.method.HandlerTypePredicate
 	 * HandlerTypePredicate} to group controllers.
-	 * @param prefix the prefix to apply
+	 *
+	 * @param prefix    the prefix to apply
 	 * @param predicate a predicate for matching controller types
 	 * @since 5.1
 	 */
@@ -120,6 +106,7 @@ public class PathMatchConfigurer {
 	 * <p>By default this is set to {@code true}.
 	 * <p><strong>Note:</strong> This property is mutually exclusive with and
 	 * ignored when {@link #setPatternParser(PathPatternParser)} is set.
+	 *
 	 * @deprecated as of 5.2.4. See class-level note in
 	 * {@link RequestMappingHandlerMapping} on the deprecation of path extension
 	 * config options. As there is no replacement for this method, in 5.2.x it is
@@ -141,6 +128,7 @@ public class PathMatchConfigurer {
 	 * <p>By default this is set to "false".
 	 * <p><strong>Note:</strong> This property is mutually exclusive with and
 	 * ignored when {@link #setPatternParser(PathPatternParser)} is set.
+	 *
 	 * @deprecated as of 5.2.4. See class-level note in
 	 * {@link RequestMappingHandlerMapping} on the deprecation of path extension
 	 * config options.
@@ -175,6 +163,7 @@ public class PathMatchConfigurer {
 
 	/**
 	 * Return the {@link PathPatternParser} to use, if configured.
+	 *
 	 * @since 5.3
 	 */
 	@Nullable
@@ -195,6 +184,7 @@ public class PathMatchConfigurer {
 
 	/**
 	 * Whether to use registered suffixes for pattern matching.
+	 *
 	 * @deprecated as of 5.2.4, see deprecation note on
 	 * {@link #setUseRegisteredSuffixPatternMatch(Boolean)}.
 	 */
@@ -206,6 +196,7 @@ public class PathMatchConfigurer {
 
 	/**
 	 * Whether to use registered suffixes for pattern matching.
+	 *
 	 * @deprecated as of 5.2.4, see deprecation note on
 	 * {@link #setUseSuffixPatternMatch(Boolean)}.
 	 */
@@ -227,6 +218,7 @@ public class PathMatchConfigurer {
 
 	/**
 	 * Return the configure UrlPathHelper instance or a default (shared) instance.
+	 *
 	 * @since 5.3
 	 */
 	protected UrlPathHelper getUrlPathHelperOrDefault() {
@@ -241,6 +233,7 @@ public class PathMatchConfigurer {
 
 	/**
 	 * Return the configure PathMatcher instance or a default (shared) instance.
+	 *
 	 * @since 5.3
 	 */
 	protected PathMatcher getPathMatcherOrDefault() {

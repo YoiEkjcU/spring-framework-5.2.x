@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.view.xslt;
 
 import java.util.Properties;
@@ -90,6 +74,7 @@ public class XsltViewResolver extends UrlBasedViewResolver {
 	 * {@link org.springframework.util.xml.SimpleTransformErrorListener} is
 	 * used that simply logs warnings using the logger instance of the view class,
 	 * and rethrows errors to discontinue the XML transformation.
+	 *
 	 * @see org.springframework.util.xml.SimpleTransformErrorListener
 	 */
 	public void setErrorListener(ErrorListener errorListener) {
@@ -101,6 +86,7 @@ public class XsltViewResolver extends UrlBasedViewResolver {
 	 * outputting the result tree.
 	 * <p>Default is {@code true} (on); set this to {@code false} (off)
 	 * to not specify an "indent" key, leaving the choice up to the stylesheet.
+	 *
 	 * @see javax.xml.transform.OutputKeys#INDENT
 	 */
 	public void setIndent(boolean indent) {
@@ -111,6 +97,7 @@ public class XsltViewResolver extends UrlBasedViewResolver {
 	 * Set arbitrary transformer output properties to be applied to the stylesheet.
 	 * <p>Any values specified here will override defaults that this view sets
 	 * programmatically.
+	 *
 	 * @see javax.xml.transform.Transformer#setOutputProperty
 	 */
 	public void setOutputProperties(Properties outputProperties) {

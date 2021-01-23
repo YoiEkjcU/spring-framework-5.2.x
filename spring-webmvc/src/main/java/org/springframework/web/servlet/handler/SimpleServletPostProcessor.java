@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.handler;
 
 import java.util.Collections;
@@ -60,10 +44,10 @@ import org.springframework.web.context.ServletContextAware;
  * allowing to specify Servlet initialization parameters etc.
  *
  * @author Juergen Hoeller
- * @since 1.1.5
  * @see javax.servlet.Servlet#init(javax.servlet.ServletConfig)
  * @see javax.servlet.Servlet#destroy()
  * @see SimpleServletHandlerAdapter
+ * @since 1.1.5
  */
 public class SimpleServletPostProcessor implements
 		DestructionAwareBeanPostProcessor, ServletContextAware, ServletConfigAware {
@@ -83,6 +67,7 @@ public class SimpleServletPostProcessor implements
 	 * <p>Default is "true". Turn this setting to "false" to pass in
 	 * a mock ServletConfig object with the bean name as servlet name,
 	 * holding the current ServletContext.
+	 *
 	 * @see #setServletConfig
 	 */
 	public void setUseSharedServletConfig(boolean useSharedServletConfig) {
@@ -114,8 +99,7 @@ public class SimpleServletPostProcessor implements
 			}
 			try {
 				((Servlet) bean).init(config);
-			}
-			catch (ServletException ex) {
+			} catch (ServletException ex) {
 				throw new BeanInitializationException("Servlet.init threw exception", ex);
 			}
 		}

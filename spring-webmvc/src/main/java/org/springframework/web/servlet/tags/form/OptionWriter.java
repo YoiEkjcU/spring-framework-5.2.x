@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2012 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.web.servlet.tags.form;
 
 import java.beans.PropertyEditor;
@@ -105,15 +89,16 @@ class OptionWriter {
 
 	/**
 	 * Create a new {@code OptionWriter} for the supplied {@code objectSource}.
-	 * @param optionSource the source of the {@code options} (never {@code null})
-	 * @param bindStatus the {@link BindStatus} for the bound value (never {@code null})
+	 *
+	 * @param optionSource  the source of the {@code options} (never {@code null})
+	 * @param bindStatus    the {@link BindStatus} for the bound value (never {@code null})
 	 * @param valueProperty the name of the property used to render {@code option} values
-	 * (optional)
+	 *                      (optional)
 	 * @param labelProperty the name of the property used to render {@code option} labels
-	 * (optional)
+	 *                      (optional)
 	 */
 	public OptionWriter(Object optionSource, BindStatus bindStatus,
-			@Nullable String valueProperty, @Nullable String labelProperty, boolean htmlEscape) {
+						@Nullable String valueProperty, @Nullable String labelProperty, boolean htmlEscape) {
 
 		Assert.notNull(optionSource, "'optionSource' must not be null");
 		Assert.notNull(bindStatus, "'bindStatus' must not be null");
@@ -132,17 +117,13 @@ class OptionWriter {
 	public void writeOptions(TagWriter tagWriter) throws JspException {
 		if (this.optionSource.getClass().isArray()) {
 			renderFromArray(tagWriter);
-		}
-		else if (this.optionSource instanceof Collection) {
+		} else if (this.optionSource instanceof Collection) {
 			renderFromCollection(tagWriter);
-		}
-		else if (this.optionSource instanceof Map) {
+		} else if (this.optionSource instanceof Map) {
 			renderFromMap(tagWriter);
-		}
-		else if (this.optionSource instanceof Class && ((Class<?>) this.optionSource).isEnum()) {
+		} else if (this.optionSource instanceof Class && ((Class<?>) this.optionSource).isEnum()) {
 			renderFromEnum(tagWriter);
-		}
-		else {
+		} else {
 			throw new JspException(
 					"Type [" + this.optionSource.getClass().getName() + "] is not valid for option items");
 		}
@@ -150,6 +131,7 @@ class OptionWriter {
 
 	/**
 	 * Render the inner '{@code option}' tags using the {@link #optionSource}.
+	 *
 	 * @see #doRenderFromCollection(java.util.Collection, TagWriter)
 	 */
 	private void renderFromArray(TagWriter tagWriter) throws JspException {
@@ -159,6 +141,7 @@ class OptionWriter {
 	/**
 	 * Render the inner '{@code option}' tags using the supplied
 	 * {@link Map} as the source.
+	 *
 	 * @see #renderOption(TagWriter, Object, Object, Object)
 	 */
 	private void renderFromMap(TagWriter tagWriter) throws JspException {
@@ -178,6 +161,7 @@ class OptionWriter {
 
 	/**
 	 * Render the inner '{@code option}' tags using the {@link #optionSource}.
+	 *
 	 * @see #doRenderFromCollection(java.util.Collection, TagWriter)
 	 */
 	private void renderFromCollection(TagWriter tagWriter) throws JspException {
@@ -186,6 +170,7 @@ class OptionWriter {
 
 	/**
 	 * Render the inner '{@code option}' tags using the {@link #optionSource}.
+	 *
 	 * @see #doRenderFromCollection(java.util.Collection, TagWriter)
 	 */
 	private void renderFromEnum(TagWriter tagWriter) throws JspException {
@@ -204,11 +189,9 @@ class OptionWriter {
 			Object value;
 			if (this.valueProperty != null) {
 				value = wrapper.getPropertyValue(this.valueProperty);
-			}
-			else if (item instanceof Enum) {
+			} else if (item instanceof Enum) {
 				value = ((Enum<?>) item).name();
-			}
-			else {
+			} else {
 				value = item;
 			}
 			Object label = (this.labelProperty != null ? wrapper.getPropertyValue(this.labelProperty) : item);
