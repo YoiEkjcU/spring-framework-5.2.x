@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.expression.spel.ast;
 
 import java.util.ArrayList;
@@ -64,8 +48,7 @@ public class InlineList extends SpelNodeImpl {
 					if (!inlineList.isConstant()) {
 						isConstant = false;
 					}
-				}
-				else {
+				} else {
 					isConstant = false;
 				}
 			}
@@ -77,8 +60,7 @@ public class InlineList extends SpelNodeImpl {
 				SpelNode child = getChild(c);
 				if ((child instanceof Literal)) {
 					constantList.add(((Literal) child).getLiteralValue().getValue());
-				}
-				else if (child instanceof InlineList) {
+				} else if (child instanceof InlineList) {
 					constantList.add(((InlineList) child).getConstantValue());
 				}
 			}
@@ -90,8 +72,7 @@ public class InlineList extends SpelNodeImpl {
 	public TypedValue getValueInternal(ExpressionState expressionState) throws EvaluationException {
 		if (this.constant != null) {
 			return this.constant;
-		}
-		else {
+		} else {
 			int childCount = getChildCount();
 			List<Object> returnValue = new ArrayList<>(childCount);
 			for (int c = 0; c < childCount; c++) {
@@ -157,17 +138,15 @@ public class InlineList extends SpelNodeImpl {
 		for (int c = 0; c < childCount; c++) {
 			if (!nested) {
 				mv.visitFieldInsn(GETSTATIC, clazzname, constantFieldName, "Ljava/util/List;");
-			}
-			else {
+			} else {
 				mv.visitInsn(DUP);
 			}
 			// The children might be further lists if they are not constants. In this
 			// situation do not call back into generateCode() because it will register another clinit adder.
 			// Instead, directly build the list here:
 			if (this.children[c] instanceof InlineList) {
-				((InlineList)this.children[c]).generateClinitCode(clazzname, constantFieldName, mv, codeflow, true);
-			}
-			else {
+				((InlineList) this.children[c]).generateClinitCode(clazzname, constantFieldName, mv, codeflow, true);
+			} else {
 				this.children[c].generateCode(mv, codeflow);
 				String lastDesc = codeflow.lastDescriptor();
 				if (CodeFlow.isPrimitive(lastDesc)) {

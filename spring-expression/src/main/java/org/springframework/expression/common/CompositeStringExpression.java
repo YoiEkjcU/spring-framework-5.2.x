@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.expression.common;
 
 import org.springframework.core.convert.TypeDescriptor;
@@ -31,7 +15,7 @@ import org.springframework.lang.Nullable;
  * <pre class="code">
  * &quot;Hello ${getName()}&quot;
  * </pre>
- *
+ * <p>
  * which will be represented as a CompositeStringExpression of two parts. The first part
  * being a LiteralExpression representing 'Hello ' and the second part being a real
  * expression that will call {@code getName()} when invoked.
@@ -44,7 +28,9 @@ public class CompositeStringExpression implements Expression {
 
 	private final String expressionString;
 
-	/** The array of expressions that make up the composite expression. */
+	/**
+	 * The array of expressions that make up the composite expression.
+	 */
 	private final Expression[] expressions;
 
 
@@ -139,7 +125,7 @@ public class CompositeStringExpression implements Expression {
 	public <T> T getValue(EvaluationContext context, @Nullable Object rootObject, @Nullable Class<T> desiredResultType)
 			throws EvaluationException {
 
-		Object value = getValue(context,rootObject);
+		Object value = getValue(context, rootObject);
 		return ExpressionUtils.convertTypedValue(context, new TypedValue(value), desiredResultType);
 	}
 

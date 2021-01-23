@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.expression.spel;
 
 import org.springframework.core.SpringProperties;
@@ -25,8 +9,8 @@ import org.springframework.lang.Nullable;
  * @author Juergen Hoeller
  * @author Phillip Webb
  * @author Andy Clement
- * @since 3.0
  * @see org.springframework.expression.spel.standard.SpelExpressionParser#SpelExpressionParser(SpelParserConfiguration)
+ * @since 3.0
  */
 public class SpelParserConfiguration {
 
@@ -60,7 +44,8 @@ public class SpelParserConfiguration {
 
 	/**
 	 * Create a new {@code SpelParserConfiguration} instance.
-	 * @param compilerMode the compiler mode for the parser
+	 *
+	 * @param compilerMode        the compiler mode for the parser
 	 * @param compilerClassLoader the ClassLoader to use as the basis for expression compilation
 	 */
 	public SpelParserConfiguration(@Nullable SpelCompilerMode compilerMode, @Nullable ClassLoader compilerClassLoader) {
@@ -69,8 +54,9 @@ public class SpelParserConfiguration {
 
 	/**
 	 * Create a new {@code SpelParserConfiguration} instance.
+	 *
 	 * @param autoGrowNullReferences if null references should automatically grow
-	 * @param autoGrowCollections if collections should automatically grow
+	 * @param autoGrowCollections    if collections should automatically grow
 	 * @see #SpelParserConfiguration(boolean, boolean, int)
 	 */
 	public SpelParserConfiguration(boolean autoGrowNullReferences, boolean autoGrowCollections) {
@@ -79,9 +65,10 @@ public class SpelParserConfiguration {
 
 	/**
 	 * Create a new {@code SpelParserConfiguration} instance.
+	 *
 	 * @param autoGrowNullReferences if null references should automatically grow
-	 * @param autoGrowCollections if collections should automatically grow
-	 * @param maximumAutoGrowSize the maximum size that the collection can auto grow
+	 * @param autoGrowCollections    if collections should automatically grow
+	 * @param maximumAutoGrowSize    the maximum size that the collection can auto grow
 	 */
 	public SpelParserConfiguration(boolean autoGrowNullReferences, boolean autoGrowCollections, int maximumAutoGrowSize) {
 		this(null, null, autoGrowNullReferences, autoGrowCollections, maximumAutoGrowSize);
@@ -89,14 +76,15 @@ public class SpelParserConfiguration {
 
 	/**
 	 * Create a new {@code SpelParserConfiguration} instance.
-	 * @param compilerMode the compiler mode that parsers using this configuration object should use
-	 * @param compilerClassLoader the ClassLoader to use as the basis for expression compilation
+	 *
+	 * @param compilerMode           the compiler mode that parsers using this configuration object should use
+	 * @param compilerClassLoader    the ClassLoader to use as the basis for expression compilation
 	 * @param autoGrowNullReferences if null references should automatically grow
-	 * @param autoGrowCollections if collections should automatically grow
-	 * @param maximumAutoGrowSize the maximum size that the collection can auto grow
+	 * @param autoGrowCollections    if collections should automatically grow
+	 * @param maximumAutoGrowSize    the maximum size that the collection can auto grow
 	 */
 	public SpelParserConfiguration(@Nullable SpelCompilerMode compilerMode, @Nullable ClassLoader compilerClassLoader,
-			boolean autoGrowNullReferences, boolean autoGrowCollections, int maximumAutoGrowSize) {
+								   boolean autoGrowNullReferences, boolean autoGrowCollections, int maximumAutoGrowSize) {
 
 		this.compilerMode = (compilerMode != null ? compilerMode : defaultCompilerMode);
 		this.compilerClassLoader = compilerClassLoader;

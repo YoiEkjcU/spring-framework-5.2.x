@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.expression.spel;
 
 import java.util.ArrayDeque;
@@ -121,8 +105,7 @@ public class ExpressionState {
 		}
 		try {
 			this.contextObjects.pop();
-		}
-		catch (NoSuchElementException ex) {
+		} catch (NoSuchElementException ex) {
 			throw new IllegalStateException("Cannot pop active context object: stack is empty");
 		}
 	}
@@ -233,10 +216,9 @@ public class ExpressionState {
 		if (overloader.overridesOperation(op, left, right)) {
 			Object returnValue = overloader.operate(op, left, right);
 			return new TypedValue(returnValue);
-		}
-		else {
+		} else {
 			String leftType = (left == null ? "null" : left.getClass().getName());
-			String rightType = (right == null? "null" : right.getClass().getName());
+			String rightType = (right == null ? "null" : right.getClass().getName());
 			throw new SpelEvaluationException(SpelMessage.OPERATOR_NOT_SUPPORTED_BETWEEN_TYPES, op, leftType, rightType);
 		}
 	}
@@ -275,7 +257,7 @@ public class ExpressionState {
 		}
 
 		public VariableScope(String name, Object value) {
-			this.vars.put(name,value);
+			this.vars.put(name, value);
 		}
 
 		public Object lookupVariable(String name) {
@@ -283,7 +265,7 @@ public class ExpressionState {
 		}
 
 		public void setVariable(String name, Object value) {
-			this.vars.put(name,value);
+			this.vars.put(name, value);
 		}
 
 		public boolean definesVariable(String name) {

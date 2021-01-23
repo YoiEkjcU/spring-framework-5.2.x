@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.expression.spel.ast;
 
 import java.lang.reflect.Method;
@@ -78,8 +62,7 @@ public class FunctionReference extends SpelNodeImpl {
 
 		try {
 			return executeFunctionJLRMethod(state, (Method) value.getValue());
-		}
-		catch (SpelEvaluationException ex) {
+		} catch (SpelEvaluationException ex) {
 			ex.setPosition(getStartPosition());
 			throw ex;
 		}
@@ -87,7 +70,8 @@ public class FunctionReference extends SpelNodeImpl {
 
 	/**
 	 * Execute a function represented as a {@code java.lang.reflect.Method}.
-	 * @param state the expression evaluation state
+	 *
+	 * @param state  the expression evaluation state
 	 * @param method the method to invoke
 	 * @return the return value of the invoked Java method
 	 * @throws EvaluationException if there is any problem invoking the method
@@ -121,17 +105,14 @@ public class FunctionReference extends SpelNodeImpl {
 			Object result = method.invoke(method.getClass(), functionArgs);
 			compilable = !argumentConversionOccurred;
 			return new TypedValue(result, new TypeDescriptor(new MethodParameter(method, -1)).narrow(result));
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			throw new SpelEvaluationException(getStartPosition(), ex, SpelMessage.EXCEPTION_DURING_FUNCTION_CALL,
 					this.name, ex.getMessage());
-		}
-		finally {
+		} finally {
 			if (compilable) {
 				this.exitTypeDescriptor = CodeFlow.toDescriptor(method.getReturnType());
 				this.method = method;
-			}
-			else {
+			} else {
 				this.exitTypeDescriptor = null;
 				this.method = null;
 			}
@@ -149,6 +130,7 @@ public class FunctionReference extends SpelNodeImpl {
 
 	/**
 	 * Compute the arguments to the function, they are the children of this expression node.
+	 *
 	 * @return an array of argument values for the function call
 	 */
 	private Object[] getArguments(ExpressionState state) throws EvaluationException {

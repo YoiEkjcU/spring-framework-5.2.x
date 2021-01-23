@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.expression.spel.support;
 
 import java.lang.reflect.Constructor;
@@ -83,19 +67,16 @@ public class ReflectiveConstructorResolver implements ConstructorResolver {
 					// or the final parameter
 					// we are supplied does match exactly (it is an array already).
 					matchInfo = ReflectionHelper.compareArgumentsVarargs(paramDescriptors, argumentTypes, typeConverter);
-				}
-				else if (paramCount == argumentTypes.size()) {
+				} else if (paramCount == argumentTypes.size()) {
 					// worth a closer look
 					matchInfo = ReflectionHelper.compareArguments(paramDescriptors, argumentTypes, typeConverter);
 				}
 				if (matchInfo != null) {
 					if (matchInfo.isExactMatch()) {
 						return new ReflectiveConstructorExecutor(ctor);
-					}
-					else if (matchInfo.isCloseMatch()) {
+					} else if (matchInfo.isCloseMatch()) {
 						closeMatch = ctor;
-					}
-					else if (matchInfo.isMatchRequiringConversion()) {
+					} else if (matchInfo.isMatchRequiringConversion()) {
 						matchRequiringConversion = ctor;
 					}
 				}
@@ -103,15 +84,12 @@ public class ReflectiveConstructorResolver implements ConstructorResolver {
 
 			if (closeMatch != null) {
 				return new ReflectiveConstructorExecutor(closeMatch);
-			}
-			else if (matchRequiringConversion != null) {
+			} else if (matchRequiringConversion != null) {
 				return new ReflectiveConstructorExecutor(matchRequiringConversion);
-			}
-			else {
+			} else {
 				return null;
 			}
-		}
-		catch (EvaluationException ex) {
+		} catch (EvaluationException ex) {
 			throw new AccessException("Failed to resolve constructor", ex);
 		}
 	}

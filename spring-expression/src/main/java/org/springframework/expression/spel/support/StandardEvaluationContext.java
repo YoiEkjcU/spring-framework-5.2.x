@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.expression.spel.support;
 
 import java.lang.reflect.Method;
@@ -49,7 +33,6 @@ import org.springframework.util.Assert;
  * @author Andy Clement
  * @author Juergen Hoeller
  * @author Sam Brannen
- * @since 3.0
  * @see SimpleEvaluationContext
  * @see ReflectivePropertyAccessor
  * @see ReflectiveConstructorResolver
@@ -58,6 +41,7 @@ import org.springframework.util.Assert;
  * @see StandardTypeConverter
  * @see StandardTypeComparator
  * @see StandardOperatorOverloader
+ * @since 3.0
  */
 public class StandardEvaluationContext implements EvaluationContext {
 
@@ -100,6 +84,7 @@ public class StandardEvaluationContext implements EvaluationContext {
 
 	/**
 	 * Create a {@code StandardEvaluationContext} with the given root object.
+	 *
 	 * @param rootObject the root object to use
 	 * @see #setRootObject
 	 */
@@ -236,8 +221,7 @@ public class StandardEvaluationContext implements EvaluationContext {
 		if (name != null) {
 			if (value != null) {
 				this.variables.put(name, value);
-			}
-			else {
+			} else {
 				this.variables.remove(name);
 			}
 		}
@@ -262,7 +246,8 @@ public class StandardEvaluationContext implements EvaluationContext {
 	 * for the specified type.
 	 * <p>The {@code MethodFilter} may remove methods and/or sort the methods which
 	 * will then be used by SpEL as the candidates to look through for a match.
-	 * @param type the type for which the filter should be called
+	 *
+	 * @param type   the type for which the filter should be called
 	 * @param filter a {@code MethodFilter}, or {@code null} to unregister a filter for the type
 	 * @throws IllegalStateException if the {@link ReflectiveMethodResolver} is not in use
 	 */

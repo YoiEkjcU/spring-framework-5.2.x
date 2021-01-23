@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.expression.spel.ast;
 
 import java.math.BigDecimal;
@@ -150,16 +134,16 @@ public abstract class Operator extends SpelNodeImpl {
 		mv.visitInsn(POP);  // stack: <nothing>
 		// load 0 or 1 depending on comparison instruction
 		switch (compInstruction1) {
-		case IFGE: // OpLT
-		case IFLE: // OpGT
-			mv.visitInsn(ICONST_0);  // false - null is not < or > null
-			break;
-		case IFGT: // OpLE
-		case IFLT: // OpGE
-			mv.visitInsn(ICONST_1);  // true - null is <= or >= null
-			break;
-		default:
-			throw new IllegalStateException("Unsupported: " + compInstruction1);
+			case IFGE: // OpLT
+			case IFLE: // OpGT
+				mv.visitInsn(ICONST_0);  // false - null is not < or > null
+				break;
+			case IFGT: // OpLE
+			case IFLT: // OpGE
+				mv.visitInsn(ICONST_1);  // true - null is <= or >= null
+				break;
+			default:
+				throw new IllegalStateException("Unsupported: " + compInstruction1);
 		}
 		mv.visitJumpInsn(GOTO, endOfIf);
 		mv.visitLabel(leftNotNullRightIsNull);  // stack: right
@@ -167,16 +151,16 @@ public abstract class Operator extends SpelNodeImpl {
 		mv.visitInsn(POP);  // stack: <nothing>
 		// load 0 or 1 depending on comparison instruction
 		switch (compInstruction1) {
-		case IFGE: // OpLT
-		case IFGT: // OpLE
-			mv.visitInsn(ICONST_0);  // false - something is not < or <= null
-			break;
-		case IFLE: // OpGT
-		case IFLT: // OpGE
-			mv.visitInsn(ICONST_1);  // true - something is > or >= null
-			break;
-		default:
-			throw new IllegalStateException("Unsupported: " + compInstruction1);
+			case IFGE: // OpLT
+			case IFGT: // OpLE
+				mv.visitInsn(ICONST_0);  // false - something is not < or <= null
+				break;
+			case IFLE: // OpGT
+			case IFLT: // OpGE
+				mv.visitInsn(ICONST_1);  // true - something is > or >= null
+				break;
+			default:
+				throw new IllegalStateException("Unsupported: " + compInstruction1);
 		}
 		mv.visitJumpInsn(GOTO, endOfIf);
 
@@ -189,16 +173,16 @@ public abstract class Operator extends SpelNodeImpl {
 		// here: RIGHT!=null LEFT==null
 		mv.visitInsn(POP2);  // stack: <nothing>
 		switch (compInstruction1) {
-		case IFGE: // OpLT
-		case IFGT: // OpLE
-			mv.visitInsn(ICONST_1);  // true - null is < or <= something
-			break;
-		case IFLE: // OpGT
-		case IFLT: // OpGE
-			mv.visitInsn(ICONST_0);  // false - null is not > or >= something
-			break;
-		default:
-			throw new IllegalStateException("Unsupported: " + compInstruction1);
+			case IFGE: // OpLT
+			case IFGT: // OpLE
+				mv.visitInsn(ICONST_1);  // true - null is < or <= something
+				break;
+			case IFLE: // OpGT
+			case IFLT: // OpGE
+				mv.visitInsn(ICONST_0);  // false - null is not > or >= something
+				break;
+			default:
+				throw new IllegalStateException("Unsupported: " + compInstruction1);
 		}
 		mv.visitJumpInsn(GOTO, endOfIf);
 		mv.visitLabel(neitherRightNorLeftAreNull);  // stack: right/left
@@ -212,8 +196,7 @@ public abstract class Operator extends SpelNodeImpl {
 		if (targetType == 'D' || targetType == 'J') {
 			mv.visitInsn(DUP2_X1);
 			mv.visitInsn(POP2);
-		}
-		else {
+		} else {
 			mv.visitInsn(SWAP);
 		}
 		// stack: left(1or2)/right
@@ -225,25 +208,21 @@ public abstract class Operator extends SpelNodeImpl {
 		if (targetType == 'D') {
 			mv.visitInsn(DCMPG);
 			mv.visitJumpInsn(compInstruction1, elseTarget);
-		}
-		else if (targetType == 'F') {
+		} else if (targetType == 'F') {
 			mv.visitInsn(FCMPG);
 			mv.visitJumpInsn(compInstruction1, elseTarget);
-		}
-		else if (targetType == 'J') {
+		} else if (targetType == 'J') {
 			mv.visitInsn(LCMP);
 			mv.visitJumpInsn(compInstruction1, elseTarget);
-		}
-		else if (targetType == 'I') {
+		} else if (targetType == 'I') {
 			mv.visitJumpInsn(compInstruction2, elseTarget);
-		}
-		else {
+		} else {
 			throw new IllegalStateException("Unexpected descriptor " + leftDesc);
 		}
 
 		// Other numbers are not yet supported (isCompilable will not have returned true)
 		mv.visitInsn(ICONST_1);
-		mv.visitJumpInsn(GOTO,endOfIf);
+		mv.visitJumpInsn(GOTO, endOfIf);
 		mv.visitLabel(elseTarget);
 		mv.visitInsn(ICONST_0);
 		mv.visitLabel(endOfIf);
@@ -256,9 +235,10 @@ public abstract class Operator extends SpelNodeImpl {
 	 * <p>This method is not just used for reflective comparisons in subclasses
 	 * but also from compiled expression code, which is why it needs to be
 	 * declared as {@code public static} here.
+	 *
 	 * @param context the current evaluation context
-	 * @param left the left-hand operand value
-	 * @param right the right-hand operand value
+	 * @param left    the left-hand operand value
+	 * @param right   the right-hand operand value
 	 */
 	public static boolean equalityCheck(EvaluationContext context, @Nullable Object left, @Nullable Object right) {
 		if (left instanceof Number && right instanceof Number) {
@@ -269,31 +249,23 @@ public abstract class Operator extends SpelNodeImpl {
 				BigDecimal leftBigDecimal = NumberUtils.convertNumberToTargetClass(leftNumber, BigDecimal.class);
 				BigDecimal rightBigDecimal = NumberUtils.convertNumberToTargetClass(rightNumber, BigDecimal.class);
 				return (leftBigDecimal.compareTo(rightBigDecimal) == 0);
-			}
-			else if (leftNumber instanceof Double || rightNumber instanceof Double) {
+			} else if (leftNumber instanceof Double || rightNumber instanceof Double) {
 				return (leftNumber.doubleValue() == rightNumber.doubleValue());
-			}
-			else if (leftNumber instanceof Float || rightNumber instanceof Float) {
+			} else if (leftNumber instanceof Float || rightNumber instanceof Float) {
 				return (leftNumber.floatValue() == rightNumber.floatValue());
-			}
-			else if (leftNumber instanceof BigInteger || rightNumber instanceof BigInteger) {
+			} else if (leftNumber instanceof BigInteger || rightNumber instanceof BigInteger) {
 				BigInteger leftBigInteger = NumberUtils.convertNumberToTargetClass(leftNumber, BigInteger.class);
 				BigInteger rightBigInteger = NumberUtils.convertNumberToTargetClass(rightNumber, BigInteger.class);
 				return (leftBigInteger.compareTo(rightBigInteger) == 0);
-			}
-			else if (leftNumber instanceof Long || rightNumber instanceof Long) {
+			} else if (leftNumber instanceof Long || rightNumber instanceof Long) {
 				return (leftNumber.longValue() == rightNumber.longValue());
-			}
-			else if (leftNumber instanceof Integer || rightNumber instanceof Integer) {
+			} else if (leftNumber instanceof Integer || rightNumber instanceof Integer) {
 				return (leftNumber.intValue() == rightNumber.intValue());
-			}
-			else if (leftNumber instanceof Short || rightNumber instanceof Short) {
+			} else if (leftNumber instanceof Short || rightNumber instanceof Short) {
 				return (leftNumber.shortValue() == rightNumber.shortValue());
-			}
-			else if (leftNumber instanceof Byte || rightNumber instanceof Byte) {
+			} else if (leftNumber instanceof Byte || rightNumber instanceof Byte) {
 				return (leftNumber.byteValue() == rightNumber.byteValue());
-			}
-			else {
+			} else {
 				// Unknown Number subtypes -> best guess is double comparison
 				return (leftNumber.doubleValue() == rightNumber.doubleValue());
 			}
@@ -352,10 +324,11 @@ public abstract class Operator extends SpelNodeImpl {
 		 * <p>For generic types with unbound type variables, the declared descriptor
 		 * discovered may be 'Object' but from the actual descriptor it is possible to
 		 * observe that the objects are really numeric values (e.g. ints).
-		 * @param leftDeclaredDescriptor the statically determinable left descriptor
+		 *
+		 * @param leftDeclaredDescriptor  the statically determinable left descriptor
 		 * @param rightDeclaredDescriptor the statically determinable right descriptor
-		 * @param leftActualDescriptor the dynamic/runtime left object descriptor
-		 * @param rightActualDescriptor the dynamic/runtime right object descriptor
+		 * @param leftActualDescriptor    the dynamic/runtime left object descriptor
+		 * @param rightActualDescriptor   the dynamic/runtime right object descriptor
 		 * @return a DescriptorComparison object indicating the type of compatibility, if any
 		 */
 		public static DescriptorComparison checkNumericCompatibility(
@@ -381,12 +354,10 @@ public abstract class Operator extends SpelNodeImpl {
 			if (leftNumeric && rightNumeric) {
 				if (CodeFlow.areBoxingCompatible(ld, rd)) {
 					return new DescriptorComparison(true, true, CodeFlow.toPrimitiveTargetDesc(ld));
-				}
-				else {
+				} else {
 					return DescriptorComparison.INCOMPATIBLE_NUMBERS;
 				}
-			}
-			else {
+			} else {
 				return DescriptorComparison.NOT_NUMBERS;
 			}
 		}

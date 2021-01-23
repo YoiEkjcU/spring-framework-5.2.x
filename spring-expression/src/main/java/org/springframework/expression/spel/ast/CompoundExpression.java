@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.expression.spel.ast;
 
 import java.util.StringJoiner;
@@ -59,8 +43,7 @@ public class CompoundExpression extends SpelNodeImpl {
 					state.pushActiveContextObject(result);
 					nextNode = this.children[i];
 					result = nextNode.getValueInternal(state);
-				}
-				finally {
+				} finally {
 					state.popActiveContextObject();
 				}
 			}
@@ -68,12 +51,10 @@ public class CompoundExpression extends SpelNodeImpl {
 				state.pushActiveContextObject(result);
 				nextNode = this.children[cc - 1];
 				return nextNode.getValueRef(state);
-			}
-			finally {
+			} finally {
 				state.popActiveContextObject();
 			}
-		}
-		catch (SpelEvaluationException ex) {
+		} catch (SpelEvaluationException ex) {
 			// Correct the position for the error before re-throwing
 			ex.setPosition(nextNode.getStartPosition());
 			throw ex;
@@ -83,6 +64,7 @@ public class CompoundExpression extends SpelNodeImpl {
 	/**
 	 * Evaluates a compound expression. This involves evaluating each piece in turn and the
 	 * return value from each piece is the active context object for the subsequent piece.
+	 *
 	 * @param state the state in which the expression is being evaluated
 	 * @return the final value from the last piece of the compound expression
 	 */
@@ -115,7 +97,7 @@ public class CompoundExpression extends SpelNodeImpl {
 
 	@Override
 	public boolean isCompilable() {
-		for (SpelNodeImpl child: this.children) {
+		for (SpelNodeImpl child : this.children) {
 			if (!child.isCompilable()) {
 				return false;
 			}

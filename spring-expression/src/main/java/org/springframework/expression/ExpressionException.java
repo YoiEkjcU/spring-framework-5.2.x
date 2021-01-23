@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.expression;
 
 import org.springframework.lang.Nullable;
@@ -36,6 +20,7 @@ public class ExpressionException extends RuntimeException {
 
 	/**
 	 * Construct a new expression exception.
+	 *
 	 * @param message a descriptive message
 	 */
 	public ExpressionException(String message) {
@@ -46,8 +31,9 @@ public class ExpressionException extends RuntimeException {
 
 	/**
 	 * Construct a new expression exception.
+	 *
 	 * @param message a descriptive message
-	 * @param cause the underlying cause of this exception
+	 * @param cause   the underlying cause of this exception
 	 */
 	public ExpressionException(String message, Throwable cause) {
 		super(message, cause);
@@ -57,8 +43,9 @@ public class ExpressionException extends RuntimeException {
 
 	/**
 	 * Construct a new expression exception.
+	 *
 	 * @param expressionString the expression string
-	 * @param message a descriptive message
+	 * @param message          a descriptive message
 	 */
 	public ExpressionException(@Nullable String expressionString, String message) {
 		super(message);
@@ -68,9 +55,10 @@ public class ExpressionException extends RuntimeException {
 
 	/**
 	 * Construct a new expression exception.
+	 *
 	 * @param expressionString the expression string
-	 * @param position the position in the expression string where the problem occurred
-	 * @param message a descriptive message
+	 * @param position         the position in the expression string where the problem occurred
+	 * @param message          a descriptive message
 	 */
 	public ExpressionException(@Nullable String expressionString, int position, String message) {
 		super(message);
@@ -80,8 +68,9 @@ public class ExpressionException extends RuntimeException {
 
 	/**
 	 * Construct a new expression exception.
+	 *
 	 * @param position the position in the expression string where the problem occurred
-	 * @param message a descriptive message
+	 * @param message  a descriptive message
 	 */
 	public ExpressionException(int position, String message) {
 		super(message);
@@ -91,9 +80,10 @@ public class ExpressionException extends RuntimeException {
 
 	/**
 	 * Construct a new expression exception.
+	 *
 	 * @param position the position in the expression string where the problem occurred
-	 * @param message a descriptive message
-	 * @param cause the underlying cause of this exception
+	 * @param message  a descriptive message
+	 * @param cause    the underlying cause of this exception
 	 */
 	public ExpressionException(int position, String message, Throwable cause) {
 		super(message, cause);
@@ -120,6 +110,7 @@ public class ExpressionException extends RuntimeException {
 	/**
 	 * Return the exception message.
 	 * As of Spring 4.0, this method returns the same result as {@link #toDetailedString()}.
+	 *
 	 * @see #getSimpleMessage()
 	 * @see java.lang.Throwable#getMessage()
 	 */
@@ -145,8 +136,7 @@ public class ExpressionException extends RuntimeException {
 			output.append(": ");
 			output.append(getSimpleMessage());
 			return output.toString();
-		}
-		else {
+		} else {
 			return getSimpleMessage();
 		}
 	}
@@ -154,6 +144,7 @@ public class ExpressionException extends RuntimeException {
 	/**
 	 * Return the exception simple message without including the expression
 	 * that caused the failure.
+	 *
 	 * @since 4.0
 	 */
 	public String getSimpleMessage() {

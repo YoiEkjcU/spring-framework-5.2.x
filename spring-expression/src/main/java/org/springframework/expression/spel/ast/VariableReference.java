@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.expression.spel.ast;
 
 import java.lang.reflect.Modifier;
@@ -53,14 +37,14 @@ public class VariableReference extends SpelNodeImpl {
 	@Override
 	public ValueRef getValueRef(ExpressionState state) throws SpelEvaluationException {
 		if (this.name.equals(THIS)) {
-			return new ValueRef.TypedValueHolderValueRef(state.getActiveContextObject(),this);
+			return new ValueRef.TypedValueHolderValueRef(state.getActiveContextObject(), this);
 		}
 		if (this.name.equals(ROOT)) {
-			return new ValueRef.TypedValueHolderValueRef(state.getRootContextObject(),this);
+			return new ValueRef.TypedValueHolderValueRef(state.getRootContextObject(), this);
 		}
 		TypedValue result = state.lookupVariable(this.name);
 		// a null value will mean either the value was null or the variable was not found
-		return new VariableRef(this.name,result,state.getEvaluationContext());
+		return new VariableRef(this.name, result, state.getEvaluationContext());
 	}
 
 	@Override
@@ -81,8 +65,7 @@ public class VariableReference extends SpelNodeImpl {
 			// If resorting to Object isn't sufficient, the hierarchy could be traversed for
 			// the first public type.
 			this.exitTypeDescriptor = "Ljava/lang/Object";
-		}
-		else {
+		} else {
 			this.exitTypeDescriptor = CodeFlow.toDescriptorFromObject(value);
 		}
 		// a null value will mean either the value was null or the variable was not found
@@ -112,12 +95,11 @@ public class VariableReference extends SpelNodeImpl {
 	@Override
 	public void generateCode(MethodVisitor mv, CodeFlow cf) {
 		if (this.name.equals(ROOT)) {
-			mv.visitVarInsn(ALOAD,1);
-		}
-		else {
+			mv.visitVarInsn(ALOAD, 1);
+		} else {
 			mv.visitVarInsn(ALOAD, 2);
 			mv.visitLdcInsn(this.name);
-			mv.visitMethodInsn(INVOKEINTERFACE, "org/springframework/expression/EvaluationContext", "lookupVariable", "(Ljava/lang/String;)Ljava/lang/Object;",true);
+			mv.visitMethodInsn(INVOKEINTERFACE, "org/springframework/expression/EvaluationContext", "lookupVariable", "(Ljava/lang/String;)Ljava/lang/Object;", true);
 		}
 		CodeFlow.insertCheckCast(mv, this.exitTypeDescriptor);
 		cf.pushDescriptor(this.exitTypeDescriptor);

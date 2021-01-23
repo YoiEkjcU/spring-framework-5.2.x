@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.expression.spel.ast;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -52,11 +36,12 @@ public class OperatorMatches extends Operator {
 
 	/**
 	 * Check the first operand matches the regex specified as the second operand.
+	 *
 	 * @param state the expression state
 	 * @return {@code true} if the first operand matches the regex specified as the
 	 * second operand, otherwise {@code false}
 	 * @throws EvaluationException if there is a problem evaluating the expression
-	 * (e.g. the regex is invalid)
+	 *                             (e.g. the regex is invalid)
 	 */
 	@Override
 	public BooleanTypedValue getValueInternal(ExpressionState state) throws EvaluationException {
@@ -83,12 +68,10 @@ public class OperatorMatches extends Operator {
 			}
 			Matcher matcher = pattern.matcher(new MatcherInput(left, new AccessCount()));
 			return BooleanTypedValue.forValue(matcher.matches());
-		}
-		catch (PatternSyntaxException ex) {
+		} catch (PatternSyntaxException ex) {
 			throw new SpelEvaluationException(
 					rightOp.getStartPosition(), ex, SpelMessage.INVALID_PATTERN, right);
-		}
-		catch (IllegalStateException ex) {
+		} catch (IllegalStateException ex) {
 			throw new SpelEvaluationException(
 					rightOp.getStartPosition(), ex, SpelMessage.FLAWED_PATTERN, right);
 		}
