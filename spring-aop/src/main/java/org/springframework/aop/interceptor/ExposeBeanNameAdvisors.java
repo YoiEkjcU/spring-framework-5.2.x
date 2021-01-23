@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.aop.interceptor;
 
 import org.aopalliance.intercept.MethodInterceptor;
@@ -37,8 +21,8 @@ import org.springframework.lang.Nullable;
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
- * @since 2.0
  * @see org.springframework.beans.factory.NamedBean
+ * @since 2.0
  */
 public abstract class ExposeBeanNameAdvisors {
 
@@ -53,6 +37,7 @@ public abstract class ExposeBeanNameAdvisors {
 	 * Find the bean name for the current invocation. Assumes that an ExposeBeanNameAdvisor
 	 * has been included in the interceptor chain, and that the invocation is exposed
 	 * with ExposeInvocationInterceptor.
+	 *
 	 * @return the bean name (never {@code null})
 	 * @throws IllegalStateException if the bean name has not been exposed
 	 */
@@ -63,6 +48,7 @@ public abstract class ExposeBeanNameAdvisors {
 	/**
 	 * Find the bean name for the given invocation. Assumes that an ExposeBeanNameAdvisor
 	 * has been included in the interceptor chain.
+	 *
 	 * @param mi the MethodInvocation that should contain the bean name as an attribute
 	 * @return the bean name (never {@code null})
 	 * @throws IllegalStateException if the bean name has not been exposed
@@ -82,6 +68,7 @@ public abstract class ExposeBeanNameAdvisors {
 	/**
 	 * Create a new advisor that will expose the given bean name,
 	 * with no introduction.
+	 *
 	 * @param beanName bean name to expose
 	 */
 	public static Advisor createAdvisorWithoutIntroduction(String beanName) {
@@ -92,6 +79,7 @@ public abstract class ExposeBeanNameAdvisors {
 	 * Create a new advisor that will expose the given bean name, introducing
 	 * the NamedBean interface to make the bean name accessible without forcing
 	 * the target object to be aware of this Spring IoC concept.
+	 *
 	 * @param beanName the bean name to expose
 	 */
 	public static Advisor createAdvisorIntroducingNamedBean(String beanName) {

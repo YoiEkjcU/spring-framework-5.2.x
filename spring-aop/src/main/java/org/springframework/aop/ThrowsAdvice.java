@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2008 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.aop;
 
 /**
@@ -30,7 +14,7 @@ package org.springframework.aop;
  * <pre class="code">public void afterThrowing(RemoteException)</pre>
  * <pre class="code">public void afterThrowing(Method method, Object[] args, Object target, Exception ex)</pre>
  * <pre class="code">public void afterThrowing(Method method, Object[] args, Object target, ServletException ex)</pre>
- *
+ * <p>
  * The first three arguments are optional, and only useful if we want further
  * information about the joinpoint, as in AspectJ <b>after-throwing</b> advice.
  *

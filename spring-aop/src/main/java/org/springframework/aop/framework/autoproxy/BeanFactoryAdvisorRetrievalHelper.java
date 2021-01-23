@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.aop.framework.autoproxy;
 
 import java.util.ArrayList;
@@ -35,8 +19,8 @@ import org.springframework.util.Assert;
  * for use with auto-proxying.
  *
  * @author Juergen Hoeller
- * @since 2.0.2
  * @see AbstractAdvisorAutoProxyCreator
+ * @since 2.0.2
  */
 public class BeanFactoryAdvisorRetrievalHelper {
 
@@ -50,6 +34,7 @@ public class BeanFactoryAdvisorRetrievalHelper {
 
 	/**
 	 * Create a new BeanFactoryAdvisorRetrievalHelper for the given BeanFactory.
+	 *
 	 * @param beanFactory the ListableBeanFactory to scan
 	 */
 	public BeanFactoryAdvisorRetrievalHelper(ConfigurableListableBeanFactory beanFactory) {
@@ -61,6 +46,7 @@ public class BeanFactoryAdvisorRetrievalHelper {
 	/**
 	 * Find all eligible Advisor beans in the current bean factory,
 	 * ignoring FactoryBeans and excluding beans that are currently in creation.
+	 *
 	 * @return the list of {@link org.springframework.aop.Advisor} beans
 	 * @see #isEligibleBean
 	 */
@@ -85,12 +71,10 @@ public class BeanFactoryAdvisorRetrievalHelper {
 					if (logger.isTraceEnabled()) {
 						logger.trace("Skipping currently created advisor '" + name + "'");
 					}
-				}
-				else {
+				} else {
 					try {
 						advisors.add(this.beanFactory.getBean(name, Advisor.class));
-					}
-					catch (BeanCreationException ex) {
+					} catch (BeanCreationException ex) {
 						Throwable rootCause = ex.getMostSpecificCause();
 						if (rootCause instanceof BeanCurrentlyInCreationException) {
 							BeanCreationException bce = (BeanCreationException) rootCause;
@@ -116,6 +100,7 @@ public class BeanFactoryAdvisorRetrievalHelper {
 	/**
 	 * Determine whether the aspect bean with the given name is eligible.
 	 * <p>The default implementation always returns {@code true}.
+	 *
 	 * @param beanName the name of the aspect bean
 	 * @return whether the bean is eligible
 	 */

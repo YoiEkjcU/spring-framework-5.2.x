@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.aop.target.dynamic;
 
 import org.apache.commons.logging.Log;
@@ -33,13 +17,15 @@ import org.springframework.lang.Nullable;
  * @author Rod Johnson
  * @author Rob Harrop
  * @author Juergen Hoeller
- * @since 2.0
  * @see #requiresRefresh()
  * @see #freshTarget()
+ * @since 2.0
  */
 public abstract class AbstractRefreshableTargetSource implements TargetSource, Refreshable {
 
-	/** Logger available to subclasses. */
+	/**
+	 * Logger available to subclasses.
+	 */
 	protected final Log logger = LogFactory.getLog(getClass());
 
 	@Nullable
@@ -144,6 +130,7 @@ public abstract class AbstractRefreshableTargetSource implements TargetSource, R
 	 * <p>The default implementation always returns {@code true}, triggering
 	 * a refresh every time the delay has elapsed. To be overridden by subclasses
 	 * with an appropriate check of the underlying target resource.
+	 *
 	 * @return whether a refresh is required
 	 */
 	protected boolean requiresRefresh() {
@@ -154,6 +141,7 @@ public abstract class AbstractRefreshableTargetSource implements TargetSource, R
 	 * Obtain a fresh target object.
 	 * <p>Only invoked if a refresh check has found that a refresh is required
 	 * (that is, {@link #requiresRefresh()} has returned {@code true}).
+	 *
 	 * @return the fresh target object
 	 */
 	protected abstract Object freshTarget();

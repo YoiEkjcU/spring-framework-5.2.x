@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.aop.support;
 
 import java.io.IOException;
@@ -36,9 +20,9 @@ import org.springframework.util.Assert;
  * in order to not initialize the advice object until the pointcut actually matches.
  *
  * @author Juergen Hoeller
- * @since 2.0.2
  * @see #setAdviceBeanName
  * @see DefaultBeanFactoryPointcutAdvisor
+ * @since 2.0.2
  */
 @SuppressWarnings("serial")
 public abstract class AbstractBeanFactoryPointcutAdvisor extends AbstractPointcutAdvisor implements BeanFactoryAware {
@@ -61,6 +45,7 @@ public abstract class AbstractBeanFactoryPointcutAdvisor extends AbstractPointcu
 	 * of this advisor's advice. This advisor will only ever obtain at most one
 	 * single instance of the advice bean, caching the instance for the lifetime
 	 * of the advisor.
+	 *
 	 * @see #getAdvice()
 	 */
 	public void setAdviceBeanName(@Nullable String adviceBeanName) {
@@ -84,8 +69,7 @@ public abstract class AbstractBeanFactoryPointcutAdvisor extends AbstractPointcu
 	private void resetAdviceMonitor() {
 		if (this.beanFactory instanceof ConfigurableBeanFactory) {
 			this.adviceMonitor = ((ConfigurableBeanFactory) this.beanFactory).getSingletonMutex();
-		}
-		else {
+		} else {
 			this.adviceMonitor = new Object();
 		}
 	}
@@ -93,6 +77,7 @@ public abstract class AbstractBeanFactoryPointcutAdvisor extends AbstractPointcu
 	/**
 	 * Specify a particular instance of the target advice directly,
 	 * avoiding lazy resolution in {@link #getAdvice()}.
+	 *
 	 * @since 3.1
 	 */
 	public void setAdvice(Advice advice) {
@@ -116,8 +101,7 @@ public abstract class AbstractBeanFactoryPointcutAdvisor extends AbstractPointcu
 			advice = this.beanFactory.getBean(this.adviceBeanName, Advice.class);
 			this.advice = advice;
 			return advice;
-		}
-		else {
+		} else {
 			// No singleton guarantees from the factory -> let's lock locally but
 			// reuse the factory's singleton lock, just in case a lazy dependency
 			// of our advice bean happens to trigger the singleton lock implicitly...
@@ -138,8 +122,7 @@ public abstract class AbstractBeanFactoryPointcutAdvisor extends AbstractPointcu
 		sb.append(": advice ");
 		if (this.adviceBeanName != null) {
 			sb.append("bean '").append(this.adviceBeanName).append("'");
-		}
-		else {
+		} else {
 			sb.append(this.advice);
 		}
 		return sb.toString();

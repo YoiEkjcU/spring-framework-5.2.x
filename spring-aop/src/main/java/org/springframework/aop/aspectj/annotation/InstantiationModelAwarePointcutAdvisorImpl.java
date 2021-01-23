@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.aop.aspectj.annotation;
 
 import java.io.IOException;
@@ -45,7 +29,8 @@ import org.springframework.lang.Nullable;
 final class InstantiationModelAwarePointcutAdvisorImpl
 		implements InstantiationModelAwarePointcutAdvisor, AspectJPrecedenceInformation, Serializable {
 
-	private static final Advice EMPTY_ADVICE = new Advice() {};
+	private static final Advice EMPTY_ADVICE = new Advice() {
+	};
 
 
 	private final AspectJExpressionPointcut declaredPointcut;
@@ -81,8 +66,8 @@ final class InstantiationModelAwarePointcutAdvisorImpl
 
 
 	public InstantiationModelAwarePointcutAdvisorImpl(AspectJExpressionPointcut declaredPointcut,
-			Method aspectJAdviceMethod, AspectJAdvisorFactory aspectJAdvisorFactory,
-			MetadataAwareAspectInstanceFactory aspectInstanceFactory, int declarationOrder, String aspectName) {
+													  Method aspectJAdviceMethod, AspectJAdvisorFactory aspectJAdvisorFactory,
+													  MetadataAwareAspectInstanceFactory aspectInstanceFactory, int declarationOrder, String aspectName) {
 
 		this.declaredPointcut = declaredPointcut;
 		this.declaringClass = aspectJAdviceMethod.getDeclaringClass();
@@ -105,8 +90,7 @@ final class InstantiationModelAwarePointcutAdvisorImpl
 			this.pointcut = new PerTargetInstantiationModelPointcut(
 					this.declaredPointcut, preInstantiationPointcut, aspectInstanceFactory);
 			this.lazy = true;
-		}
-		else {
+		} else {
 			// A singleton aspect.
 			this.pointcut = this.declaredPointcut;
 			this.lazy = false;
@@ -217,8 +201,7 @@ final class InstantiationModelAwarePointcutAdvisorImpl
 		if (aspectJAnnotation == null) {
 			this.isBeforeAdvice = false;
 			this.isAfterAdvice = false;
-		}
-		else {
+		} else {
 			switch (aspectJAnnotation.getAnnotationType()) {
 				case AtPointcut:
 				case AtAround:
@@ -244,8 +227,7 @@ final class InstantiationModelAwarePointcutAdvisorImpl
 		inputStream.defaultReadObject();
 		try {
 			this.aspectJAdviceMethod = this.declaringClass.getMethod(this.methodName, this.parameterTypes);
-		}
-		catch (NoSuchMethodException ex) {
+		} catch (NoSuchMethodException ex) {
 			throw new IllegalStateException("Failed to find advice method on deserialization", ex);
 		}
 	}
@@ -273,7 +255,7 @@ final class InstantiationModelAwarePointcutAdvisorImpl
 		private LazySingletonAspectInstanceFactoryDecorator aspectInstanceFactory;
 
 		public PerTargetInstantiationModelPointcut(AspectJExpressionPointcut declaredPointcut,
-				Pointcut preInstantiationPointcut, MetadataAwareAspectInstanceFactory aspectInstanceFactory) {
+												   Pointcut preInstantiationPointcut, MetadataAwareAspectInstanceFactory aspectInstanceFactory) {
 
 			this.declaredPointcut = declaredPointcut;
 			this.preInstantiationPointcut = preInstantiationPointcut;

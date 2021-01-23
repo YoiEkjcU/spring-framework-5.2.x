@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.aop.aspectj;
 
 import java.lang.reflect.InvocationTargetException;
@@ -38,6 +22,7 @@ public class SimpleAspectInstanceFactory implements AspectInstanceFactory {
 
 	/**
 	 * Create a new SimpleAspectInstanceFactory for the given aspect class.
+	 *
 	 * @param aspectClass the aspect class
 	 */
 	public SimpleAspectInstanceFactory(Class<?> aspectClass) {
@@ -57,20 +42,16 @@ public class SimpleAspectInstanceFactory implements AspectInstanceFactory {
 	public final Object getAspectInstance() {
 		try {
 			return ReflectionUtils.accessibleConstructor(this.aspectClass).newInstance();
-		}
-		catch (NoSuchMethodException ex) {
+		} catch (NoSuchMethodException ex) {
 			throw new AopConfigException(
 					"No default constructor on aspect class: " + this.aspectClass.getName(), ex);
-		}
-		catch (InstantiationException ex) {
+		} catch (InstantiationException ex) {
 			throw new AopConfigException(
 					"Unable to instantiate aspect class: " + this.aspectClass.getName(), ex);
-		}
-		catch (IllegalAccessException ex) {
+		} catch (IllegalAccessException ex) {
 			throw new AopConfigException(
 					"Could not access aspect constructor: " + this.aspectClass.getName(), ex);
-		}
-		catch (InvocationTargetException ex) {
+		} catch (InvocationTargetException ex) {
 			throw new AopConfigException(
 					"Failed to invoke aspect constructor: " + this.aspectClass.getName(), ex.getTargetException());
 		}
@@ -87,6 +68,7 @@ public class SimpleAspectInstanceFactory implements AspectInstanceFactory {
 	 * either an instance-specific order expressed through implementing
 	 * the {@link org.springframework.core.Ordered} interface,
 	 * or a fallback order.
+	 *
 	 * @see org.springframework.core.Ordered
 	 * @see #getOrderForAspectClass
 	 */
@@ -100,6 +82,7 @@ public class SimpleAspectInstanceFactory implements AspectInstanceFactory {
 	 * does not express an instance-specific order through implementing
 	 * the {@link org.springframework.core.Ordered} interface.
 	 * <p>The default implementation simply returns {@code Ordered.LOWEST_PRECEDENCE}.
+	 *
 	 * @param aspectClass the aspect class
 	 */
 	protected int getOrderForAspectClass(Class<?> aspectClass) {

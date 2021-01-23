@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.aop.support;
 
 import java.util.Map;
@@ -48,9 +32,9 @@ import org.springframework.util.ReflectionUtils;
  *
  * @author Adrian Colyer
  * @author Juergen Hoeller
- * @since 2.0
  * @see #suppressInterface
  * @see DelegatingIntroductionInterceptor
+ * @since 2.0
  */
 @SuppressWarnings("serial")
 public class DelegatePerTargetObjectIntroductionInterceptor extends IntroductionInfoSupport
@@ -124,8 +108,7 @@ public class DelegatePerTargetObjectIntroductionInterceptor extends Introduction
 		synchronized (this.delegateMap) {
 			if (this.delegateMap.containsKey(targetObject)) {
 				return this.delegateMap.get(targetObject);
-			}
-			else {
+			} else {
 				Object delegate = createNewDelegate();
 				this.delegateMap.put(targetObject, delegate);
 				return delegate;
@@ -136,8 +119,7 @@ public class DelegatePerTargetObjectIntroductionInterceptor extends Introduction
 	private Object createNewDelegate() {
 		try {
 			return ReflectionUtils.accessibleConstructor(this.defaultImplType).newInstance();
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			throw new IllegalArgumentException("Cannot create default implementation for '" +
 					this.interfaceType.getName() + "' mixin (" + this.defaultImplType.getName() + "): " + ex);
 		}

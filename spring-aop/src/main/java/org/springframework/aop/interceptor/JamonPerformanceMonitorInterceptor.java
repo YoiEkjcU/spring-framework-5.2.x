@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.aop.interceptor;
 
 import com.jamonapi.MonKey;
@@ -36,9 +20,9 @@ import org.apache.commons.logging.Log;
  * @author Juergen Hoeller
  * @author Rob Harrop
  * @author Steve Souza
- * @since 1.1.3
  * @see com.jamonapi.MonitorFactory
  * @see PerformanceMonitorInterceptor
+ * @since 1.1.3
  */
 @SuppressWarnings("serial")
 public class JamonPerformanceMonitorInterceptor extends AbstractMonitoringInterceptor {
@@ -55,6 +39,7 @@ public class JamonPerformanceMonitorInterceptor extends AbstractMonitoringInterc
 	/**
 	 * Create a new JamonPerformanceMonitorInterceptor with a dynamic or static logger,
 	 * according to the given flag.
+	 *
 	 * @param useDynamicLogger whether to use a dynamic logger or a static logger
 	 * @see #setUseDynamicLogger
 	 */
@@ -65,9 +50,10 @@ public class JamonPerformanceMonitorInterceptor extends AbstractMonitoringInterc
 	/**
 	 * Create a new JamonPerformanceMonitorInterceptor with a dynamic or static logger,
 	 * according to the given flag.
-	 * @param useDynamicLogger whether to use a dynamic logger or a static logger
+	 *
+	 * @param useDynamicLogger    whether to use a dynamic logger or a static logger
 	 * @param trackAllInvocations whether to track all invocations that go through
-	 * this interceptor, or just invocations with trace logging enabled
+	 *                            this interceptor, or just invocations with trace logging enabled
 	 * @see #setUseDynamicLogger
 	 */
 	public JamonPerformanceMonitorInterceptor(boolean useDynamicLogger, boolean trackAllInvocations) {
@@ -91,6 +77,7 @@ public class JamonPerformanceMonitorInterceptor extends AbstractMonitoringInterc
 	/**
 	 * Always applies the interceptor if the "trackAllInvocations" flag has been set;
 	 * else just kicks in if the log is enabled.
+	 *
 	 * @see #setTrackAllInvocations
 	 * @see #isLogEnabled
 	 */
@@ -102,6 +89,7 @@ public class JamonPerformanceMonitorInterceptor extends AbstractMonitoringInterc
 	/**
 	 * Wraps the invocation with a JAMon Monitor and writes the current
 	 * performance statistics to the log (if enabled).
+	 *
 	 * @see com.jamonapi.MonitorFactory#start
 	 * @see com.jamonapi.Monitor#stop
 	 */
@@ -113,12 +101,10 @@ public class JamonPerformanceMonitorInterceptor extends AbstractMonitoringInterc
 		Monitor monitor = MonitorFactory.start(key);
 		try {
 			return invocation.proceed();
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			trackException(key, ex);
 			throw ex;
-		}
-		finally {
+		} finally {
 			monitor.stop();
 			if (!this.trackAllInvocations || isLogEnabled(logger)) {
 				writeToLog(logger, "JAMon performance statistics for method [" + name + "]:\n" + monitor);

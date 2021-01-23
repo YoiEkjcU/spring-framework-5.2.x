@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.aop.support;
 
 import org.aopalliance.intercept.MethodInvocation;
@@ -45,9 +29,9 @@ import org.springframework.util.Assert;
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
- * @since 16.11.2003
  * @see #suppressInterface
  * @see DelegatePerTargetObjectIntroductionInterceptor
+ * @since 16.11.2003
  */
 @SuppressWarnings("serial")
 public class DelegatingIntroductionInterceptor extends IntroductionInfoSupport
@@ -64,6 +48,7 @@ public class DelegatingIntroductionInterceptor extends IntroductionInfoSupport
 	/**
 	 * Construct a new DelegatingIntroductionInterceptor, providing
 	 * a delegate that implements the interfaces to be introduced.
+	 *
 	 * @param delegate the delegate that implements the introduced interfaces
 	 */
 	public DelegatingIntroductionInterceptor(Object delegate) {
@@ -83,6 +68,7 @@ public class DelegatingIntroductionInterceptor extends IntroductionInfoSupport
 	/**
 	 * Both constructors use this init method, as it is impossible to pass
 	 * a "this" reference from one constructor to another.
+	 *
 	 * @param delegate the delegate object
 	 */
 	private void init(Object delegate) {

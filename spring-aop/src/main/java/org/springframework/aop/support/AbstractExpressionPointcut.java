@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.aop.support;
 
 import java.io.Serializable;
@@ -26,9 +10,9 @@ import org.springframework.lang.Nullable;
  *
  * @author Rod Johnson
  * @author Rob Harrop
- * @since 2.0
  * @see #setLocation
  * @see #setExpression
+ * @since 2.0
  */
 @SuppressWarnings("serial")
 public abstract class AbstractExpressionPointcut implements ExpressionPointcut, Serializable {
@@ -50,6 +34,7 @@ public abstract class AbstractExpressionPointcut implements ExpressionPointcut, 
 	/**
 	 * Return location information about the pointcut expression
 	 * if available. This is useful in debugging.
+	 *
 	 * @return location information as a human-readable String,
 	 * or {@code null} if none is available
 	 */
@@ -62,13 +47,11 @@ public abstract class AbstractExpressionPointcut implements ExpressionPointcut, 
 		this.expression = expression;
 		try {
 			onSetExpression(expression);
-		}
-		catch (IllegalArgumentException ex) {
+		} catch (IllegalArgumentException ex) {
 			// Fill in location information if possible.
 			if (this.location != null) {
 				throw new IllegalArgumentException("Invalid expression at location [" + this.location + "]: " + ex);
-			}
-			else {
+			} else {
 				throw ex;
 			}
 		}
@@ -78,6 +61,7 @@ public abstract class AbstractExpressionPointcut implements ExpressionPointcut, 
 	 * Called when a new pointcut expression is set.
 	 * The expression should be parsed at this point if possible.
 	 * <p>This implementation is empty.
+	 *
 	 * @param expression the expression to set
 	 * @throws IllegalArgumentException if the expression is invalid
 	 * @see #setExpression

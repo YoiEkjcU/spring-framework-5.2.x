@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.aop.aspectj.autoproxy;
 
 import java.util.Comparator;
@@ -70,6 +54,7 @@ class AspectJPrecedenceComparator implements Comparator<Advisor> {
 	/**
 	 * Create an {@code AspectJPrecedenceComparator}, using the given {@link Comparator}
 	 * for comparing {@link org.springframework.aop.Advisor} instances.
+	 *
 	 * @param advisorComparator the {@code Comparator} to use for advisors
 	 */
 	public AspectJPrecedenceComparator(Comparator<? super Advisor> advisorComparator) {
@@ -98,25 +83,20 @@ class AspectJPrecedenceComparator implements Comparator<Advisor> {
 				// advice1 was declared before advice2
 				// so advice1 has lower precedence
 				return LOWER_PRECEDENCE;
-			}
-			else if (adviceDeclarationOrderDelta == 0) {
+			} else if (adviceDeclarationOrderDelta == 0) {
 				return SAME_PRECEDENCE;
-			}
-			else {
+			} else {
 				return HIGHER_PRECEDENCE;
 			}
-		}
-		else {
+		} else {
 			// the advice declared first has higher precedence
 			if (adviceDeclarationOrderDelta < 0) {
 				// advice1 was declared before advice2
 				// so advice1 has higher precedence
 				return HIGHER_PRECEDENCE;
-			}
-			else if (adviceDeclarationOrderDelta == 0) {
+			} else if (adviceDeclarationOrderDelta == 0) {
 				return SAME_PRECEDENCE;
-			}
-			else {
+			} else {
 				return LOWER_PRECEDENCE;
 			}
 		}

@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.aop.aspectj.annotation;
 
 import java.lang.annotation.Annotation;
@@ -59,11 +43,13 @@ public abstract class AbstractAspectJAdvisorFactory implements AspectJAdvisorFac
 
 	private static final String AJC_MAGIC = "ajc$";
 
-	private static final Class<?>[] ASPECTJ_ANNOTATION_CLASSES = new Class<?>[] {
+	private static final Class<?>[] ASPECTJ_ANNOTATION_CLASSES = new Class<?>[]{
 			Pointcut.class, Around.class, Before.class, After.class, AfterReturning.class, AfterThrowing.class};
 
 
-	/** Logger available to subclasses. */
+	/**
+	 * Logger available to subclasses.
+	 */
 	protected final Log logger = LogFactory.getLog(getClass());
 
 	protected final ParameterNameDiscoverer parameterNameDiscoverer = new AspectJAnnotationParameterNameDiscoverer();
@@ -144,8 +130,7 @@ public abstract class AbstractAspectJAdvisorFactory implements AspectJAdvisorFac
 		A result = AnnotationUtils.findAnnotation(method, toLookFor);
 		if (result != null) {
 			return new AspectJAnnotation<>(result);
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
@@ -153,6 +138,7 @@ public abstract class AbstractAspectJAdvisorFactory implements AspectJAdvisorFac
 
 	/**
 	 * Enum for AspectJ annotation types.
+	 *
 	 * @see AspectJAnnotation#getAnnotationType()
 	 */
 	protected enum AspectJAnnotationType {
@@ -164,11 +150,12 @@ public abstract class AbstractAspectJAdvisorFactory implements AspectJAdvisorFac
 	/**
 	 * Class modelling an AspectJ annotation, exposing its type enumeration and
 	 * pointcut String.
+	 *
 	 * @param <A> the annotation type
 	 */
 	protected static class AspectJAnnotation<A extends Annotation> {
 
-		private static final String[] EXPRESSION_ATTRIBUTES = new String[] {"pointcut", "value"};
+		private static final String[] EXPRESSION_ATTRIBUTES = new String[]{"pointcut", "value"};
 
 		private static Map<Class<?>, AspectJAnnotationType> annotationTypeMap = new HashMap<>(8);
 
@@ -196,8 +183,7 @@ public abstract class AbstractAspectJAdvisorFactory implements AspectJAdvisorFac
 				this.pointcutExpression = resolveExpression(annotation);
 				Object argNames = AnnotationUtils.getValue(annotation, "argNames");
 				this.argumentNames = (argNames instanceof String ? (String) argNames : "");
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				throw new IllegalArgumentException(annotation + " is not a valid AspectJ annotation", ex);
 			}
 		}
@@ -269,8 +255,7 @@ public abstract class AbstractAspectJAdvisorFactory implements AspectJAdvisorFac
 					names[i] = nameTokens.nextToken();
 				}
 				return names;
-			}
-			else {
+			} else {
 				return null;
 			}
 		}

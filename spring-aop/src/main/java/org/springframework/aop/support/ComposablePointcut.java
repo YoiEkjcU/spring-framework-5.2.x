@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.aop.support;
 
 import java.io.Serializable;
@@ -38,12 +22,14 @@ import org.springframework.util.Assert;
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @author Rob Harrop
- * @since 11.11.2003
  * @see Pointcuts
+ * @since 11.11.2003
  */
 public class ComposablePointcut implements Pointcut, Serializable {
 
-	/** use serialVersionUID from Spring 1.2 for interoperability. */
+	/**
+	 * use serialVersionUID from Spring 1.2 for interoperability.
+	 */
 	private static final long serialVersionUID = -2743223737633663832L;
 
 	private ClassFilter classFilter;
@@ -62,6 +48,7 @@ public class ComposablePointcut implements Pointcut, Serializable {
 
 	/**
 	 * Create a ComposablePointcut based on the given Pointcut.
+	 *
 	 * @param pointcut the original Pointcut
 	 */
 	public ComposablePointcut(Pointcut pointcut) {
@@ -73,6 +60,7 @@ public class ComposablePointcut implements Pointcut, Serializable {
 	/**
 	 * Create a ComposablePointcut for the given ClassFilter,
 	 * with {@code MethodMatcher.TRUE}.
+	 *
 	 * @param classFilter the ClassFilter to use
 	 */
 	public ComposablePointcut(ClassFilter classFilter) {
@@ -84,6 +72,7 @@ public class ComposablePointcut implements Pointcut, Serializable {
 	/**
 	 * Create a ComposablePointcut for the given MethodMatcher,
 	 * with {@code ClassFilter.TRUE}.
+	 *
 	 * @param methodMatcher the MethodMatcher to use
 	 */
 	public ComposablePointcut(MethodMatcher methodMatcher) {
@@ -94,7 +83,8 @@ public class ComposablePointcut implements Pointcut, Serializable {
 
 	/**
 	 * Create a ComposablePointcut for the given ClassFilter and MethodMatcher.
-	 * @param classFilter the ClassFilter to use
+	 *
+	 * @param classFilter   the ClassFilter to use
 	 * @param methodMatcher the MethodMatcher to use
 	 */
 	public ComposablePointcut(ClassFilter classFilter, MethodMatcher methodMatcher) {
@@ -107,6 +97,7 @@ public class ComposablePointcut implements Pointcut, Serializable {
 
 	/**
 	 * Apply a union with the given ClassFilter.
+	 *
 	 * @param other the ClassFilter to apply a union with
 	 * @return this composable pointcut (for call chaining)
 	 */
@@ -117,6 +108,7 @@ public class ComposablePointcut implements Pointcut, Serializable {
 
 	/**
 	 * Apply an intersection with the given ClassFilter.
+	 *
 	 * @param other the ClassFilter to apply an intersection with
 	 * @return this composable pointcut (for call chaining)
 	 */
@@ -127,6 +119,7 @@ public class ComposablePointcut implements Pointcut, Serializable {
 
 	/**
 	 * Apply a union with the given MethodMatcher.
+	 *
 	 * @param other the MethodMatcher to apply a union with
 	 * @return this composable pointcut (for call chaining)
 	 */
@@ -137,6 +130,7 @@ public class ComposablePointcut implements Pointcut, Serializable {
 
 	/**
 	 * Apply an intersection with the given MethodMatcher.
+	 *
 	 * @param other the MethodMatcher to apply an intersection with
 	 * @return this composable pointcut (for call chaining)
 	 */
@@ -151,6 +145,7 @@ public class ComposablePointcut implements Pointcut, Serializable {
 	 * original ClassFilter (from the originating Pointcut) matches as well.
 	 * MethodMatchers and ClassFilters from different Pointcuts will never
 	 * get interleaved with each other.
+	 *
 	 * @param other the Pointcut to apply a union with
 	 * @return this composable pointcut (for call chaining)
 	 */
@@ -163,6 +158,7 @@ public class ComposablePointcut implements Pointcut, Serializable {
 
 	/**
 	 * Apply an intersection with the given Pointcut.
+	 *
 	 * @param other the Pointcut to apply an intersection with
 	 * @return this composable pointcut (for call chaining)
 	 */

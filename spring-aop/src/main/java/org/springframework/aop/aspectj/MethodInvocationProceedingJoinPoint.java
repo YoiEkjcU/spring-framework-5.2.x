@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2020 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.aop.aspectj;
 
 import java.lang.reflect.Method;
@@ -58,11 +42,15 @@ public class MethodInvocationProceedingJoinPoint implements ProceedingJoinPoint,
 	@Nullable
 	private Object[] args;
 
-	/** Lazily initialized signature object. */
+	/**
+	 * Lazily initialized signature object.
+	 */
 	@Nullable
 	private Signature signature;
 
-	/** Lazily initialized source location object. */
+	/**
+	 * Lazily initialized source location object.
+	 */
 	@Nullable
 	private SourceLocation sourceLocation;
 
@@ -70,6 +58,7 @@ public class MethodInvocationProceedingJoinPoint implements ProceedingJoinPoint,
 	/**
 	 * Create a new MethodInvocationProceedingJoinPoint, wrapping the given
 	 * Spring ProxyMethodInvocation object.
+	 *
 	 * @param methodInvocation the Spring ProxyMethodInvocation object
 	 */
 	public MethodInvocationProceedingJoinPoint(ProxyMethodInvocation methodInvocation) {
@@ -248,7 +237,7 @@ public class MethodInvocationProceedingJoinPoint implements ProceedingJoinPoint,
 		}
 
 		private String toString(boolean includeModifier, boolean includeReturnTypeAndArgs,
-				boolean useLongReturnAndArgumentTypeName, boolean useLongTypeName) {
+								boolean useLongReturnAndArgumentTypeName, boolean useLongTypeName) {
 
 			StringBuilder sb = new StringBuilder();
 			if (includeModifier) {
@@ -270,7 +259,7 @@ public class MethodInvocationProceedingJoinPoint implements ProceedingJoinPoint,
 		}
 
 		private void appendTypes(StringBuilder sb, Class<?>[] types, boolean includeArgs,
-				boolean useLongReturnAndArgumentTypeName) {
+								 boolean useLongReturnAndArgumentTypeName) {
 
 			if (includeArgs) {
 				for (int size = types.length, i = 0; i < size; i++) {
@@ -279,8 +268,7 @@ public class MethodInvocationProceedingJoinPoint implements ProceedingJoinPoint,
 						sb.append(",");
 					}
 				}
-			}
-			else {
+			} else {
 				if (types.length != 0) {
 					sb.append("..");
 				}
@@ -291,8 +279,7 @@ public class MethodInvocationProceedingJoinPoint implements ProceedingJoinPoint,
 			if (type.isArray()) {
 				appendType(sb, type.getComponentType(), useLongTypeName);
 				sb.append("[]");
-			}
-			else {
+			} else {
 				sb.append(useLongTypeName ? type.getName() : type.getSimpleName());
 			}
 		}

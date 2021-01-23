@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2019 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.aop.support;
 
 import java.io.Serializable;
@@ -51,8 +35,9 @@ public class DefaultIntroductionAdvisor implements IntroductionAdvisor, ClassFil
 
 	/**
 	 * Create a DefaultIntroductionAdvisor for the given advice.
+	 *
 	 * @param advice the Advice to apply (may implement the
-	 * {@link org.springframework.aop.IntroductionInfo} interface)
+	 *               {@link org.springframework.aop.IntroductionInfo} interface)
 	 * @see #addInterface
 	 */
 	public DefaultIntroductionAdvisor(Advice advice) {
@@ -61,9 +46,10 @@ public class DefaultIntroductionAdvisor implements IntroductionAdvisor, ClassFil
 
 	/**
 	 * Create a DefaultIntroductionAdvisor for the given advice.
-	 * @param advice the Advice to apply
+	 *
+	 * @param advice           the Advice to apply
 	 * @param introductionInfo the IntroductionInfo that describes
-	 * the interface to introduce (may be {@code null})
+	 *                         the interface to introduce (may be {@code null})
 	 */
 	public DefaultIntroductionAdvisor(Advice advice, @Nullable IntroductionInfo introductionInfo) {
 		Assert.notNull(advice, "Advice must not be null");
@@ -81,8 +67,9 @@ public class DefaultIntroductionAdvisor implements IntroductionAdvisor, ClassFil
 
 	/**
 	 * Create a DefaultIntroductionAdvisor for the given advice.
+	 *
 	 * @param advice the Advice to apply
-	 * @param ifc the interface to introduce
+	 * @param ifc    the interface to introduce
 	 */
 	public DefaultIntroductionAdvisor(DynamicIntroductionAdvice advice, Class<?> ifc) {
 		Assert.notNull(advice, "Advice must not be null");
@@ -93,6 +80,7 @@ public class DefaultIntroductionAdvisor implements IntroductionAdvisor, ClassFil
 
 	/**
 	 * Add the specified interface to the list of interfaces to introduce.
+	 *
 	 * @param ifc the interface to introduce
 	 */
 	public void addInterface(Class<?> ifc) {

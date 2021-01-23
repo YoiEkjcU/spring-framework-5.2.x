@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.aop.framework;
 
 import org.aopalliance.aop.Advice;
@@ -32,8 +16,8 @@ import org.springframework.aop.TargetSource;
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
- * @since 13.03.2003
  * @see org.springframework.aop.framework.AdvisedSupport
+ * @since 13.03.2003
  */
 public interface Advised extends TargetClassAware {
 
@@ -56,6 +40,7 @@ public interface Advised extends TargetClassAware {
 
 	/**
 	 * Determine whether the given interface is proxied.
+	 *
 	 * @param intf the interface to check
 	 */
 	boolean isInterfaceProxied(Class<?> intf);
@@ -63,6 +48,7 @@ public interface Advised extends TargetClassAware {
 	/**
 	 * Change the {@code TargetSource} used by this {@code Advised} object.
 	 * <p>Only works if the configuration isn't {@linkplain #isFrozen frozen}.
+	 *
 	 * @param targetSource new TargetSource to use
 	 */
 	void setTargetSource(TargetSource targetSource);
@@ -88,6 +74,7 @@ public interface Advised extends TargetClassAware {
 	 * to invoke a method on itself with advice applied. Otherwise, if an
 	 * advised object invokes a method on {@code this}, no advice will be applied.
 	 * <p>Getting the proxy is analogous to an EJB calling {@code getEJBObject()}.
+	 *
 	 * @see AopContext
 	 */
 	boolean isExposeProxy();
@@ -98,6 +85,7 @@ public interface Advised extends TargetClassAware {
 	 * <p>Default is "false". Set this to "true" if the advisors have been
 	 * pre-filtered already, meaning that the ClassFilter check can be skipped
 	 * when building the actual advisor chain for proxy invocations.
+	 *
 	 * @see org.springframework.aop.ClassFilter
 	 */
 	void setPreFiltered(boolean preFiltered);
@@ -110,6 +98,7 @@ public interface Advised extends TargetClassAware {
 
 	/**
 	 * Return the advisors applying to this proxy.
+	 *
 	 * @return a list of Advisors applying to this proxy (never {@code null})
 	 */
 	Advisor[] getAdvisors();
@@ -119,6 +108,7 @@ public interface Advised extends TargetClassAware {
 	 * <p>The Advisor may be an {@link org.springframework.aop.IntroductionAdvisor},
 	 * in which new interfaces will be available when a proxy is next obtained
 	 * from the relevant factory.
+	 *
 	 * @param advisor the advisor to add to the end of the chain
 	 * @throws AopConfigException in case of invalid advice
 	 */
@@ -126,14 +116,16 @@ public interface Advised extends TargetClassAware {
 
 	/**
 	 * Add an Advisor at the specified position in the chain.
+	 *
 	 * @param advisor the advisor to add at the specified position in the chain
-	 * @param pos position in chain (0 is head). Must be valid.
+	 * @param pos     position in chain (0 is head). Must be valid.
 	 * @throws AopConfigException in case of invalid advice
 	 */
 	void addAdvisor(int pos, Advisor advisor) throws AopConfigException;
 
 	/**
 	 * Remove the given advisor.
+	 *
 	 * @param advisor the advisor to remove
 	 * @return {@code true} if the advisor was removed; {@code false}
 	 * if the advisor was not found and hence could not be removed
@@ -142,6 +134,7 @@ public interface Advised extends TargetClassAware {
 
 	/**
 	 * Remove the advisor at the given index.
+	 *
 	 * @param index the index of advisor to remove
 	 * @throws AopConfigException if the index is invalid
 	 */
@@ -151,6 +144,7 @@ public interface Advised extends TargetClassAware {
 	 * Return the index (from 0) of the given advisor,
 	 * or -1 if no such advisor applies to this proxy.
 	 * <p>The return value of this method can be used to index into the advisors array.
+	 *
 	 * @param advisor the advisor to search for
 	 * @return index from 0 of this advisor, or -1 if there's no such advisor
 	 */
@@ -162,6 +156,7 @@ public interface Advised extends TargetClassAware {
 	 * and the replacement is not or implements different interfaces, the proxy will need
 	 * to be re-obtained or the old interfaces won't be supported and the new interface
 	 * won't be implemented.
+	 *
 	 * @param a the advisor to replace
 	 * @param b the advisor to replace it with
 	 * @return whether it was replaced. If the advisor wasn't found in the
@@ -177,6 +172,7 @@ public interface Advised extends TargetClassAware {
 	 * <p>Note that the given advice will apply to all invocations on the proxy,
 	 * even to the {@code toString()} method! Use appropriate advice implementations
 	 * or specify appropriate pointcuts to apply to a narrower set of methods.
+	 *
 	 * @param advice the advice to add to the tail of the chain
 	 * @throws AopConfigException in case of invalid advice
 	 * @see #addAdvice(int, Advice)
@@ -192,7 +188,8 @@ public interface Advised extends TargetClassAware {
 	 * <p>Note: The given advice will apply to all invocations on the proxy,
 	 * even to the {@code toString()} method! Use appropriate advice implementations
 	 * or specify appropriate pointcuts to apply to a narrower set of methods.
-	 * @param pos index from 0 (head)
+	 *
+	 * @param pos    index from 0 (head)
 	 * @param advice the advice to add at the specified position in the advice chain
 	 * @throws AopConfigException in case of invalid advice
 	 */
@@ -200,6 +197,7 @@ public interface Advised extends TargetClassAware {
 
 	/**
 	 * Remove the Advisor containing the given advice.
+	 *
 	 * @param advice the advice to remove
 	 * @return {@code true} of the advice was found and removed;
 	 * {@code false} if there was no such advice
@@ -211,6 +209,7 @@ public interface Advised extends TargetClassAware {
 	 * or -1 if no such advice is an advice for this proxy.
 	 * <p>The return value of this method can be used to index into
 	 * the advisors array.
+	 *
 	 * @param advice the AOP Alliance advice to search for
 	 * @return index from 0 of this advice, or -1 if there's no such advice
 	 */
@@ -219,6 +218,7 @@ public interface Advised extends TargetClassAware {
 	/**
 	 * As {@code toString()} will normally be delegated to the target,
 	 * this returns the equivalent for the AOP proxy.
+	 *
 	 * @return a string description of the proxy configuration
 	 */
 	String toProxyConfigString();

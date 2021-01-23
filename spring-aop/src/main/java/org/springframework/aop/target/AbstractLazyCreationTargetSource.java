@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.aop.target;
 
 import org.apache.commons.logging.Log;
@@ -36,16 +20,20 @@ import org.springframework.lang.Nullable;
  *
  * @author Rob Harrop
  * @author Juergen Hoeller
- * @since 1.2.4
  * @see #isInitialized()
  * @see #createObject()
+ * @since 1.2.4
  */
 public abstract class AbstractLazyCreationTargetSource implements TargetSource {
 
-	/** Logger available to subclasses. */
+	/**
+	 * Logger available to subclasses.
+	 */
 	protected final Log logger = LogFactory.getLog(getClass());
 
-	/** The lazily initialized target object. */
+	/**
+	 * The lazily initialized target object.
+	 */
 	private Object lazyTarget;
 
 
@@ -63,6 +51,7 @@ public abstract class AbstractLazyCreationTargetSource implements TargetSource {
 	 * or the target class if the target has already been initialized.
 	 * <p>Subclasses may wish to override this method in order to provide
 	 * a meaningful value when the target is still {@code null}.
+	 *
 	 * @see #isInitialized()
 	 */
 	@Override
@@ -79,6 +68,7 @@ public abstract class AbstractLazyCreationTargetSource implements TargetSource {
 	/**
 	 * Returns the lazy-initialized target object,
 	 * creating it on-the-fly if it doesn't exist already.
+	 *
 	 * @see #createObject()
 	 */
 	@Override
@@ -99,6 +89,7 @@ public abstract class AbstractLazyCreationTargetSource implements TargetSource {
 	/**
 	 * Subclasses should implement this method to return the lazy initialized object.
 	 * Called the first time the proxy is invoked.
+	 *
 	 * @return the created object
 	 * @throws Exception if creation failed
 	 */

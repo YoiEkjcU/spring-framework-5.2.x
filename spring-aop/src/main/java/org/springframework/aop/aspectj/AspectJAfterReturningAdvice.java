@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2016 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.aop.aspectj;
 
 import java.io.Serializable;
@@ -73,6 +57,7 @@ public class AspectJAfterReturningAdvice extends AbstractAspectJAdvice
 	 * advice is only invoked if the returned value is an instance of the given
 	 * returning type and generic type parameters, if any, match the assignment
 	 * rules. If the returning type is Object, the advice is *always* invoked.
+	 *
 	 * @param returnValue the return value of the target method
 	 * @return whether to invoke the advice method for the given return value
 	 */
@@ -90,19 +75,18 @@ public class AspectJAfterReturningAdvice extends AbstractAspectJAdvice
 	 * then the return type of target method should be used to determine whether advice
 	 * is invoked or not. Also, even if the return type is void, if the type of argument
 	 * declared in the advice method is Object, then the advice must still get invoked.
-	 * @param type the type of argument declared in advice method
-	 * @param method the advice method
+	 *
+	 * @param type        the type of argument declared in advice method
+	 * @param method      the advice method
 	 * @param returnValue the return value of the target method
 	 * @return whether to invoke the advice method for the given return value and type
 	 */
 	private boolean matchesReturnValue(Class<?> type, Method method, @Nullable Object returnValue) {
 		if (returnValue != null) {
 			return ClassUtils.isAssignableValue(type, returnValue);
-		}
-		else if (Object.class == type && void.class == method.getReturnType()) {
+		} else if (Object.class == type && void.class == method.getReturnType()) {
 			return true;
-		}
-		else {
+		} else {
 			return ClassUtils.isAssignable(type, method.getReturnType());
 		}
 	}

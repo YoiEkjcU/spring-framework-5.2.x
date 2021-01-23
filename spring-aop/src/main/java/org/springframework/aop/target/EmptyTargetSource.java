@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.aop.target;
 
 import java.io.Serializable;
@@ -32,7 +16,9 @@ import org.springframework.util.ObjectUtils;
  */
 public final class EmptyTargetSource implements TargetSource, Serializable {
 
-	/** use serialVersionUID from Spring 1.2 for interoperability. */
+	/**
+	 * use serialVersionUID from Spring 1.2 for interoperability.
+	 */
 	private static final long serialVersionUID = 3680494563553489691L;
 
 
@@ -48,6 +34,7 @@ public final class EmptyTargetSource implements TargetSource, Serializable {
 
 	/**
 	 * Return an EmptyTargetSource for the given target Class.
+	 *
 	 * @param targetClass the target Class (may be {@code null})
 	 * @see #getTargetClass()
 	 */
@@ -57,8 +44,9 @@ public final class EmptyTargetSource implements TargetSource, Serializable {
 
 	/**
 	 * Return an EmptyTargetSource for the given target Class.
+	 *
 	 * @param targetClass the target Class (may be {@code null})
-	 * @param isStatic whether the TargetSource should be marked as static
+	 * @param isStatic    whether the TargetSource should be marked as static
 	 * @see #getTargetClass()
 	 */
 	public static EmptyTargetSource forClass(@Nullable Class<?> targetClass, boolean isStatic) {
@@ -79,8 +67,9 @@ public final class EmptyTargetSource implements TargetSource, Serializable {
 	 * Create a new instance of the {@link EmptyTargetSource} class.
 	 * <p>This constructor is {@code private} to enforce the
 	 * Singleton pattern / factory method pattern.
+	 *
 	 * @param targetClass the target class to expose (may be {@code null})
-	 * @param isStatic whether the TargetSource is marked as static
+	 * @param isStatic    whether the TargetSource is marked as static
 	 */
 	private EmptyTargetSource(@Nullable Class<?> targetClass, boolean isStatic) {
 		this.targetClass = targetClass;

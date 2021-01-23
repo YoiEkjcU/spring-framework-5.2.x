@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.aop.target;
 
 import org.springframework.aop.support.DefaultIntroductionAdvisor;
@@ -55,7 +39,9 @@ import org.springframework.lang.Nullable;
 public abstract class AbstractPoolingTargetSource extends AbstractPrototypeBasedTargetSource
 		implements PoolingConfig, DisposableBean {
 
-	/** The maximum size of the pool. */
+	/**
+	 * The maximum size of the pool.
+	 */
 	private int maxSize = -1;
 
 
@@ -81,8 +67,7 @@ public abstract class AbstractPoolingTargetSource extends AbstractPrototypeBased
 		super.setBeanFactory(beanFactory);
 		try {
 			createPool();
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			throw new BeanInitializationException("Could not create instance pool for TargetSource", ex);
 		}
 	}
@@ -90,15 +75,17 @@ public abstract class AbstractPoolingTargetSource extends AbstractPrototypeBased
 
 	/**
 	 * Create the pool.
+	 *
 	 * @throws Exception to avoid placing constraints on pooling APIs
 	 */
 	protected abstract void createPool() throws Exception;
 
 	/**
 	 * Acquire an object from the pool.
+	 *
 	 * @return an object from the pool
 	 * @throws Exception we may need to deal with checked exceptions from pool
-	 * APIs, so we're forgiving with our exception signature
+	 *                   APIs, so we're forgiving with our exception signature
 	 */
 	@Override
 	@Nullable
@@ -106,8 +93,9 @@ public abstract class AbstractPoolingTargetSource extends AbstractPrototypeBased
 
 	/**
 	 * Return the given object to the pool.
+	 *
 	 * @param target object that must have been acquired from the pool
-	 * via a call to {@code getTarget()}
+	 *               via a call to {@code getTarget()}
 	 * @throws Exception to allow pooling APIs to throw exception
 	 * @see #getTarget
 	 */

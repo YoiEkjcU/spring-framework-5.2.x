@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.aop.framework;
 
 import java.util.LinkedList;
@@ -26,8 +10,8 @@ import org.springframework.util.Assert;
  * Provides convenient access to a configurable AopProxyFactory.
  *
  * @author Juergen Hoeller
- * @since 2.0.3
  * @see #createAopProxy()
+ * @since 2.0.3
  */
 @SuppressWarnings("serial")
 public class ProxyCreatorSupport extends AdvisedSupport {
@@ -36,7 +20,9 @@ public class ProxyCreatorSupport extends AdvisedSupport {
 
 	private final List<AdvisedSupportListener> listeners = new LinkedList<>();
 
-	/** Set to true when the first AOP proxy has been created. */
+	/**
+	 * Set to true when the first AOP proxy has been created.
+	 */
 	private boolean active = false;
 
 
@@ -49,6 +35,7 @@ public class ProxyCreatorSupport extends AdvisedSupport {
 
 	/**
 	 * Create a new ProxyCreatorSupport instance.
+	 *
 	 * @param aopProxyFactory the AopProxyFactory to use
 	 */
 	public ProxyCreatorSupport(AopProxyFactory aopProxyFactory) {
@@ -77,6 +64,7 @@ public class ProxyCreatorSupport extends AdvisedSupport {
 
 	/**
 	 * Add the given AdvisedSupportListener to this proxy configuration.
+	 *
 	 * @param listener the listener to register
 	 */
 	public void addListener(AdvisedSupportListener listener) {
@@ -86,6 +74,7 @@ public class ProxyCreatorSupport extends AdvisedSupport {
 
 	/**
 	 * Remove the given AdvisedSupportListener from this proxy configuration.
+	 *
 	 * @param listener the listener to deregister
 	 */
 	public void removeListener(AdvisedSupportListener listener) {
@@ -107,6 +96,7 @@ public class ProxyCreatorSupport extends AdvisedSupport {
 
 	/**
 	 * Activate this proxy configuration.
+	 *
 	 * @see AdvisedSupportListener#activated
 	 */
 	private void activate() {
@@ -118,6 +108,7 @@ public class ProxyCreatorSupport extends AdvisedSupport {
 
 	/**
 	 * Propagate advice change event to all AdvisedSupportListeners.
+	 *
 	 * @see AdvisedSupportListener#adviceChanged
 	 */
 	@Override

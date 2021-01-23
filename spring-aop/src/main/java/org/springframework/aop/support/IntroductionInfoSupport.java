@@ -1,19 +1,3 @@
-/*
- * Copyright 2002-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.springframework.aop.support;
 
 import java.io.IOException;
@@ -53,6 +37,7 @@ public class IntroductionInfoSupport implements IntroductionInfo, Serializable {
 	 * due to the delegate implementing it. Call this method to exclude
 	 * internal interfaces from being visible at the proxy level.
 	 * <p>Does nothing if the interface is not implemented by the delegate.
+	 *
 	 * @param ifc the interface to suppress
 	 */
 	public void suppressInterface(Class<?> ifc) {
@@ -66,6 +51,7 @@ public class IntroductionInfoSupport implements IntroductionInfo, Serializable {
 
 	/**
 	 * Check whether the specified interfaces is a published introduction interface.
+	 *
 	 * @param ifc the interface to check
 	 * @return whether the interface is part of this introduction
 	 */
@@ -80,6 +66,7 @@ public class IntroductionInfoSupport implements IntroductionInfo, Serializable {
 
 	/**
 	 * Publish all interfaces that the given delegate implements at the proxy level.
+	 *
 	 * @param delegate the delegate object
 	 */
 	protected void implementInterfacesOnObject(Object delegate) {
@@ -88,6 +75,7 @@ public class IntroductionInfoSupport implements IntroductionInfo, Serializable {
 
 	/**
 	 * Is this method on an introduced interface?
+	 *
 	 * @param mi the method invocation
 	 * @return whether the invoked method is on an introduced interface
 	 */
@@ -95,8 +83,7 @@ public class IntroductionInfoSupport implements IntroductionInfo, Serializable {
 		Boolean rememberedResult = this.rememberedMethods.get(mi.getMethod());
 		if (rememberedResult != null) {
 			return rememberedResult;
-		}
-		else {
+		} else {
 			// Work it out and cache it.
 			boolean result = implementsInterface(mi.getMethod().getDeclaringClass());
 			this.rememberedMethods.put(mi.getMethod(), result);
